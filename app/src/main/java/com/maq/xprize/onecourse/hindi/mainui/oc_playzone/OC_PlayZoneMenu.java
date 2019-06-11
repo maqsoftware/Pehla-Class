@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.util.ArrayMap;
 import android.view.View;
 
+import com.maq.xprize.onecourse.hindi.Testing_Mode;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 import com.maq.xprize.onecourse.hindi.controls.OBImage;
@@ -52,6 +53,7 @@ import java.util.Map;
 
 public class OC_PlayZoneMenu extends OC_Menu
 {
+    int count = 0;
     static int VIDEO_BAR_SIZE = 20;
     static float MAX_SPEED = 0.6f;
     static float TICK_VALUE = 0.0025f;
@@ -929,15 +931,44 @@ public class OC_PlayZoneMenu extends OC_Menu
         if(speedX == 0 && speedY == 0)
             return;
         PointF loc = OBMisc.copyPoint(button.position());
-        loc.x += speedX * frameFrac;
-        loc.y += speedY * frameFrac;
-        float decay = (float)Math.pow(0.99f,frameFrac);
-        if(Math.abs(speedX) > MAX_SPEED)
-            speedX *= decay;
-        if(Math.abs(speedY) > MAX_SPEED)
-            speedY *= decay;
-        setControlSpeed(button,speedX,speedY);
-        setButtonLoc(button,loc ,(boolean)button.propertyValue("collide"));
+        if(!Testing_Mode.testing){
+            loc.x += speedX * frameFrac;
+            loc.y += speedY * frameFrac;
+            float decay = (float)Math.pow(0.99f,frameFrac);
+            if(Math.abs(speedX) > MAX_SPEED)
+                speedX *= decay;
+            if(Math.abs(speedY) > MAX_SPEED)
+                speedY *= decay;
+            setControlSpeed(button,speedX,speedY);
+            setButtonLoc(button,loc ,(boolean)button.propertyValue("collide"));
+        }else {
+            float x1 = loc.x, y1 = loc.y;
+            if (count < 120) {
+                loc.x += speedX * frameFrac;
+                loc.y += speedY * frameFrac;
+                x1 = loc.x;
+                y1 = loc.y;
+                float decay = (float) Math.pow(0.99f, frameFrac);
+                if (Math.abs(speedX) > MAX_SPEED)
+                    speedX *= decay;
+                if (Math.abs(speedY) > MAX_SPEED)
+                    speedY *= decay;
+                setControlSpeed(button, speedX, speedY);
+                setButtonLoc(button, loc, (boolean) button.propertyValue("collide"));
+
+            } else {
+                loc.x = x1;
+                loc.y = y1;
+                if (Math.abs(speedX) > MAX_SPEED)
+                    speedX = 0;
+                if (Math.abs(speedY) > MAX_SPEED)
+                    speedY = 0;
+                setControlSpeed(button, speedX, speedY);
+                setButtonLoc(button, loc, (boolean) button.propertyValue("collide"));
+            }
+            count++;
+        }
+
     }
 
     public void moveMediaIconsBySpeedFrac(float frameFrac)

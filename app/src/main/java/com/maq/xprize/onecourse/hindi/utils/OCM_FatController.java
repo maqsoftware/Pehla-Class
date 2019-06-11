@@ -10,6 +10,7 @@ import android.util.ArrayMap;
 import android.widget.Toast;
 
 import com.maq.xprize.onecourse.hindi.R;
+import com.maq.xprize.onecourse.hindi.Testing_Mode;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
@@ -1402,7 +1403,11 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
 
     public boolean communityModeActive()
     {
-        if(currentSessionStandardUnitCount() >= SESSION_UNIT_COUNT)
+        if(Testing_Mode.testing)
+        {
+            return true;
+        }
+        else if(currentSessionStandardUnitCount() >= SESSION_UNIT_COUNT)
         {
             return true;
         }
