@@ -1403,7 +1403,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
 
     public boolean communityModeActive()
     {
-        if(Testing_Mode.testing)
+        if(Testing_Mode.testing || Testing_Mode.study_section)
         {
             return true;
         }
