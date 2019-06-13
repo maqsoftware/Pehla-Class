@@ -282,9 +282,6 @@ public class OBMainViewController extends OBViewController
                 }
                 return true;
             }
-
-
-
         });
 
         MainActivity.mainActivity.fatController.startUp();
