@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':testing'
 include ':market_licensing'
 include ':downloader_library'
 include ':zip_file'

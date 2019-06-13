@@ -10,7 +10,7 @@ import android.util.ArrayMap;
 import android.widget.Toast;
 
 import com.maq.xprize.onecourse.hindi.R;
-import com.maq.xprize.onecourse.hindi.Testing_Mode;
+import com.example.testing.Testing_Mode;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
@@ -338,7 +338,14 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
      */
     public long getCurrentTime()
     {
-        return  System.currentTimeMillis()/1000;
+        if(!Testing_Mode.testing) {
+            return System.currentTimeMillis() / 1000;
+        }else{
+            if(Testing_Mode.night_mode)
+            return 1555090245;
+            else
+            return Testing_Mode.timemillis;
+        }
     }
 
     public int getCurrentDay()
@@ -1397,8 +1404,14 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
         Calendar currentCalendar = Calendar.getInstance();
         currentCalendar.setTimeInMillis(getCurrentTime()*1000);
         int hourNow = currentCalendar.get(Calendar.HOUR_OF_DAY);
-
-        return hourNow >= playzoneActiveHour;
+        if(!Testing_Mode.testing) {
+            return hourNow >= playzoneActiveHour;
+        }else{
+            if(Testing_Mode.play_ground)
+            return true;
+            else
+            return false;
+        }
     }
 
     public boolean communityModeActive()

@@ -9,7 +9,7 @@ import android.graphics.Typeface;
 import android.util.ArrayMap;
 import android.view.View;
 
-import com.maq.xprize.onecourse.hindi.Testing_Mode;
+import com.example.testing.Testing_Mode;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 import com.maq.xprize.onecourse.hindi.controls.OBImage;
