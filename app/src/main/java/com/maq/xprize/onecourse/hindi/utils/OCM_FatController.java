@@ -46,7 +46,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
     public final static int STUDY_LISTID=1,
             PLAYZONE_LISTID=2,
             LIBRARY_LISTID=3;
-
+    private Testing_Mode testing_mode = new Testing_Mode("2019/04/12 16:00:45");
     public int scoreCorrect,scoreWrong;
     public float finalScore;
     public Map<String,Integer> colourDict;
@@ -338,13 +338,13 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
      */
     public long getCurrentTime()
     {
-        if(!Testing_Mode.testing) {
+        if(!testing_mode.testing) {
             return System.currentTimeMillis() / 1000;
         }else{
-            if(Testing_Mode.night_mode)
+            if(testing_mode.night_mode)
             return 1555090245;
             else
-            return Testing_Mode.timemillis;
+            return testing_mode.timemillis;
         }
     }
 
@@ -1398,16 +1398,17 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
 
     public boolean playZoneActive()
     {
+
         if(currentTimeIsDirty())
             return true;
 
         Calendar currentCalendar = Calendar.getInstance();
         currentCalendar.setTimeInMillis(getCurrentTime()*1000);
         int hourNow = currentCalendar.get(Calendar.HOUR_OF_DAY);
-        if(!Testing_Mode.testing) {
+        if(!testing_mode.testing) {
             return hourNow >= playzoneActiveHour;
         }else{
-            if(Testing_Mode.play_ground)
+            if(testing_mode.play_ground)
             return true;
             else
             return false;
@@ -1416,7 +1417,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
 
     public boolean communityModeActive()
     {
-        if(Testing_Mode.testing || Testing_Mode.study_section)
+        if(testing_mode.testing || testing_mode.study_section)
         {
             return true;
         }

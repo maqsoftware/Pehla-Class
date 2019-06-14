@@ -52,7 +52,7 @@ import java.util.Map;
  */
 
 public class OC_PlayZoneMenu extends OC_Menu
-{
+{   private  Testing_Mode testing_mode = new Testing_Mode("2019/04/12 16:00:45");
     int count = 0;
     static int VIDEO_BAR_SIZE = 20;
     static float MAX_SPEED = 0.6f;
@@ -931,7 +931,7 @@ public class OC_PlayZoneMenu extends OC_Menu
         if(speedX == 0 && speedY == 0)
             return;
         PointF loc = OBMisc.copyPoint(button.position());
-        if(!Testing_Mode.testing){
+        if(!testing_mode.testing){
             loc.x += speedX * frameFrac;
             loc.y += speedY * frameFrac;
             float decay = (float)Math.pow(0.99f,frameFrac);
