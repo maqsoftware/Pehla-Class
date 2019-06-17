@@ -145,11 +145,11 @@ public class Helpers {
             }
             return "";
         }
-        return String.format("%.2f",
+        return String.format(Locale.US, "%.2f",
                 (float) overallProgress / (1024.0f * 1024.0f))
                 + "MB /" +
-                String.format("%.2f", (float) overallTotal /
-                        (1024.0f * 1024.0f)) + "MB";
+                String.format(Locale.US,"%.2f", (float) overallTotal /
+                        (1024.0f * 1024.0f), Locale.US) + "MB";
     }
 
     /**
@@ -182,7 +182,7 @@ public class Helpers {
     }
 
     public static String getSpeedString(float bytesPerMillisecond) {
-        return String.format("%.2f", bytesPerMillisecond * 1000 / 1024);
+        return String.format(Locale.US,"%.2f", bytesPerMillisecond * 1000 / 1024);
     }
 
     public static String getTimeRemaining(long durationInMilliseconds) {

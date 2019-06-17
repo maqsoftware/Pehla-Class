@@ -403,7 +403,7 @@ public class OC_DiagnosticsManager
                     String key = split.get(0);
                     String valueString = split.get(1);
                     //
-                    List<String> values = Arrays.asList(valueString.split(";|,| "));
+                    List<String> values = Arrays.asList(valueString.split("[;, ]"));
                     parameters.put(key, values);
                 }
             }

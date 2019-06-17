@@ -16,4 +16,16 @@
     <string name="_888">888</string>
     <string name="_00_00">00:00</string>
     <string name="run_tests">Run Tests</string>
+    <string name="_0000">0000</string>
+    <string name="spin_like_a_record">SPIN LIKE A RECORD</string>
+    <string name="disable_administrator_privileges">Disable Administrator Privileges</string>
+    <string name="kill_services">Kill Services</string>
+    <string name="shutdown">Shutdown</string>
+    <string name="upload_backup">Upload Backup</string>
+    <string name="skip">SKIP</string>
+    <string name="new_day">new day</string>
+    <string name="reset">RESET</string>
+    <string name="playzone">Playzone</string>
+    <string name="next">Next</string>
+    <string name="cause_crash">Cause Crash</string>
 </resources>

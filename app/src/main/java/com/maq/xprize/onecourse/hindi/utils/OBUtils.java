@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -1215,7 +1216,7 @@ public class OBUtils
 
     public static String getFilePathForTempFile (OBSectionController controller)
     {
-        String fileName = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+        String fileName = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US).format(new Date());
         try
         {
             File outputDir = controller.activity.getCacheDir();

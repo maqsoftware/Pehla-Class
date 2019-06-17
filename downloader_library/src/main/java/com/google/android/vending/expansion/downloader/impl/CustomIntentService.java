@@ -85,6 +85,7 @@ public abstract class CustomIntentService extends Service {
         }
     }
 
+    @SuppressLint("InlinedApi")
     @Override
     public int onStartCommand(Intent paramIntent, int flags, int startId) {
         onStart(paramIntent, startId);

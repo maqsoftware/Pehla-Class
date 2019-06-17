@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -8,19 +9,23 @@
 
         <EditText
             android:id="@+id/positionText"
+            android:labelFor="@+id/positionText"
             android:layout_width="100dp"
             android:layout_marginStart="100dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            tools:ignore="Autofill" />
         <TextView android:id="@+id/buildNumber" android:layout_width="552dp" android:layout_height="wrap_content" android:layout_weight="0.57" android:text="@string/textview" android:textAlignment="center" android:textSize="30sp" android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/filterText"
+            android:labelFor="@+id/filterText"
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textFilter" />
+            android:inputType="textFilter"
+            tools:ignore="Autofill" />
 
     </LinearLayout>
 

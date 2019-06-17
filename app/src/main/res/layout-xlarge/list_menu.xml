@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:weightSum="1">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:weightSum="1"
+        android:baselineAligned="false"
+        tools:ignore="UselessParent">
 
         <ListView android:id="@+id/listView" android:layout_width="1000dp" android:layout_height="match_parent" android:choiceMode="singleChoice"/>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_weight="0.4" android:orientation="vertical" android:weightSum="1">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.4" android:orientation="vertical" android:weightSum="1">
 
-            <TextView android:id="@+id/buildNumber" android:layout_width="match_parent" android:layout_height="120dp" android:layout_weight="1" android:text="0000" android:textAlignment="center" android:textSize="36sp" android:textStyle="bold"/>
-            <Button android:id="@+id/nextButton" android:layout_width="match_parent" android:layout_height="180dp" android:layout_centerInParent="true" android:layout_weight="1" android:text="Next"/>
-            <Button android:id="@+id/loopButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_centerInParent="true" android:layout_weight="1" android:text="SPIN LIKE A RECORD"/>
-            <Button android:id="@+id/disableAdministratorButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_centerInParent="true" android:layout_weight="1" android:text="Disable Administrator Privileges"/>
-            <Button android:id="@+id/killButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_centerInParent="true" android:layout_weight="1" android:text="Kill Services"/>
-            <Button android:id="@+id/shutdownButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_centerInParent="true" android:layout_weight="1" android:text="Shutdown"/>
-            <Button android:id="@+id/uploadBackup" android:layout_width="match_parent" android:layout_height="60dp" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="Upload Backup"/>
-            <Button android:id="@+id/skipButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_centerInParent="true" android:layout_weight="1" android:text="SKIP"/>
-            <Button android:id="@+id/newdDayButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_alignParentTop="true" android:layout_alignStart="@+id/refreshButton" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="new day"/>
-            <Button android:id="@+id/refreshButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="RESET"/>
-            <Button android:id="@+id/playzone" android:layout_width="match_parent" android:layout_height="120dp" android:layout_centerInParent="true" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="Playzone"/>
+            <TextView android:id="@+id/buildNumber" android:layout_width="match_parent" android:layout_height="120dp" android:layout_weight="1" android:text="@string/_0000" android:textAlignment="center" android:textSize="36sp" android:textStyle="bold"/>
+            <Button android:id="@+id/nextButton" android:layout_width="match_parent" android:layout_height="180dp" android:layout_weight="1" android:text="@string/next"/>
+            <Button android:id="@+id/loopButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:text="@string/spin_like_a_record"/>
+            <Button android:id="@+id/disableAdministratorButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:text="@string/disable_administrator_privileges"/>
+            <Button android:id="@+id/killButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:text="@string/kill_services"/>
+            <Button android:id="@+id/shutdownButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:text="@string/shutdown"/>
+            <Button android:id="@+id/uploadBackup" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="@string/upload_backup"/>
+            <Button android:id="@+id/skipButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:text="@string/skip"/>
+            <Button android:id="@+id/newdDayButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="@string/new_day"/>
+            <Button android:id="@+id/refreshButton" android:layout_width="match_parent" android:layout_height="60dp" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="@string/reset"/>
+            <Button android:id="@+id/playzone" android:layout_width="match_parent" android:layout_height="120dp" android:layout_weight="1" android:enabled="true" android:singleLine="true" android:text="@string/playzone"/>
         </LinearLayout>
     </LinearLayout>
 
