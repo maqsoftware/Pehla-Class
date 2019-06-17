@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -53,14 +54,11 @@ public class SplashScreenActivity extends Activity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 1);
         } else {
             sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
             // Retrieve the stored values of main and patch file version
@@ -83,8 +81,7 @@ public class SplashScreenActivity extends Activity {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[2] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[3] == PackageManager.PERMISSION_GRANTED) {
+                    && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                 sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
                 // Retrieve the stored values of main and patch file version
                 storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
@@ -185,7 +182,14 @@ public class SplashScreenActivity extends Activity {
                 unzipFile();
             } else {
                 Toast.makeText(SplashScreenActivity.this, "Insufficient storage space! Please free up your storage to use this application.", Toast.LENGTH_LONG).show();
-                finish();
+
+                // Call finish after the toast message disappears
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SplashScreenActivity.this.finish();
+                    }
+                }, 3500);
             }
             return null;
         }

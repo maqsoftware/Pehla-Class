@@ -39,7 +39,6 @@ import com.maq.xprize.onecourse.hindi.utils.OBAudioManager;
 import com.maq.xprize.onecourse.hindi.utils.OBConfigManager;
 import com.maq.xprize.onecourse.hindi.utils.OBFatController;
 import com.maq.xprize.onecourse.hindi.utils.OBImageManager;
-import com.maq.xprize.onecourse.hindi.utils.OBLocationManager;
 import com.maq.xprize.onecourse.hindi.utils.OBPreferenceManager;
 import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
 import com.maq.xprize.onecourse.hindi.utils.OBUser;
@@ -82,7 +81,7 @@ public class MainActivity extends Activity {
     public static OBConfigManager configManager;
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
-    public static OBLocationManager locationManager;
+//    public static OBLocationManager locationManager;
     public static MainActivity mainActivity;
     public static OBMainViewController mainViewController;
     public static Typeface standardTypeFace, writingTypeFace;
@@ -99,7 +98,6 @@ public class MainActivity extends Activity {
     };
 
     private static String[] PERMISSION_ALL = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE,
@@ -186,21 +184,17 @@ public class MainActivity extends Activity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         //
         // Hide Status Bar
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //
         mainActivity = this;
         //
-        configManager = new OBConfigManager();
+        configManager = new OBConfigManager(this.getApplicationContext());
         //
         analyticsManager = new OBAnalyticsManager(this);
-        locationManager = new OBLocationManager(this);
+//        locationManager = new OBLocationManager(this);
         //
         // this flag disables screenshots
         // Commented code to enable capturing of screenshots

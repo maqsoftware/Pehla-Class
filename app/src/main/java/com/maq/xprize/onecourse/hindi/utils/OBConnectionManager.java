@@ -1,6 +1,5 @@
 package com.maq.xprize.onecourse.hindi.utils;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -95,11 +94,11 @@ public class OBConnectionManager
 
     public boolean isScanningDisabled ()
     {
-        WifiManager wifiManager = (WifiManager) MainActivity.mainActivity.getApplicationContext().getSystemService(MainActivity.WIFI_SERVICE);
+        /*WifiManager wifiManager = (WifiManager) MainActivity.mainActivity.getApplicationContext().getSystemService(MainActivity.WIFI_SERVICE);
         if (wifiManager.isScanAlwaysAvailable()) return false;
         //
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter.isDiscovering()) return false;
+        if (bluetoothAdapter.isDiscovering()) return false;*/
         //
         return true;
     }
@@ -107,7 +106,7 @@ public class OBConnectionManager
 
     public boolean setBluetooth (boolean enable)
     {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        /*BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter != null)
         {
             boolean isEnabled = bluetoothAdapter.isEnabled();
@@ -120,7 +119,7 @@ public class OBConnectionManager
                 return bluetoothAdapter.disable();
             }
             return true;
-        }
+        }*/
         return false;
     }
 

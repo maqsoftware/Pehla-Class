@@ -8,8 +8,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.StatFs;
 
-import org.json.JSONObject;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -180,7 +181,8 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     {
         Map<String, Object> parameters = new HashMap();
         //
-        Location loc = OBLocationManager.sharedManager.getLastKnownLocation();
+//        Location loc = OBLocationManager.sharedManager.getLastKnownLocation();
+        Location loc = null;
         if (loc != null)
         {
             deviceStatusValues.put(OBAnalytics.Params.DEVICE_GPS_LATITUDE, Double.valueOf(loc.getLatitude()));

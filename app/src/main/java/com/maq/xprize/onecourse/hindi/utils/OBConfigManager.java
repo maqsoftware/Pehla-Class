@@ -1,9 +1,8 @@
 package com.maq.xprize.onecourse.hindi.utils;
 
-import android.renderscript.ScriptGroup;
+import android.content.Context;
 
 import com.maq.xprize.onecourse.hindi.BuildConfig;
-import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 
 import java.io.File;
@@ -144,11 +143,14 @@ public class OBConfigManager
     //
     private float internalGraphicScale;
     //
+    private Context mainActivityContext;
+
     public static OBConfigManager sharedManager;
 
-    public OBConfigManager ()
+    public OBConfigManager (Context mainActivityContext)
     {
         sharedManager = this;
+        this.mainActivityContext = mainActivityContext;
         //
         try
         {
@@ -920,7 +922,8 @@ public class OBConfigManager
 
     public String getAssetsExternalPath ()
     {
-        return getStringValue(ASSETS_EXTERNAL_PATH);
+        return mainActivityContext.getExternalFilesDir(null).getPath() + File.separator + "assets";
+//        return getStringValue(ASSETS_EXTERNAL_PATH);
     }
 
     public List<File> getExternalAssetsSearchPaths()
@@ -1066,7 +1069,8 @@ public class OBConfigManager
 
     public Boolean isLocationEnabled()
     {
-        return getBooleanValue(LOCATION_ENABLED);
+//        return getBooleanValue(LOCATION_ENABLED);
+        return false;
     }
 
 }

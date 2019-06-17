@@ -1,18 +1,19 @@
 package com.maq.xprize.onecourse.hindi.mainui;
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.view.*;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBLabel;
@@ -23,8 +24,13 @@ import com.maq.xprize.onecourse.hindi.glstuff.TextureShaderProgram;
 import com.maq.xprize.onecourse.hindi.utils.OBBrightnessManager;
 import com.maq.xprize.onecourse.hindi.utils.OBConfigManager;
 import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
-import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
+import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class OBMainViewController extends OBViewController
 {
