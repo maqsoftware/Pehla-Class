@@ -437,13 +437,7 @@ public class MainActivity extends Activity {
         // app is running on an emulator, and assume that it supports
         // OpenGL ES 2.0.
         final boolean supportsEs2 =
-                configurationInfo.reqGlEsVersion >= 0x20000
-                        || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
-                        && (Build.FINGERPRINT.startsWith("generic")
-                        || Build.FINGERPRINT.startsWith("unknown")
-                        || Build.MODEL.contains("google_sdk")
-                        || Build.MODEL.contains("Emulator")
-                        || Build.MODEL.contains("Android SDK built for x86")));
+                configurationInfo.reqGlEsVersion >= 0x20000 || Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") || Build.MODEL.contains("Android SDK built for x86");
 
         if (supportsEs2) {
             // Request an OpenGL ES 2.0 compatible context.

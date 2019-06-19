@@ -39,6 +39,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBXMLNode;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alan on 11/12/17.
@@ -221,7 +222,7 @@ public class OC_SimpleListMenu extends OBSectionController
                 @Override
                 public void afterTextChanged(Editable s)
                 {
-                    String text = filterText.getText().toString().toLowerCase();
+                    String text = filterText.getText().toString().toLowerCase(Locale.US);
                     masterlistFilter.filter(text);
                 }
             });
@@ -241,11 +242,11 @@ public class OC_SimpleListMenu extends OBSectionController
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        String text = positionText.getText().toString().toLowerCase();
+                        String text = positionText.getText().toString().toLowerCase(Locale.US);
                         int position = -1;
                         for (int i=0;i<arrayAdapter.getCount();i++){
                             MlUnit ml = arrayAdapter.getItem(i);
-                            if (ml.key.toLowerCase().contains(text.toString().toLowerCase()))
+                            if (ml.key.toLowerCase(Locale.US).contains(text.toString().toLowerCase(Locale.US)))
                             {
                                 position = i;
                                 break;
@@ -380,9 +381,9 @@ public class OC_SimpleListMenu extends OBSectionController
 
 
             for (int i = 0; i < masterList.size(); i++) {
-                if (masterList.get(i).key.toLowerCase().contains(constraint.toString().toLowerCase()) ||
-                        masterList.get(i).params.toLowerCase().contains(constraint.toString().toLowerCase()) ||
-                        masterList.get(i).target.toLowerCase().contains(constraint.toString().toLowerCase())
+                if (masterList.get(i).key.toLowerCase(Locale.US).contains(constraint.toString().toLowerCase(Locale.US)) ||
+                        masterList.get(i).params.toLowerCase(Locale.US).contains(constraint.toString().toLowerCase(Locale.US)) ||
+                        masterList.get(i).target.toLowerCase(Locale.US).contains(constraint.toString().toLowerCase(Locale.US))
                         ) {
                     resultList.add(masterList.get(i));
                 }

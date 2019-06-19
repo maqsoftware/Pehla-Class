@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -217,7 +218,7 @@ public class OC_AddSubtract_S1 extends OC_SectionController
 
                     OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get("equation"),4,5,"equation",this);
                     waitForSecs(0.3f);
-                    performSel("demoFin",String.format("%s%d",currentEvent(),currentPhase));
+                    performSel("demoFin",String.format(Locale.US,"%s%d",currentEvent(),currentPhase));
                     demoFinEquation();
                     waitForSecs(0.5f);
                     if(currentEvent() != events.get(events.size()-1))
@@ -232,7 +233,7 @@ public class OC_AddSubtract_S1 extends OC_SectionController
                     gotItRight();
                     OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get("equation"),1,1,"equation",this);
                     waitSFX();
-                    performSel("demoFin",String.format("%s%d",currentEvent(),currentPhase));
+                    performSel("demoFin",String.format(Locale.US,"%s%d",currentEvent(),currentPhase));
                     box.objectDict.get("box").setBackgroundColor(eventColour.get("box"));
                     currentPhase++;
                     startPhase();
@@ -260,7 +261,7 @@ public class OC_AddSubtract_S1 extends OC_SectionController
         if(!subtractMode)
             phase--;
         OBMisc.doSceneAudio(4,currentEvent(),setStatus(STATUS_AWAITING_CLICK)
-                ,phase == 0? "": String.format("%d",phase+1),this);
+                ,phase == 0? "": String.format(Locale.US,"%d",phase+1),this);
     }
 
     public void loadObjects(OBControl main,String[] locs, List<OBControl> arr)
@@ -383,7 +384,7 @@ public class OC_AddSubtract_S1 extends OC_SectionController
     {
         waitForSecs(0.2f);
         OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get("equation"),2,3,"equation",this);
-        performSel("demoFin",String.format("%s%d",currentEvent(),currentPhase));
+        performSel("demoFin",String.format(Locale.US,"%s%d",currentEvent(),currentPhase));
         currentPhase++;
         waitForSecs(0.3f);
         startPhase();
@@ -392,7 +393,7 @@ public class OC_AddSubtract_S1 extends OC_SectionController
     public void pointerPointEquationAt(int at, String audio, float duration) throws Exception
     {
         OBGroup equation = (OBGroup)objectDict.get("equation");
-        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format("part%d",at)).getWorldFrame());
+        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format(Locale.US,"part%d",at)).getWorldFrame());
         point.y =  equation.bottom() + equation.height()*0.2f;
         movePointerToPoint(point,-15,duration,true);
         OC_Numberlines_Additions.colourEquation(equation,at,at,Color.RED,this);

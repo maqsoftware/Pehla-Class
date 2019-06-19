@@ -26,6 +26,7 @@ import com.maq.xprize.onecourse.hindi.utils.OC_FatReceiver;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -200,7 +201,7 @@ public class OC_miniapp5_menu extends OC_Menu implements OC_FatReceiver
     public void setCurrentLevel(MlUnit unit)
     {
         String xmlid = unit.key.split("\\.")[0];
-        String postfix = String.format("   %d", unit.level);
+        String postfix = String.format(Locale.US,"   %d", unit.level);
         String fullString = String.format("%s%s", xmlid,postfix);
         currentLevelLabel.setString(fullString);
         int st = fullString.lastIndexOf(postfix);
@@ -286,7 +287,7 @@ public class OC_miniapp5_menu extends OC_Menu implements OC_FatReceiver
         ec.lifeTimeRange = 0.5f;
         star.enCache();
         ec.contents = star.cache;
-        ec.name = String.format("fire%d",i);
+        ec.name = String.format(Locale.US,"fire%d",i);
         ec.velocity = 200;
         ec.velocityRange = 60;
         ec.emissionRange = (float)(Math.PI * 2.0);

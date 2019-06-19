@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -180,7 +181,7 @@ public class OC_Numbers1To10_S7 extends OC_Generic_SelectCorrectObject
         //
         for (int i = 1; i <= 10; i++)
         {
-            OBLabel number = numbers.get(String.format("number_%d", i));
+            OBLabel number = numbers.get(String.format(Locale.US,"number_%d", i));
             action_playNextDemoSentence(false); // One. Two. Three. Four. Five. Six. Seven. Eight. Nine. Ten
             OBAnim anim = OBAnim.scaleAnim(1.5f, number);
             OBAnimationGroup.runAnims(Arrays.asList(anim), 0.15, true, OBAnim.ANIM_EASE_IN_EASE_OUT, this);
@@ -227,7 +228,7 @@ public class OC_Numbers1To10_S7 extends OC_Generic_SelectCorrectObject
         //
         for (int i = 10; i > 0; i--)
         {
-            OBLabel number = numbers.get(String.format("number_%d", i));
+            OBLabel number = numbers.get(String.format(Locale.US,"number_%d", i));
             action_playNextDemoSentence(false); // Ten. Nine. Eight. Seven. Six. Five. Four. Three. Two. One.
             OBAnim anim = OBAnim.scaleAnim(1.5f, number);
             OBAnimationGroup.runAnims(Arrays.asList(anim), 0.15, true, OBAnim.ANIM_EASE_IN_EASE_OUT, this);

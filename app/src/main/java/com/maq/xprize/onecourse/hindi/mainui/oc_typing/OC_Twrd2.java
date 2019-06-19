@@ -9,6 +9,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -47,7 +48,7 @@ public class OC_Twrd2 extends OC_Twrd_Text
                     if(withDemo && index == 1 && j>1)
                         continue;
                     Map<String, Object> data = new ArrayMap();
-                    String eventName = String.format("%d%d",index,j);
+                    String eventName = String.format(Locale.US,"%d%d",index,j);
                     data.put("text",word.text);
                     data.put("audio",word.audio());
                     if(imageMode && word.imageName != null)
@@ -57,7 +58,7 @@ public class OC_Twrd2 extends OC_Twrd_Text
                     data.put("feedback",j==2?FEEDBACK_TICK:FEEDBACK_NONE);
                     if(i == words.length-1 && words.length > 2)
                     {
-                        data.put("event",String.format("last%d",j));
+                        data.put("event",String.format(Locale.US,"last%d",j));
                     }
                     else if(audioScenes.get(eventName) != null)
                     {
@@ -65,7 +66,7 @@ public class OC_Twrd2 extends OC_Twrd_Text
                     }
                     else
                     {
-                        data.put("event",String.format("default%d",j));
+                        data.put("event",String.format(Locale.US,"default%d",j));
                     }
                     eventsData.add(data);
                 }

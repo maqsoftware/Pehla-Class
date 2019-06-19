@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.USubPath;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -82,7 +83,7 @@ public class OC_2dShapes_S2f extends OC_SectionController
             copy.setPosition(element.tAlongt(0, null));
             attachControl(copy);
             copy.show();
-            objectDict.put(String.format("dot_%d",index),copy);
+            objectDict.put(String.format(Locale.US,"dot_%d",index),copy);
         }
 
         path.sizeToBoundingBoxIncludingStroke();
@@ -273,9 +274,9 @@ public class OC_2dShapes_S2f extends OC_SectionController
         moveScenePointer(OB_Maths.locationForRect(0.8f,0.7f,objectDict.get("box") .frame()),-25,0.5f,"DEMO",1,0.3f);
         for(int i=1; i<4; i++)
         {
-            OBControl line = objectDict.get(String.format("line_%d",i));
+            OBControl line = objectDict.get(String.format(Locale.US,"line_%d",i));
             movePointerToPoint(OB_Maths.locationForRect(0.5f,0.5f,line.frame()),-20,0.5f,true);
-            OBMisc.moveControlWithAttached(line,Arrays.asList(thePointer),objectDict.get(String.format("drop_%d",i)).position(),0.7f,OBAnim.ANIM_EASE_IN_EASE_OUT,this);
+            OBMisc.moveControlWithAttached(line,Arrays.asList(thePointer),objectDict.get(String.format(Locale.US,"drop_%d",i)).position(),0.7f,OBAnim.ANIM_EASE_IN_EASE_OUT,this);
             playSfxAudio("drop",true);
         }
         OBPath obj =(OBPath ) objectDict.get("obj");

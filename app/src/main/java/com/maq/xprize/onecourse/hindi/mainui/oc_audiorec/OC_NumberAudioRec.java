@@ -10,6 +10,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -36,7 +37,7 @@ public class OC_NumberAudioRec extends OC_AudioRecSection
         {
             OBPhoneme pho = new OBPhoneme(param,String.format("n_%s",param));
             eventsData.add(pho);
-            String eventName = String.format("%d",index);
+            String eventName = String.format(Locale.US,"%d",index);
             if(audioScenes.get(eventName) == null)
                 eventName = "default";
             eventsList.add(eventName);

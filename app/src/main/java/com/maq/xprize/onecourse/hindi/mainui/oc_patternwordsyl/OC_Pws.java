@@ -24,6 +24,7 @@ import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -477,7 +478,7 @@ public class OC_Pws extends OC_SectionController
                         targetLabel.setProperty("image",imageName);
 
                 }
-                OBControl locControl = objectDict.get(String.format("loc_%d",index));
+                OBControl locControl = objectDict.get(String.format(Locale.US,"loc_%d",index));
                 if(locControl.width() < targetLabel.width())
                     targetLabel.setScale(locControl.width()/targetLabel.width());
                 OBLabel screenLabel = (OBLabel)targetLabel.copy();
@@ -523,14 +524,14 @@ public class OC_Pws extends OC_SectionController
         for(int i=0; i<targetLabels.size(); i++)
         {
             OBControl con = targetLabels.get(i);
-            String matchEvent = String.format("match_%d",i+1);
+            String matchEvent = String.format(Locale.US,"match_%d",i+1);
             if(audioScenes.get(matchEvent) != null)
                 matchEvents.add(matchEvent);
             else
                 matchEvents.add("match_default");
             if(withFind)
             {
-                String findEvent = String.format("find_%d",i+1);
+                String findEvent = String.format(Locale.US,"find_%d",i+1);
                 if(audioScenes.get(findEvent) != null)
                     findEvents.add(findEvent);
                 else

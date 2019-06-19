@@ -8,6 +8,7 @@ import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class OC_CountingTo1000_RevisionBackwards extends OC_CountingTo1000_Revision
 {
@@ -16,7 +17,7 @@ public class OC_CountingTo1000_RevisionBackwards extends OC_CountingTo1000_Revis
         numbers = new ArrayList();
         for (int i = 0; i < 10; i++)
         {
-            String number = String.format("%d", (10 - i) * 100);
+            String number = String.format(Locale.US,"%d", (10 - i) * 100);
             numbers.add(number);
         }
     }

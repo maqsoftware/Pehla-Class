@@ -1,5 +1,6 @@
 package com.maq.xprize.onecourse.hindi.utils;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -794,7 +795,7 @@ public class OBConnectionManager
         try
         {
             TelephonyManager telephonyService = (TelephonyManager) MainActivity.mainActivity.getSystemService(Context.TELEPHONY_SERVICE);
-            Method getMobileDataEnabledMethod = telephonyService.getClass().getDeclaredMethod("getDataEnabled");
+            @SuppressLint("PrivateApi") Method getMobileDataEnabledMethod = telephonyService.getClass().getDeclaredMethod("getDataEnabled");
             //
             if (null != getMobileDataEnabledMethod)
             {

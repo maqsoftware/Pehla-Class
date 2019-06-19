@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -474,7 +475,7 @@ public class OC_LTrace extends OC_Wordcontroller
         preTrace(i);
         waitForSecs(0.4f);
         movePointerToPoint(dot.position(),-1,true);
-        String demoN = String.format("DEMO%d",i+2);
+        String demoN = String.format(Locale.US,"DEMO%d",i+2);
         if (currentAudio(demoN) != null)
         {
             playAudioQueuedSceneIndex(currentEvent(),demoN,0,true);

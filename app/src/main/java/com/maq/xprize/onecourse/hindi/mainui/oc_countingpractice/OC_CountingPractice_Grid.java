@@ -20,6 +20,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 
 import static com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic.adjustColour;
@@ -280,7 +281,7 @@ public class OC_CountingPractice_Grid extends OC_SectionController
         {
             for (int column = 0; column < cellsPerRow; column++)
             {
-                String number = String.format("%d", numberValue);
+                String number = String.format(Locale.US,"%d", numberValue);
                 numbers.add(number);
                 //
                 OBPath box = (OBPath) numberBox.copy();
@@ -813,7 +814,7 @@ public class OC_CountingPractice_Grid extends OC_SectionController
         int positionIndex = 1;
         for (OBLabel label : draggableLabelsForPhase3)
         {
-            OBControl placement = objectDict.get(String.format("position%d", positionIndex));
+            OBControl placement = objectDict.get(String.format(Locale.US,"position%d", positionIndex));
             PointF destination = OC_Generic.copyPoint(placement.position());
             Path animationPath = OC_Generic.generateBezierPathForControl(label, destination);
             label.setProperty("original_position", destination);

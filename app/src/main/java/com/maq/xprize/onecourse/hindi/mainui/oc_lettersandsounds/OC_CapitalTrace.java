@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alan on 24/08/2017.
@@ -314,7 +315,7 @@ public class OC_CapitalTrace extends OC_LTrace
     }
     public void playFeedback(String l)
     {
-        playLetterName(l.toLowerCase());
+        playLetterName(l.toLowerCase(Locale.US));
     }
 
 }

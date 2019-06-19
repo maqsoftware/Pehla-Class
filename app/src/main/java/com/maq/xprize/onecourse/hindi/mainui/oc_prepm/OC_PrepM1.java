@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.utils.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -408,7 +409,7 @@ public class OC_PrepM1 extends OC_SectionController
 
     public OBLabel mainLabelForNumber(int n,PointF pt)
     {
-        String s = String.format("%d",n);
+        String s = String.format(Locale.US,"%d",n);
         OBLabel l = new OBLabel(s,font);
         l.setZPosition(10);
         l.setPosition(pt);
@@ -709,7 +710,7 @@ public class OC_PrepM1 extends OC_SectionController
     public void playNumber(int n) throws Exception
     {
         //String fn = String.format("nums/n_%d",n);
-        String fn = String.format("n_%d",n);
+        String fn = String.format(Locale.US,"n_%d",n);
         playAudioQueued(Arrays.asList((Object)fn),true);
     }
 
@@ -818,7 +819,7 @@ public class OC_PrepM1 extends OC_SectionController
 
     public OBLabel smallLabelForNumber(int n,OBControl bg,OBFont fnt)
     {
-        String s = String.format("%d",n);
+        String s = String.format(Locale.US,"%d",n);
         OBLabel l = new OBLabel(s,fnt);
         l.setZPosition(bg.zPosition() +1);
         l.setPosition(bg.position());
@@ -846,11 +847,11 @@ public class OC_PrepM1 extends OC_SectionController
         int greycol = swatch.fillColor();
         for(int i = 1;i <= 10;i++)
         {
-            OBControl sq = machine.objectDict.get(String.format("squ_%d",i));
+            OBControl sq = machine.objectDict.get(String.format(Locale.US,"squ_%d",i));
             smallLabelForNumber(i,sq,fnt);
             sq.setProperty("origcol",sq.fillColor());
             sq.setFillColor(greycol);
-            OBControl star = machine.objectDict.get(String.format("star_%d",i));
+            OBControl star = machine.objectDict.get(String.format(Locale.US,"star_%d",i));
             star.setProperty("origcol",star.fillColor());
             star.setFillColor(greycol);
         }

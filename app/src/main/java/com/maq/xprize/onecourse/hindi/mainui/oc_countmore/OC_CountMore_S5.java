@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -86,7 +87,7 @@ public class OC_CountMore_S5 extends OC_SectionController
             }
         }
         correct = OBUtils.getIntValue(eventAttributes.get("correct"));
-        topLabel.setString(String.format("%d",correct));
+        topLabel.setString(String.format(Locale.US,"%d",correct));
         topLabel.setColour(Color.BLACK);
     }
 
@@ -308,7 +309,7 @@ public class OC_CountMore_S5 extends OC_SectionController
         List<Integer> nums = Arrays.asList(2, 7, 4);
         for(int i=0; i<nums.size(); i++)
         {
-            OBGroup cont = (OBGroup)objectDict.get(String.format("obj_%d",nums.get(i)));
+            OBGroup cont = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",nums.get(i)));
             movePointerToPoint(cont.position(),0.5f,true);
             int drop = nums.get(i);
             OBMisc.moveControlWithAttached(thePointer,Arrays.asList((OBControl)cont),dropLocs.get(drop),0.5f,OBAnim.ANIM_EASE_IN_EASE_OUT,this);

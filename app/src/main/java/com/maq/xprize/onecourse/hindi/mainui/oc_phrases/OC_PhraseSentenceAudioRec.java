@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -118,7 +119,7 @@ public class OC_PhraseSentenceAudioRec extends OC_PhraseSentence
         {
             if(componentDict.containsKey(component))
             {
-                String indexString = String.format("%d", index);
+                String indexString = String.format(Locale.US,"%d", index);
                 if(audioScenes.containsKey(indexString))
                 {
                     eventsArray.add(indexString);
@@ -181,9 +182,9 @@ public class OC_PhraseSentenceAudioRec extends OC_PhraseSentence
         currentAudios = new ArrayList<>();
         for(OBReadingPara para : paragraphs)
         {
-            loadTimingsPara(para, getLocalPath(String.format("%s_%d.etpa",currComponentKey,i)),false);
-            loadTimingsPara(para, getLocalPath(String.format("%s_%d.etpa",SlowVersion(currComponentKey,true) ,i)),true);
-            String audioName = String.format("%s_%d",currComponentKey,i);
+            loadTimingsPara(para, getLocalPath(String.format(Locale.US,"%s_%d.etpa",currComponentKey,i)),false);
+            loadTimingsPara(para, getLocalPath(String.format(Locale.US,"%s_%d.etpa",SlowVersion(currComponentKey,true) ,i)),true);
+            String audioName = String.format(Locale.US,"%s_%d",currComponentKey,i);
             currentAudios.add(audioName);
             OBAudioManager.audioManager.prepareForChannel(audioName,"special");
             recordDuration += OBAudioManager.audioManager.durationForChannel("special");

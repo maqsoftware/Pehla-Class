@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 12/04/2017.
@@ -70,18 +71,18 @@ public class OC_Numberlines_S1 extends OC_SectionController
                 {
                     OBControl screenImage = image.copy();
                     screenImage.setPosition(OB_Maths.locationForRect(arrs.get(i).get(j), arrs.get(i).get(j+1),
-                            objectDict.get(String.format("container%d",i+1)).getWorldFrame()));
+                            objectDict.get(String.format(Locale.US,"container%d",i+1)).getWorldFrame()));
                     attachControl(screenImage);
                     screenImage.hide();
                     screenImage.setZPosition (2);
-                    objectDict.put(String.format("obj%d", index),screenImage);
+                    objectDict.put(String.format(Locale.US,"obj%d", index),screenImage);
                     index++;
                 }
             }
         }
         for(int i=1; i<=2; i++)
         {
-            OBGroup group = (OBGroup)objectDict.get(String.format("container%d", i));
+            OBGroup group = (OBGroup)objectDict.get(String.format(Locale.US,"container%d", i));
             if(group.objectDict.get("_highlight") == null)
             {
                 group.show();
@@ -107,8 +108,8 @@ public class OC_Numberlines_S1 extends OC_SectionController
             float fontSize = ((OBLabel)objectDict.get("num1")).fontSize() * 1.7f;
             for(int i = 1; i <= 2; i++)
             {
-                OBLabel numLabel = new OBLabel(String.format("%d",arr.get(i-1)),OBUtils.standardTypeFace(),fontSize);
-                numLabel.setPosition(OB_Maths.locationForRect(rloc.x,rloc.y,objectDict.get(String.format("container%d",i)).getWorldFrame()));
+                OBLabel numLabel = new OBLabel(String.format(Locale.US,"%d",arr.get(i-1)),OBUtils.standardTypeFace(),fontSize);
+                numLabel.setPosition(OB_Maths.locationForRect(rloc.x,rloc.y,objectDict.get(String.format(Locale.US,"container%d",i)).getWorldFrame()));
                 numLabel.setColour(largeNumColour);
                 numLabel.setZPosition(3);
                 attachControl(numLabel);
@@ -223,7 +224,7 @@ public class OC_Numberlines_S1 extends OC_SectionController
 
     public void demoHilite(int num) throws Exception
     {
-        OBControl cont = objectDict.get(String.format("container%d",num));
+        OBControl cont = objectDict.get(String.format(Locale.US,"container%d",num));
         loadPointer(POINTER_LEFT);
         movePointerToPoint(OB_Maths.locationForRect(0.8f,1f,cont.frame()),0.4f,true);
         cont.highlight();

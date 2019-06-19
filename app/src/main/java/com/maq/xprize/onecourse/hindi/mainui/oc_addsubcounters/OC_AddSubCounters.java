@@ -9,6 +9,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class OC_AddSubCounters extends OC_SectionController
 {
@@ -69,9 +70,9 @@ public class OC_AddSubCounters extends OC_SectionController
         {
             List audarray = new ArrayList<>();
             String op = eq.isPlus?"add":"sub";
-            audarray.add(String.format("addsub_st%d",eq.lh));
-            audarray.add(String.format("addsub_%s%d",op,eq.rh));
-            audarray.add(String.format("addsub_ans%d",eq.lh +(eq.isPlus?1:-1) * eq.rh));
+            audarray.add(String.format(Locale.US,"addsub_st%d",eq.lh));
+            audarray.add(String.format(Locale.US,"addsub_%s%d",op,eq.rh));
+            audarray.add(String.format(Locale.US,"addsub_ans%d",eq.lh +(eq.isPlus?1:-1) * eq.rh));
             playAudioQueued(audarray,true);
         }
         waitForSecs(0.2f);

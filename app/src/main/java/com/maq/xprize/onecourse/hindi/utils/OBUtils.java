@@ -355,7 +355,7 @@ public class OBUtils
             return 0;
         if (str.startsWith("#"))
         {
-            str = str.substring(1).toLowerCase();
+            str = str.substring(1).toLowerCase(Locale.US);
             if (str.length() == 3)
             {
                 int rgb[] = {0, 0, 0};
@@ -1146,12 +1146,12 @@ public class OBUtils
         if (from < to)
         {
             for (int i = from; i <= to; i++)
-                list.add(String.format("%s%d", prefix, i));
+                list.add(String.format(Locale.US,"%s%d", prefix, i));
         }
         else
         {
             for (int i = from; i >= to; i--)
-                list.add(String.format("%s%d", prefix, i));
+                list.add(String.format(Locale.US,"%s%d", prefix, i));
         }
 
         return list;

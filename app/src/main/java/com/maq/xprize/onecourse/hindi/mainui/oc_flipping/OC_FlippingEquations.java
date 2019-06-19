@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic.action_createLabelForControl;
@@ -121,9 +122,9 @@ public class OC_FlippingEquations extends OC_SectionController
             if (c > 20) continue;
             if (b - a <= 4) continue;
             //
-            String part1 = String.format("%d", a);
-            String part2 = String.format("%d", b);
-            String total = String.format("%d", c);
+            String part1 = String.format(Locale.US,"%d", a);
+            String part2 = String.format(Locale.US,"%d", b);
+            String total = String.format(Locale.US,"%d", c);
             //
             boolean alreadyUsed = false;
             for (Map<String, Object> equation : equations)
@@ -162,7 +163,7 @@ public class OC_FlippingEquations extends OC_SectionController
             equation.put("part1", part1);
             equation.put("part2", part2);
             equation.put("total", total);
-            equation.put("options", OBUtils.randomlySortedArray(Arrays.asList(String.format("%d,%d,%d", distractor2, distractor1, c).split(","))));
+            equation.put("options", OBUtils.randomlySortedArray(Arrays.asList(String.format(Locale.US,"%d,%d,%d", distractor2, distractor1, c).split(","))));
             ;
             equations.add(equation);
         }

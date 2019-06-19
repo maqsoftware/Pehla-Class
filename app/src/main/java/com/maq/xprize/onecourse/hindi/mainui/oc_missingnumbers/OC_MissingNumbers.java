@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 09/11/2017.
@@ -155,7 +156,7 @@ public class OC_MissingNumbers extends OC_Generic_Event
                     newButton.sizeToBoundingBoxIncludingStroke();
                     newButton.setPosition(new PointF(startingX + i * slottedWidth + newButton.width() / 2f, y));
                     newButton.setProperty("original_position", newButton.getWorldPosition());
-                    OBLabel newButtonLabel = action_createLabelForControl(newButton, String.format("%d", i), colourTextNormal, 1.2f);
+                    OBLabel newButtonLabel = action_createLabelForControl(newButton, String.format(Locale.US,"%d", i), colourTextNormal, 1.2f);
                     newButton.setProperty("label", newButtonLabel);
                     numberButtons.add(newButton);
                     numberButtonLabels.add(newButtonLabel);
@@ -194,7 +195,7 @@ public class OC_MissingNumbers extends OC_Generic_Event
                 hideControls("line_.*");
                 hideControls("number_box");
                 int number = (numberSequence == null) ? 0 : numberSequence.get(0);
-                String number_string = String.format("%d", number);
+                String number_string = String.format(Locale.US,"%d", number);
                 OBControl bigBox = objectDict.get("number_box_big");
                 bigBox.setPosition(new PointF(0.5f * bounds().width(), 0.4f * bounds().height()));
                 OBLabel bigBoxLabel = action_createLabelForControl(bigBox, number_string, colourTextNormal, 0.8f);
@@ -218,7 +219,7 @@ public class OC_MissingNumbers extends OC_Generic_Event
                     newBox.setPosition(new PointF(startingX + i * slottedWidth + newBox.width() / 2f, y));
                     //
                     int number = (numberSequence == null) ? 0 : numberSequence.get(i);
-                    String number_string = String.format("%d", number);
+                    String number_string = String.format(Locale.US,"%d", number);
                     OBLabel newBoxLabel = action_createLabelForControl(newBox, number_string, colourTextNormal, 0.8f);
                     newBox.setProperty("label", newBoxLabel);
                     OBPath newVerticalLine = (OBPath) verticalLineTemplate.copy();
@@ -481,7 +482,7 @@ public class OC_MissingNumbers extends OC_Generic_Event
         for (int i = 0; i < numberBoxLabels.size(); i++)
         {
             Integer number = numberSequence.get(i);
-            String number_string = String.format("%d", number);
+            String number_string = String.format(Locale.US,"%d", number);
             OBLabel label = numberBoxLabels.get(i);
             label.setString(number_string);
             PointF position = OC_Generic.copyPoint(label.position());

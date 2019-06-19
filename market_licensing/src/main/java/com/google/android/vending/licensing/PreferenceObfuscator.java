@@ -43,10 +43,10 @@ public class PreferenceObfuscator {
         mEditor = null;
     }
 
-    @SuppressLint("CommitPrefEdits")
     public void putString(String key, String value) {
         if (mEditor == null) {
             mEditor = mPreferences.edit();
+            mEditor.commit();
         }
         String obfuscatedValue = mObfuscator.obfuscate(value, key);
         mEditor.putString(key, obfuscatedValue);

@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.mainui.OC_SectionController;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Created by michal on 06/04/2017.
@@ -21,7 +22,7 @@ public class OC_MoreNumbers_Additions
     public static void insertIntoGroup(OBGroup group, int num, float size, int colour, PointF position, OC_SectionController sectionController)
     {
         Typeface typeface = OBUtils.standardTypeFace();
-        OBLabel label = new OBLabel(String.format("%d",num),typeface,size);
+        OBLabel label = new OBLabel(String.format(Locale.US,"%d",num),typeface,size);
         label.setColour(colour);
         label.setScale(1.0f/group.scale());
         OBGroup numGroup = new OBGroup(Arrays.asList((OBControl)label));

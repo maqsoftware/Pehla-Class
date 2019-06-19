@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kAnswerNumberRange;
@@ -36,7 +37,7 @@ public class OC_Diagnostics_TouchCorrectNumber_WordProblems extends OC_Diagnosti
         int number2 = Integer.parseInt((String) currentQuestion.additionalInformation.get("number2"));
         //
         String introAudio = ((List<String>) ((Map<String, Object>) audioScenes.get(eventUUID)).get("DEMO")).get(0);
-        Map sceneAudio = (Map<String, Object>) audioScenes.get(String.format("%s%d", eventUUID, currNo + 1));
+        Map sceneAudio = (Map<String, Object>) audioScenes.get(String.format(Locale.US,"%s%d", eventUUID, currNo + 1));
         //
         String promptPart1 = ((List<String>) sceneAudio.get("PROMPT")).get(number1 + audioOffsetNumber1);
         String promptPart2 = ((List<String>) sceneAudio.get("PROMPT2")).get(number2 + audioOffsetNumber2);
@@ -76,7 +77,7 @@ public class OC_Diagnostics_TouchCorrectNumber_WordProblems extends OC_Diagnosti
         List allValuesParameter1 = new ArrayList<>();
         for (int i = minParameter1; i <= maxParameter1; i++)
         {
-            allValuesParameter1.add(String.format("%d", i));
+            allValuesParameter1.add(String.format(Locale.US,"%d", i));
         }
         //
         List<String> rangeArrayParameter2 = Arrays.asList(((String) exerciseData.get(kParameter2NumberRange)).split("-"));
@@ -86,7 +87,7 @@ public class OC_Diagnostics_TouchCorrectNumber_WordProblems extends OC_Diagnosti
         List allValuesParameter2 = new ArrayList<>();
         for (int i = minParameter2; i <= maxParameter2; i++)
         {
-            allValuesParameter2.add(String.format("%d", i));
+            allValuesParameter2.add(String.format(Locale.US,"%d", i));
         }
         //
         List<String> distractorsRangeArray = Arrays.asList(((String) exerciseData.get(kAnswerNumberRange)).split("-"));
@@ -96,7 +97,7 @@ public class OC_Diagnostics_TouchCorrectNumber_WordProblems extends OC_Diagnosti
         List allDistractors = new ArrayList<>();
         for (int i = minDistractor; i <= maxDistractor; i++)
         {
-            allDistractors.add(String.format("%d", i));
+            allDistractors.add(String.format(Locale.US,"%d", i));
         }
         //
         int totalQuestions = Integer.parseInt((String) exerciseData.get(kTotalQuestions));
@@ -137,7 +138,7 @@ public class OC_Diagnostics_TouchCorrectNumber_WordProblems extends OC_Diagnosti
             }
             //
             List unitsUsed = new ArrayList<>();
-            String correctAnswer = String.format("%d", correctValue);
+            String correctAnswer = String.format(Locale.US,"%d", correctValue);
             //
             List possibleDistractors = new ArrayList();
             possibleDistractors.addAll(allDistractors);
@@ -151,8 +152,8 @@ public class OC_Diagnostics_TouchCorrectNumber_WordProblems extends OC_Diagnosti
             List uniqueUnits = new ArrayList(new HashSet(unitsUsed));
             OC_DiagnosticsQuestion question = new OC_DiagnosticsQuestion(eventUUID, Arrays.asList(correctAnswer), distractors, uniqueUnits);
             //
-            question.additionalInformation.put("number1", String.format("%d", number1));
-            question.additionalInformation.put("number2", String.format("%d", number2));
+            question.additionalInformation.put("number1", String.format(Locale.US,"%d", number1));
+            question.additionalInformation.put("number2", String.format(Locale.US,"%d", number2));
             result.add(question);
         }
         return result;

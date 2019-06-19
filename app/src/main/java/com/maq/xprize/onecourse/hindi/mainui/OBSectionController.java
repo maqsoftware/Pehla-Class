@@ -952,7 +952,7 @@ public class OBSectionController extends OBViewController
                 {
                     String pieces[] = components[i].split("=");
                     if (pieces.length == 1)
-                        d.put((new Integer(i)).toString(), pieces[0]);
+                        d.put((Integer.valueOf(i)).toString(), pieces[0]);
                     else if (pieces.length > 1)
                         d.put(pieces[0], pieces[1]);
                 }

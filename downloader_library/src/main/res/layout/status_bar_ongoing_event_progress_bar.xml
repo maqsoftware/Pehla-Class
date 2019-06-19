@@ -37,7 +37,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"            
             android:src="@android:drawable/stat_sys_download"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/status" />
 
         <TextView
             android:id="@+id/progress_text"

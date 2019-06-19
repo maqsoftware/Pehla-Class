@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.OBViewController.MainViewController;
@@ -662,7 +663,7 @@ public class OC_DiagnosticsManager
         List filteredUnits = new ArrayList();
         for (Map unitAttributes : unitsFromMasterlist)
         {
-            String target = ((String) unitAttributes.get(kTarget)).toLowerCase();
+            String target = ((String) unitAttributes.get(kTarget)).toLowerCase(Locale.US);
             if (classFilter.contains(target))
             {
                 filteredUnits.add(unitAttributes);
@@ -711,8 +712,8 @@ public class OC_DiagnosticsManager
         //
         for (Map unitAttributes : unitsFromMasterlist)
         {
-            String unitTarget = ((String) unitAttributes.get(kTarget)).toLowerCase();
-            if (!unitTarget.equalsIgnoreCase(target.toLowerCase()))
+            String unitTarget = ((String) unitAttributes.get(kTarget)).toLowerCase(Locale.US);
+            if (!unitTarget.equalsIgnoreCase(target.toLowerCase(Locale.US)))
             {
                 continue;
             }

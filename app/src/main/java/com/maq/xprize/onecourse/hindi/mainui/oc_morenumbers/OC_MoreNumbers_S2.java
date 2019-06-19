@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 06/04/2017.
@@ -250,13 +251,13 @@ public class OC_MoreNumbers_S2 extends OC_SectionController
             newMask.setProperty("correct",false);
             if(maskNum == targetNums.get(0))
             {
-                ((OBLabel)objectDict.get(String.format("num_%d",maskNum))).setColour(Color.RED);
-                objectDict.get(String.format("box_%d",maskNum)).setBackgroundColor(hilitecolour);
+                ((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",maskNum))).setColour(Color.RED);
+                objectDict.get(String.format(Locale.US,"box_%d",maskNum)).setBackgroundColor(hilitecolour);
                 newMask.setProperty("correct",true);
                 newMask.setProperty("value",maskNum);
 
             }
-            OBControl alingBox = objectDict.get(String.format("box_%d", maskNum));
+            OBControl alingBox = objectDict.get(String.format(Locale.US,"box_%d", maskNum));
             RectF frame = new RectF(alingBox.getWorldFrame());
             frame.inset(alingBox.borderWidth/2.0f, alingBox.borderWidth/2.0f);
             newMask.setFrame(frame);
@@ -271,7 +272,7 @@ public class OC_MoreNumbers_S2 extends OC_SectionController
 
     public String getPhase()
     {
-        return String.format("%s%d", currentEvent(), currentPhase);
+        return String.format(Locale.US,"%s%d", currentEvent(), currentPhase);
     }
 
     public void nextPhase() throws Exception
@@ -298,10 +299,10 @@ public class OC_MoreNumbers_S2 extends OC_SectionController
     public void hiliteBox(int num, int colour, boolean audio) throws Exception
     {
         lockScreen();
-        OBControl cont = objectDict.get(String.format("box_%d", num));
+        OBControl cont = objectDict.get(String.format(Locale.US,"box_%d", num));
         cont.setBackgroundColor ( hilitecolour);
         cont.disable();
-        ((OBLabel)objectDict.get(String.format("num_%d", num))).setColour(colour);
+        ((OBLabel)objectDict.get(String.format(Locale.US,"num_%d", num))).setColour(colour);
 
         unlockScreen();
         if(audio)
@@ -312,7 +313,7 @@ public class OC_MoreNumbers_S2 extends OC_SectionController
     {
         for(int num : nums)
         {
-            OBControl cont = objectDict.get(String.format("box_%d", num));
+            OBControl cont = objectDict.get(String.format(Locale.US,"box_%d", num));
             cont.setBackgroundColor(Color.WHITE);
             cont.enable();
             ((OBLabel)objectDict.get(String.format("num_%s", num))).setColour(textcolour);
@@ -334,10 +335,10 @@ public class OC_MoreNumbers_S2 extends OC_SectionController
             lockScreen();
             for(int j=0; j<10; j++)
             {
-                objectDict.get(String.format("num_%d",i+j*10)).show();
+                objectDict.get(String.format(Locale.US,"num_%d",i+j*10)).show();
 
             }
-            playSFX(String.format("note_%d",i));
+            playSFX(String.format(Locale.US,"note_%d",i));
 
             unlockScreen();
             waitForSecs(0.35f);
@@ -357,10 +358,10 @@ public class OC_MoreNumbers_S2 extends OC_SectionController
         List<String> demoAudio = getAudioForScene(getPhase(),"DEMO");
 
         moveScenePointer(OB_Maths.locationForRect(1f,1f,objectDict.get("box_45").getWorldFrame()),0.5f,demoAudio.get(0),0.3f);
-        moveScenePointer(OB_Maths.locationForRect(0.75f,1f,objectDict.get(String.format("box_%d",hiliteNums.get(0))).getWorldFrame()),0.5f,demoAudio.get(1),0f);
+        moveScenePointer(OB_Maths.locationForRect(0.75f,1f,objectDict.get(String.format(Locale.US,"box_%d",hiliteNums.get(0))).getWorldFrame()),0.5f,demoAudio.get(1),0f);
         hiliteBox(hiliteNums.get(0),textcolour2,true);
         waitForSecs(0.3f);
-        moveScenePointer(OB_Maths.locationForRect(0.75f,1f,objectDict.get(String.format("box_%d",targetNums.get(0))).getWorldFrame()),0.5f,demoAudio.get(2),0f);
+        moveScenePointer(OB_Maths.locationForRect(0.75f,1f,objectDict.get(String.format(Locale.US,"box_%d",targetNums.get(0))).getWorldFrame()),0.5f,demoAudio.get(2),0f);
         hiliteBox(targetNums.get(0),Color.RED,true);
     }
 
