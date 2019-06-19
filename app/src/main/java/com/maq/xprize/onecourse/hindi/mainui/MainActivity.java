@@ -68,7 +68,6 @@ import static com.maq.xprize.onecourse.hindi.mainui.DownloadExpansionFile.xAPKS;
 public class MainActivity extends Activity {
     public static final int REQUEST_EXTERNAL_STORAGE = 1,
             REQUEST_MICROPHONE = 2,
-            REQUEST_CAMERA = 3,
             REQUEST_ALL = 4,
             REQUEST_FIRST_SETUP_DATE_TIME = 5,
             REQUEST_FIRST_SETUP_PERMISSIONS = 6,
@@ -93,16 +92,12 @@ public class MainActivity extends Activity {
     private static String[] PERMISSIONS_MICROPHONE = {
             Manifest.permission.RECORD_AUDIO
     };
-    private static String[] PERMISSIONS_CAMERA = {
-            Manifest.permission.CAMERA
-    };
 
     private static String[] PERMISSION_ALL = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.CAMERA,
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE
     };
@@ -573,10 +568,11 @@ public class MainActivity extends Activity {
     public boolean isCameraPermissionGranted() {
         Boolean micPermission = selfPermissionGranted(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
         //
-        if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA, REQUEST_CAMERA);
+        /*if (!micPermission)
+            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA, REQUEST_CAMERA);*/
         //
-        return micPermission;
+//        return micPermission;
+            return false;
     }
 
 
