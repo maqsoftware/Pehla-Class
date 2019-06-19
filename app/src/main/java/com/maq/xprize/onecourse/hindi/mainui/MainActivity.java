@@ -29,6 +29,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+//import com.google.firebase.analytics.FirebaseAnalytics;
 import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
@@ -118,6 +119,8 @@ public class MainActivity extends Activity {
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
     private int b;
+    //private FirebaseAnalytics FirebaseAnalytics;
+
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
@@ -140,6 +143,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 

@@ -54,7 +54,7 @@ public class Firebase {
         databaseReference.child("device").child("mobile").child("time").setValue(t);
     }
 
-    public static void getValue(String module, final long startTime, int userid){
+    public static void getValue(String module,final long startTime, int userid){
         userIID = userid;
 
 //        DBSQL db = new DBSQL(true);
@@ -97,14 +97,6 @@ public class Firebase {
                             }
                         }
                     });
-                    databaseReference.child(DeviceID).child(username).child(module_name).child("elapseTIme").setValue(102).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                System.out.println("data is successfully added..");
-                            }
-                        }
-                    });
                 }
                 else {
                     uploadValue();
@@ -120,6 +112,53 @@ public class Firebase {
 //        uploadValue();
 //        /*module_child =*/
 
+
+
+    }
+
+    public static void retotaling(String module,final int St, int Et,int userid){   /////////////////////////// This is for the testing perpose the retotalling  or for reducing the code. Not tested yet .  for directly updating the start,end and elapse time.
+        elapseTime = Et - St;
+
+        databaseReference.child(DeviceID).child(username).child(module).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    databaseReference.child(DeviceID).child(username).child(module_name).child("startTime").setValue(St).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("data is successfully added..");
+                            }
+                        }
+                    });
+                    databaseReference.child(DeviceID).child(username).child(module_name).child("elapseTIme").setValue(elapseTime).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("data is successfully added..");
+                            }
+                        }
+                    });
+                    databaseReference.child(DeviceID).child(username).child(module_name).child("endTime").setValue(elapseTime).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("data is successfully added..");
+                            }
+                        }
+                    });
+
+                }
+                else {
+                    uploadValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
@@ -331,33 +370,6 @@ public class Firebase {
 
 
     }
-
-
-//    public String DevicID(){
-//        String id ;//= Settings.Secure.getString(MainActivity.getContentResolver(),Settings.Secure.ANDROID_ID);
-//        //TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//
-//        return id;
-//    }
-
-//    public String device_getUUID()
-//    {
-//        String uuid = device_getSerial();
-//        //
-//        if (uuid == null)
-//        {
-//            uuid = "unknown_uuid";
-//
-//            String mac = device_getMac();
-//            if (mac != null)
-//                uuid = mac.replace(":", "");
-//
-//        }
-//        //
-//        return uuid;
-//    }
-
-
 
 
 }

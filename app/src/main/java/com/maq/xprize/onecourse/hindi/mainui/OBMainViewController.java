@@ -682,6 +682,12 @@ public class OBMainViewController extends OBViewController
         if(viewControllers != null && viewControllers.size() > 0)
         {
             OBSectionController controller = viewControllers.get(viewControllers.size()-1);
+            long t = 28829384;
+            t = System.currentTimeMillis()/1000;
+
+            if(lastModuleName != null ){
+                Firebase.getValue(lastModuleName,t,userIID);
+            }
             if(controller != null)
                 controller.onResume();
         }
@@ -693,6 +699,12 @@ public class OBMainViewController extends OBViewController
         if(viewControllers != null && viewControllers.size() > 0)
         {
             OBSectionController controller = viewControllers.get(viewControllers.size()-1);
+            long t = 28829384;
+            t = System.currentTimeMillis()/1000;
+
+            if(lastModuleName != null ){
+                Firebase.endTime(lastModuleName,t,userIID);
+            }
             if(controller != null)
                 controller.onPause();
         }
