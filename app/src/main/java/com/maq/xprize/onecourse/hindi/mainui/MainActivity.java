@@ -143,10 +143,6 @@ public class MainActivity extends Activity {
     }
 
     public static void logEvent(String id, String name,long st, long et, long elpT){
-        //String ID = Integer.toString(id);
-//        String ST = Long.toString(st);
-//        String ET = Long.toString(et);
-//        String ElpT = Long.toString(elpT);
         Bundle bundle = new Bundle();
         bundle.putString("userId", id);
         bundle.putString("module_name", name);
