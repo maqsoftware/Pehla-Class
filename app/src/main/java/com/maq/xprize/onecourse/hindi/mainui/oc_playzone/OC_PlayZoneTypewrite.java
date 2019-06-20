@@ -127,7 +127,8 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         String[] themea = ((String)eventAttributes.get("themes")).split(",");
         themeNames = Arrays.asList(themea);
 
-        float textBottom = objectDict.get("keyboard_rect").frame.top;
+        //Set bottom of textbox to be equal to top of Keyboard
+        float textBottom = objectDict.get("keyboard_rect").frame().top;
         float textTop = objectDict.get("text_box").frame().top;
         float textRight = objectDict.get("text_box").frame().right;
         float textLeft = objectDict.get("text_box").frame().left ;
@@ -181,7 +182,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
             objectDict.put("cursor",newc);
             gControls.add(newc);
         }
-
+        // Set the bounds of tbb to be equal to the frame of textbox
         textBoxGroup = new OBGroup(gControls,textBox.frame());
         textBoxGroup.setZPosition(50);
         OBControl tbb = objectDict.get("text_box_bg");
@@ -377,10 +378,11 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         float height = keyNormal.height();
         float minLeft = keyboardRect.left() + buttonDistance;
         float maxRight = minLeft;
-        WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-        Point size = new Point();
-        wm.getDefaultDisplay().getRealSize(size);
-        float screenWidth = (float) size.x, screenHeight = (float) size.y;
+        WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
+        Point sizeScreen = new Point();
+        windowManager.getDefaultDisplay().getRealSize(sizeScreen);
+        float screenWidth = (float) sizeScreen.x, screenHeight = (float) sizeScreen.y;
+        // Check for bottom of keyboard not exceeding screen size, if it exceeds then set bottom of keyboard
         if(screenHeight - 20f < keyboardRect.frame.bottom )
         {
             keyboardRect.setBottom(screenHeight - 10f);

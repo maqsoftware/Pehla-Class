@@ -128,7 +128,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         themeNames = Arrays.asList(themea);
 		
 		//Set the bottom of text box to be equal to top of keyboard.
-        float text_bottom = objectDict.get("keyboard_rect").frame.top;
+        float text_bottom = objectDict.get("keyboard_rect").frame().top;
         float text_top = objectDict.get("text_box").frame().top;
         float text_right = objectDict.get("text_box").frame().right;
         float text_left = objectDict.get("text_box").frame().left ;
@@ -379,14 +379,14 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         float height = keyNormal.height();
         float minLeft = keyboardRect.left() + buttonDistance;
         float maxRight = minLeft;
-        WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
-        Point size = new Point();
-        wm.getDefaultDisplay().getRealSize(size);
-        float screen_width = (float) size.x, screen_height = (float) size.y;
+        WindowManager windowManager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
+        Point sizeScreen = new Point();
+        windowManager.getDefaultDisplay().getRealSize(sizeScreen);
+        float screenWidth = (float) sizeScreen.x, screeneight = (float) sizeScreen.y;
 		//Condition to check the bottom of frame of keyboard does'nt exceed the screen height. If it exceeds then set the bottom of frame of keyboard.
-        if(screen_height - 20f < keyboardRect.frame.bottom )  
+        if(screenHeight - 20f < keyboardRect.frame.bottom )  
         {
-            keyboardRect.setBottom(screen_height - 10f);
+            keyboardRect.setBottom(screenHeight - 10f);
         }
 
         Typeface typeface = Typeface.createFromAsset(MainActivity.mainActivity.getAssets(), "onebillionreader-Regular.otf");
