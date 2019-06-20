@@ -276,7 +276,6 @@ public class OBMainViewController extends OBViewController
                 else if (currentTouchID != null && currentTouchID == pointerID && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP))
                 {
                     currentTouchID = null;
-                    v.performClick();
                     touchUpAtPoint(event.getX(), event.getY(), (OBGLView) v);
                 }
                 return true;
