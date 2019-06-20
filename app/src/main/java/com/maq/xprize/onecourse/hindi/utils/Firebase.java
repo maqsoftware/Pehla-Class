@@ -116,7 +116,7 @@ public class Firebase {
 
     }
 
-    public static void retotaling(String module,final int St, int Et,int userid){   /////////////////////////// This is for the testing perpose the retotalling  or for reducing the code. Not tested yet .  for directly updating the start,end and elapse time.
+    public static void retotaling(String module,final int St, int Et,int userid){   /////////////////////////// This is for the testing perpose the retotaling  or for reducing the code. Not tested yet .  for directly updating the start,end and elapse time.
         elapseTime = Et - St;
 
         databaseReference.child(DeviceID).child(username).child(module).addListenerForSingleValueEvent(new ValueEventListener() {
