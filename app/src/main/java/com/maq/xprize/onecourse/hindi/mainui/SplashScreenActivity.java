@@ -184,7 +184,7 @@ public class SplashScreenActivity extends Activity {
                     public void run() {
                         SplashScreenActivity.this.finish();
                     }
-                }, 3500);
+                }, Toast.LENGTH_LONG);
             }
             return null;
         }

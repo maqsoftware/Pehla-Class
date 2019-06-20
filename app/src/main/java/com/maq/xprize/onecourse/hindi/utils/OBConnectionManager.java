@@ -91,35 +91,8 @@ public class OBConnectionManager
         }
     }
 
-
-    public boolean isScanningDisabled ()
-    {
-        /*WifiManager wifiManager = (WifiManager) MainActivity.mainActivity.getApplicationContext().getSystemService(MainActivity.WIFI_SERVICE);
-        if (wifiManager.isScanAlwaysAvailable()) return false;
-        //
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter.isDiscovering()) return false;*/
-        //
-        return true;
-    }
-
-
     public boolean setBluetooth (boolean enable)
     {
-        /*BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter != null)
-        {
-            boolean isEnabled = bluetoothAdapter.isEnabled();
-            if (enable && !isEnabled)
-            {
-                return bluetoothAdapter.enable();
-            }
-            else if (!enable && isEnabled)
-            {
-                return bluetoothAdapter.disable();
-            }
-            return true;
-        }*/
         return false;
     }
 

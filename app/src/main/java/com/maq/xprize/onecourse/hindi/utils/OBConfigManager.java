@@ -923,7 +923,6 @@ public class OBConfigManager
     public String getAssetsExternalPath ()
     {
         return mainActivityContext.getExternalFilesDir(null).getPath() + File.separator + "assets";
-//        return getStringValue(ASSETS_EXTERNAL_PATH);
     }
 
     public List<File> getExternalAssetsSearchPaths()

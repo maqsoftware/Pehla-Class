@@ -80,7 +80,6 @@ public class MainActivity extends Activity {
     public static OBConfigManager configManager;
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
-//    public static OBLocationManager locationManager;
     public static MainActivity mainActivity;
     public static OBMainViewController mainViewController;
     public static Typeface standardTypeFace, writingTypeFace;
@@ -88,9 +87,6 @@ public class MainActivity extends Activity {
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-    private static String[] PERMISSIONS_MICROPHONE = {
-            Manifest.permission.RECORD_AUDIO
     };
 
     private static String[] PERMISSION_ALL = {
@@ -189,7 +185,6 @@ public class MainActivity extends Activity {
         configManager = new OBConfigManager(this.getApplicationContext());
         //
         analyticsManager = new OBAnalyticsManager(this);
-//        locationManager = new OBLocationManager(this);
         //
         // this flag disables screenshots
         // Commented code to enable capturing of screenshots
@@ -554,27 +549,6 @@ public class MainActivity extends Activity {
         //
         return result;
     }
-
-
-    public boolean isMicrophonePermissionGranted() {
-        Boolean micPermission = selfPermissionGranted(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
-        //
-        if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_MICROPHONE, REQUEST_MICROPHONE);
-        //
-        return micPermission;
-    }
-
-    public boolean isCameraPermissionGranted() {
-        Boolean micPermission = selfPermissionGranted(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-        //
-        /*if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA, REQUEST_CAMERA);*/
-        //
-//        return micPermission;
-            return false;
-    }
-
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == REQUEST_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

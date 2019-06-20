@@ -181,7 +181,6 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     {
         Map<String, Object> parameters = new HashMap();
         //
-//        Location loc = OBLocationManager.sharedManager.getLastKnownLocation();
         Location loc = null;
         if (loc != null)
         {
