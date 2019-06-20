@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -146,10 +147,10 @@ public class OC_CountMore_S6 extends OC_SectionController
     {
         for(int i=1; i<11; i++)
         {
-            OBPath circle = (OBPath)objectDict.get(String.format("obj_%d", i));
+            OBPath circle = (OBPath)objectDict.get(String.format(Locale.US,"obj_%d", i));
             circle.sizeToBoundingBoxIncludingStroke();
             OBControl copy = circle.copy();
-            OBLabel label = new OBLabel(String.format("%d", start+i-1), OBUtils.standardTypeFace(),60.0f* circle.height()/84.0f);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d", start+i-1), OBUtils.standardTypeFace(),60.0f* circle.height()/84.0f);
             label.setColour(eventColours.get("num"));
             OBGroup numGroup =  new OBGroup(Arrays.asList((OBControl)label));
             numGroup.sizeToTightBoundingBox();

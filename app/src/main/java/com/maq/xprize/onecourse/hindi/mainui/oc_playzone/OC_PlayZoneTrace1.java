@@ -2,6 +2,8 @@ package com.maq.xprize.onecourse.hindi.mainui.oc_playzone;
 
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 
+import java.util.Locale;
+
 public class OC_PlayZoneTrace1 extends OC_PlayZoneTrace
 {
     public void demoa() throws Exception
@@ -83,7 +85,7 @@ public class OC_PlayZoneTrace1 extends OC_PlayZoneTrace
             String l = "_" + (character);
             for(int ii = 0;ii < 8;ii++)
             {
-                OBGroup g = letterGroup(l,String.format("letterrect%d",ii));
+                OBGroup g = letterGroup(l,String.format(Locale.US,"letterrect%d",ii));
                 groupList.add(g);
                 attachControl(g);
                 hideControls("xbox.*");

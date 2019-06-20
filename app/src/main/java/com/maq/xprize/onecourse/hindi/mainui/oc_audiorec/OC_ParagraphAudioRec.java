@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_prepr3.OC_PrepR3.LoadPassagesXML;
@@ -49,7 +50,7 @@ public class OC_ParagraphAudioRec extends OC_AudioRecSection
         List<String> eventsList = new ArrayList<>();
         for(int i=1; i<=currPassage.sentences.size(); i++)
         {
-            String eventName = String.format("%d",i);
+            String eventName = String.format(Locale.US,"%d",i);
             if(audioScenes.get(eventName) == null)
                 eventName = "default";
             eventsList.add(eventName);
@@ -106,7 +107,7 @@ public class OC_ParagraphAudioRec extends OC_AudioRecSection
 
     public String audioForSentence(int sno)
     {
-        return String.format("comp_%s_p_p_%d",currPassage.passageID,sno + 1);
+        return String.format(Locale.US,"comp_%s_p_p_%d",currPassage.passageID,sno + 1);
     }
 
     public void setUpPassage()

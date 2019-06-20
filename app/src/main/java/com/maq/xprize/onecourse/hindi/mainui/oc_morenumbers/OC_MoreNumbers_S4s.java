@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 07/04/2017.
@@ -75,13 +76,13 @@ public class OC_MoreNumbers_S4s extends OC_SectionController
 
         for(int i=0; i<10; i++)
         {
-            String boxname = String.format("box_%d",i);
+            String boxname = String.format(Locale.US,"box_%d",i);
             OBControl box = objectDict.get(boxname);
             float lineWidth = ((OBPath)box).lineWidth();
             ((OBPath) box).sizeToBoundingBoxInset(-lineWidth -box.getShadowOffsetY());
             box.show();
             float fontSize2 = 70.0f*box.height()/78.0f;
-            OBLabel label = new OBLabel(String.format("%d",i),OBUtils.standardTypeFace(),fontSize2);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",i),OBUtils.standardTypeFace(),fontSize2);
             label.setColour(Color.BLACK);
             box.setZPosition(1);
             OBGroup labelGroup = new OBGroup(Arrays.asList((OBControl)label));
@@ -206,7 +207,7 @@ public class OC_MoreNumbers_S4s extends OC_SectionController
     public void checkNumBox(OBControl numBox) throws Exception
     {
         int val = (int)numBox.propertyValue("num_value");
-        typeNumber(String.format("%d",val), numBox);
+        typeNumber(String.format(Locale.US,"%d",val), numBox);
         lastTarget = numBox;
         long time = setStatus(STATUS_AWAITING_CLICK);
         waitSFX();
@@ -361,7 +362,7 @@ public class OC_MoreNumbers_S4s extends OC_SectionController
         movePointerToPoint(OB_Maths.locationForRect(0.7f,1.1f,clickNums.get(num).frame()),-30,0.5f,true);
         waitForSecs(0.3f);
         movePointerToPoint(OB_Maths.locationForRect(0.5f,0.5f,clickNums.get(num).frame()),-30,0.15f,true);
-        typeNumber(String.format("%d",num),clickNums.get(num));
+        typeNumber(String.format(Locale.US,"%d",num),clickNums.get(num));
         waitSFX();
         setLabelInGroup((OBGroup)clickNums.get(num), Color.BLACK);
         movePointerToPoint(OB_Maths.locationForRect(0.7f,1.1f,clickNums.get(num).frame()),-30,0.15f,true);

@@ -13,6 +13,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 02/05/2017.
@@ -140,9 +141,9 @@ public class OC_Counting4To6_S4e extends OC_Generic_DragNumbersToSlots
         for (int i = 1; i <= sequence.length; i++)
         {
             String index = sequence[i - 1];
-            OBControl box = objectDict.get(String.format("box_%d", i));
-            OBControl frame = objectDict.get(String.format("frame_%s", index));
-            OBControl object = objectDict.get(String.format("object_%s", index));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d", i));
+            OBControl frame = objectDict.get(String.format(Locale.US,"frame_%s", index));
+            OBControl object = objectDict.get(String.format(Locale.US,"object_%s", index));
             //
             offsets.put((String) object.attributes().get("id"), getAbsoluteOffsetWithParent(frame));
             object.setPosition(objectPositionFromContainer(object, box));
@@ -199,14 +200,14 @@ public class OC_Counting4To6_S4e extends OC_Generic_DragNumbersToSlots
 
     public void showFinal (int index) throws Exception
     {
-        OBGroup number = (OBGroup) objectDict.get(String.format("number_%d", index));
-        OBGroup object = (OBGroup) objectDict.get(String.format("object_%d", index));
-        OBGroup finalGroup = (OBGroup) objectDict.get(String.format("final_%d", index));
+        OBGroup number = (OBGroup) objectDict.get(String.format(Locale.US,"number_%d", index));
+        OBGroup object = (OBGroup) objectDict.get(String.format(Locale.US,"object_%d", index));
+        OBGroup finalGroup = (OBGroup) objectDict.get(String.format(Locale.US,"final_%d", index));
         //
-        playSfxAudio(String.format("plink_%d", index), false);
+        playSfxAudio(String.format(Locale.US,"plink_%d", index), false);
         //
         lockScreen();
-        object.objectDict.get(String.format("frame_%d", index)).hide();
+        object.objectDict.get(String.format(Locale.US,"frame_%d", index)).hide();
         number.members.get(1).hide();
         finalGroup.show();
         unlockScreen();

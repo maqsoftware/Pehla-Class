@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 11/06/2018.
@@ -226,7 +227,7 @@ public class OC_ReadingAudioRec extends OC_Reading
     {
         List<String> audios = new ArrayList<>();
         for(int i=0; i<paragraphs.size(); i++)
-            audios.add(String.format("p%d_%d",pageNo,i+1));
+            audios.add(String.format(Locale.US,"p%d_%d",pageNo,i+1));
         return audios;
     }
 
@@ -426,7 +427,7 @@ public class OC_ReadingAudioRec extends OC_Reading
             }
         }
 
-        performSel("demoPage",String.format("%d",pageNo));
+        performSel("demoPage",String.format(Locale.US,"%d",pageNo));
     }
 
     public void demoExample() throws Exception
@@ -533,14 +534,14 @@ public class OC_ReadingAudioRec extends OC_Reading
 
     public List<String> getPageAudio(String audio)
     {
-        String currentPage = String.format("%d_%d",pageNo, 1);
+        String currentPage = String.format(Locale.US,"%d_%d",pageNo, 1);
         if(audioScenes.containsKey(currentPage))
         {
             return getAudioForScene(currentPage,audio);
         }
         else
         {
-            currentPage = String.format("%d_default",pageNo);
+            currentPage = String.format(Locale.US,"%d_default",pageNo);
             if(audioScenes.get(currentPage) != null)
             {
                 return getAudioForScene(currentPage,audio);

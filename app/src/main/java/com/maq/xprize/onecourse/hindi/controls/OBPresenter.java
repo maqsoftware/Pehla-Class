@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -158,7 +159,7 @@ public class OBPresenter extends OBCharacter
                     while (audioMan.isPlaying() || audioMan.isPreparing())
                     {
                         controller.lockScreen();
-                        showOnly(String.format("mouth_%d", mframe), mouth);
+                        showOnly(String.format(Locale.US,"mouth_%d", mframe), mouth);
                         nframe = OB_Maths.randomInt(1, 6);
                         if (mframe == nframe)
                         {
@@ -214,7 +215,7 @@ public class OBPresenter extends OBCharacter
                     while (audioMan.isPlaying() || audioMan.isPreparing())
                     {
                         controller.lockScreen();
-                        showOnly(String.format("mouth_%d", mframe), mouth);
+                        showOnly(String.format(Locale.US,"mouth_%d", mframe), mouth);
                         controller.unlockScreen();
                         nframe = OB_Maths.randomInt(1, 6);
                         if (mframe == nframe)

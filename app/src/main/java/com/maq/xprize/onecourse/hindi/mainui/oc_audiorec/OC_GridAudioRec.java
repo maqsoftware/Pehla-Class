@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -191,8 +192,8 @@ public class OC_GridAudioRec extends OC_AudioRecSection
                     if(j%numList.size() == 0)
                         randNumList = OBUtils.randomlySortedArray(numList);
                     int number =randNumList.get(j%randNumList.size()).intValue();
-                    String audioId = String.format("n_%d",number);
-                    OBPhoneme pho = new OBPhoneme(String.format("%d",number),audioId);
+                    String audioId = String.format(Locale.US,"n_%d",number);
+                    OBPhoneme pho = new OBPhoneme(String.format(Locale.US,"%d",number),audioId);
                     phonemes.add(pho);
                 }
             }
@@ -230,7 +231,7 @@ public class OC_GridAudioRec extends OC_AudioRecSection
                 label.setZPosition(10);
                 label.hide();
                 eventLabels.add(label);
-                String eventName = String.format("%d",index);
+                String eventName = String.format(Locale.US,"%d",index);
                 if(audioScenes.get(eventName) == null)
                     eventName = "default";
                 eventsList.add(eventName);

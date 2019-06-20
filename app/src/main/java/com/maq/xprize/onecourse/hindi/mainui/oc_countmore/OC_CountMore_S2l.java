@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -129,7 +130,7 @@ public class OC_CountMore_S2l extends OC_SectionController
     public void checkPot(OBGroup pot, int num) throws Exception
     {
         playAudio(null);
-        if (num == 0 || pot == objectDict.get(String.format("pot_%d", num)))
+        if (num == 0 || pot == objectDict.get(String.format(Locale.US,"pot_%d", num)))
         {
             if (num != 0)
                 gotItRight();

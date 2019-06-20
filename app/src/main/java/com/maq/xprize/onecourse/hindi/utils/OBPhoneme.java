@@ -101,7 +101,7 @@ public class OBPhoneme
         List<Double> timingsClone = new ArrayList<Double>();
         for (Double timing : (List<Double>) (Object) timings)
         {
-            timingsClone.add(new Double(timing));
+            timingsClone.add(Double.valueOf(timing));
         }
         return new OBPhoneme(text, soundid, (List<Object>) (Object) timingsClone);
     }

@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.UPath;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -244,7 +245,7 @@ public class OC_Alpha extends OC_Generic_WordsEvent
         {
             String text = letters.get(i);
             //
-            if (text.toUpperCase().equals(text))
+            if (text.toUpperCase(Locale.US).equals(text))
             {
                 text = OC_Generic.toTitleCase(text);
                 fontSize = applyGraphicScale(textSize) * 0.75f;

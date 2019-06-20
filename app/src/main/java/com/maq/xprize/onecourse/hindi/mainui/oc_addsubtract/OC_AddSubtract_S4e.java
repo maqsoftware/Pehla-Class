@@ -26,6 +26,7 @@ import com.maq.xprize.onecourse.hindi.utils.USubPath;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -73,11 +74,11 @@ public class OC_AddSubtract_S4e extends OC_SectionController
             targets.clear();
             for (int i = 1; i <= 6; i++)
             {
-                OBControl eqBox = objectDict.get(String.format("eq_box_%d", i));
+                OBControl eqBox = objectDict.get(String.format(Locale.US,"eq_box_%d", i));
                 String[] eqParts = ((String) eqBox.attributes().get("equation")).split(",");
                 String equation = String.format("%s + %s = %s", eqParts[0], eqParts[1], eqParts[2]);
 
-                String equationName = String.format("equation_%d", i);
+                String equationName = String.format(Locale.US,"equation_%d", i);
                 OC_Numberlines_Additions.loadEquation(equation, equationName, eqBox, Color.BLACK, false, 0, 1, this);
                 OBGroup eq = (OBGroup) objectDict.get(equationName);
                 eq.setAnchorPoint(OB_Maths.relativePointInRectForLocation(eq.objectDict.get("part3").getWorldPosition(), eq.frame));
@@ -265,10 +266,10 @@ public class OC_AddSubtract_S4e extends OC_SectionController
         List<OBAnim> anims = new ArrayList<>();
         for(int i=1; i<=3; i++)
         {
-            OBControl box = objectDict.get(String.format("box_%d",i));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d",i));
             for(int j=1; j<=2; j++)
             {
-                OBGroup equation = (OBGroup)objectDict.get(String.format("equation_%d",(i-1)*2 + j));
+                OBGroup equation = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",(i-1)*2 + j));
                 anims.add(OBAnim.moveAnim(OB_Maths.locationForRect(0.5f,0.25f + (j-1)*0.5f,box.frame()),equation));
             }
         }
@@ -283,13 +284,13 @@ public class OC_AddSubtract_S4e extends OC_SectionController
         loadPointer(POINTER_LEFT);
         for(int boxNum=1; boxNum<=3; boxNum++)
         {
-            OBControl box = objectDict.get(String.format("box_%d",boxNum));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d",boxNum));
             box.show();
-            String audioName = String.format("FINAL%d",boxNum+1);
+            String audioName = String.format(Locale.US,"FINAL%d",boxNum+1);
             List<OBGroup> eqArray = new ArrayList<>();
             for(int i=1; i<=2; i++)
             {
-                OBGroup equation = (OBGroup)objectDict.get(String.format("equation_%d", (boxNum-1)*2 + i));
+                OBGroup equation = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d", (boxNum-1)*2 + i));
                 eqArray.add(equation);
                 movePointerToPoint(OB_Maths.locationForRect(0.35f,1.15f,equation.frame()),-15,i==1?0.7f:0.4f,true);
                 OC_Numberlines_Additions.colourEquation(equation,1,full?5:3,Color.RED,this);
@@ -344,7 +345,7 @@ public class OC_AddSubtract_S4e extends OC_SectionController
         moveScenePointer(OB_Maths.locationForRect(0.15f,0.6f,this.bounds()),-30,0.5f,"DEMO",0,0.3f);
         for(int i=1; i<=2; i++)
         {
-            String eqName = String.format("equation_%d",i);
+            String eqName = String.format(Locale.US,"equation_%d",i);
             movePointerToPoint(OB_Maths.locationForRect(0.3f,1.1f,objectDict.get(eqName).frame()),-15,0.5f,true);
             movePointerToPoint(OB_Maths.locationForRect(0.3f,0.5f,objectDict.get(eqName).frame()),-15,0.2f,true);
             playSfxAudio("touch",false);

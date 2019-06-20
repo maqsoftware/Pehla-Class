@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kNumberOperator;
@@ -61,7 +62,7 @@ public class OC_Diagnostics_TouchCorrectNumber_Counters extends OC_Diagnostics_T
         List allParameters = new ArrayList<>();
         for (int i = min; i <= max; i++)
         {
-            allParameters.add(String.format("%d", i));
+            allParameters.add(String.format(Locale.US,"%d", i));
         }
         int totalQuestions = Integer.parseInt((String) exerciseData.get(kTotalQuestions));
         int possibleAnswerCount = Integer.parseInt((String) exerciseData.get(kTotalAvailableOptions));
@@ -78,7 +79,7 @@ public class OC_Diagnostics_TouchCorrectNumber_Counters extends OC_Diagnostics_T
             int correctValue = Integer.parseInt((String) selectedParameters.get(0));
             //
             List unitsUsed = new ArrayList<>();
-            String correctAnswer = String.format("%d", correctValue);
+            String correctAnswer = String.format(Locale.US,"%d", correctValue);
             List possibleDistractors = new ArrayList();
             possibleDistractors.addAll(allParameters);
             possibleDistractors.remove(correctAnswer);

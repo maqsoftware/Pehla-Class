@@ -58,6 +58,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
@@ -298,7 +299,7 @@ public class OBSetupMenu extends OC_SectionController implements TimePickerDialo
             return;
         }
         //
-        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm   dd MMMM yyyy");
+        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm   dd MMMM yyyy", Locale.US);
         Date date = userSetDate;
         Boolean fromServerTime = false;
         //
@@ -660,14 +661,14 @@ public class OBSetupMenu extends OC_SectionController implements TimePickerDialo
                 if (currentDate == null) currentDate = serverDate;
                 if (currentDate == null) currentDate = new Date(System.currentTimeMillis());
                 //
-                SimpleDateFormat currentDateFormat = new SimpleDateFormat("HH:mm   dd MMMM yyyy");
+                SimpleDateFormat currentDateFormat = new SimpleDateFormat("HH:mm   dd MMMM yyyy", Locale.US);
                 OBPath boxForLabel = (OBPath) currentDateField.propertyValue("box");
                 currentDateField.setString(currentDateFormat.format(currentDate));
                 currentDateField.sizeToBoundingBox();
                 currentDateField.setPosition(OC_Generic.copyPoint(boxForLabel.position()));
                 currentDateField.setLeft(boxForLabel.left());
                 //
-                SimpleDateFormat trialDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+                SimpleDateFormat trialDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
                 boxForLabel = (OBPath) startOfTrialDateField.propertyValue("box");
                 startOfTrialDateField.setString(trialDateFormat.format(trialDate));
                 startOfTrialDateField.sizeToBoundingBox();

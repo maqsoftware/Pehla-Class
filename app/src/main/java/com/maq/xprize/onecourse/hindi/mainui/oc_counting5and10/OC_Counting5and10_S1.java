@@ -12,6 +12,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 16/03/2017.
@@ -171,7 +172,7 @@ public class OC_Counting5and10_S1 extends OC_Generic_Event
     {
         if (counterCheck == counter)
         {
-            OBControl line = objectDict.get(String.format("line_%d", counter + 1));
+            OBControl line = objectDict.get(String.format(Locale.US,"line_%d", counter + 1));
             if (line != null)
             {
                 line.enable();
@@ -191,14 +192,14 @@ public class OC_Counting5and10_S1 extends OC_Generic_Event
     public void checkLine () throws Exception
     {
         saveStatusClearReplayAudioSetChecking();
-        OBGroup group = (OBGroup) objectDict.get(String.format("group_%d", counter + 1));
-        OBControl oldLine = objectDict.get(String.format("line_%d", counter + 1));
+        OBGroup group = (OBGroup) objectDict.get(String.format(Locale.US,"group_%d", counter + 1));
+        OBControl oldLine = objectDict.get(String.format(Locale.US,"line_%d", counter + 1));
         oldLine.disable();
-        OBControl line = objectDict.get(String.format("line_%d", counter + 2));
+        OBControl line = objectDict.get(String.format(Locale.US,"line_%d", counter + 2));
         //
         lockScreen();
         if (group != null) group.show();
-        number.setString(String.format("%d", startingNumber + 10 * (counter + 1)));
+        number.setString(String.format(Locale.US,"%d", startingNumber + 10 * (counter + 1)));
         number.show();
         unlockScreen();
         //

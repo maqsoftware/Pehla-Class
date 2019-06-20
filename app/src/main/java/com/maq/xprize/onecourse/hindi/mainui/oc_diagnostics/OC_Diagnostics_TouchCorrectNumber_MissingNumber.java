@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kOptionsNumberRange;
@@ -47,7 +48,7 @@ public class OC_Diagnostics_TouchCorrectNumber_MissingNumber extends OC_Diagnost
         List<String> sequence = (List<String>) currentQuestion.additionalInformation.get("sequence");
         for (int i = 0; i < totalParameters; i++)
         {
-            OBControl numberBox = objectDict.get(String.format("label%d", i + 1));
+            OBControl numberBox = objectDict.get(String.format(Locale.US,"label%d", i + 1));
             String number = currentQuestion.distractors.get(i);
             OBLabel numberLabel = OC_Generic.action_createLabelForControl(numberBox, number, 1.0f, false, OBUtils.standardTypeFace(), Color.BLACK, this);
             numberLabel.setProperty("number", number);
@@ -62,7 +63,7 @@ public class OC_Diagnostics_TouchCorrectNumber_MissingNumber extends OC_Diagnost
         OBPath missingBox = (OBPath) objectDict.get("box");
         for (int i = 0; i < totalSequenceElements; i++)
         {
-            OBControl numberBox = objectDict.get(String.format("sequence%d", i + 1));
+            OBControl numberBox = objectDict.get(String.format(Locale.US,"sequence%d", i + 1));
             String number = sequence.get(i);
             //
             if (correctAnswer.equals(number))
@@ -95,7 +96,7 @@ public class OC_Diagnostics_TouchCorrectNumber_MissingNumber extends OC_Diagnost
         List allParameters = new ArrayList<>();
         for (int i = min; i <= max; i++)
         {
-            allParameters.add(String.format("%d", i));
+            allParameters.add(String.format(Locale.US,"%d", i));
         }
         int totalQuestions = Integer.parseInt((String) exerciseData.get(kTotalQuestions));
         int possibleAnswerCount = Integer.parseInt((String) exerciseData.get(kTotalAvailableOptions));

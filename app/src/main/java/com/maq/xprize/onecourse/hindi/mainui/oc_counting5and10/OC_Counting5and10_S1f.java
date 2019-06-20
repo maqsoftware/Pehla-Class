@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic_SelectCorrectObj
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 16/03/2017.
@@ -43,7 +44,7 @@ public class OC_Counting5and10_S1f extends OC_Generic_SelectCorrectObject
         for (int i = 1;  i <= 10; i++)
         {
             action_playNextDemoSentence(false); // TEN. TWENTY. THIRTY. FORTY. FIFTY. SIXTY. SEVENTY. EIGHTY. NINETY. ONE HUNDRED.
-            OBControl control = objectDict.get(String.format("number_%d", i));
+            OBControl control = objectDict.get(String.format(Locale.US,"number_%d", i));
             control.show();
             //
             OBLabel label = (OBLabel) control.propertyValue("label");

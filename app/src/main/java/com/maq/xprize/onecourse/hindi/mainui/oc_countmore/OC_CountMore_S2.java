@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 21/02/2017.
@@ -178,7 +179,7 @@ public class OC_CountMore_S2 extends OC_SectionController
             i<11;
             i++)
         {
-            house = (OBGroup)objectDict.get(String.format("house_%d",i));
+            house = (OBGroup)objectDict.get(String.format(Locale.US,"house_%d",i));
             house.highlight();
             playAudioScene("DEMO",i-1,true);
             house.lowlight();

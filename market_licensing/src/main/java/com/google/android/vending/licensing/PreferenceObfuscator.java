@@ -16,6 +16,7 @@
 
 package com.google.android.vending.licensing;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -45,6 +46,7 @@ public class PreferenceObfuscator {
     public void putString(String key, String value) {
         if (mEditor == null) {
             mEditor = mPreferences.edit();
+            mEditor.commit();
         }
         String obfuscatedValue = mObfuscator.obfuscate(value, key);
         mEditor.putString(key, obfuscatedValue);

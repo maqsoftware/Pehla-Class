@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 24/08/16.
@@ -241,7 +242,7 @@ public class OC_Count100_S4 extends OC_SectionController
         }
         OBControl marble = machine.objectDict.get("marble");
         marble.setFillColor(marbleColour);
-        OBControl cont = machine.objectDict.get(String.format("container%d", currentContainer));
+        OBControl cont = machine.objectDict.get(String.format(Locale.US,"container%d", currentContainer));
         float bottomtarget = OB_Maths.worldLocationForControl(0f,1f,cont).y;
         for(int i=0;i<10;i++)
         {
@@ -254,7 +255,7 @@ public class OC_Count100_S4 extends OC_SectionController
             dropMarble.show();
             OBAnimationGroup.runAnims(Arrays.asList(OBAnim.propertyAnim("bottom",bottomtarget,dropMarble)),0.4 - (0.02 *i),true,OBAnim.ANIM_EASE_IN,this);
             int currentNum = ((currentContainer -1)*10)+i+1;
-            counter.setString(String.format("%d",currentNum));
+            counter.setString(String.format(Locale.US,"%d",currentNum));
             playSfxAudio("marble",true);
             waitForSecs(0.1f);
             OC_Count100_Additions.playNumberAudio(currentNum,true,this);
@@ -280,12 +281,12 @@ public class OC_Count100_S4 extends OC_SectionController
         if(currentContainer < 10)
         {
             playSfxAudio("pipe",false);
-            OBAnimationGroup.runAnims(Arrays.asList(OBAnim.propertyAnim("left",machine.objectDict.get(String.format("pipe%d",10-currentContainer)).left(),machine.objectDict.get("pipeend")))
+            OBAnimationGroup.runAnims(Arrays.asList(OBAnim.propertyAnim("left",machine.objectDict.get(String.format(Locale.US,"pipe%d",10-currentContainer)).left(),machine.objectDict.get("pipeend")))
                     ,0.35,true,OBAnim.ANIM_LINEAR,this);
             waitForSecs(0.2f);
             playSfxAudio("container",false);
-            machine.objectDict.get(String.format("pipe%d", 10-currentContainer)).hide();
-            machine.objectDict.get(String.format("container%d", currentContainer +1)).show();
+            machine.objectDict.get(String.format(Locale.US,"pipe%d", 10-currentContainer)).hide();
+            machine.objectDict.get(String.format(Locale.US,"container%d", currentContainer +1)).show();
             waitForSecs(0.2f);
 
         }

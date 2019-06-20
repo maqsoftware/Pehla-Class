@@ -20,6 +20,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic.darkerColor;
@@ -82,7 +83,7 @@ public class OC_CountingTo1000 extends OC_SectionController
         numbers = new ArrayList();
         for (int i = 0; i < 10; i++)
         {
-            String number = String.format("%d", (i + 1) * 100);
+            String number = String.format(Locale.US,"%d", (i + 1) * 100);
             numbers.add(number);
 
         }
@@ -500,7 +501,7 @@ public class OC_CountingTo1000 extends OC_SectionController
         {
             titleBox.show();
             titleBoxLabel.show();
-            titleBoxLabel.setString(String.format("%d", totalBlocks));
+            titleBoxLabel.setString(String.format(Locale.US,"%d", totalBlocks));
         }
         else
         {
@@ -511,7 +512,7 @@ public class OC_CountingTo1000 extends OC_SectionController
         unlockScreen();
         if (playAudio)
         {
-            playAudio(String.format("n_%d", totalBlocks));
+            playAudio(String.format(Locale.US,"n_%d", totalBlocks));
             waitAudio();
         }
     }

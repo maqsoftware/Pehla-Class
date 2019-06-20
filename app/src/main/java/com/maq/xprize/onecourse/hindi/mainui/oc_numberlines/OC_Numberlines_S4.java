@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 11/05/2017.
@@ -283,7 +284,7 @@ public class OC_Numberlines_S4 extends OC_SectionController
             }
             else
             {
-                String audioName = String.format("PROMPT%d.REPEAT", Math.abs(currentJump-startNum)+1);
+                String audioName = String.format(Locale.US,"PROMPT%d.REPEAT", Math.abs(currentJump-startNum)+1);
                 if(getAudioForScene(currentEvent(),audioName) != null)
                     setReplayAudio(OBUtils.insertAudioInterval(getAudioForScene(currentEvent(),audioName), 300));
                 setStatus(STATUS_AWAITING_CLICK);
@@ -298,7 +299,7 @@ public class OC_Numberlines_S4 extends OC_SectionController
             {
                 if(currentJump != startNum)
                 {
-                    String audioName = String.format("INCORRECT%d", Math.abs(currentJump-startNum)+1);
+                    String audioName = String.format(Locale.US,"INCORRECT%d", Math.abs(currentJump-startNum)+1);
                     if(getAudioForScene(currentEvent(),audioName) != null)
                     {
                         playAudioQueuedScene(audioName,0.3f,false);
@@ -364,7 +365,7 @@ public class OC_Numberlines_S4 extends OC_SectionController
             }
             else
             {
-                String audioName = String.format("PROMPT%d.REPEAT", maxNum - (int)eventTargets.size()+1);
+                String audioName = String.format(Locale.US,"PROMPT%d.REPEAT", maxNum - (int)eventTargets.size()+1);
                 if(getAudioForScene(currentEvent(),audioName) != null)
                     setReplayAudio(OBUtils.insertAudioInterval(getAudioForScene(currentEvent(),audioName), 300));
                 setStatus(STATUS_WAITING_FOR_DRAG);
@@ -379,7 +380,7 @@ public class OC_Numberlines_S4 extends OC_SectionController
             cont.setZPosition(cont.zPosition()-10);
             waitForAudio();
             setStatus(STATUS_WAITING_FOR_DRAG);
-            String audioName = String.format("INCORRECT%d", maxNum - (int)eventTargets.size() + 1);
+            String audioName = String.format(Locale.US,"INCORRECT%d", maxNum - (int)eventTargets.size() + 1);
             if(getAudioForScene(currentEvent(),audioName) != null)
                 playAudioQueuedScene(audioName,0.3f,false);
             else
@@ -422,8 +423,8 @@ public class OC_Numberlines_S4 extends OC_SectionController
             int index =1;
             for (int i=start; i<start+4; i++)
             {
-                playSfxAudio(String.format("scale%d",index++),false);
-                objectDict.get(String.format("num_%d",i)).show();
+                playSfxAudio(String.format(Locale.US,"scale%d",index++),false);
+                objectDict.get(String.format(Locale.US,"num_%d",i)).show();
                 waitSFX();
             }
         }
@@ -432,8 +433,8 @@ public class OC_Numberlines_S4 extends OC_SectionController
             int index =7;
             for (int i=start; i>start-4; i--)
             {
-                playSfxAudio(String.format("scale%d",index--),false);
-                objectDict.get(String.format("num_%d",i)).show();
+                playSfxAudio(String.format(Locale.US,"scale%d",index--),false);
+                objectDict.get(String.format(Locale.US,"num_%d",i)).show();
                 waitSFX();
             }
         }
@@ -494,8 +495,8 @@ public class OC_Numberlines_S4 extends OC_SectionController
 
     public void pointerTouchDiv(int num, boolean hilite, boolean clockwise, int audioIndex) throws Exception
     {
-        PointF clickLoc = OB_Maths.locationForRect(0.5f,0.8f,objectDict.get(String.format("divline_%d",num)).frame());
-        PointF prevLoc = OB_Maths.locationForRect(0.5f,1f,objectDict.get(String.format("divline_%d",num)).frame());
+        PointF clickLoc = OB_Maths.locationForRect(0.5f,0.8f,objectDict.get(String.format(Locale.US,"divline_%d",num)).frame());
+        PointF prevLoc = OB_Maths.locationForRect(0.5f,1f,objectDict.get(String.format(Locale.US,"divline_%d",num)).frame());
         prevLoc.x = prevLoc.x+(objectDict.get("numberline").width()/18.0f);
         movePointerToPoint(prevLoc,-40+(num*5),0.5f,true);
         if(audioIndex>=0)
@@ -503,7 +504,7 @@ public class OC_Numberlines_S4 extends OC_SectionController
         waitForSecs(0.3f);
         movePointerToPoint(clickLoc,-40+(num*5),0.2f,true);
         if(hilite)
-            ((OBLabel)objectDict.get(String.format("num_%d",num))).setColour(Color.RED);
+            ((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",num))).setColour(Color.RED);
         playSfxAudio("div_line",true);
         OC_Numberlines_Additions.animateCurve(num,clockwise,0.65f,true,false,this);
         waitForSecs(0.1f);
@@ -511,7 +512,7 @@ public class OC_Numberlines_S4 extends OC_SectionController
 
     public void pointerPointEquation(OBGroup equation,int from, int to, List<String> audio, float duration) throws Exception
     {
-        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format("part%d",to)).getWorldFrame());
+        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format(Locale.US,"part%d",to)).getWorldFrame());
         point.y = equation.bottom() + equation.height()*0.2f;
         movePointerToPoint(point,-20,duration,true);
         OC_Numberlines_Additions.colourEquation(equation,from,to,Color.BLACK,this);

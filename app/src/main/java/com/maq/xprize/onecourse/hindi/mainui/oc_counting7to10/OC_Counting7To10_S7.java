@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 21/07/16.
@@ -198,7 +199,7 @@ public class OC_Counting7To10_S7 extends OC_Generic_Tracing
         {
             public void ex ()
             {
-                loadEvent(String.format("%d", number));
+                loadEvent(String.format(Locale.US,"%d", number));
                 path1 = (OBGroup) objectDict.get("trace_p1");
                 path2 = (OBGroup) objectDict.get("trace_p2");
                 //

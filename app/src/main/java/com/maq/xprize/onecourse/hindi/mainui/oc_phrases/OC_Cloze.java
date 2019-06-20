@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,7 +128,7 @@ List<Integer>indicesFromArray(List<String>arr)
             if(rw.settings.get("lclabel")  == null)
                 lab = new OBLabel(rw.text,font);
             else
-                lab = new OBLabel(rw.text.toLowerCase(),font);
+                lab = new OBLabel(rw.text.toLowerCase(Locale.US),font);
             lab.setColour(labelcol);
             botlabs.add(lab);
         }

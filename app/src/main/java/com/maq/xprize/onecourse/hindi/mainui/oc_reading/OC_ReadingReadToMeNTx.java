@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBUtils.coalesce;
@@ -113,7 +114,7 @@ public class OC_ReadingReadToMeNTx extends OC_ReadingReadToMe
 
     public void readParagraph(int pidx,long token,boolean canInterrupt) throws Exception
     {
-        List<Object> l = (List<Object>)(Object)Collections.singletonList(String.format("p%d_%d",pageNo,pidx+1,true));
+        List<Object> l = (List<Object>)(Object)Collections.singletonList(String.format(Locale.US,"p%d_%d",pageNo,pidx+1,true));
         playAudioQueued(l,true);
     }
 
@@ -297,7 +298,7 @@ public class OC_ReadingReadToMeNTx extends OC_ReadingReadToMe
 
     public String pageName()
     {
-        return String.format("p%d",pageNo);
+        return String.format(Locale.US,"p%d",pageNo);
     }
 
     public boolean considerComprehensionQuestions() throws Exception
@@ -642,7 +643,7 @@ public class OC_ReadingReadToMeNTx extends OC_ReadingReadToMe
         ec.green = 216.0f/255.0f;
         ec.blue = 0.0f;
         ec.contents = im;
-        ec.name = String.format("star%d",i);
+        ec.name = String.format(Locale.US,"star%d",i);
         ec.velocity = 0;
         ec.velocityRange = 2;
         ec.emissionRange = (float)(Math.PI * 2.0);

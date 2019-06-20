@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBAnimationGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -120,7 +121,7 @@ public class OC_Numbers1To10_S4 extends OC_Generic_SelectCorrectObject
             for (OBControl control : filterControls("obj_.*"))
             {
                 String objectNumber = ((String) control.attributes().get("id")).split("_")[1];
-                OBControl referenceObject = objectDict.get(String.format("position_%s_%d", objectNumber, phase));
+                OBControl referenceObject = objectDict.get(String.format(Locale.US,"position_%s_%d", objectNumber, phase));
                 if (referenceObject != null)
                 {
                     animations.add(OBAnim.moveAnim(OC_Generic.copyPoint(referenceObject.position()), control));
@@ -131,8 +132,8 @@ public class OC_Numbers1To10_S4 extends OC_Generic_SelectCorrectObject
                 OBAnimationGroup.runAnims(animations, 0.6f, true, OBAnim.ANIM_EASE_IN_EASE_OUT, this);
             }
             //
-            List audio = getAudioForScene(currentEvent(), String.format("PROMPT%d", phase));
-            List replayAudio = getAudioForScene(currentEvent(), String.format("REPEAT%d", phase));
+            List audio = getAudioForScene(currentEvent(), String.format(Locale.US,"PROMPT%d", phase));
+            List replayAudio = getAudioForScene(currentEvent(), String.format(Locale.US,"REPEAT%d", phase));
             setReplayAudio(replayAudio);
             playAudioQueued(audio, false);
             //

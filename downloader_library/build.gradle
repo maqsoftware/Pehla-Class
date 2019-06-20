@@ -15,8 +15,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+lintOptions {
+          abortOnError false 
+    }
+
 }
 
 dependencies {
     implementation project(path: ':market_licensing')
+
 }

@@ -8,6 +8,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBWord;
 import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -44,7 +45,7 @@ public class OC_Twrd3 extends OC_Twrd_Text
                 OBWord word = (OBWord)wordComponents.get(wordid);
 
                 Map<String,Object> data = new ArrayMap();
-                String eventName = String.format("%d",index);
+                String eventName = String.format(Locale.US,"%d",index);
                 data.put("text",word.text);
                 data.put("audio",word.audio());
                 if(imageMode && word.imageName != null)

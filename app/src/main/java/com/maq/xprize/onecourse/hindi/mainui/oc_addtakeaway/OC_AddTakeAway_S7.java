@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 27/06/16.
@@ -123,7 +124,7 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
         }
         //
         OBGroup group = new OBGroup(Arrays.asList(cell));
-        String cell_id = String.format("cell_%d", cellNumber);
+        String cell_id = String.format(Locale.US,"cell_%d", cellNumber);
         group.setProperty("id", cell_id);
         group.setProperty("number", cellNumber);
         //
@@ -140,8 +141,8 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
         for (String link_id : links)
         {
             String link[] = eventAttributes.get(String.format("link_%s", link_id)).split(",");
-            OBControl first_cell = objectDict.get(String.format("cell_%d", Integer.parseInt(link[0])));
-            OBControl last_cell = objectDict.get(String.format("cell_%d", Integer.parseInt(link[1])));
+            OBControl first_cell = objectDict.get(String.format(Locale.US,"cell_%d", Integer.parseInt(link[0])));
+            OBControl last_cell = objectDict.get(String.format(Locale.US,"cell_%d", Integer.parseInt(link[1])));
             OBPath path = (OBPath) objectDict.get(String.format("%s_path", link_id));
             //
             path.sizeToBox(new RectF(bounds()));
@@ -173,8 +174,8 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
         layers = dice_2.filterMembers("roll_[0-9]+");
         for (OBControl layer : layers) layer.hide();
         //
-        dice_1.objectDict.get(String.format("roll_%d", first)).show();
-        dice_2.objectDict.get(String.format("roll_%d", last)).show();
+        dice_1.objectDict.get(String.format(Locale.US,"roll_%d", first)).show();
+        dice_2.objectDict.get(String.format(Locale.US,"roll_%d", last)).show();
         //
         dice_1.show();
         dice_2.show();
@@ -243,7 +244,7 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
         int value1 = (int) (nextPlayValue / (float) 2);
         int value2 = nextPlayValue - value1;
         //
-        String nextCellName = String.format("cell_%d", nextPlayValue + currentPosition);
+        String nextCellName = String.format(Locale.US,"cell_%d", nextPlayValue + currentPosition);
         correctCell = objectDict.get(nextCellName);
         number_plays++;
         action_shakeTumbler(value1, value2);
@@ -303,7 +304,7 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
 
     public Boolean isCellSnake (int number)
     {
-        OBControl cell = objectDict.get(String.format("cell_%d", number));
+        OBControl cell = objectDict.get(String.format(Locale.US,"cell_%d", number));
         OBPath path = (OBPath) cell.propertyValue("path");
         if (path != null)
         {
@@ -559,7 +560,7 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
                 {
                     gotItWrongWithSfx();
                     //
-                    currentCell = objectDict.get(String.format("cell_%d", currentPosition));
+                    currentCell = objectDict.get(String.format(Locale.US,"cell_%d", currentPosition));
                     OBAnim moveAnim = OBAnim.moveAnim(currentCell.position(), counter);
                     if (counterMovementAnimation != null) counterMovementAnimation.flags = OBAnimationGroup.ANIM_CANCEL;
                     counterMovementAnimation = OBAnimationGroup.runAnims(Arrays.asList(moveAnim), 0.2, true, OBAnim.ANIM_EASE_IN, this);
@@ -571,7 +572,7 @@ public class OC_AddTakeAway_S7 extends OC_Generic_Event
             }
             else
             {
-                currentCell = objectDict.get(String.format("cell_%d", currentPosition));
+                currentCell = objectDict.get(String.format(Locale.US,"cell_%d", currentPosition));
                 OBAnim moveAnim = OBAnim.moveAnim(currentCell.position(), counter);
                 if (counterMovementAnimation != null) counterMovementAnimation.flags = OBAnimationGroup.ANIM_CANCEL;
                 counterMovementAnimation = OBAnimationGroup.runAnims(Arrays.asList(moveAnim), 0.2, true, OBAnim.ANIM_EASE_IN, this);

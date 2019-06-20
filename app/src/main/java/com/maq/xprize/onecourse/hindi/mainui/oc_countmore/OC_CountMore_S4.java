@@ -20,6 +20,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 15/03/2017.
@@ -184,7 +185,7 @@ public class OC_CountMore_S4 extends OC_SectionController
             box.setPosition(OB_Maths.locationForRect(1/10.0f ,0.5f,numbox.frame()));
             box.setLeft(numbox.position().x - (5-i)*(box.width() - box.borderWidth));
 
-            OBLabel label =  new OBLabel(String.format("%d",(i+1)*2),OBUtils.standardTypeFace(),65.0f*numbox.height()/85.0f);
+            OBLabel label =  new OBLabel(String.format(Locale.US,"%d",(i+1)*2),OBUtils.standardTypeFace(),65.0f*numbox.height()/85.0f);
             label.setColour(Color.BLACK);
             label.setPosition(OBMisc.copyPoint(box.position()));
             box.setZPosition(1.5f);
