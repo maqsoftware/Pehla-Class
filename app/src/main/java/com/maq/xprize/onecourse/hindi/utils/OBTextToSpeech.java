@@ -16,25 +16,27 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-/* TEXT TO SPEECH IMPLEMENTATION
-/* This class defines a text-to-speech object which is used to play audio from
- * the Hindi transcripts, thus removing the dependency on audio files. */
+/**
+ * TEXT TO SPEECH IMPLEMENTATION
+ * This class defines a text-to-speech object which is used to play audio
+ * from the Hindi transcripts directly, thus removing the dependency on audio
+ * files.
+ */
 
 public class OBTextToSpeech {
 
-    private TextToSpeech textToSpeech;
-    private AudioManager audioManager;
-    private static int state;
-    public static OBTextToSpeech obTextToSpeech;
     private static final int OBAP_IDLE = 0,
             OBAP_PREPARING = 1,
             OBAP_PLAYING = 2,
             OBAP_FINISHED = 3;
+    private static int state;
+    final private AudioManager audioManager;
+    private TextToSpeech textToSpeech;
 
     OBTextToSpeech(final Context context) {
         setState(OBAP_IDLE);
         // initializes AudioManager object which is used to detect whether any sound is being played from the device
-        audioManager = (AudioManager) MainActivity.mainActivity.getSystemService(context.AUDIO_SERVICE);
+        audioManager = (AudioManager) MainActivity.mainActivity.getSystemService(Context.AUDIO_SERVICE);
         // initializes the TextToSpeech object which generates the audio
         textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
@@ -65,20 +67,18 @@ public class OBTextToSpeech {
                             Log.e(utteranceId, "Error in playing audio");
                         }
                     });
-                }
-                else
+                } else
                     Toast.makeText(context, "TTS initialization failed", Toast.LENGTH_SHORT).show();
             }
         });
-        obTextToSpeech = this;
+    }
+
+    private int getState() {
+        return state;
     }
 
     private void setState(int st) {
         state = st;
-    }
-
-    public int getState() {
-        return state;
     }
 
     public boolean playAudio(AssetFileDescriptor fd) {
@@ -92,17 +92,16 @@ public class OBTextToSpeech {
                 setState(OBAP_PLAYING);
                 int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null, "TTS");
                 // this loop ensures that the audio has completed playing to prevent sound overlapping
-                while (textToSpeech.isSpeaking());
+                while (textToSpeech.isSpeaking()) ;
                 return (speechStatus != TextToSpeech.ERROR);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return false;
         }
     }
 
-    public boolean isPreparing() {
+    boolean isPreparing() {
         return getState() == OBAP_PREPARING;
     }
 
@@ -110,11 +109,7 @@ public class OBTextToSpeech {
         return audioManager.isMusicActive();
     }
 
-    public boolean isDone() {
-        return getState() == OBAP_FINISHED;
-    }
-
-    public void stopAudio() {
+    void stopAudio() {
         if (isPlaying())
             textToSpeech.stop();
     }

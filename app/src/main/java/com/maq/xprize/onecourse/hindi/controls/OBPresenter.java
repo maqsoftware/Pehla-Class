@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alan on 07/06/16.
@@ -156,7 +157,7 @@ public class OBPresenter extends OBCharacter
                     while (audioMan.isPlaying() || audioMan.isPreparing())
                     {
                         controller.lockScreen();
-                        showOnly(String.format("mouth_%d", mframe), mouth);
+                        showOnly(String.format(Locale.US, "mouth_%d", mframe), mouth);
                         nframe = OB_Maths.randomInt(1, 6);
                         if (mframe == nframe)
                         {
@@ -212,7 +213,7 @@ public class OBPresenter extends OBCharacter
                     while (audioMan.isPlaying() || audioMan.isPreparing())
                     {
                         controller.lockScreen();
-                        showOnly(String.format("mouth_%d", mframe), mouth);
+                        showOnly(String.format(Locale.US, "mouth_%d", mframe), mouth);
                         controller.unlockScreen();
                         nframe = OB_Maths.randomInt(1, 6);
                         if (mframe == nframe)
@@ -297,22 +298,6 @@ public class OBPresenter extends OBCharacter
         control.objectDict.get("faceright").hide();
         control.objectDict.get("body").show();
         control.objectDict.get("head").show();
-        control.unlockScreen();
-    }
-
-    public void onlyHeadRight()
-    {
-        control.lockScreen();
-        control.objectDict.get("faceright").show();
-        control.objectDict.get("head").hide();
-        control.objectDict.get("body").hide();
-        OBControl c = control.objectDict.get("faceright");
-        if (c.scaleX < 0)
-        {
-            c.reflectInAncestor(control);
-            control.objectDict.get("hairlock").setZPosition(1);
-        }
-        control.invalidate();
         control.unlockScreen();
     }
 
