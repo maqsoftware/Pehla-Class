@@ -30,6 +30,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics.Param;
+import com.google.firebase.analytics.FirebaseAnalytics.*;
 import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
@@ -119,7 +121,7 @@ public class MainActivity extends Activity {
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
     private int b;
-    private FirebaseAnalytics FirebaseAnalytics;
+    private static FirebaseAnalytics FirebaseAnalytics;
 
 
     public static OBGroup armPointer() {
@@ -138,6 +140,20 @@ public class MainActivity extends Activity {
         //arm.borderColour = 0xff000000;
         //arm.borderWidth = 1;
         return arm;
+    }
+
+    public static void logEvent(String id, String name,long st, long et, long elpT){
+        //String ID = Integer.toString(id);
+//        String ST = Long.toString(st);
+//        String ET = Long.toString(et);
+//        String ElpT = Long.toString(elpT);
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", id);
+        bundle.putString("module_name", name);
+        bundle.putLong("startTime", st);
+        bundle.putLong("endTime", et);
+        bundle.putLong("elapseTime", elpT);
+        FirebaseAnalytics.logEvent("module_complete", bundle);
     }
 
 

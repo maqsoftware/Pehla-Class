@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import com.google.firebase.database.ValueEventListener;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
@@ -44,6 +45,12 @@ public class Firebase {
     private static String DeviceID;
 
     private static long f;  /// for the testing perpose.
+    private static FirebaseAnalytics FirebaseAnalytics;
+
+
+
+
+
 
 
     public static void load(String m, int t){   //that's the part for testing the app connection with the FirebaseDatabase
@@ -56,6 +63,7 @@ public class Firebase {
 
     public static void getValue(String module,final long startTime, int userid){
         userIID = userid;
+
 
 //        DBSQL db = new DBSQL(true);
 //        //u = ff.load();//OCM_FatController.lastUserActiveFromDB(db);
@@ -83,7 +91,9 @@ public class Firebase {
        // user.setEndTime(endTime);user.setElapseTime(endTime-startTime);
        // user.setElapseTime(elapseTime);
 
+
         DeviceID = OBSystemsManager.sharedManager.device_getUUID();
+
 
         databaseReference.child(DeviceID).child(username).child(module).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,6 +104,7 @@ public class Firebase {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 System.out.println("data is successfully added..");
+
                             }
                         }
                     });
@@ -242,6 +253,7 @@ public class Firebase {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
                                         System.out.println("data is successfully addded");
+                                        MainActivity.mainActivity.logEvent(username, lastModule,lastStartTime, lastendTime, elapseTime);
                                     }
                                     else{
 
@@ -263,6 +275,7 @@ public class Firebase {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
                                         System.out.println("data is successfully addded");
+                                        MainActivity.mainActivity.logEvent(username, lastModule,lastStartTime, lastendTime, elapseTime);
                                     }
                                     else{
 
@@ -334,6 +347,11 @@ public class Firebase {
 
 
     }
+
+
+//    public void logEvent(){
+//        FirebaseAnalytics = FirebaseAnalytics.getInstance();
+//    }
 
 
     public static void getData(){
