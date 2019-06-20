@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_MutInt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 07/04/2017.
@@ -60,7 +61,7 @@ public class OC_MoreNumbers_S5k extends OC_SectionController
         int count = filterControls("obj_.*").size();
         for(int i=1; i<=count; i++)
         {
-            OBGroup flag = (OBGroup)objectDict.get(String.format("obj_%d", i));
+            OBGroup flag = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d", i));
             flag.substituteFillForAllMembers("colour_.*", OBUtils.colorFromRGBString((String)flag.attributes().get("colour_background")));
             OC_MoreNumbers_Additions.insertIntoGroup(flag,Integer.valueOf((String)flag.attributes().get("num")), 90*flag.height()/300.0f, Color.BLACK,flag.objectDict.get("colour_1").getWorldPosition(), this );
             flag.setTop(objectDict.get("workrect").bottom());

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -196,14 +197,14 @@ public class OC_JMenu extends OC_Menu
     }
     void createToggleLabels()
     {
-        OBLabel label = new OBLabel(languageNames.get(0).toUpperCase(),plainFont(),toggleTextSize);
+        OBLabel label = new OBLabel(languageNames.get(0).toUpperCase(Locale.US),plainFont(),toggleTextSize);
         label.setColour(Color.argb((int)(0.8f * 255),255,255,255));
         OBControl placeHolder = objectDict.get("toggleleft");
         label.setPosition(placeHolder.position());
         label.setZPosition(placeHolder.zPosition()+10);
         attachControl(label);
         objectDict.put("toggletextl",label);
-        label = new OBLabel(languageNames.get(1).toUpperCase(),plainFont(),toggleTextSize);
+        label = new OBLabel(languageNames.get(1).toUpperCase(Locale.US),plainFont(),toggleTextSize);
         label.setColour(Color.argb((int)(0.8f * 255),255,255,255));
         placeHolder = objectDict.get("toggleright");
         label.setPosition(placeHolder.position());
@@ -402,12 +403,12 @@ public class OC_JMenu extends OC_Menu
             }
             OBLabel label = new OBLabel(s,tf,subsubheadtextSize);
             label.setColour(Color.WHITE);
-            OBControl placeHolder = objectDict.get(tabstring + String.format("_subsubhead%d",i));
+            OBControl placeHolder = objectDict.get(tabstring + String.format(Locale.US,"_subsubhead%d",i));
             label.setLeft(placeHolder.left());
             label.setTop(placeHolder.top());
             label.setZPosition(objectDict.get(tabstring+"_background").zPosition()+10);
             attachControl(label);
-            objectDict.put(tabstring+String.format("_ssh%d",i),label);
+            objectDict.put(tabstring+String.format(Locale.US,"_ssh%d",i),label);
             i++;
         }
     }
@@ -431,13 +432,13 @@ public class OC_JMenu extends OC_Menu
                 textsize = applyGraphicScale(Float.parseFloat(attr));
             OBLabel label = new OBLabel(s,tf,textsize);
             label.setColour(Color.WHITE);
-            OBControl placeHolder = objectDict.get(tabstring + String.format("_misctext%d",i));
+            OBControl placeHolder = objectDict.get(tabstring + String.format(Locale.US,"_misctext%d",i));
             label.setLeft(placeHolder.left());
             label.setTop(placeHolder.top());
             label.setZPosition(objectDict.get(tabstring+"_background").zPosition()+10);
             attachControl(label);
-            objectDict.put(tabstring+String.format("__misctext%d",i),label);
-            OBControl flag = objectDict.get(tabstring + String.format("_flag%d",i));
+            objectDict.put(tabstring+String.format(Locale.US,"__misctext%d",i),label);
+            OBControl flag = objectDict.get(tabstring + String.format(Locale.US,"_flag%d",i));
             float y = flag.position().y;
             label.setPosition(label.position().x,y);
             i++;
@@ -482,7 +483,7 @@ public class OC_JMenu extends OC_Menu
                     im = loadImageWithName(srcb,pt,boundsf(),true);
                 }
                 im.setZPosition(zpos);
-                objectDict.put(tabstring+String.format("_iconi%d",idx+1),im);
+                objectDict.put(tabstring+String.format(Locale.US,"_iconi%d",idx+1),im);
                 String boxname = iconBoxStrings.get(idx);
                 OBControl iconbox = objectDict.get(boxname);
                 float ratio = iconbox.height() / im.height();
@@ -517,7 +518,7 @@ public class OC_JMenu extends OC_Menu
                         top = label.bottom() + applyGraphicScale(9);
                         //label.setBorderColor(Color.BLACK);
                         //label.setBorderWidth(2f);
-                        objectDict.put(tabstring+String.format("_head%d",idx+1),label);
+                        objectDict.put(tabstring+String.format(Locale.US,"_head%d",idx+1),label);
                         attachControl(label);
 
                     }
@@ -536,7 +537,7 @@ public class OC_JMenu extends OC_Menu
                         label2.setColour(Color.WHITE);
                         label2.setJustification(centred?OBTextLayer.JUST_CENTRE:OBTextLayer.JUST_LEFT);
 
-                        objectDict.put(tabstring+String.format("_bod%d",idx+1),label2);
+                        objectDict.put(tabstring+String.format(Locale.US,"_bod%d",idx+1),label2);
                         attachControl(label2);
                     }
                 }
@@ -559,13 +560,13 @@ public class OC_JMenu extends OC_Menu
         int i = 1;
         for (OBControl c : nums)
         {
-            OBLabel label = new OBLabel(String.format("%d",i),tf,subheadtextSize);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",i),tf,subheadtextSize);
             label.sizeToBoundingBox();
             label.setPosition(c.position());
             label.setZPosition(c.zPosition());
             label.setColour(Color.WHITE);
             //label.setJustification(OBTextLayer.JUST_CENTER);
-            objectDict.put("reading_num_"+String.format("_%d",i),label);
+            objectDict.put("reading_num_"+String.format(Locale.US,"_%d",i),label);
             attachControl(label);
             i++;
         }
@@ -590,13 +591,13 @@ public class OC_JMenu extends OC_Menu
         int i = 1;
         for (OBControl c : nums)
         {
-            OBLabel label = new OBLabel(String.format("Reading %d",i),tf,subsubheadtextSize);
+            OBLabel label = new OBLabel(String.format(Locale.US,"Reading %d",i),tf,subsubheadtextSize);
             label.sizeToBoundingBox();
             label.setPosition(c.position());
             label.setZPosition(c.zPosition());
             label.setColour(Color.WHITE);
             //label.setJustification(OBTextLayer.JUST_CENTER);
-            objectDict.put(tabstring+"_num_"+String.format("_%d",i),label);
+            objectDict.put(tabstring+"_num_"+String.format(Locale.US,"_%d",i),label);
             attachControl(label);
             i++;
         }
@@ -770,7 +771,7 @@ public class OC_JMenu extends OC_Menu
 
                 im.setHighlightColour(Color.argb(80,0,0,0));
 
-                OBLabel label = new OBLabel(String.format("%d",idx+1),boldFont(),videoPreviewTextHeadingSize);
+                OBLabel label = new OBLabel(String.format(Locale.US,"%d",idx+1),boldFont(),videoPreviewTextHeadingSize);
                 label.setColour(Color.WHITE);
                 label.setLeft(im.left() + toplabelleft);
                 label.setTop(im.top() + toplabeltop);

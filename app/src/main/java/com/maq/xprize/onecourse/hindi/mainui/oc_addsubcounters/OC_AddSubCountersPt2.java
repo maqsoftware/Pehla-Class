@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBAudioManager.AM_MAIN_CHANNEL;
@@ -125,13 +126,13 @@ public class OC_AddSubCountersPt2 extends OC_AddSubCounters
     public OBLabel layOutEquation(ocasc_equation equ,float left,float top)
     {
         StringBuilder str = new StringBuilder();
-        str.append(String.format("%d ",equ.lh));
+        str.append(String.format(Locale.US,"%d ",equ.lh));
         str.append(equ.isPlus?"+":"–");
-        str.append(String.format(" %d",equ.rh));
+        str.append(String.format(Locale.US," %d",equ.rh));
         str.append(" = ");
         int val = equ.lh;
         val +=(equ.isPlus?1:-1) * equ.rh;
-        str.append(String.format("%d",val));
+        str.append(String.format(Locale.US,"%d",val));
         OBLabel equLabel = new OBLabel(str.toString(),font);
         equLabel.setLeft(left);
         equLabel.setTop(top);
@@ -315,8 +316,8 @@ public class OC_AddSubCountersPt2 extends OC_AddSubCounters
         try
         {
             waitForSecs(0.3f);
-            Map<String, List> eventd = (Map<String, List>) audioScenes.get(String.format("finale%d",standalone?1:2));
-            playAudioQueued(eventd.get(String.format("DEMO%s",isPlus?"":"2")),true);
+            Map<String, List> eventd = (Map<String, List>) audioScenes.get(String.format(Locale.US,"finale%d",standalone?1:2));
+            playAudioQueued(eventd.get(String.format(Locale.US,"DEMO%s",isPlus?"":"2")),true);
             MainActivity.mainActivity.fatController.completeEvent(this);
         }
         catch(Exception exception)

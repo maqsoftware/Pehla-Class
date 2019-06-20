@@ -6,6 +6,8 @@ import android.view.WindowManager;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 import com.maq.xprize.onecourse.hindi.mainui.OBSectionController;
 
+import java.util.Locale;
+
 /**
  * Created by pedroloureiro on 30/08/16.
  */
@@ -123,7 +125,7 @@ public class OBBrightnessManager
     {
         WindowManager.LayoutParams layoutpars = MainActivity.mainActivity.getWindow().getAttributes();
         float brightness = Math.abs(layoutpars.screenBrightness);
-        String result = String.format("%.1f%%", brightness * 100);
+        String result = String.format(Locale.US, "%.1f%%", brightness * 100);
         return result;
     }
 

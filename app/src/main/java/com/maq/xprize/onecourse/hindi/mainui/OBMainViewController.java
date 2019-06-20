@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.*;
@@ -246,6 +247,7 @@ public class OBMainViewController extends OBViewController
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
 
     public void prepare ()
@@ -253,6 +255,7 @@ public class OBMainViewController extends OBViewController
         addButtons();
         glView().setOnTouchListener(new View.OnTouchListener()
         {
+
             public boolean onTouch (View v, MotionEvent event)
             {
                 int pointerIndex = event.getActionIndex();
@@ -278,11 +281,14 @@ public class OBMainViewController extends OBViewController
                 return true;
             }
         });
+
         MainActivity.mainActivity.fatController.startUp();
     }
 
     public OBGLView glView ()
     {
+
+
         return MainActivity.mainActivity.glSurfaceView;
     }
 
@@ -334,8 +340,7 @@ public class OBMainViewController extends OBViewController
                 config = config.replace("-", "_");
                 config += ".";
             }
-            Class cnm = Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);
-            return cnm;
+            return Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);
         }
         catch (ClassNotFoundException e)
         {

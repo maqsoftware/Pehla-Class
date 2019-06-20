@@ -5,6 +5,7 @@ import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic;
 import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic_Tracing;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 13/07/16.
@@ -25,7 +26,7 @@ public class OC_CountingTo3_S6 extends OC_Generic_Tracing
         OBGroup orangeBowl = (OBGroup) objectDict.get("orange_bowl");
         for (int i = 1 ; i <= 3; i++)
         {
-            OBGroup orange = (OBGroup) orangeBowl.objectDict.get(String.format("orange_%d", i));
+            OBGroup orange = (OBGroup) orangeBowl.objectDict.get(String.format(Locale.US,"orange_%d", i));
             orange.setHidden(i > Integer.parseInt(eventAttributes.get("oranges")));
         }
     }

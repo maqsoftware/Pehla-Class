@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.controls.OBLabel.OBLABEL_ALIGN_LEFT;
@@ -233,7 +234,7 @@ public class OC_Comprehension extends OC_SectionController
             long token = takeSequenceLockInterrupt(true);
             waitForSecs(0.3f);
             checkSequenceToken(token);
-            String fn = String.format("%s_%s_q%d_q",audioPrefix,currPassage.passageID,questionNo + 1);
+            String fn = String.format(Locale.US,"%s_%s_q%d_q",audioPrefix,currPassage.passageID,questionNo + 1);
             waitForSecs(0.3f);
             questionLabel.setColour(Color.RED);
             playAudioQueued(Arrays.asList((Object)fn),true);
@@ -269,7 +270,7 @@ public class OC_Comprehension extends OC_SectionController
 
      public OBConditionLock playAnswerNo(int answerno) throws Exception
     {
-        String fn = String.format("%s_%s_q%d_a_%d",audioPrefix,currPassage.passageID,questionNo + 1,answerno+1);
+        String fn = String.format(Locale.US,"%s_%s_q%d_a_%d",audioPrefix,currPassage.passageID,questionNo + 1,answerno+1);
         return playAudioQueued(Arrays.asList((Object)fn),false);
     }
 
@@ -316,7 +317,7 @@ public class OC_Comprehension extends OC_SectionController
             waitForSecs(0.3f);
             if(playQuestionAudio)
             {
-                String fn = String.format("%s_%s_q%d_q",audioPrefix,currPassage.passageID,questionNo + 1);
+                String fn = String.format(Locale.US,"%s_%s_q%d_q",audioPrefix,currPassage.passageID,questionNo + 1);
                 playSfxAudio("newquestion",false);
                 questionLabel.show();
                 waitForSecs(0.3f);

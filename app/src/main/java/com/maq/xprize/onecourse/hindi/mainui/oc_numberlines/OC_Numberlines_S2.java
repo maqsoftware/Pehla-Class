@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 12/04/2017.
@@ -52,8 +53,8 @@ public class OC_Numberlines_S2 extends OC_SectionController
         float fontSize = 50*objectDict.get("numbox0").height()/62.0f;
         for(int i=0; i<=10; i++)
         {
-            OBLabel num = new OBLabel(String.format("%d",i), OBUtils.standardTypeFace(),fontSize);
-            OBControl cont = objectDict.get(String.format("numbox%d", i));
+            OBLabel num = new OBLabel(String.format(Locale.US,"%d",i), OBUtils.standardTypeFace(),fontSize);
+            OBControl cont = objectDict.get(String.format(Locale.US,"numbox%d", i));
             num.setPosition(cont.position());
             cont.show();
             num.setColour(Color.BLACK);
@@ -62,13 +63,13 @@ public class OC_Numberlines_S2 extends OC_SectionController
 
             OBGroup group = new OBGroup(Arrays.asList(num,cont));
             attachControl(group);
-            objectDict.put(String.format("numbox%d", i),group);
+            objectDict.put(String.format(Locale.US,"numbox%d", i),group);
             group.show();
             group.setZPosition(1.2f);
             group.setProperty("startpos", OBMisc.copyPoint(group.position()));
             group.setPosition(OB_Maths.locationForRect(0.5f,0.75f,objectDict.get("box_front").frame()));
             group.setRotation((float)Math.toRadians(i*10));
-            group.setProperty("target",String.format("peg%d",i+1));
+            group.setProperty("target",String.format(Locale.US,"peg%d",i+1));
             group.setProperty("value",i);
             dragTargets.add(group);
         }

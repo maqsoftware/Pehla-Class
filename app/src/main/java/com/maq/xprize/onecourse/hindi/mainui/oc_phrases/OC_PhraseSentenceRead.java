@@ -10,6 +10,7 @@ import com.maq.xprize.onecourse.hindi.controls.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBReadingWord.WORD_SPEAKABLE;
@@ -91,8 +92,8 @@ public class OC_PhraseSentenceRead extends OC_PhraseSentence
         int i = 1;
         for(OBReadingPara p : paragraphs)
         {
-            loadTimingsPara(p,getLocalPath(String.format("%s_%d.etpa",currComponentKey,i)),false);
-            loadTimingsPara(p,getLocalPath(String.format("%s_%d.etpa",SlowVersion(currComponentKey,true),i)),true);
+            loadTimingsPara(p,getLocalPath(String.format(Locale.US,"%s_%d.etpa",currComponentKey,i)),false);
+            loadTimingsPara(p,getLocalPath(String.format(Locale.US,"%s_%d.etpa",SlowVersion(currComponentKey,true),i)),true);
             i++;
         }
 

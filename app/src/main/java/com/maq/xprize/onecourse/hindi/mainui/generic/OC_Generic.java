@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -688,7 +689,7 @@ public class OC_Generic
 
         if (str.length() == 1)
         {
-            return str.toUpperCase();
+            return str.toUpperCase(Locale.US);
         }
 
         //split the string by space
@@ -701,12 +702,12 @@ public class OC_Generic
 
             if (part.length() > 1)
             {
-                sb.append(part.substring(0, 1).toUpperCase())
-                        .append(part.substring(1).toLowerCase());
+                sb.append(part.substring(0, 1).toUpperCase(Locale.US))
+                        .append(part.substring(1).toLowerCase(Locale.US));
             }
             else
             {
-                sb.append(part.toUpperCase());
+                sb.append(part.toUpperCase(Locale.US));
             }
 
             sb.append(" ");

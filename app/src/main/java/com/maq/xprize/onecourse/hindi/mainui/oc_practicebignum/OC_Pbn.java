@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBUtils.*;
@@ -125,7 +126,7 @@ public class OC_Pbn extends OC_SectionController
         for(int i=0; i<2; i++)
         {
             int currentMode = nums.get(i).intValue();
-            loadNum(currentMode,String.format("num_%d",i+1),feedbackMode,correct==currentMode);
+            loadNum(currentMode,String.format(Locale.US,"num_%d",i+1),feedbackMode,correct==currentMode);
         }
 
     }
@@ -212,7 +213,7 @@ public class OC_Pbn extends OC_SectionController
         String eventName = null;
         if(audioScenes.get(eventName) == null)
         {
-            eventName = String.format("%s%d",prefix,num);
+            eventName = String.format(Locale.US,"%s%d",prefix,num);
 
         }
         if(audioScenes.get(eventName) != null)
@@ -226,7 +227,7 @@ public class OC_Pbn extends OC_SectionController
     public void loadNum(int num,String box,boolean feedback,boolean correct)
     {
         OBControl boxControl = objectDict.get(box);
-        OBLabel label = new OBLabel(String.format("%d",num),OBUtils.StandardReadingFontOfSize(150));
+        OBLabel label = new OBLabel(String.format(Locale.US,"%d",num),OBUtils.StandardReadingFontOfSize(150));
         label.setColour(Color.BLACK);
         label.setProperty("num_val",num);
         label.setProperty("correct",correct);
@@ -288,7 +289,7 @@ public void higlightAndSayLabel(OBLabel label) throws Exception
     int currentNum = (int)label.propertyValue("num_val");
     if(currentNum == 0)        return;
     label.setColour(Color.RED);
-    playAudio(String.format("n_%d",currentNum));
+    playAudio(String.format(Locale.US,"n_%d",currentNum));
     waitAudio();
     waitForSecs(0.3f);
     label.setColour(Color.BLACK);
@@ -312,7 +313,7 @@ public void higlightAndSayLabel(OBLabel label) throws Exception
                 int val = Integer.valueOf(num);
                 label.setHighRange(i,i+1,Color.RED);
                 int place = (int)Math.pow(10,(label.text().length()-i-1));
-                playAudio(String.format("plc%d_%d",place,val));
+                playAudio(String.format(Locale.US,"plc%d_%d",place,val));
                 waitAudio();
                 waitForSecs(0.3f);
                 label.setColour(Color.BLACK);
@@ -418,7 +419,7 @@ public void higlightAndSayLabel(OBLabel label) throws Exception
                 OC_Cwys_Additions.highlightBlock(block,true);
 
             unlockScreen();
-            playAudio(String.format("plc100_%d",hundredBlocks.size()));
+            playAudio(String.format(Locale.US,"plc100_%d",hundredBlocks.size()));
             waitAudio();
             waitForSecs(0.3f);
             lockScreen();
@@ -447,7 +448,7 @@ public void higlightAndSayLabel(OBLabel label) throws Exception
                 OC_Cwys_Additions.highlightColumn(column,true);
 
             unlockScreen();
-            playAudio(String.format("plc10_%d",tenColumns.size()));
+            playAudio(String.format(Locale.US,"plc10_%d",tenColumns.size()));
             waitAudio();
             waitForSecs(0.3f);
             lockScreen();
@@ -488,7 +489,7 @@ public void higlightAndSayLabel(OBLabel label) throws Exception
                 OC_Cwys_Additions.highlightUnit(unit,true);
 
             unlockScreen();
-            playAudio(String.format("plc1_%d",units.size()));
+            playAudio(String.format(Locale.US,"plc1_%d",units.size()));
             waitAudio();
             waitForSecs(0.3f);
             lockScreen();

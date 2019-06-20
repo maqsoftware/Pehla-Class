@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -161,24 +162,24 @@ public class OC_Generic_DragMultipleObjectsToSameContainer extends OC_Generic_Dr
                 List usedPlacements = new ArrayList();
                 if (contained.size() == 1)
                 {
-                    usedPlacements.add(new Integer(3));
+                    usedPlacements.add(3);
                 }
                 else if (contained.size() == 2)
                 {
-                    usedPlacements.add(new Integer(2));
-                    usedPlacements.add(new Integer(4));
+                    usedPlacements.add(2);
+                    usedPlacements.add(4);
                 }
                 else if (contained.size() == 3)
                 {
-                    usedPlacements.add(new Integer(1));
-                    usedPlacements.add(new Integer(3));
-                    usedPlacements.add(new Integer(5));
+                    usedPlacements.add(1);
+                    usedPlacements.add(3);
+                    usedPlacements.add(5);
                 }
                 //
                 List<OBAnim> animations = new ArrayList<OBAnim>();
                 for (int i = 0; i < contained.size(); i++)
                 {
-                    OBControl subPlacement = objectDict.get(String.format("%s_%d", placement.attributes().get("id"), usedPlacements.get(i)));
+                    OBControl subPlacement = objectDict.get(String.format(Locale.US,"%s_%d", placement.attributes().get("id"), usedPlacements.get(i)));
                     PointF newPosition = OC_Generic.copyPoint(subPlacement.getWorldPosition());
                     //
                     OBControl placedObject = contained.get(i);

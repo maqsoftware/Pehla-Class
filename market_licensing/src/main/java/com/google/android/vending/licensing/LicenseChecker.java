@@ -19,6 +19,7 @@ package com.google.android.vending.licensing;
 import com.google.android.vending.licensing.util.Base64;
 import com.google.android.vending.licensing.util.Base64DecoderException;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -249,7 +250,7 @@ public class LicenseChecker implements ServiceConnection {
                         }
 
                         if (logResponse) {
-                            String android_id = Secure.getString(mContext.getContentResolver(),
+                            @SuppressLint("HardwareIds") String android_id = Secure.getString(mContext.getContentResolver(),
                                     Secure.ANDROID_ID);
                             Date date = new Date();
                             Log.d(TAG, "Server Failure: " + stringError);

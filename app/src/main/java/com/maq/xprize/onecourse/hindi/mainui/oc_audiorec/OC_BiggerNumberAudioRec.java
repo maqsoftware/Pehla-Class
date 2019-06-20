@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -64,7 +65,7 @@ public class OC_BiggerNumberAudioRec extends OC_AudioRecSection
         for(int i=0; i<nums.size(); i++)
         {
             int num = nums.get(i).intValue();
-            OBLabel label = new OBLabel(String.format("%d",num) ,font);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",num) ,font);
             label.setZPosition(10);
             label.setPosition(OB_Maths.locationForRect(0.25f + i*0.5f,0.5f,objectDict.get("work_rect") .frame()));
             label.setColour(Color.BLACK);
@@ -77,7 +78,7 @@ public class OC_BiggerNumberAudioRec extends OC_AudioRecSection
             }
             attachControl(label);
             numLabels.add(label);
-            label.setProperty("audio",String.format("n_%d",num));
+            label.setProperty("audio",String.format(Locale.US,"n_%d",num));
             label.setProperty("num_val",num);
             float curDist = 0;
             if(i == 0)
@@ -195,7 +196,7 @@ public class OC_BiggerNumberAudioRec extends OC_AudioRecSection
             dict.put("numbers",arr);
             index++;
             eventsData.add(dict);
-            String eventName = String.format("%d",i+1);
+            String eventName = String.format(Locale.US,"%d",i+1);
             if(audioScenes.get(eventName) == null)
                 eventName = "default";
             eventsList.add(eventName);

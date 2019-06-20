@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 26/07/16.
@@ -54,7 +55,7 @@ public class OC_Hw2 extends OC_Hw
             if(componentDict.get(wordIds[i]) != null)
             {
                 words.add((OBWord)componentDict.get(wordIds[i]));
-                String eventName = String.format("trace_%d",index);
+                String eventName = String.format(Locale.US,"trace_%d",index);
                 if(index == wordIds.length)
                 {
                     events.add("trace_last");

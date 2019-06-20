@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -446,7 +447,7 @@ public class OC_WordVideoRec extends OC_SectionController
 
     public List<String> getSceneAudio(String audio)
     {
-        String currentScene = String.format("%d%s",currentWord, currentMode == MODE_WORD ? "w" : "c");
+        String currentScene = String.format(Locale.US,"%d%s",currentWord, currentMode == MODE_WORD ? "w" : "c");
         if(audioScenes.get(currentScene) != null)
         {
             return getAudioForScene(currentScene,audio);

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -412,7 +413,7 @@ public class OBConfigManager
 
     public void updateGraphicScale(float newWidth, float newHeight)
     {
-        MainActivity.log(String.format("updateGraphicScale called: %f %f",newWidth,newHeight));
+        MainActivity.log(String.format(Locale.US, "updateGraphicScale called: %f %f",newWidth,newHeight));
         if (newHeight > newWidth)
         {
             float temp = newWidth;

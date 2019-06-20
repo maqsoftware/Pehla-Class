@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kAudioOffset;
@@ -45,7 +46,7 @@ public class OC_Diagnostics_TouchCorrectNumber extends OC_Diagnostics_TouchCorre
         OC_DiagnosticsQuestion currentQuestion = questions.get(currNo);
         for (int i = 0; i < totalParameters; i++)
         {
-            OBControl numberBox = objectDict.get(String.format("label%d", i + 1));
+            OBControl numberBox = objectDict.get(String.format(Locale.US,"label%d", i + 1));
             String number = currentQuestion.distractors.get(i);
             OBLabel numberLabel = OC_Generic.action_createLabelForControl(numberBox, number, 1.0f, false, OBUtils.standardTypeFace(), Color.BLACK, this);
             numberLabel.setProperty("number", number);
@@ -69,7 +70,7 @@ public class OC_Diagnostics_TouchCorrectNumber extends OC_Diagnostics_TouchCorre
         List<String> allParameters = new ArrayList<>();
         for (int i = min; i <= max; i++)
         {
-            allParameters.add(String.format("%d", i));
+            allParameters.add(String.format(Locale.US,"%d", i));
         }
         int totalQuestions = Integer.parseInt((String) exerciseData.get(kTotalQuestions));
         int possibleAnswerCount = Integer.parseInt((String) exerciseData.get(kTotalAvailableOptions));

@@ -23,6 +23,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -368,7 +369,7 @@ public class OC_MakeSylWord extends OC_SectionController
             }
             else
             {
-                scene = String.format("BUTTON%d",currentPart+1);
+                scene = String.format(Locale.US,"BUTTON%d",currentPart+1);
             }
             List<Object> repeatAudio = scene == null ? null : getSceneAudio(String.format("%s.REPEAT",scene));
             if(repeatAudio == null)
@@ -560,7 +561,7 @@ public class OC_MakeSylWord extends OC_SectionController
     {
         if(audio == null)
             return null;
-        String currentScene = String.format("%d%d",currentWord + 1, currentRepeat + 1);
+        String currentScene = String.format(Locale.US,"%d%d",currentWord + 1, currentRepeat + 1);
 
 
         List<String> list = audioForScene(currentScene,audio);

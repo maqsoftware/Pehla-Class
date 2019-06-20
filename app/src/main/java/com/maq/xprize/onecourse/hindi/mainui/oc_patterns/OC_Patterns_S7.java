@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -60,9 +61,9 @@ public class OC_Patterns_S7 extends OC_Generic_Event
         //
         for (int i = 1; i <= filterControls("obj.*").size(); i++)
         {
-            String key = String.format("button_%d", i);
+            String key = String.format(Locale.US,"button_%d", i);
             OBGroup button = (OBGroup) objectDict.get(key);
-            OBGroup control = (OBGroup) objectDict.get(String.format("obj_%d", i));
+            OBGroup control = (OBGroup) objectDict.get(String.format(Locale.US,"obj_%d", i));
             control.setPosition(OC_Generic.copyPoint(button.position()));
             control.setScale(0.9f);
             //

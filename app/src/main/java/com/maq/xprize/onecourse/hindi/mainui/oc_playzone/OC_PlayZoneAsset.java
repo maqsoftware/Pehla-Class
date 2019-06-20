@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -44,7 +45,7 @@ public class OC_PlayZoneAsset extends DBObject
     {
         File dir = MainActivity.mainActivity.getDir(ASSET_FOLDER, Context.MODE_PRIVATE);
 
-        String dateString = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+        String dateString = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US).format(new Date());
 
         String prefix = "thumb";
         String extension1 = "jpg";

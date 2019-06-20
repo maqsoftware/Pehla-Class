@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBUtils.RectOverlapRatio;
 
@@ -167,7 +168,7 @@ public class OC_Counting5and10_S5 extends OC_Generic_Event
         saveStatusClearReplayAudioSetChecking();
         //
         OBControl container = objectDict.get("container");
-        OBGroup group = (OBGroup) objectDict.get(String.format("group_%d", visibleObjectCount));
+        OBGroup group = (OBGroup) objectDict.get(String.format(Locale.US,"group_%d", visibleObjectCount));
         if (action_isPositionValid(pt))
         {
             playSfxAudio("cake_show", false);
@@ -196,7 +197,7 @@ public class OC_Counting5and10_S5 extends OC_Generic_Event
                 //
                 for (int i = 1; i <= visibleObjectCount; i++)
                 {
-                    group = (OBGroup) objectDict.get(String.format("group_%d", i));
+                    group = (OBGroup) objectDict.get(String.format(Locale.US,"group_%d", i));
                     OBAnim moveAnim = OBAnim.moveAnim((OC_Generic.copyPoint((PointF) group.propertyValue("originalPosition"))), group);
                     animations.add(moveAnim);
 

@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -75,7 +76,7 @@ public class OC_Reading extends OC_SectionController
     protected static String CrunchedString(String s)
     {
         String t = s;
-        String[] l = t.toLowerCase().split("[^[a-z][A-Z]]*");
+        String[] l = t.toLowerCase(Locale.US).split("[^[a-z][A-Z]]*");
         t = TextUtils.join("",l);
         return t;
     }
@@ -458,8 +459,8 @@ public class OC_Reading extends OC_SectionController
         int i = 1;
         for (OBReadingPara para : paragraphs)
         {
-            loadTimingsPara(para,getLocalPath(String.format("p%d_%d.etpa",pageNo,i)),false);
-            loadTimingsPara(para,getLocalPath(String.format("ps%d_%d.etpa",pageNo,i)),true);
+            loadTimingsPara(para,getLocalPath(String.format(Locale.US,"p%d_%d.etpa",pageNo,i)),false);
+            loadTimingsPara(para,getLocalPath(String.format(Locale.US,"ps%d_%d.etpa",pageNo,i)),true);
             i++;
         }
         //setButtons();
@@ -592,7 +593,7 @@ public class OC_Reading extends OC_SectionController
         tb.hide();
         textBox.setShouldTexturise(false);
         attachControl(textBox);
-        mainPic = loadImageWithName(String.format("p%d",pageNo),new PointF(0.5f, 0.5f),new RectF(bounds()));
+        mainPic = loadImageWithName(String.format(Locale.US,"p%d",pageNo),new PointF(0.5f, 0.5f),new RectF(bounds()));
         objectDict.put("mainpic",mainPic);
         mainPic.setZPosition(60);
         scalePicToBox();
@@ -836,13 +837,13 @@ public class OC_Reading extends OC_SectionController
         String pref = "p";
         if (slowWordsAvailable)
             pref = "ps";
-        playAudioFromTo(String.format("%s%d_%d",pref,pageNo,w.paraNo),w.slowTimeStart,w.slowTimeEnd);
+        playAudioFromTo(String.format(Locale.US,"%s%d_%d",pref,pageNo,w.paraNo),w.slowTimeStart,w.slowTimeEnd);
         waitAudio();
     }
 
     public void readParagraph(int pidx,long token,boolean canInterrupt) throws Exception
     {
-        String fn = String.format("p%d_%d",pageNo,pidx+1);
+        String fn = String.format(Locale.US,"p%d_%d",pageNo,pidx+1);
         readParagraph(pidx,fn,token,canInterrupt);
     }
 
@@ -949,7 +950,7 @@ public class OC_Reading extends OC_SectionController
     {
         if (shouldCollectMiscData())
         {
-            collectMiscData(String.format("page_%d",pageNo), (int)collectNextButtonPressDuration);
+            collectMiscData(String.format(Locale.US,"page_%d",pageNo), (int)collectNextButtonPressDuration);
         }
 
     }
@@ -974,7 +975,7 @@ public class OC_Reading extends OC_SectionController
             int p = pageNo + 1;
             StringBuilder parmString = new StringBuilder();
             parmString.append(parameters.get("0"));
-            parmString.append(String.format("/page=%d",p));
+            parmString.append(String.format(Locale.US,"/page=%d",p));
             if (parameters.get("cq") != null)
                 parmString.append(String.format("/cq=%s",parameters.get("cq")));
             _aborting = true;
@@ -1024,7 +1025,7 @@ public class OC_Reading extends OC_SectionController
         int p = pageNo - 1;
         StringBuilder parmString = new StringBuilder();
         parmString.append(parameters.get("0"));
-        parmString.append(String.format("/page=%d",p));
+        parmString.append(String.format(Locale.US,"/page=%d",p));
         if (parameters.get("cq") != null)
             parmString.append(String.format("/cq=%s",parameters.get("cq")));
         _aborting = true;

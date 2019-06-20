@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_MutInt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -230,7 +231,7 @@ public class OC_AddSubtract_S5 extends OC_SectionController
     public void startPhase() throws Exception
     {
         OBMisc.doSceneAudio(4,currentEvent(),setStatus(STATUS_AWAITING_CLICK)
-                ,phase == 1? "": String.format("%d",phase),this);
+                ,phase == 1? "": String.format(Locale.US,"%d",phase),this);
 
     }
 

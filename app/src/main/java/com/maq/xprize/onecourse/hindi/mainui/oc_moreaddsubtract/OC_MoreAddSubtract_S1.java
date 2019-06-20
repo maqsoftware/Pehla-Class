@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Created by michal on 16/03/2017.
@@ -201,7 +202,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
             waitForSecs(0.3f);
             if(!performSel("demoFin",currentEvent()))
             {
-                OBGroup equ = (OBGroup)objectDict.get(String.format("box_%d",currentEquation));
+                OBGroup equ = (OBGroup)objectDict.get(String.format(Locale.US,"box_%d",currentEquation));
                 OC_Numberlines_Additions.colourEquation(equ, 1, 5, Color.RED, this);
                 playAudioQueuedScene("FINAL",0.3f,true);
                 waitForSecs(0.3f);
@@ -257,7 +258,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
         button.hide();
         equation.hide();
         for(int i=1; i<11; i++)
-            objectDict.get(String.format("obj_%s_%d",eventAttributes.get("correct"), i)).setOpacity(0.35f);
+            objectDict.get(String.format(Locale.US,"obj_%s_%d",eventAttributes.get("correct"), i)).setOpacity(0.35f);
         unlockScreen();
 
         nextScene();
@@ -305,14 +306,14 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
             box.setBorderWidth(applyGraphicScale(2));
             box.setPosition(OB_Maths.locationForRect(1/11.0f * i,0.5f,numbox.frame()));
             box.setLeft ( numbox.position().x - (5.5f-i)*(box.width() - box.borderWidth));
-            OBLabel label = new OBLabel(String.format("%d",i),OBUtils.standardTypeFace(),105.0f*numbox.height()/130.0f);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",i),OBUtils.standardTypeFace(),105.0f*numbox.height()/130.0f);
             label.setColour(Color.BLACK);
             label.setPosition(OBMisc.copyPoint(box.position()));
             OBGroup group = new OBGroup(Arrays.asList(box,label));
             group.objectDict.put("label",label);
             group.objectDict.put("box",box);
             attachControl(group);
-            objectDict.put(String.format("num_%d",i),group);
+            objectDict.put(String.format(Locale.US,"num_%d",i),group);
             group.hide();
         }
     }
@@ -320,7 +321,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
 
     public void showEquationWithBox() throws Exception
     {
-        OBGroup group = (OBGroup)objectDict.get(String.format("box_%d",currentEquation));
+        OBGroup group = (OBGroup)objectDict.get(String.format(Locale.US,"box_%d",currentEquation));
         OBControl box = objectDict.get("targetbox");
         box.setPosition(group.objectDict.get(String.format("part%s", eventAttributes.get("part"))).getWorldPosition());
 
@@ -351,7 +352,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
 
     public void pointerPointEquation(OBGroup equation,int at, String audio, float duration) throws Exception
     {
-        PointF point = OB_Maths.locationForRect(0.7f,1f,equation.objectDict.get(String.format("part%d",at)).getWorldFrame());
+        PointF point = OB_Maths.locationForRect(0.7f,1f,equation.objectDict.get(String.format(Locale.US,"part%d",at)).getWorldFrame());
         point.y = equation.bottom() + equation.height()*0.2f;
         movePointerToPoint(point,-30,duration,true);
         OC_Numberlines_Additions.colourEquation(equation, at, at, Color.RED, this);
@@ -371,7 +372,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
         movePointerToPoint(OB_Maths.locationForRect(0.9f,0.9f,this.bounds()),-20,0.5f,true);
         for(int i=0; i<4; i++)
         {
-            objectDict.get(String.format("row_%d",i)).show();
+            objectDict.get(String.format(Locale.US,"row_%d",i)).show();
             playSfxAudio("rowon",true);
             waitForSecs(0.1f);
         }
@@ -402,7 +403,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
             i<11;
             i++)
         {
-            objectDict.get(String.format("num_%d",i)).show();
+            objectDict.get(String.format(Locale.US,"num_%d",i)).show();
 
         }
         playSfxAudio("gridon",false);
@@ -457,7 +458,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
         waitForSecs(0.2f);
         for(int i=4; i<8; i++)
         {
-            objectDict.get(String.format("row_%d",i)).show();
+            objectDict.get(String.format(Locale.US,"row_%d",i)).show();
             playSfxAudio("rowon",true);
             waitForSecs(0.1f);
         }
@@ -473,7 +474,7 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
         waitForSecs(0.2f);
         for(int i=8; i<11; i++)
         {
-            objectDict.get(String.format("row_%d",i)).show();
+            objectDict.get(String.format(Locale.US,"row_%d",i)).show();
             playSfxAudio("rowon",true);
             waitForSecs(0.1f);
         }
@@ -491,9 +492,9 @@ public class OC_MoreAddSubtract_S1 extends OC_SectionController
             lockScreen();
             for(int j=1; j<11; j++)
             {
-                objectDict.get(String.format("obj_%d_%d",i,j)).show();
+                objectDict.get(String.format(Locale.US,"obj_%d_%d",i,j)).show();
             }
-            playSfxAudio(String.format("note_%d",i),false);
+            playSfxAudio(String.format(Locale.US,"note_%d",i),false);
             unlockScreen();
             waitForSecs(0.45f);
         }

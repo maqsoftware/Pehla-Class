@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.UPath;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic.randomInt;
 import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.bezef;
@@ -95,7 +96,7 @@ public class OC_Patterns_S4m extends OC_Patterns_S4f
         String strokeColour = strokeColours.get(randomInt(0, strokeColours.size() - 1));
         strokeColours.remove(strokeColour);
         //
-        line = (OBPath) objectDict.get(String.format("path_%d", currentLine));
+        line = (OBPath) objectDict.get(String.format(Locale.US,"path_%d", currentLine));
         line.sizeToBox(boundsf());
         start.setPosition(line.firstPoint());
         //
@@ -212,8 +213,8 @@ public class OC_Patterns_S4m extends OC_Patterns_S4f
         {
             action_setupCurrentLine();
             //
-            List audio = audioForScene(String.format("PROMPT%d", currentLine));
-            setReplayAudio(audioForScene(String.format("REPEAT%d", currentLine)));
+            List audio = audioForScene(String.format(Locale.US,"PROMPT%d", currentLine));
+            setReplayAudio(audioForScene(String.format(Locale.US,"REPEAT%d", currentLine)));
             //
             playAudioQueued(audio, false);
             //
