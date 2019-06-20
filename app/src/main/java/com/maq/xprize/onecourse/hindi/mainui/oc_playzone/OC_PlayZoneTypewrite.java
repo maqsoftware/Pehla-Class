@@ -1,29 +1,22 @@
 package com.maq.xprize.onecourse.hindi.mainui.oc_playzone;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.text.DynamicLayout;
-import android.text.Layout;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.style.LeadingMarginSpan;
-import android.util.Log;
 import android.view.View;
-
+import android.view.WindowManager;
+import android.content.Context;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 import com.maq.xprize.onecourse.hindi.controls.OBLabel;
 import com.maq.xprize.onecourse.hindi.controls.OBPath;
 import com.maq.xprize.onecourse.hindi.controls.OBScrollingText;
-import com.maq.xprize.onecourse.hindi.glstuff.OBRenderer;
-import com.maq.xprize.onecourse.hindi.glstuff.TextureShaderProgram;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 import com.maq.xprize.onecourse.hindi.mainui.OBMainViewController;
 import com.maq.xprize.onecourse.hindi.mainui.OC_SectionController;
@@ -42,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.maq.xprize.onecourse.hindi.mainui.oc_playzone.OC_PlayZoneAsset.ASSET_DOODLE;
+
 import static com.maq.xprize.onecourse.hindi.mainui.oc_playzone.OC_PlayZoneAsset.ASSET_TEXT;
 import static com.maq.xprize.onecourse.hindi.mainui.oc_playzone.OC_PlayZoneAsset.assetsNamesForNewFile;
 import static com.maq.xprize.onecourse.hindi.mainui.oc_playzone.OC_PlayZoneAsset.pathToAsset;
@@ -134,9 +127,12 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         String[] themea = ((String)eventAttributes.get("themes")).split(",");;
         themeNames = Arrays.asList(themea);
 
-        textBox = new OBScrollingText(objectDict.get("text_box").frame());
-        textBox.setZPosition(5);
-        textBox.setFillColor(Color.WHITE);
+        float text_bottom = objectDict.get("keyboard_rect").frame.top;
+        float text_top = objectDict.get("text_box").frame().top;
+        float text_right = objectDict.get("text_box").frame().right;
+        float text_left = objectDict.get("text_box").frame().left ;
+        RectF sample = new RectF(text_left,text_top,text_right,text_bottom);
+        textBox = new OBScrollingText(sample);
         textBox.setZPosition(50);
         textBox.setMasksToBounds(true);
         attachControl(textBox);
@@ -189,6 +185,8 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         textBoxGroup = new OBGroup(gControls,textBox.frame());
         textBoxGroup.setZPosition(50);
         OBControl tbb = objectDict.get("text_box_bg");
+        tbb.setFrame(sample);
+        textBoxGroup.setFrame(sample);
         tbb.setZPosition(49);
         textBoxGroup.setPosition(tbb.position());
         textBoxGroup.setMasksToBounds(true);
@@ -379,6 +377,15 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         float height = keyNormal.height();
         float minLeft = keyboardRect.left() + buttonDistance;
         float maxRight = minLeft;
+        WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
+        Point size = new Point();
+        wm.getDefaultDisplay().getRealSize(size);
+        float screen_width = (float) size.x, screen_height = (float) size.y;
+        if(screen_height - 20f < keyboardRect.frame.bottom )
+        {
+            keyboardRect.setBottom(screen_height - 10f);
+        }
+
         Typeface typeface = Typeface.createFromAsset(MainActivity.mainActivity.getAssets(), "onebillionreader-Regular.otf");
         Typeface specialtypeface = Typeface.createFromAsset(MainActivity.mainActivity.getAssets(), "onebillionreader-Regular.otf");
         float fontSize = 40f * height / 60f;
