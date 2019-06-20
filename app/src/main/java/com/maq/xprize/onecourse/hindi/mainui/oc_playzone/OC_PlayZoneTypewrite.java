@@ -124,15 +124,15 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         if (p != null)
             textScale = Float.valueOf(p);
 
-        String[] themea = ((String)eventAttributes.get("themes")).split(",");;
+        String[] themea = ((String)eventAttributes.get("themes")).split(",");
         themeNames = Arrays.asList(themea);
 
-        float text_bottom = objectDict.get("keyboard_rect").frame.top;
-        float text_top = objectDict.get("text_box").frame().top;
-        float text_right = objectDict.get("text_box").frame().right;
-        float text_left = objectDict.get("text_box").frame().left ;
-        RectF sample = new RectF(text_left,text_top,text_right,text_bottom);
-        textBox = new OBScrollingText(sample);
+        float textBottom = objectDict.get("keyboard_rect").frame.top;
+        float textTop = objectDict.get("text_box").frame().top;
+        float textRight = objectDict.get("text_box").frame().right;
+        float textLeft = objectDict.get("text_box").frame().left ;
+        RectF rectText  = new RectF(textLeft,textTop,textRight,textBottom);
+        textBox = new OBScrollingText(rectText);
         textBox.setZPosition(50);
         textBox.setMasksToBounds(true);
         attachControl(textBox);
@@ -185,8 +185,8 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         textBoxGroup = new OBGroup(gControls,textBox.frame());
         textBoxGroup.setZPosition(50);
         OBControl tbb = objectDict.get("text_box_bg");
-        tbb.setFrame(sample);
-        textBoxGroup.setFrame(sample);
+        tbb.setFrame(rectText);
+        textBoxGroup.setFrame(rectText);
         tbb.setZPosition(49);
         textBoxGroup.setPosition(tbb.position());
         textBoxGroup.setMasksToBounds(true);
@@ -380,10 +380,10 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         Point size = new Point();
         wm.getDefaultDisplay().getRealSize(size);
-        float screen_width = (float) size.x, screen_height = (float) size.y;
-        if(screen_height - 20f < keyboardRect.frame.bottom )
+        float screenWidth = (float) size.x, screenHeight = (float) size.y;
+        if(screenHeight - 20f < keyboardRect.frame.bottom )
         {
-            keyboardRect.setBottom(screen_height - 10f);
+            keyboardRect.setBottom(screenHeight - 10f);
         }
 
         Typeface typeface = Typeface.createFromAsset(MainActivity.mainActivity.getAssets(), "onebillionreader-Regular.otf");
