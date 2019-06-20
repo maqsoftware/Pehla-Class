@@ -131,7 +131,7 @@ public class OBBatteryReceiver extends BroadcastReceiver
 
     public String printStatus()
     {
-        String batteryLevel = String.format(Locale.getDefault(),"%.1f%%", getBatteryLevel());
+        String batteryLevel = String.format(Locale.US,"%.1f%%", getBatteryLevel());
         return batteryLevel + " " + ((isCharging) ? "charging" : "") + " " + ((usbCharge) ? "USB" : "") + ((acCharge) ? "AC" : "");
     }
 

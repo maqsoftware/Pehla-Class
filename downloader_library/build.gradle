@@ -16,7 +16,6 @@ android {
         }
     }
 lintOptions {
-          disable 'LongLogTag'
           abortOnError false 
     }
 
