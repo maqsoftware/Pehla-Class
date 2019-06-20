@@ -271,7 +271,6 @@ public class OBMainViewController extends OBViewController
                 else if (action == MotionEvent.ACTION_MOVE && currentTouchID != null && currentTouchID == pointerID)
                 {
                     OBGLView ov = (OBGLView) v;
-                    ov.performClick();
                     topController().touchMovedToPoint(new PointF(event.getX(), event.getY()), ov);
                 }
                 else if (currentTouchID != null && currentTouchID == pointerID && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP))

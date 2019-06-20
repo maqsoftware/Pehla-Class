@@ -150,7 +150,6 @@ public class OC_SimpleListMenu extends OBSectionController
             public boolean onTouch(View v, MotionEvent event)
             {
                 hideKeyboard();
-                v.performClick();
                 return false;
             }
 
