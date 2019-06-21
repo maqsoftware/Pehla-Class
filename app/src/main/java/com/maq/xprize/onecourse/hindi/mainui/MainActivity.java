@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.analytics.FirebaseAnalytics.Param;
 import com.google.firebase.analytics.FirebaseAnalytics.*;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
@@ -122,6 +124,8 @@ public class MainActivity extends Activity {
     Map<String, Float> sfxVolumes = new HashMap<>();
     private int b;
     private static FirebaseAnalytics FirebaseAnalytics;
+    private static FirebaseDatabase firebaseDatabase;// = FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    private static DatabaseReference databaseReference;
 
 
     public static OBGroup armPointer() {
@@ -162,6 +166,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseDatabase.setPersistenceEnabled(true);
+//        DatafirebaseDatabase.getInstance().getReference().
+//
+//        databaseReference.child(DeviceID).child(username).keepSynced(true);
 
         SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;

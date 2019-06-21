@@ -26,7 +26,9 @@ import com.maq.xprize.onecourse.hindi.mainui.OBSectionController;
 
 public class Firebase {
     private static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
     private static DatabaseReference databaseReference = firebaseDatabase.getReference("main");
+
     private static DatabaseReference module_child;
 
     static User user = new User();   // its the user object that is being created using User.java. It contain the getter and setter.
@@ -63,8 +65,8 @@ public class Firebase {
 
     public static void getValue(String module,final long startTime, int userid){
         userIID = userid;
-
-
+        firebaseDatabase.setPersistenceEnabled(true);
+        databaseReference.child(DeviceID).child(username).keepSynced(true);
 //        DBSQL db = new DBSQL(true);
 //        //u = ff.load();//OCM_FatController.lastUserActiveFromDB(db);
 //        //CurrrentUser = OC_FatController.lastUserActiveFromDB(db);
