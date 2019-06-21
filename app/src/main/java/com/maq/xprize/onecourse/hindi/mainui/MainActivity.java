@@ -145,11 +145,11 @@ public class MainActivity extends Activity {
     public static void logEvent(String id, String name,long st, long et, long elpT){
         Bundle bundle = new Bundle();
         bundle.putString("userId", id);
-        bundle.putString("module_name", name);
+        //bundle.putString("module_name", name);
         bundle.putLong("startTime", st);
         bundle.putLong("endTime", et);
         bundle.putLong("elapseTime", elpT);
-        FirebaseAnalytics.logEvent("module_complete", bundle);
+        FirebaseAnalytics.logEvent(name, bundle);
     }
 
 
