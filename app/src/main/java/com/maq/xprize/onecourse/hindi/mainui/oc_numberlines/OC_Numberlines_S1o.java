@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 12/04/2017.
@@ -56,7 +57,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         }
         for (int i = 1; i <= 10; i++)
         {
-            createBlock(workrect.objectDict.get(String.format("blo%d", i)));
+            createBlock(workrect.objectDict.get(String.format(Locale.US,"blo%d", i)));
         }
         setSceneXX(currentEvent());
     }
@@ -80,7 +81,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         {
             for(Integer num : OBMisc.stringToIntegerList(eventAttributes.get("block"),","))
             {
-                targets.add(objectDict.get(String.format("block%d", num)));
+                targets.add(objectDict.get(String.format(Locale.US,"block%d", num)));
             }
         }
 
@@ -88,7 +89,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         {
             for(Integer num : OBMisc.stringToIntegerList(eventAttributes.get("correct"),","))
             {
-                targets.add(objectDict.get(String.format("num%d", num)));
+                targets.add(objectDict.get(String.format(Locale.US,"num%d", num)));
             }
         }
     }
@@ -291,14 +292,14 @@ public class OC_Numberlines_S1o extends OC_SectionController
         boolean complete = true;
         for(int i=0; i<blockOrder.size(); i++)
         {
-            PointF destLoc = workrect.objectDict.get(String.format("blo%d",i+1)).getWorldPosition();
+            PointF destLoc = workrect.objectDict.get(String.format(Locale.US,"blo%d",i+1)).getWorldPosition();
             OBControl blockToAnim = blockOrder.get(i);
             if(destLoc.x != blockToAnim.position().x)
             {
                 destLoc.y  = blockToAnim.position().y;
                 arr.add(OBAnim.moveAnim(destLoc,blockToAnim));
             }
-            if(blockOrder.get(i) != objectDict.get(String.format("block%d",i+1)))
+            if(blockOrder.get(i) != objectDict.get(String.format(Locale.US,"block%d",i+1)))
                 complete = false;
         }
         playSfxAudio("drop",false);
@@ -343,7 +344,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         List<OBAnim> anims = new ArrayList<>();
         for(Integer num : arr)
         {
-            OBLabel numLabel = (OBLabel)objectDict.get(String.format("num%d",num));
+            OBLabel numLabel = (OBLabel)objectDict.get(String.format(Locale.US,"num%d",num));
             anims.add(OBAnim.colourAnim("colour",colour,numLabel));
         }
         OBAnimationGroup.runAnims(anims,0.5,true,OBAnim.ANIM_LINEAR,this);
@@ -354,11 +355,11 @@ public class OC_Numberlines_S1o extends OC_SectionController
         lockScreen();
         for(int i=1; i<= 10; i++)
         {
-            OBGroup block = (OBGroup)objectDict.get(String.format("block%d",i));
+            OBGroup block = (OBGroup)objectDict.get(String.format(Locale.US,"block%d",i));
             OBLabel numLabel = (OBLabel)block.objectDict.get("label").copy();
             numLabel.setPosition(block.objectDict.get("label").getWorldPosition());
             attachControl(numLabel);
-            objectDict.put(String.format("num%d",i),numLabel);
+            objectDict.put(String.format(Locale.US,"num%d",i),numLabel);
             numLabel.setOpacity (0);
         }
         unlockScreen();
@@ -401,7 +402,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         List<OBAnim> anim = new ArrayList<>();
         for(Integer val : blocks)
         {
-            anim.add(OBAnim.opacityAnim(opacity,objectDict.get(String.format("block%d", val))));
+            anim.add(OBAnim.opacityAnim(opacity,objectDict.get(String.format(Locale.US,"block%d", val))));
         }
         OBAnimationGroup.runAnims(anim,0.5,true,OBAnim.ANIM_LINEAR,this);
     }
@@ -411,14 +412,14 @@ public class OC_Numberlines_S1o extends OC_SectionController
         List<OBAnim> anim = new ArrayList<>();
         for(int i=from; i<=to; i++)
         {
-            anim.add(OBAnim.opacityAnim(opacity,objectDict.get(String.format("num%d", i))));
+            anim.add(OBAnim.opacityAnim(opacity,objectDict.get(String.format(Locale.US,"num%d", i))));
         }
         OBAnimationGroup.runAnims(anim,0.5,true,OBAnim.ANIM_LINEAR,this);
     }
 
     public void showBlockNum(int num) throws Exception
     {
-        OBGroup group = (OBGroup)objectDict.get(String.format("block%d",num));
+        OBGroup group = (OBGroup)objectDict.get(String.format(Locale.US,"block%d",num));
         group.objectDict.get("label").show();
         playSfxAudio("show_num",true);
     }
@@ -445,7 +446,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
             arr.add(con);
         }
 
-        OBLabel label = new OBLabel(String.format("%d",size), OBUtils.standardTypeFace(), 60*arr.get(0).height()/41.5f);
+        OBLabel label = new OBLabel(String.format(Locale.US,"%d",size), OBUtils.standardTypeFace(), 60*arr.get(0).height()/41.5f);
         label.setPosition(OB_Maths.locationForRect(0.5f,2f,arr.get(0).getWorldFrame()));
         label.setZPosition(1.5f);
         label.setColour(Color.BLACK);
@@ -455,7 +456,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         block.objectDict.put("block",arr.get(0));
         block.setZPosition(1.5f);
         attachControl(block);
-        objectDict.put(String.format("block%d", size),block);
+        objectDict.put(String.format(Locale.US,"block%d", size),block);
         blockOrder.add(block);
         label.hide();
         block.highlight();
@@ -471,7 +472,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
         playSfxAudio("show_stack",false);
         for(int i=0; i<10; i++)
         {
-            objectDict.get(String.format("block%d",i+1)).show();
+            objectDict.get(String.format(Locale.US,"block%d",i+1)).show();
             waitForSecs(arr.get(i));
         }
         waitSFX();
@@ -568,9 +569,9 @@ public class OC_Numberlines_S1o extends OC_SectionController
         for(int i =1; i<=10; i++)
         {
             objectDict.get("bottombar").setZPosition(2.1f);
-            OBGroup block =  (OBGroup)objectDict.get(String.format("block%d",i));
+            OBGroup block =  (OBGroup)objectDict.get(String.format(Locale.US,"block%d",i));
             block.objectDict.get("label").hide();
-            OBControl numLabel = objectDict.get(String.format("num%d",i));
+            OBControl numLabel = objectDict.get(String.format(Locale.US,"num%d",i));
             numLabel.setOpacity(1);
             numLabel.setZPosition(2.2f);
         }
@@ -585,7 +586,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
             {
                 for(int i=1; i<=9; i++)
                 {
-                    OBGroup block = (OBGroup)objectDict.get(String.format("block%d",i));
+                    OBGroup block = (OBGroup)objectDict.get(String.format(Locale.US,"block%d",i));
                     if(block.top() <= objectDict.get("block10").top())
                         block.setTop(objectDict.get("block10").top());
                 }
@@ -722,7 +723,7 @@ public class OC_Numberlines_S1o extends OC_SectionController
 
     public void pointAndHilite(int num,float rotation, int index, boolean hilite) throws Exception
     {
-        OBGroup group = (OBGroup)objectDict.get(String.format("block%d",num));
+        OBGroup group = (OBGroup)objectDict.get(String.format(Locale.US,"block%d",num));
         movePointerToPoint(OB_Maths.locationForRect(0.5f,0.5f,group.objectDict.get("block").getWorldFrame()),rotation,0.5f,true);
         if(hilite)
             animateBlocks(Arrays.asList(num),1);

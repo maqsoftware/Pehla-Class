@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBAnimationGroup;
 
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBUtils.SimplePath;
 import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.PointDistance;
@@ -41,20 +42,20 @@ public class OC_Counting4To6_S4 extends OC_Generic_DragNumbersToSlots
             //
             for (int i = 4; i <= 6; i++)
             {
-                OC_Generic.pointer_moveToObjectByName(String.format("obj_%d_1", i), -10, 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
+                OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"obj_%d_1", i), -10, 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
                 waitAudio();
                 waitForSecs(0.3f);
                 //
                 action_playNextDemoSentence(false); // There are four / five / six beads on this wire.
-                OC_Generic.pointer_moveToObjectByName(String.format("obj_%d_%d", i, i), -10 + i, 1 + (i - 3) * 0.2f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
+                OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"obj_%d_%d", i, i), -10 + i, 1 + (i - 3) * 0.2f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
                 waitAudio();
                 waitForSecs(0.3f);
                 //
                 action_playNextDemoSentence(false); //  Four. Five. Six.
-                OC_Generic.pointer_moveToObjectByName(String.format("number_%d", i - 3), 5, 0.8f - (i - 3) * 0.2f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
+                OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"number_%d", i - 3), 5, 0.8f - (i - 3) * 0.2f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
                 waitForSecs(0.3f);
                 //
-                OBControl number = objectDict.get(String.format("number_%d", i - 3));
+                OBControl number = objectDict.get(String.format(Locale.US,"number_%d", i - 3));
                 number.show();
                 waitAudio();
                 waitForSecs(0.3f);
@@ -62,7 +63,7 @@ public class OC_Counting4To6_S4 extends OC_Generic_DragNumbersToSlots
             //
             for (int i = 1; i <= 3; i++)
             {
-                OBControl number = objectDict.get(String.format("number_%d", i));
+                OBControl number = objectDict.get(String.format(Locale.US,"number_%d", i));
                 PointF originalPosition = (PointF) number.propertyValue("originalPosition");
                 float distance = PointDistance(number.position(), originalPosition);
                 Path path = SimplePath(number.position(), originalPosition, -distance / 5);
@@ -117,8 +118,8 @@ public class OC_Counting4To6_S4 extends OC_Generic_DragNumbersToSlots
         //
         for (int i = 1; i <= 3; i++)
         {
-            OBControl number = objectDict.get(String.format("number_%d", i));
-            OBControl box = objectDict.get(String.format("box_%d", i));
+            OBControl number = objectDict.get(String.format(Locale.US,"number_%d", i));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d", i));
             number.setPosition(box.position());
             number.hide();
         }

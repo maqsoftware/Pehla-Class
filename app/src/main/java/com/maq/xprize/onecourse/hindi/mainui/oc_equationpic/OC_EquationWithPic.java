@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -46,7 +47,7 @@ public class OC_EquationWithPic extends OC_SectionController
         loadEvent("master");
         eqColour = OBUtils.colorFromRGBString(eventAttributes.get("colour_equation"));
         int size = OBUtils.getIntValue(parameters.get("size"));
-        loadEvent(String.format("grid_%d",size));
+        loadEvent(String.format(Locale.US,"grid_%d",size));
         currentMode = MODE_MIXED;
         if(parameters.get("mode").equals("add"))
         {
@@ -77,9 +78,9 @@ public class OC_EquationWithPic extends OC_SectionController
             picTo = 48;
 
         int picNum = OB_Maths.randomInt(picFrom ,picTo);
-        OBImage screenImage = loadImageWithName(String.format("eqpic_%d",picNum),new PointF(0.5f, 0.5f),picFrame.frame());
+        OBImage screenImage = loadImageWithName(String.format(Locale.US,"eqpic_%d",picNum),new PointF(0.5f, 0.5f),picFrame.frame());
         if(screenImage == null)
-            screenImage = loadImageWithName(String.format("eqpic_%d",OB_Maths.randomInt(1,48)),new PointF(0.5f, 0.5f),picFrame.frame());
+            screenImage = loadImageWithName(String.format(Locale.US,"eqpic_%d",OB_Maths.randomInt(1,48)),new PointF(0.5f, 0.5f),picFrame.frame());
         if(picFrame.width()/picFrame.height() < screenImage.width()/screenImage.height())
         {
             screenImage.setScale(picFrame.height()/screenImage.height());
@@ -138,7 +139,7 @@ public class OC_EquationWithPic extends OC_SectionController
         }
         String sign = addMode ? "+" : "–";
         OBPath eqBox =(OBPath) objectDict.get("eq_box");
-        OC_Numberlines_Additions.loadEquation(String.format("%d %s %d = %d",num1,sign,num2,result) ,
+        OC_Numberlines_Additions.loadEquation(String.format(Locale.US,"%d %s %d = %d",num1,sign,num2,result) ,
                 "equation",eqBox,eqColour,false,this);
         currentEquation =(OBGroup)objectDict.get("equation");
         currentEquation.setZPosition(5);
@@ -301,7 +302,7 @@ public class OC_EquationWithPic extends OC_SectionController
         for(int i=0; i<eventData.size(); i++)
         {
             Map<String,Object> eventDict = eventData.get(i);
-            OBPath path =(OBPath)objectDict.get(String.format("obj_%d",i+1));
+            OBPath path =(OBPath)objectDict.get(String.format(Locale.US,"obj_%d",i+1));
             path.setProperty("fill_colour",path.fillColor());
             path.sizeToBoundingBoxIncludingStroke();
             path.setDoubleSided(false);
@@ -310,17 +311,17 @@ public class OC_EquationWithPic extends OC_SectionController
             path.setAnchorPoint(new PointF(0, 0.5f));
 
             int num = (int)eventDict.get("num");
-            OBLabel label = new OBLabel(String.format("%d",num) , OBUtils.StandardReadingFontOfSize(size > 10 ? 60 : 80));
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",num) , OBUtils.StandardReadingFontOfSize(size > 10 ? 60 : 80));
             label.setColour(Color.WHITE);
             label.setPosition(path.position());
             attachControl(label);
             label.setZPosition(3);
-            label.setPosition(OBUtils.centroidForPath(String.format("grid_%d",size), (String)path.attributes().get("id"), this));
+            label.setPosition(OBUtils.centroidForPath(String.format(Locale.US,"grid_%d",size), (String)path.attributes().get("id"), this));
 
             path.setProperty("label",label);
 
             eventDict.put("obj",path);
-            String indexString = String.format("%d", i+1);
+            String indexString = String.format(Locale.US,"%d", i+1);
             if(audioScenes.containsKey(indexString))
             {
                 eventList.add(indexString);

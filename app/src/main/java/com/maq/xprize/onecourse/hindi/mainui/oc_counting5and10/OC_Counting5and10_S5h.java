@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 16/03/2017.
@@ -50,7 +51,7 @@ public class OC_Counting5and10_S5h extends OC_Generic_Event
             OBLabel label = action_createLabelForControl(control, 1.2f, false);
             control.hide();
             //
-            objectDict.put(String.format("label_%d", count), label);
+            objectDict.put(String.format(Locale.US,"label_%d", count), label);
             OC_Generic.sendObjectToTop(label, this);
             count++;
         }
@@ -85,7 +86,7 @@ public class OC_Counting5and10_S5h extends OC_Generic_Event
         for (int i = 1; i <= 3; i++)
         {
             action_playNextDemoSentence(false); // Five.Ten.Fifteen.
-            group = (OBGroup) objectDict.get(String.format("group_%d", i));
+            group = (OBGroup) objectDict.get(String.format(Locale.US,"group_%d", i));
             OC_Generic.pointer_moveToObject(group, -5f, 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
             waitAudio();
             waitForSecs(0.3f);

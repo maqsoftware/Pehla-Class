@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic.generateBezierPathForControl;
 import static com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic.hidePointer;
@@ -363,7 +364,7 @@ public class OC_CountingTo1000_Revision extends OC_CountingTo1000
         for (int i = 1; i <= 10; i++)
         {
             OBLabel label = (OBLabel) randomLabels.get(i - 1);
-            OBControl placement = objectDict.get(String.format("position%d", i));
+            OBControl placement = objectDict.get(String.format(Locale.US,"position%d", i));
             PointF destination = OC_Generic.copyPoint(placement.position());
             Path animationPath = generateBezierPathForControl(label, destination);
             label.setProperty("original_position", destination);

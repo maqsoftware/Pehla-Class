@@ -13,6 +13,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -55,7 +56,7 @@ public class OC_Cwys extends OC_SectionController
         }
         if(!last || audioScenes.get(eventName) == null)
         {
-            eventName = String.format("%s%d",prefix,num);
+            eventName = String.format(Locale.US,"%s%d",prefix,num);
         }
         if(audioScenes.get(eventName) != null)
         {
@@ -77,7 +78,7 @@ public class OC_Cwys extends OC_SectionController
                 OC_Cwys_Additions.highlightBlock(block,true);
 
             unlockScreen();
-            playAudio(String.format("plc100_%d",hundredBlocks.size()));
+            playAudio(String.format(Locale.US,"plc100_%d",hundredBlocks.size()));
             waitAudio();
             waitForSecs(0.3f);
             lockScreen();
@@ -97,7 +98,7 @@ public class OC_Cwys extends OC_SectionController
                 OC_Cwys_Additions.highlightColumn(column,true);
 
             unlockScreen();
-            playAudio(String.format("plc10_%d",tenColumns.size()));
+            playAudio(String.format(Locale.US,"plc10_%d",tenColumns.size()));
             waitAudio();
             waitForSecs(0.3f);
             lockScreen();
@@ -126,7 +127,7 @@ public class OC_Cwys extends OC_SectionController
                 OC_Cwys_Additions.highlightUnit(unit,true);
 
             unlockScreen();
-            playAudio(String.format("plc1_%d",units.size()));
+            playAudio(String.format(Locale.US,"plc1_%d",units.size()));
             waitAudio();
             waitForSecs(0.3f);
             lockScreen();

@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -219,7 +220,7 @@ public class OC_PrepMWithVideo extends OC_SectionController
             detachControl(currentEquation);
         int result = addition ? num1 + num2 : num1 - num2;
         String sign = addition ? "+" : "–";
-        OC_Numberlines_Additions.loadEquation(String.format("%d %s %d = %d",num1,sign,num2,result),"equation",objectDict.get("eq_box"), Color.BLACK,false,this);
+        OC_Numberlines_Additions.loadEquation(String.format(Locale.US,"%d %s %d = %d",num1,sign,num2,result),"equation",objectDict.get("eq_box"), Color.BLACK,false,this);
         currentEquation =(OBGroup)objectDict.get("equation");
         OC_Numberlines_Additions.hideEquation(currentEquation,this);
         List<Integer> choices = new ArrayList<>();
@@ -234,7 +235,7 @@ public class OC_PrepMWithVideo extends OC_SectionController
         int index = 1;
         for(int answer : randAnswers)
         {
-            OBLabel label = new OBLabel(String.format("%d",answer),font);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",answer),font);
             label.setColour(Color.BLACK);
             label.setPosition(OB_Maths.locationForRect(0.1f+ index*(0.8f/(randAnswers.size()+1)),0.5f,objectDict.get("bottom_bar").frame()));
             attachControl(label);

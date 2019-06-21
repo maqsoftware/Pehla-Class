@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -154,7 +155,7 @@ public class OC_Count20_S1 extends OC_SectionController
         waitForSecs(0.3);
         for (int i = 1;i <= 20;i++)
         {
-            final OBControl obj = objectDict.get(String.format("obj%d",i));
+            final OBControl obj = objectDict.get(String.format(Locale.US,"obj%d",i));
 
 
             OBUtils.runOnMainThread(new OBUtils.RunLambda() {
@@ -237,8 +238,8 @@ public class OC_Count20_S1 extends OC_SectionController
         setStatus(STATUS_CHECKING);
         try
         {
-            final OBControl currcounter = objectDict.get(String.format("obj%d",currNo));
-            final OBControl nextcounter = objectDict.get(String.format("obj%d",currNo+1));
+            final OBControl currcounter = objectDict.get(String.format(Locale.US,"obj%d",currNo));
+            final OBControl nextcounter = objectDict.get(String.format(Locale.US,"obj%d",currNo+1));
             final OBControl dash = objectDict.get("dottedline");
             final OBLabel txt = (OBLabel)objectDict.get("label");
             OBUtils.runOnMainThread(new OBUtils.RunLambda() {
@@ -252,7 +253,7 @@ public class OC_Count20_S1 extends OC_SectionController
                     else
                         dash.hide();
                     invalidateControl(dash);
-                    txt.setString(String.format("%d", currNo));
+                    txt.setString(String.format(Locale.US,"%d", currNo));
                     invalidateControl(txt);
             }});
             String audFeedback = StrAndNo("CORRECT",currNo - 10);

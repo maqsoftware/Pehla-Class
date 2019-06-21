@@ -1,5 +1,6 @@
 package com.maq.xprize.onecourse.hindi.mainui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -252,6 +253,7 @@ public class OBMainViewController extends OBViewController
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
 
     public void prepare ()
@@ -340,8 +342,7 @@ public class OBMainViewController extends OBViewController
                 config = config.replace("-", "_");
                 config += ".";
             }
-            Class cnm = Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);
-            return cnm;
+            return Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);
         }
         catch (ClassNotFoundException e)
         {

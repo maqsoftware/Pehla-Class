@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 03/05/2017.
@@ -334,7 +335,7 @@ public class OC_Numbers1To10_S3 extends OC_Generic_Event
     public void checkDot (OBControl selectedDot) throws Exception
     {
         setStatus(STATUS_CHECKING);
-        OBControl correctDot = objectDict.get(String.format("obj_%d", currentDot));
+        OBControl correctDot = objectDict.get(String.format(Locale.US,"obj_%d", currentDot));
         if (selectedDot.equals(correctDot))
         {
             correctDot.disable();

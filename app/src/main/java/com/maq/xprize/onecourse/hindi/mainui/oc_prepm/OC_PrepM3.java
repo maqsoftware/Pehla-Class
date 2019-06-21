@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -45,7 +46,7 @@ public class OC_PrepM3 extends OC_PrepMWithVideo
         events = new ArrayList<>();
         for(int i=1; i<=equationList.size(); i++)
         {
-            String eventName = String.format("%d",i);
+            String eventName = String.format(Locale.US,"%d",i);
             if(audioScenes.get(eventName) != null)
             {
                 events.add(eventName);
@@ -163,7 +164,7 @@ public class OC_PrepM3 extends OC_PrepMWithVideo
             {
                 List<Integer> eq = currentEquationValues();
                 int num1 = eq.get(0) , num2 = eq.get(1);
-                String userAnswer = String.format("%d %s %d = %s",num1,additionMode ? "+" : "–",num2,targ.text());
+                String userAnswer = String.format(Locale.US,"%d %s %d = %s",num1,additionMode ? "+" : "–",num2,targ.text());
                 collectMiscData("wrong",userAnswer);
             }
             objectDict.get("wrong_cross").show();
@@ -383,7 +384,7 @@ public class OC_PrepM3 extends OC_PrepMWithVideo
 
     public void demoCount() throws Exception
     {
-        prepareCountingVideo(String.format("counting-%d",maxNum));
+        prepareCountingVideo(String.format(Locale.US,"counting-%d",maxNum));
         waitForSecs(1f);
         lockScreen();
         for(OBControl con : eventTargets)
@@ -403,7 +404,7 @@ public class OC_PrepM3 extends OC_PrepMWithVideo
         unlockScreen();
         playSfxAudio("video",true);
         waitForSecs(0.5f);
-        List<String> audio = getAudioForScene(String.format("counting_%d",maxNum),"DEMO");
+        List<String> audio = getAudioForScene(String.format(Locale.US,"counting_%d",maxNum),"DEMO");
         if(audio != null)
         {
             playAudio(audio.get(0));
@@ -428,7 +429,7 @@ public class OC_PrepM3 extends OC_PrepMWithVideo
         waitForSecs(0.3f);
         OC_Numberlines_Additions.colourEquation(currentEquation,5,5,eventColours.get("highlight"),this);
         OC_Numberlines_Additions.showEquation(currentEquation,5,5,null,this);
-        playAudio(String.format("n_%d",result));
+        playAudio(String.format(Locale.US,"n_%d",result));
         waitForSecs(5f);
         fin();
     }

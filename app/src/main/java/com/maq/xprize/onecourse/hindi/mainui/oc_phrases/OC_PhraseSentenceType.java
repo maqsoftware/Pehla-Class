@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -134,8 +135,8 @@ public class OC_PhraseSentenceType extends OC_PhraseSentence implements OC_Typew
         int i=1;
         for(OBReadingPara parag : paragraphs)
         {
-            loadTimingsPara(parag, getLocalPath(String.format("%s_%d.etpa",currComponentKey,i)),false);
-            String audioName = String.format("%s_%d",currComponentKey,i);
+            loadTimingsPara(parag, getLocalPath(String.format(Locale.US,"%s_%d.etpa",currComponentKey,i)),false);
+            String audioName = String.format(Locale.US,"%s_%d",currComponentKey,i);
             curAudios.add(audioName);
             i++;
         }
@@ -461,7 +462,7 @@ public class OC_PhraseSentenceType extends OC_PhraseSentence implements OC_Typew
             String phid = idList.get(i);
             if(componentDict.get(phid) != null)
             {
-                String eventName = String.format("%d", i+1);
+                String eventName = String.format(Locale.US,"%d", i+1);
                 if(i == idList.size()-1)
                     eventName = "last";
                 addEvent(eventName,phid);
@@ -475,7 +476,7 @@ public class OC_PhraseSentenceType extends OC_PhraseSentence implements OC_Typew
         {
             for(int i=1; i<3; i++)
             {
-                String subEventName = String.format("%s_%d",eventName,i);
+                String subEventName = String.format(Locale.US,"%s_%d",eventName,i);
                 addEventDataForTarget(target,i==2);
                 if(audioScenes.containsKey(subEventName))
                 {
@@ -483,7 +484,7 @@ public class OC_PhraseSentenceType extends OC_PhraseSentence implements OC_Typew
                 }
                 else
                 {
-                    events.add(String.format("default_%d",i));
+                    events.add(String.format(Locale.US,"default_%d",i));
                 }
             }
         }
@@ -564,13 +565,13 @@ public class OC_PhraseSentenceType extends OC_PhraseSentence implements OC_Typew
         for(int i=0; i< currentLabel.text().length(); i++)
         {
             String letter = currentLabel.text().substring(i, i+1);
-            if(typewriterManager.keyboardKeys.containsKey(letter.toLowerCase()))
+            if(typewriterManager.keyboardKeys.containsKey(letter.toLowerCase(Locale.US)))
             {
                 Map<String,Object> dict = new ArrayMap();
                 dict.put("letter",letter);
                 dict.put("display",letter);
                 dict.put("range",i);
-                dict.put("key",typewriterManager.keyboardKeys.get(letter.toLowerCase()));
+                dict.put("key",typewriterManager.keyboardKeys.get(letter.toLowerCase(Locale.US)));
                 currentWordData.add(dict);
             }
             else if(currentWordData.size() > 0)

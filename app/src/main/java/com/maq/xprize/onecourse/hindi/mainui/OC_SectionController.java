@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,7 +56,7 @@ public class OC_SectionController extends OBSectionController {
     {
         if (n == 1)
             return s;
-        return String.format("%s%d",s,n);
+        return String.format(Locale.US,"%s%d",s,n);
     }
 
     public void setSceneXX(String scene)
@@ -385,7 +386,7 @@ public class OC_SectionController extends OBSectionController {
         float graphicScale = graphicScale();
         for (int i = 1;i <= 3;i++)
         {
-            String nm = "finger"+((new Integer(i)).toString());
+            String nm = "finger"+((Integer.valueOf(i)).toString());
             OBImage oim = OBImageManager.sharedImageManager().imageForName(nm);
             if (oim != null)
             {
@@ -662,7 +663,7 @@ public class OC_SectionController extends OBSectionController {
     {
         String script = questionMode?"scorehammer1":"scorehammer2";
         Class cls = OBMainViewController.MainViewController().controllerClass("OC_ScoreHammer","oc-playzone");
-        goToCard(cls,String.format("scorehammer;%s/score=%d",script,scoreOutOfTen),false,"oc-playzone");
+        goToCard(cls,String.format(Locale.US,"scorehammer;%s/score=%d",script,scoreOutOfTen),false,"oc-playzone");
     }
 
     @Override

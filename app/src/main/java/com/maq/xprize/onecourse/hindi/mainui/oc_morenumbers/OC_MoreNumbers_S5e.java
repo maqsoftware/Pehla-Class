@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -64,7 +65,7 @@ public class OC_MoreNumbers_S5e extends OC_SectionController
         starMode = eventAttributes.get("target").equals("star");
         for(int i=1; i<=4; i++)
         {
-            OBGroup control = (OBGroup)objectDict.get(String.format("obj_%d",i));
+            OBGroup control = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",i));
             if(control == null)            break;
             int standardColour = OBUtils.colorFromRGBString((String)control.attributes().get("colour_background"));
             control.substituteFillForAllMembers("colour_.*", standardColour);
@@ -251,7 +252,7 @@ public class OC_MoreNumbers_S5e extends OC_SectionController
             float dist = 0.3f * bounds().height();
             for(int i=1; i<=3; i++)
             {
-                OBGroup obj = (OBGroup)objectDict.get(String.format("obj_%d",i));
+                OBGroup obj = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",i));
                 PointF startPoint = OBMisc.copyPoint(obj.position());
                 PointF endPoint = OBMisc.copyPoint(startPoint);
                 endPoint.x += bounds().width();
@@ -282,7 +283,7 @@ public class OC_MoreNumbers_S5e extends OC_SectionController
             List<Float> yLocs = Arrays.asList(0.4f,0.8f,0.2f,0.6f);
             for(int i=1; i<=4; i++)
             {
-                OBGroup obj = (OBGroup)objectDict.get(String.format("obj_%d",i));
+                OBGroup obj = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",i));
                 PointF startPoint = OBMisc.copyPoint(obj.position());
                 PointF endPoint = OBMisc.copyPoint(startPoint);
                 endPoint.x += bounds().width();
@@ -316,7 +317,7 @@ public class OC_MoreNumbers_S5e extends OC_SectionController
             for(OBControl groupNum : dragTargets)
             {
                 groupNum.show();
-                playSfxAudio(String.format("note_%d",index++),true);
+                playSfxAudio(String.format(Locale.US,"note_%d",index++),true);
             }
 
         }
@@ -421,7 +422,7 @@ public class OC_MoreNumbers_S5e extends OC_SectionController
 
     public void pointerPointObj(int num,int audioIndex) throws Exception
     {
-        OBGroup obj = (OBGroup)objectDict.get(String.format("obj_%d",num));
+        OBGroup obj = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",num));
         movePointerToPoint(OB_Maths.locationForRect(0.7f,1.2f,obj.frame())
                 ,((1-(obj.position().x/bounds().width()*1.0f))*-40.0f)-10
                 ,0.4f,true);
@@ -433,7 +434,7 @@ public class OC_MoreNumbers_S5e extends OC_SectionController
 
     public void pointerPointObjNum(int num,int audioIndex, int numCount) throws Exception
     {
-        OBGroup obj = (OBGroup)objectDict.get(String.format("obj_%d",num));
+        OBGroup obj = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",num));
         movePointerToPoint(OB_Maths.locationForRect(0.7f,0.8f,obj.frame())
                 ,((1-(obj.position().x/bounds().width()*1.0f))*-40.0f)-10
                 ,0.5f,true);

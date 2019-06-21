@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -88,14 +89,14 @@ public class OC_Hw3 extends OC_Hw
                     String text = pho.text;
                     if(dualLetterMode)
                     {
-                        text = String.format("%s %s", text.toUpperCase(), text);
+                        text = String.format("%s %s", text.toUpperCase(Locale.US), text);
                     }
                     else if(arr.length > 1)
                     {
                         boolean capitalise = arr[1].equals("c");
                         if(capitalise)
                         {
-                            String cap = text.substring(0,1).toUpperCase();
+                            String cap = text.substring(0,1).toUpperCase(Locale.US);
                             if(cap.length()>1)
                                 text = cap + text.substring(1, text.length()+1);
                             else
@@ -128,7 +129,7 @@ public class OC_Hw3 extends OC_Hw
                     }
                     else
                     {
-                        String eventName = String.format("menu_%d",i+1);
+                        String eventName = String.format(Locale.US,"menu_%d",i+1);
                         if(audioScenes.get(eventName) != null)
                         {
                             events.add(eventName);
@@ -387,14 +388,14 @@ public class OC_Hw3 extends OC_Hw
     {
         String prefix = currentPhase < 3 ? "trace" : "write";
         int currentCount = currentPhase < 3 ? currentPhase + 1 : currentPhase - 2;
-        String scene = String.format("%s_%d_%d", prefix, eventIndex, currentCount);
+        String scene = String.format(Locale.US,"%s_%d_%d", prefix, eventIndex, currentCount);
         if(audioScenes.get(scene) != null)
         {
             return scene;
         }
         else
         {
-            return String.format("%s_default_%d", prefix, currentCount);
+            return String.format(Locale.US,"%s_default_%d", prefix, currentCount);
         }
     }
 
@@ -420,7 +421,7 @@ public class OC_Hw3 extends OC_Hw
             detachControl(exampleGroup);
 
         String firstChar = text.substring(0,1);
-        boolean useXbox = numbersMode || !firstChar.equals(firstChar.toUpperCase());
+        boolean useXbox = numbersMode || !firstChar.equals(firstChar.toUpperCase(Locale.US));
 
         exampleGroup = loadPaths(text,Color.WHITE,applyGraphicScale(20),true);
 
@@ -486,9 +487,9 @@ public class OC_Hw3 extends OC_Hw
     {
         int index = 1;
         boolean playSeparate = (boolean)currentMenuItem.propertyValue("play_separate");
-        while(exampleGroup.objectDict.get(String.format("xbox%d",index)) != null)
+        while(exampleGroup.objectDict.get(String.format(Locale.US,"xbox%d",index)) != null)
         {
-            List<OBControl> paths = exampleGroup.filterMembers(String.format("Path%d.*",index),true);
+            List<OBControl> paths = exampleGroup.filterMembers(String.format(Locale.US,"Path%d.*",index),true);
             if(paths.size() > 0)
             {
                 for(OBControl p : paths)

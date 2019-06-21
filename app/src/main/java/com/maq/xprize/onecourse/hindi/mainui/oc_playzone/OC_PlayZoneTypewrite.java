@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_playzone.OC_PlayZoneAsset.ASSET_DOODLE;
@@ -434,7 +435,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
                 boolean unicodeChar = displayLetter.startsWith("#");
                 if(unicodeChar)
                 {
-                    int codevalue = (new Integer(displayLetter.substring(1))).intValue();
+                    int codevalue = (Integer.valueOf(displayLetter.substring(1))).intValue();
 
                     displayLetter =  Character.toString((char)codevalue);
                     if(!specialKey)
@@ -469,7 +470,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
                     arr.add(lowerCaseLabel);
                     if(!specialKey && !unicodeChar)
                     {
-                        upperCaseLabel = labelForKey(key,typeface,fontSize,displayLetter.toUpperCase(),false);
+                        upperCaseLabel = labelForKey(key,typeface,fontSize,displayLetter.toUpperCase(Locale.US),false);
                         upperCaseLabel.hide();
                         arr.add(upperCaseLabel);
                     }
@@ -486,7 +487,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
                 if(upperCaseLabel != null)
                 {
                     buttonGroup.objectDict.put("label_upper",upperCaseLabel);
-                    buttonGroup.setProperty("value_upper",value.toUpperCase());
+                    buttonGroup.setProperty("value_upper",value.toUpperCase(Locale.US));
                 }
 
                 buttonGroup.setProperty("value",value);
@@ -577,7 +578,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
                 @Override
                 public void run() throws Exception
                 {
-                    String channel = String.format("special_%d",currentTapIndex);
+                    String channel = String.format(Locale.US,"special_%d",currentTapIndex);
                     OBAudioManager.audioManager.startPlaying("keyboard_click",channel);
                     /*OBAudioManager.audioManager.pausePlayingOnChannel(channel);
                     OBAudioManager.audioManager.setCurrentTime(0.15 onChannel:channel);

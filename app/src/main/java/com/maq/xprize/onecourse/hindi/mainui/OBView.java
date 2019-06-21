@@ -3,11 +3,13 @@ package com.maq.xprize.onecourse.hindi.mainui;
 /**
  * Created by alan on 11/10/15.
  */
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.*;
 import android.view.View;
 import android.view.ViewGroup;
 
+@SuppressLint("ViewConstructor")
 public class OBView extends ViewGroup
 {
     public static class LayoutParams extends ViewGroup.LayoutParams

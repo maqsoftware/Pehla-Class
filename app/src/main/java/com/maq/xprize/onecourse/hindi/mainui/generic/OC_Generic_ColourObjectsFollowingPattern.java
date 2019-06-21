@@ -132,7 +132,7 @@ public class OC_Generic_ColourObjectsFollowingPattern extends OC_Generic_ColourO
                 String type = (String) control.attributes().get("type");
                 if (type != null)
                 {
-                    colouredTypes.put(type, new Integer(originalColour));
+                    colouredTypes.put(type, originalColour);
                 }
                 control.setProperty("colour", originalColour);
             }

@@ -10,6 +10,7 @@ import com.maq.xprize.onecourse.hindi.utils.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,9 +38,9 @@ public class OC_CapsFirst extends OC_Wordcontroller
         String s1 = s.substring(0,1);
         String s2 = s.substring(1);
         if(cap)
-            s1 = s1.toUpperCase();
+            s1 = s1.toUpperCase(Locale.US);
         else
-            s1 = s1.toLowerCase();
+            s1 = s1.toLowerCase(Locale.US);
         return s1 + s2;
     }
 
@@ -83,7 +84,7 @@ public class OC_CapsFirst extends OC_Wordcontroller
         pos.set(mainLabel.position());
 
         String capS1 = tx.substring(0,1);
-        String lcS1 = capS1.toLowerCase();
+        String lcS1 = capS1.toLowerCase(Locale.US);
         String body = tx.substring(1);
 
         bodyLabel = new OBLabel(body,font);

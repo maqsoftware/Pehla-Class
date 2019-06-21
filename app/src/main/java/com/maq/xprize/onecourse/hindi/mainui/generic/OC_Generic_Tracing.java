@@ -23,14 +23,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * OC_Generic_Tracing
  * Generic Event for Units where the Child has to trace numbers.
  *
- * @param autoClean indicates if the tracing is cleared automatically after Child successfuly traces the number the first time or if it requires a touch to clear
- *                  Created by pedroloureiro on 12/07/16.
  */
 public class OC_Generic_Tracing extends OC_Tracer
 {
@@ -351,10 +350,10 @@ public class OC_Generic_Tracing extends OC_Tracer
         {
             public void ex ()
             {
-                String traceControl = (number == null) ? "trace" : String.format("trace_%d", number);
+                String traceControl = (number == null) ? "trace" : String.format(Locale.US,"trace_%d", number);
                 path1 = (OBGroup) objectDict.get(traceControl);
                 //
-                String dashControl = (number == null) ? "dash" : String.format("dash_%d", number);
+                String dashControl = (number == null) ? "dash" : String.format(Locale.US,"dash_%d", number);
                 dash1 = (OBImage) objectDict.get(dashControl);
                 if (dash1 != null)
                 {
@@ -382,7 +381,7 @@ public class OC_Generic_Tracing extends OC_Tracer
         {
             for (int i = 1; i <= 2; i++)
             {
-                OBPath p = (OBPath) digit.objectDict.get(String.format("p%d", i));
+                OBPath p = (OBPath) digit.objectDict.get(String.format(Locale.US,"p%d", i));
                 if (p != null)
                 {
                     arr.add(p);
@@ -426,7 +425,7 @@ public class OC_Generic_Tracing extends OC_Tracer
         {
             for (int i = 1; i < 10; i++)
             {
-                String pp = String.format("p%d", i);
+                String pp = String.format(Locale.US,"p%d", i);
                 OBPath characterfragment = (OBPath) p.objectDict.get(pp);
                 if (characterfragment != null)
                 {

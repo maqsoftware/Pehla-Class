@@ -19,6 +19,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -54,8 +55,8 @@ public class OC_CountMore_S6k extends OC_SectionController
         {
             float xLoc = xLocs.get(i%3) ;
             float yLoc = yLocs.get((int)Math.round(Math.floor(i/3))) ;
-            oddLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format("box_%d", 1)).frame()));
-            evenLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format("box_%d", 2)).frame()));
+            oddLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format(Locale.US,"box_%d", 1)).frame()));
+            evenLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format(Locale.US,"box_%d", 2)).frame()));
 
         }
         events = Arrays.asList(eventAttributes.get("scenes").split(","));
@@ -144,7 +145,7 @@ public class OC_CountMore_S6k extends OC_SectionController
         int wrongBox = -1;
         for(int j=1 ; j<=2; j++)
         {
-            OBControl boxCont = objectDict.get(String.format("box_%d",j));
+            OBControl boxCont = objectDict.get(String.format(Locale.US,"box_%d",j));
             if(boxCont.frame().contains( label.position().x, label.position().y))
             {
                 if((boolean)label.propertyValue("even") != (j==2))

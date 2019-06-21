@@ -9,6 +9,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -41,9 +42,9 @@ public class OC_Twrd5 extends OC_Twrd_Text
         {
             String letter = letters[i];
             Map<String, Object> data = new ArrayMap<>();
-            String eventName = String.format("%d", index);
+            String eventName = String.format(Locale.US,"%d", index);
             data.put("text", letter);
-            data.put("audio", String.format("alph_%s", letter.toLowerCase()));
+            data.put("audio", String.format("alph_%s", letter.toLowerCase(Locale.US)));
             data.put("hidden", true);
             data.put("replayWrong", true);
             data.put("feedback", FEEDBACK_SFX);

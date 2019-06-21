@@ -16,6 +16,7 @@
 
 package com.google.android.vending.expansion.downloader.impl;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -750,7 +751,7 @@ public abstract class DownloaderService extends CustomIntentService implements I
         public void run() {
             setServiceRunning(true);
             mNotification.onDownloadStateChanged(IDownloaderClient.STATE_FETCHING_URL);
-            String deviceId = Secure.getString(mContext.getContentResolver(),
+            @SuppressLint("HardwareIds") String deviceId = Secure.getString(mContext.getContentResolver(),
                     Secure.ANDROID_ID);
 
             final APKExpansionPolicy aep = new APKExpansionPolicy(mContext,

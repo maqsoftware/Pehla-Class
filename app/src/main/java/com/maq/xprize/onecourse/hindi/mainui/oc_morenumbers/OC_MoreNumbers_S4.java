@@ -22,6 +22,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 07/04/2017.
@@ -50,7 +51,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
         if(startEvent.equals("4a"))
         {
             createCounter(Color.BLACK);
-            counter.setString(String.format("%d",0));
+            counter.setString(String.format(Locale.US,"%d",0));
             OBControl button = objectDict.get("button_10");
             PointF loc = OBMisc.copyPoint(button.position());
             button.setProperty("startloc",OBMisc.copyPoint(loc));
@@ -64,7 +65,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
             buttonMode = true;
             OBControl shutter =objectDict.get("shutter");
             createCounter(shutter.fillColor());
-            counter.setString(String.format("%d", 0));
+            counter.setString(String.format(Locale.US,"%d", 0));
             objectDict.get("numbox").setZPosition(1);
             counter.setZPosition(1.5f);
             shutter.setZPosition(2);
@@ -108,7 +109,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
                 counter.hide();
                 OC_MoreNumbers_Additions.buttonSet(2,this);
             }
-            counter.setString (String.format("%d", targetNum));
+            counter.setString (String.format(Locale.US,"%d", targetNum));
         }
         else
         {
@@ -331,7 +332,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
         for(int i=currentNum; i<currentNum+addValue; i++)
             eventObjs.get(i).show();
         if(!buttonMode)
-            counter.setString ( String.format("%d", currentNum+addValue));
+            counter.setString ( String.format(Locale.US,"%d", currentNum+addValue));
         playSfxAudio(addValue == 1 ? "1ns_btn" : "10ns_btn",false);
 
         unlockScreen();
@@ -365,7 +366,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
 
     public void setUpButton(int num)
     {
-        OBGroup button = (OBGroup)objectDict.get(String.format("button_%d", num));
+        OBGroup button = (OBGroup)objectDict.get(String.format(Locale.US,"button_%d", num));
         OBMisc.colourObjectFromAttributes(button);
         button.objectDict.get("reflection").hide();
         OC_MoreNumbers_Additions.insertIntoGroup(button,num, applyGraphicScale(70),
@@ -390,7 +391,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
     {
         OBControl box = objectDict.get("numbox");
         float fontSize = 90*box.height()/90.0f;
-        counter = new OBLabel(String.format("%d",888), OBUtils.standardTypeFace(),fontSize);
+        counter = new OBLabel(String.format(Locale.US,"%d",888), OBUtils.standardTypeFace(),fontSize);
         counter.setPosition(box.position());
         counter.setColour(colour);
         attachControl(counter);
@@ -460,7 +461,7 @@ public class OC_MoreNumbers_S4 extends OC_SectionController
 
     public void pointerClickButton(int num) throws Exception
     {
-        OBGroup button = (OBGroup)objectDict.get(String.format("button_%d",num));
+        OBGroup button = (OBGroup)objectDict.get(String.format(Locale.US,"button_%d",num));
         movePointerToPoint(OB_Maths.locationForRect(0.5f,0.5f,button.frame()),-35,0.2f,true);
         button.objectDict.get("hilight").show();
         addEventObjectsToScreen(num);

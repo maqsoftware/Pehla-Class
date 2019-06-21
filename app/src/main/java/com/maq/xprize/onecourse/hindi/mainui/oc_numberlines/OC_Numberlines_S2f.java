@@ -23,6 +23,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 12/04/2017.
@@ -79,12 +80,12 @@ public class OC_Numberlines_S2f extends OC_SectionController
         objectDict.get("dot2").setOpacity(0);
         for(int i=0; i<=10; i++)
         {
-            OBControl con = objectDict.get(String.format("divline_%d", i));
+            OBControl con = objectDict.get(String.format(Locale.US,"divline_%d", i));
             divPositions.add(OBMisc.copyPoint(con.position()));
             con.setPosition(OB_Maths.locationForRect(0.15f+(i/10.0f)*0.7f,0.5f,objectDict.get("bottombar").frame()));
             con.setProperty("startpos",OBMisc.copyPoint(con.position()));
             con.hide();
-            OBControl num = objectDict.get(String.format("num_%d", i));
+            OBControl num = objectDict.get(String.format(Locale.US,"num_%d", i));
             num.setProperty("destpos",OBMisc.copyPoint(num.position()));
             num.hide();
         }
@@ -129,7 +130,7 @@ public class OC_Numberlines_S2f extends OC_SectionController
                 orderMode = false;
             for(int i=0; i<=10; i++)
             {
-                eventTargets.add(objectDict.get(String.format("num_%d", i)));
+                eventTargets.add(objectDict.get(String.format(Locale.US,"num_%d", i)));
             }
         }
         else if(eventAttributes.get("target").equals("tnum"))
@@ -152,9 +153,9 @@ public class OC_Numberlines_S2f extends OC_SectionController
             for(int i=0; i<=10; i++)
             {
                 PointF startPoint = OB_Maths.locationForRect(Float.valueOf(dropLocs[i*2]),Float.valueOf(dropLocs[(i*2)+1]), objectDict.get("bottombar").frame());
-                OBLabel num = (OBLabel)objectDict.get(String.format("num_%d", i));
+                OBLabel num = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d", i));
                 num.hide();
-                num.setString(String.format("%d", startnum+i));
+                num.setString(String.format(Locale.US,"%d", startnum+i));
                 num.setProperty("startpos",OBMisc.copyPoint(startPoint));
                 num.setRotation((float)Math.toRadians(i*10));
             }
@@ -378,7 +379,7 @@ public class OC_Numberlines_S2f extends OC_SectionController
 
             playAudio("correct");
             OBAnimationGroup.runAnims(Arrays.asList(OBAnim.moveAnim(divPositions.get(11 - eventTargets.size()), cont)), 0.2, true, OBAnim.ANIM_EASE_IN_EASE_OUT, this);
-            objectDict.put(String.format("divline_%d", (int) (11 - eventTargets.size())), cont);
+            objectDict.put(String.format(Locale.US,"divline_%d", (int) (11 - eventTargets.size())), cont);
             continueDrag(cont);
         }
         else
@@ -586,7 +587,7 @@ public class OC_Numberlines_S2f extends OC_SectionController
 
     public void pointerDragNumber(int num,float duration) throws Exception
     {
-        OBControl numControl = objectDict.get(String.format("num_%d",num));
+        OBControl numControl = objectDict.get(String.format(Locale.US,"num_%d",num));
         movePointerToPoint(numControl.position(),-30,duration,true);
         playSfxAudio("drag",false);
         OBAnimationGroup.runAnims(Arrays.asList(OBAnim.moveAnim((PointF)numControl.propertyValue("destpos") ,numControl),
@@ -598,7 +599,7 @@ public class OC_Numberlines_S2f extends OC_SectionController
     }
     public void pointerPoint(int num,int colour)
     {
-        OBLabel label = (OBLabel)objectDict.get(String.format("num_%d", num));
+        OBLabel label = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d", num));
         movePointerToPoint(OB_Maths.locationForRect(0.8f,0.8f,label.frame()),-40,0.5f,true);
         label.setColour(colour);
     }

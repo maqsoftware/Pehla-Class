@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -340,12 +341,12 @@ public class OC_SpeedyNumberlines extends OC_SectionController
                     dict.put("target",TARGET_ANS);
                 }
                 eventsData.add(dict);
-                String eventName = String.format("%d_%d",i+1,j+1);
+                String eventName = String.format(Locale.US,"%d_%d",i+1,j+1);
                 if(i == selectedNumbers.size()-1)
-                    eventName = String.format("last_%d",j+1);
+                    eventName = String.format(Locale.US,"last_%d",j+1);
                 if(audioScenes.get(eventName) == null)
                 {
-                    eventName = String.format("default_%d",j+1);
+                    eventName = String.format(Locale.US,"default_%d",j+1);
                 }
                 eventsList.add(eventName);
             }
@@ -362,12 +363,12 @@ public class OC_SpeedyNumberlines extends OC_SectionController
         if(addMode)
         {
             eqPart3 = eqPart1 + eqPart2;
-            equationString = String.format("%d + %d = %d",eqPart1,eqPart2,eqPart3);
+            equationString = String.format(Locale.US,"%d + %d = %d",eqPart1,eqPart2,eqPart3);
         }
         else
         {
             eqPart3 = eqPart1 - eqPart2;
-            equationString = String.format("%d – %d = %d",eqPart1,eqPart2,eqPart3);
+            equationString = String.format(Locale.US,"%d – %d = %d",eqPart1,eqPart2,eqPart3);
         }
         OBControl equationBg = objectDict.get("eq_box").copy();
         attachControl(equationBg);
@@ -452,7 +453,7 @@ public class OC_SpeedyNumberlines extends OC_SectionController
         for(int i=0; i<randChoices.size(); i++)
         {
             int num = randChoices.get(i).intValue();
-            OBLabel label = new OBLabel(String.format("%d",num),OBUtils.StandardReadingFontOfSize(70));
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",num),OBUtils.StandardReadingFontOfSize(70));
             label.setPosition (OB_Maths.locationForRect(0.1f + (i+1)*0.8f/(answerCount+1),0.5f,objectDict.get("bottom_bar").frame()));
             label.setColour(eventColours.get("num2"));
             attachControl(label);
@@ -494,7 +495,7 @@ public class OC_SpeedyNumberlines extends OC_SectionController
     public void loadLabelForLine(OBPath line)
     {
         int num = (int)line.propertyValue("num");
-        OBLabel label = new OBLabel(String.format("%d",num) ,OBUtils.StandardReadingFontOfSize(60));
+        OBLabel label = new OBLabel(String.format(Locale.US,"%d",num) ,OBUtils.StandardReadingFontOfSize(60));
         PointF loc = OBMisc.copyPoint(line.position());
         loc.y = OB_Maths.locationForRect(0f,1.3f,objectDict.get("line_box").frame()).y;
         label.setPosition(loc);
@@ -532,7 +533,7 @@ public class OC_SpeedyNumberlines extends OC_SectionController
 
     public void playAudioForNum(int num,boolean wait) throws Exception
     {
-        playAudio(String.format("n_%d",num));
+        playAudio(String.format(Locale.US,"n_%d",num));
         if(wait)
             waitForAudio();
     }
@@ -975,7 +976,7 @@ public class OC_SpeedyNumberlines extends OC_SectionController
 
     public void demoPointerTouchEqNum(int num,String cat,int index) throws Exception
     {
-        OBControl eqPart = currentEquation.objectDict.get(String.format("part%d",num));
+        OBControl eqPart = currentEquation.objectDict.get(String.format(Locale.US,"part%d",num));
         movePointerToPoint(OB_Maths.locationForRect(0.7f,2.3f,eqPart.getWorldFrame()),-20,0.5f,true);
         waitForSecs(0.3f);
         colourEquationPart(num);

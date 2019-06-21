@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alan on 20/01/16.
@@ -76,7 +77,7 @@ public class OC_Count20_S2 extends OC_SectionController
                 box.setBackgroundColor(cols[j % 2]);
                 boxes.add(box);
                 int n = i * 10 + j + 1;
-                OBLabel txt = new OBLabel(String.format("%d",n),tf,textSize);
+                OBLabel txt = new OBLabel(String.format(Locale.US,"%d",n),tf,textSize);
                 txt.setColour(Color.BLACK);
                 txt.setPosition(box.position());
                 numbers.add(txt);

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 18/07/16.
@@ -92,7 +93,7 @@ public class OC_Counting4To6_S7 extends OC_Generic_Tracing
         }
         for (int i = 0; i <= sequenceIndex; i++)
         {
-            OBControl control = objectDict.get(String.format("progress_%d", i));
+            OBControl control = objectDict.get(String.format(Locale.US,"progress_%d", i));
             OC_Generic.colourObject(control, OBUtils.colorFromRGBString(eventAttributes.get("progress_on")));
         }
         unlockScreen();
@@ -292,7 +293,7 @@ public class OC_Counting4To6_S7 extends OC_Generic_Tracing
         //
         for (int i = 0; i < 6; i++)
         {
-            OBGroup star = (OBGroup) objectDict.get(String.format("star_%d", i+1));
+            OBGroup star = (OBGroup) objectDict.get(String.format(Locale.US,"star_%d", i+1));
             OC_Generic.pointer_moveToObject(star, -10, 0.4f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
             playSfxAudio("select_star", false);
             lockScreen();
