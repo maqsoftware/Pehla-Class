@@ -1403,7 +1403,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
 
     public boolean communityModeActive()
     {
-        if(true)
+        if(currentSessionStandardUnitCount() >= SESSION_UNIT_COUNT)
         {
             return true;
         }
