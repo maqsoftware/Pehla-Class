@@ -384,7 +384,7 @@ public class OC_PlayZoneTypewrite extends OC_SectionController
         windowManager.getDefaultDisplay().getRealSize(sizeScreen);
         float screenWidth = (float) sizeScreen.x, screenHeight = (float) sizeScreen.y;
         // Check for bottom of keyboard not exceeding screen size, if it exceeds then set bottom of keyboard
-        if(screenHeight - 20f < keyboardRect.frame.bottom )
+        if(screenHeight < keyboardRect.frame.bottom )
         {
             keyboardRect.setBottom(screenHeight - 10f);
         }
