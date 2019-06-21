@@ -38,8 +38,7 @@ import static java.util.Collections.min;
 /**
  * Created by michal on 14/07/16.
  */
-public class OBCameraManager
-{
+public class OBCameraManager {
     public static int CAMERA_FRONT = 1, CAMERA_BACK = 2;
     private int currentCameraLoc;
     public CaptureRequest.Builder previewBuilder;
@@ -57,43 +56,35 @@ public class OBCameraManager
 
     private Semaphore cameraSemaphore;
 
-    public OBCameraManager(OC_SectionController sectionController)
-    {
+    public OBCameraManager(OC_SectionController sectionController) {
         cameraSemaphore = new Semaphore(1);
         activityPaused = false;
         cameraLock = new ReentrantLock();
 
-       // startCameraLock();
+        // startCameraLock();
 
         controller = new WeakReference<>(sectionController);
 
-       // startCamera();
+        // startCamera();
     }
 
 
-
-    private void startCamera(final int cameraLoc)
-    {
+    private void startCamera(final int cameraLoc) {
         startCameraLock();
         OBUtils.runOnMainThread(
-                new OBUtils.RunLambda()
-                {
+                new OBUtils.RunLambda() {
                     @Override
-                    public void run() throws Exception
-                    {
+                    public void run() throws Exception {
 
-                        try
-                        {
+                        try {
                             cameraManager = (CameraManager) controller.get().activity.getSystemService(Context.CAMERA_SERVICE);
-                            if (!cameraSemaphore.tryAcquire(3, TimeUnit.SECONDS))
-                            {
+                            if (!cameraSemaphore.tryAcquire(3, TimeUnit.SECONDS)) {
                                 throw new RuntimeException("Camera not retrieved");
                             }
                             startBackgroundThread();
                             openCamera(cameraLoc);
 
-                        } catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Log.d("Camera error", e.getLocalizedMessage());
                         }
                     }
@@ -101,31 +92,24 @@ public class OBCameraManager
         );
     }
 
-    private int getCameraCharacteristic(int cameraLoc)
-    {
+    private int getCameraCharacteristic(int cameraLoc) {
         return cameraLoc == CAMERA_BACK ? CameraCharacteristics.LENS_FACING_BACK : CameraCharacteristics.LENS_FACING_FRONT;
     }
 
     @SuppressLint("MissingPermission")
-    private void openCamera(int cameraLoc) throws Exception
-    {
-        for (String cameraId : cameraManager.getCameraIdList())
-        {
+    private void openCamera(int cameraLoc) throws Exception {
+        for (String cameraId : cameraManager.getCameraIdList()) {
             CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
 
 
             Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-            if (facing != null && facing == getCameraCharacteristic(cameraLoc))
-            {
+            if (facing != null && facing == getCameraCharacteristic(cameraLoc)) {
                 currentCameraLoc = cameraLoc;
-                try
-                {
-                    cameraManager.openCamera(cameraId, new CameraDevice.StateCallback()
-                            {
+                try {
+                    cameraManager.openCamera(cameraId, new CameraDevice.StateCallback() {
 
                                 @Override
-                                public void onOpened(CameraDevice camDevice)
-                                {
+                                public void onOpened(CameraDevice camDevice) {
                                     cameraSemaphore.release();
                                     cameraDevice = camDevice;
                                     finishCameraWait();
@@ -133,8 +117,7 @@ public class OBCameraManager
                                 }
 
                                 @Override
-                                public void onDisconnected(CameraDevice camDevice)
-                                {
+                                public void onDisconnected(CameraDevice camDevice) {
                                     cameraSemaphore.release();
                                     cameraDevice.close();
                                     cameraDevice = null;
@@ -142,8 +125,7 @@ public class OBCameraManager
                                 }
 
                                 @Override
-                                public void onError(CameraDevice camDevice, int error)
-                                {
+                                public void onError(CameraDevice camDevice, int error) {
                                     cameraSemaphore.release();
                                     cameraDevice.close();
                                     cameraDevice = null;
@@ -151,8 +133,7 @@ public class OBCameraManager
                                 }
 
                                 @Override
-                                public void onClosed(CameraDevice camDevice)
-                                {
+                                public void onClosed(CameraDevice camDevice) {
                                     cameraSemaphore.release();
                                     cameraDevice = null;
                                     finishCameraWait();
@@ -160,8 +141,7 @@ public class OBCameraManager
                             },
                             null);
                     break;
-                } catch (SecurityException e)
-                {
+                } catch (SecurityException e) {
                     Log.d("Camera error", e.getLocalizedMessage());
                 }
 
@@ -169,10 +149,8 @@ public class OBCameraManager
         }
     }
 
-    private void startBackgroundThread()
-    {
-        if(backgroundThread == null)
-        {
+    private void startBackgroundThread() {
+        if (backgroundThread == null) {
             backgroundThread = new HandlerThread("CameraBackgroundThreadHandler");
             backgroundThread.start();
             backgroundHandler = new Handler(backgroundThread.getLooper());
@@ -180,33 +158,28 @@ public class OBCameraManager
     }
 
 
-    public void stopWithWait() throws Exception
-    {
+    public void stopWithWait() throws Exception {
         stopPreview(true);
 
-        try
-        {
-            if (cameraDevice != null)
-            {
+        try {
+            if (cameraDevice != null) {
                 startCameraLock();
                 cameraDevice.close();
                 waitForCameraReady();
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
         cameraDevice = null;
 
-       // stopBackgroundThread();
+        // stopBackgroundThread();
 
         cameraSemaphore.release();
     }
 
 
-    public void stop() throws Exception
-    {
+    public void stop() throws Exception {
         /*
         try
         {
@@ -218,12 +191,10 @@ public class OBCameraManager
         */
         stopPreview(false);
 
-        try
-        {
+        try {
             if (cameraDevice != null)
                 cameraDevice.close();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
@@ -235,47 +206,39 @@ public class OBCameraManager
     }
 
 
-    private void stopBackgroundThread()
-    {
-        if (backgroundThread != null)
-        {
+    private void stopBackgroundThread() {
+        if (backgroundThread != null) {
             backgroundThread.quitSafely();
-            try
-            {
+            try {
                 backgroundThread.join();
                 backgroundThread = null;
                 backgroundHandler = null;
-            } catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void startPreviewForControls(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder)
-    {
+    private void startPreviewForControls(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder) {
         startPreviewForControls(videoPlayer, videoRecorder, CAMERA_FRONT);
     }
 
-    private void startPreviewForControls(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder, int cameraLoc)
-    {
+    private void startPreviewForControls(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder, int cameraLoc) {
         if (videoPlayer == null || activityPaused || controller.get()._aborting || videoPlayer.activityPaused)
             return;
         controller.get().lockScreen();
-        try
-        {
-            if(cameraDevice == null)
-            {
+        try {
+            if (cameraDevice == null) {
                 startCamera(cameraLoc);
                 waitForCameraReady();
-                if(cameraDevice == null)
+                if (cameraDevice == null)
                     throw new Exception("Error connecting to the camera!");
             }
 
             stopPreview(true);
             startCameraLock();
             calculatePreviewAndRecordingSizes(videoPlayer.width(), videoPlayer.height());
-            
+
             videoPlayer.setPreviewSize(previewSize);
 
             previewBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
@@ -283,8 +246,7 @@ public class OBCameraManager
             List<Surface> surfaces = new ArrayList<>();
 
             surfaces.add(videoPlayer.surface);
-            if (videoRecorder != null)
-            {
+            if (videoRecorder != null) {
                 videoRecorder.prepareForVideoRecording(recordingSize);
                 surfaces.add(videoRecorder.getSurface());
             }
@@ -292,11 +254,9 @@ public class OBCameraManager
             for (Surface surface : surfaces)
                 previewBuilder.addTarget(surface);
 
-            cameraDevice.createCaptureSession(surfaces, new CameraCaptureSession.StateCallback()
-            {
+            cameraDevice.createCaptureSession(surfaces, new CameraCaptureSession.StateCallback() {
                 @Override
-                public void onConfigured(CameraCaptureSession cameraCaptureSession)
-                {
+                public void onConfigured(CameraCaptureSession cameraCaptureSession) {
                     captureSession = cameraCaptureSession;
 
                     updatePreview(videoPlayer);
@@ -307,58 +267,48 @@ public class OBCameraManager
                 }
 
                 @Override
-                public void onConfigureFailed(CameraCaptureSession cameraCaptureSession)
-                {
+                public void onConfigureFailed(CameraCaptureSession cameraCaptureSession) {
                     captureSession = null;
                     finishCameraWait();
                 }
 
                 @Override
-                public void onClosed(CameraCaptureSession session)
-                {
+                public void onClosed(CameraCaptureSession session) {
                     captureSession = null;
                     finishCameraWait();
                 }
             }, backgroundHandler);
             waitForCameraReady();
 
-        } catch (CameraAccessException e)
-        {
+        } catch (CameraAccessException e) {
             e.printStackTrace();
             finishCameraWait();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             finishCameraWait();
-        } finally
-        {
+        } finally {
             controller.get().unlockScreen();
         }
     }
 
-    public void startPreview(OBVideoPlayer videoPlayer)
-    {
+    public void startPreview(OBVideoPlayer videoPlayer) {
         startPreviewForControls(videoPlayer, null);
     }
 
 
-    public void startPreviewForRecording(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder, int cameraLoc)
-    {
+    public void startPreviewForRecording(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder, int cameraLoc) {
         startPreviewForControls(videoPlayer, videoRecorder, cameraLoc);
     }
 
-    public void startPreviewForRecording(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder)
-    {
+    public void startPreviewForRecording(final OBVideoPlayer videoPlayer, final OBVideoRecorder videoRecorder) {
         startPreviewForControls(videoPlayer, videoRecorder);
     }
 
 
-    private void calculatePreviewAndRecordingSizes(float width, float height)
-    {
+    private void calculatePreviewAndRecordingSizes(float width, float height) {
         if (cameraDevice == null)
             return;
-        try
-        {
+        try {
             recordingSize = null;
             previewSize = null;
             CameraCharacteristics cameraChar = cameraManager.getCameraCharacteristics(cameraDevice.getId());
@@ -366,10 +316,8 @@ public class OBCameraManager
             StreamConfigurationMap configMap = cameraChar.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 
             Size[] mediaRecorderSizes = configMap.getOutputSizes(MediaRecorder.class);
-            for (Size size : mediaRecorderSizes)
-            {
-                if (size.getHeight() <= 720 && size.getHeight() * 16 == size.getWidth() * 9)
-                {
+            for (Size size : mediaRecorderSizes) {
+                if (size.getHeight() <= 720 && size.getHeight() * 16 == size.getWidth() * 9) {
                     recordingSize = size;
                     break;
                 }
@@ -381,33 +329,26 @@ public class OBCameraManager
             Size[] sizes = configMap.getOutputSizes(SurfaceTexture.class);
             List<Size> availableSizes = new ArrayList<>();
 
-            for (Size option : sizes)
-            {
+            for (Size option : sizes) {
                 if (recordingSize.getWidth() * option.getHeight() == recordingSize.getHeight() * option.getWidth() &&
-                        option.getWidth() >= width && option.getHeight() >= height)
-                {
+                        option.getWidth() >= width && option.getHeight() >= height) {
                     availableSizes.add(option);
                 }
             }
 
-            if (availableSizes.size() > 0)
-            {
-                previewSize = min(availableSizes, new Comparator<Size>()
-                {
+            if (availableSizes.size() > 0) {
+                previewSize = min(availableSizes, new Comparator<Size>() {
                     @Override
-                    public int compare(Size lhs, Size rhs)
-                    {
+                    public int compare(Size lhs, Size rhs) {
                         return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
                                 (long) rhs.getWidth() * rhs.getHeight());
                     }
                 });
-            } else
-            {
+            } else {
                 previewSize = sizes[0];
             }
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             previewSize = new Size(1920, 1080);
             recordingSize = new Size(1920, 1080);
             e.printStackTrace();
@@ -416,48 +357,38 @@ public class OBCameraManager
     }
 
 
-    private void updatePreview(final OBVideoPlayer videoPlayer)
-    {
-        if (null == cameraDevice)
-        {
+    private void updatePreview(final OBVideoPlayer videoPlayer) {
+        if (null == cameraDevice) {
             return;
         }
-        try
-        {
+        try {
             setUpCaptureRequestBuilder(previewBuilder);
 
             captureSession.setRepeatingRequest(previewBuilder.build(),
-                    new CameraCaptureSession.CaptureCallback()
-                    {
+                    new CameraCaptureSession.CaptureCallback() {
                         @Override
-                        public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result)
-                        {
+                        public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                             videoPlayer.invalidate();
                             super.onCaptureCompleted(session, request, result);
                         }
                     }
                     , backgroundHandler);
-        } catch (CameraAccessException e)
-        {
+        } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
 
-    private void setUpCaptureRequestBuilder(CaptureRequest.Builder builder)
-    {
+    private void setUpCaptureRequestBuilder(CaptureRequest.Builder builder) {
         builder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
     }
 
-    public void stopPreview() throws Exception
-    {
+    public void stopPreview() throws Exception {
         stopPreview(true);
 
     }
 
-    private void stopPreview(Boolean wait) throws Exception
-    {
-        if (captureSession != null)
-        {
+    private void stopPreview(Boolean wait) throws Exception {
+        if (captureSession != null) {
             if (wait)
                 startCameraLock();
             captureSession.close();
@@ -469,61 +400,48 @@ public class OBCameraManager
         }
     }
 
-    private void startCameraLock()
-    {
+    private void startCameraLock() {
         condition = cameraLock.newCondition();
     }
 
-    public void waitForCameraReady() throws Exception
-    {
+    public void waitForCameraReady() throws Exception {
         if (condition == null)
             return;
 
         controller.get().checkAbort();
 
         cameraLock.lock();
-        try
-        {
-            if(condition != null)
-                 condition.await();
-        } catch (Exception e)
-        {
+        try {
+            if (condition != null)
+                condition.await();
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             cameraLock.unlock();
         }
         controller.get().checkAbort();
     }
 
-    private void finishCameraWait()
-    {
+    private void finishCameraWait() {
         if (condition == null)
             return;
         cameraLock.lock();
-        try
-        {
+        try {
             condition.signalAll();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             cameraLock.unlock();
 
         }
         condition = null;
     }
 
-    public void onResume()
-    {
+    public void onResume() {
         activityPaused = false;
     }
 
-    public void onPause() throws Exception
-    {
+    public void onPause() throws Exception {
         activityPaused = true;
         stop();
 

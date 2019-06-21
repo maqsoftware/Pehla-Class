@@ -19,44 +19,36 @@ import java.util.Map;
  * Created by pedroloureiro on 10/01/2018.
  */
 
-public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
-{
+public class OBAnalyticsManagerCommunity extends OBAnalyticsManager {
     public Map<String, Object> deviceStatusValues;
     public int lastRecordedVolume;
     private Handler reportHandler;
     private Runnable statusRunnable, volumeRunnable;
-    
-    public OBAnalyticsManagerCommunity (Activity activity)
-    {
+
+    public OBAnalyticsManagerCommunity(Activity activity) {
         super();
         //
-        if (OBConfigManager.sharedManager.isAnalyticsEnabled())
-        {
+        if (OBConfigManager.sharedManager.isAnalyticsEnabled()) {
             startupAnalytics(activity);
         }
     }
 
 
     @Override
-    protected void startupAnalytics (Activity activity)
-    {
+    protected void startupAnalytics(Activity activity) {
         super.startupAnalytics(activity);
         //
         lastRecordedVolume = -1;
         reportHandler = new Handler();
-        statusRunnable = new Runnable()
-        {
+        statusRunnable = new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 refreshDeviceStatus();
             }
         };
-        volumeRunnable = new Runnable()
-        {
+        volumeRunnable = new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 reportCurrentVolume();
             }
         };
@@ -65,38 +57,33 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
         refreshDeviceStatus();
     }
 
-    protected void refreshDeviceStatus()
-    {
-        if(deviceStatusValues.size() > 0)
+    protected void refreshDeviceStatus() {
+        if (deviceStatusValues.size() > 0)
             logEvent(OBAnalytics.Event.STATUS, deviceStatusValues);
         //
-        long delay = (long)(OBConfigManager.sharedManager.getAnalyticsDeviceStatusRefreshIntervalMinutes() * 60f * 1000);
+        long delay = (long) (OBConfigManager.sharedManager.getAnalyticsDeviceStatusRefreshIntervalMinutes() * 60f * 1000);
         //
         reportHandler.postDelayed(statusRunnable, delay);
     }
 
     @Override
-    public void onStart ()
-    {
+    public void onStart() {
 
     }
 
     @Override
-    public void onStop ()
-    {
+    public void onStop() {
     }
 
 
-    private void logEvent (final String eventName, Map<String, Object> properties)
-    {
+    private void logEvent(final String eventName, Map<String, Object> properties) {
         if (!OBConfigManager.sharedManager.isAnalyticsEnabled()) return;
         //
         long currentTime = System.currentTimeMillis();
         JSONObject parameters = new JSONObject(properties);
         //
         DBSQL db = null;
-        try
-        {
+        try {
             db = new DBSQL(true);
             //
             ContentValues contentValues = new ContentValues();
@@ -107,16 +94,11 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
             //
             /// IMPORTANT: This is spamming the log --> needs to be improved
             //MainActivity.log("OBAnalyticsManagerCommunity.logEvent: " + currentTime + " " + eventName + " " + parameters.toString());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             MainActivity.log("OBAnalyticsManagerCommunity.exception caught: " + e.getMessage());
             //e.printStackTrace();
-        }
-        finally
-        {
-            if(db != null)
-            {
+        } finally {
+            if (db != null) {
                 db.close();
             }
         }
@@ -125,8 +107,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void deviceTurnedOn ()
-    {
+    public void deviceTurnedOn() {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.DEVICE_ON, Boolean.valueOf(true));
         //
@@ -135,8 +116,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void deviceTurnedOff ()
-    {
+    public void deviceTurnedOff() {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.DEVICE_ON, Boolean.valueOf(false));
         //
@@ -144,8 +124,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     }
 
     @Override
-    public void deviceHeadphonesPluggedIn ()
-    {
+    public void deviceHeadphonesPluggedIn() {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.DEVICE_HEADPHONES_PLUGGED_IN, Boolean.valueOf(true));
         //
@@ -153,8 +132,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     }
 
     @Override
-    public void deviceHeadphonesUnplugged ()
-    {
+    public void deviceHeadphonesUnplugged() {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.DEVICE_HEADPHONES_PLUGGED_IN, Boolean.valueOf(false));
         //
@@ -163,8 +141,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void touchMadeInUnit (String unitID, PointF startLoc, long started, PointF endLoc, long finished)
-    {
+    public void touchMadeInUnit(String unitID, PointF startLoc, long started, PointF endLoc, long finished) {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.TOUCH_UNIT_ID, unitID);
         parameters.put(OBAnalytics.Params.TOUCH_START_LOCATION, startLoc);
@@ -177,13 +154,11 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void deviceGpsLocation ()
-    {
+    public void deviceGpsLocation() {
         Map<String, Object> parameters = new HashMap();
         //
         Location loc = null;
-        if (loc != null)
-        {
+        if (loc != null) {
             deviceStatusValues.put(OBAnalytics.Params.DEVICE_GPS_LATITUDE, Double.valueOf(loc.getLatitude()));
             deviceStatusValues.put(OBAnalytics.Params.DEVICE_GPS_LONGITUDE, Double.valueOf(loc.getLongitude()));
             deviceStatusValues.put(OBAnalytics.Params.DEVICE_GPS_ALTITUDE, Double.valueOf(loc.getAltitude()));
@@ -198,20 +173,16 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
             //
             logEvent(OBAnalytics.Event.DEVICE, parameters);
             */
-        }
-        else
-        {
+        } else {
             MainActivity.log("Last Known Location is NULL. Skipping analytics event");
         }
     }
 
 
     @Override
-    public void deviceVolumeChanged (float value)
-    {
-        int newVolume = Integer.valueOf(Math.round(value*100));
-        if(newVolume != lastRecordedVolume)
-        {
+    public void deviceVolumeChanged(float value) {
+        int newVolume = Integer.valueOf(Math.round(value * 100));
+        if (newVolume != lastRecordedVolume) {
             lastRecordedVolume = newVolume;
             reportHandler.removeCallbacks(volumeRunnable);
             reportHandler.postDelayed(volumeRunnable, 5 * 1000);
@@ -219,19 +190,16 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
     }
 
-    public void reportCurrentVolume()
-    {
+    public void reportCurrentVolume() {
         Map<String, Object> parameters = new HashMap();
-        parameters.put(OBAnalytics.Params.DEVICE_VOLUME,lastRecordedVolume);
+        parameters.put(OBAnalytics.Params.DEVICE_VOLUME, lastRecordedVolume);
         //
         logEvent(OBAnalytics.Event.DEVICE, parameters);
     }
 
 
-
     @Override
-    public void deviceScreenTurnedOn ()
-    {
+    public void deviceScreenTurnedOn() {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.DEVICE_SCREEN_ON, Boolean.valueOf(true));
         //
@@ -240,8 +208,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void deviceScreenTurnedOff ()
-    {
+    public void deviceScreenTurnedOff() {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.DEVICE_SCREEN_ON, Boolean.valueOf(false));
         //
@@ -250,8 +217,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void deviceMobileSignalStrength (int value)
-    {
+    public void deviceMobileSignalStrength(int value) {
         deviceStatusValues.put(OBAnalytics.Params.DEVICE_SIGNAL_STRENGTH, Integer.valueOf(value));
         /*
          * Value is now stored in a buffer for regular updates to the database
@@ -265,8 +231,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void deviceStorageUse ()
-    {
+    public void deviceStorageUse() {
         StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
         long bytesAvailable = stat.getAvailableBytes();
         long bytesTotal = stat.getTotalBytes();
@@ -290,15 +255,11 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void batteryState (float batteryValue, Boolean pluggedIn, String chargerType)
-    {
+    public void batteryState(float batteryValue, Boolean pluggedIn, String chargerType) {
         deviceStatusValues.put(OBAnalytics.Params.BATTERY_LEVEL, Float.valueOf(batteryValue));
-        if (!pluggedIn)
-        {
+        if (!pluggedIn) {
             deviceStatusValues.put(OBAnalytics.Params.BATTERY_CHARGER_STATE, OBAnalytics.Params.BATTERY_CHARGER_STATE_UNPLUGGED);
-        }
-        else
-        {
+        } else {
             deviceStatusValues.put(OBAnalytics.Params.BATTERY_CHARGER_STATE, chargerType);
         }
         /*
@@ -320,10 +281,8 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     }
 
 
-
     @Override
-    public void studyZoneUnitCompleted (String unitID, long started, long finished, float score, int replayAudioPresses)
-    {
+    public void studyZoneUnitCompleted(String unitID, long started, long finished, float score, int replayAudioPresses) {
         /*
          * DISABLED ON PURPOSE
          *
@@ -341,8 +300,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void enteredScreen(String screen)
-    {
+    public void enteredScreen(String screen) {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.APP_SCREEN_CHANGE, screen);
         //
@@ -351,8 +309,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void communityModeUnitCompleted (String unitID, long started, long finished, float score, int replayAudioPresses)
-    {
+    public void communityModeUnitCompleted(String unitID, long started, long finished, float score, int replayAudioPresses) {
         /*
          * DISABLED ON PURPOSE
          *
@@ -369,10 +326,8 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     }
 
 
-
     @Override
-    public void playZoneUnitCompleted (String unitID, long started, long finished, float score, int replayAudioPresses)
-    {
+    public void playZoneUnitCompleted(String unitID, long started, long finished, float score, int replayAudioPresses) {
         /*
          * DISABLED ON PURPOSE
          *
@@ -390,8 +345,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
 
 
     @Override
-    public void playZoneVideoWatched (String videoID)
-    {
+    public void playZoneVideoWatched(String videoID) {
         Map<String, Object> parameters = new HashMap();
         parameters.put(OBAnalytics.Params.PLAY_ZONE_VIDEO_ID, videoID);
         //
@@ -399,8 +353,7 @@ public class OBAnalyticsManagerCommunity extends OBAnalyticsManager
     }
 
     @Override
-    public void playZoneAssetCreated (int assetType, Map<String, String> data)
-    {
+    public void playZoneAssetCreated(int assetType, Map<String, String> data) {
         /*
          * DISABLED ON PURPOSE
          *
