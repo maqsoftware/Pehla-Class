@@ -351,11 +351,11 @@ public class OBMainViewController extends OBViewController
                 config = config.replace("-", "_");
                 config += ".";
             }
-// !config.equals("generic") && !config.equals("oc_childmenu") &&
+ //!config.equals("generic") && !config.equals("oc_childmenu") &&
 //            boolean isFound = config.contains("oc_community");
 //            if(!isFound){
-//                config = "oc_phrases.";
-//                name = "OC_PhraseMake";
+//                config = "oc_handwriting.";
+//                name = "OC_Hw2";
 //            }
 
             Class cnm = Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);

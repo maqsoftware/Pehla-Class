@@ -143,13 +143,18 @@ public class MainActivity extends Activity {
     }
 
     public static void logEvent(String id, String name,long st, long et, long elpT){
+        String s = name;
+
+        int module_index = s.lastIndexOf("/");
+
+        String p = s.substring(module_index+1);
         Bundle bundle = new Bundle();
         bundle.putString("userId", id);
         //bundle.putString("module_name", name);
         bundle.putLong("startTime", st);
         bundle.putLong("endTime", et);
         bundle.putLong("elapseTime", elpT);
-        FirebaseAnalytics.logEvent(name, bundle);
+        FirebaseAnalytics.logEvent(p, bundle);
     }
 
 
