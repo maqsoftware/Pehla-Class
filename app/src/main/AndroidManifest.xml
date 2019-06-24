@@ -55,7 +55,8 @@
         android:largeHeap="true"
         android:showOnLockScreen="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="com.maq.xprize.onecourse.hindi.utils.Firebase_offline_capability">
 
 
         <receiver

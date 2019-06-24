@@ -125,7 +125,7 @@ public class MainActivity extends Activity {
     private int b;
     private static FirebaseAnalytics FirebaseAnalytics;
     private static FirebaseDatabase firebaseDatabase;// = FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    private static DatabaseReference databaseReference;
+    private static DatabaseReference databaseReference;// = firebaseDatabase.getReference("main");
 
 
     public static OBGroup armPointer() {
@@ -161,15 +161,23 @@ public class MainActivity extends Activity {
         FirebaseAnalytics.logEvent(p, bundle);
     }
 
+//    public static void keepsynced(int ){
+//        databaseReference.child(DeviceID).child(username).keepSynced(true);
+//    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        firebaseDatabase.setPersistenceEnabled(true);
-//        DatafirebaseDatabase.getInstance().getReference().
-//
-//        databaseReference.child(DeviceID).child(username).keepSynced(true);
+//        if (firebaseDatabase == null) {
+//            firebaseDatabase = FirebaseDatabase.getInstance();
+//            firebaseDatabase.setPersistenceEnabled(true);
+//        }
+//       // firebaseDatabase.setPersistenceEnabled(true);
+//       // DatafirebaseDatabase.getInstance().getReference().
+//        String DeviceID = OBSystemsManager.sharedManager.device_getUUID();
+//        databaseReference.child(DeviceID).keepSynced(true);
 
         SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;

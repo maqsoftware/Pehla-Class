@@ -25,11 +25,6 @@ import com.maq.xprize.onecourse.hindi.mainui.OBSectionController;
 
 
 public class Firebase {
-    private static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-
-    private static DatabaseReference databaseReference = firebaseDatabase.getReference("main");
-
-    private static DatabaseReference module_child;
 
     static User user = new User();   // its the user object that is being created using User.java. It contain the getter and setter.
     static OC_User CurrrentUser = new OC_User();
@@ -44,10 +39,17 @@ public class Firebase {
     private static long lastendTime;
     private static String lastModule;
     private static int userIID;
-    private static String DeviceID;
+    private static String DeviceID = OBSystemsManager.sharedManager.device_getUUID();
 
     private static long f;  /// for the testing perpose.
     private static FirebaseAnalytics FirebaseAnalytics;
+
+    private static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+    private static DatabaseReference databaseReference = firebaseDatabase.getReference("main");
+
+
+    private static DatabaseReference module_child;
 
 
 
@@ -65,8 +67,7 @@ public class Firebase {
 
     public static void getValue(String module,final long startTime, int userid){
         userIID = userid;
-        firebaseDatabase.setPersistenceEnabled(true);
-        databaseReference.child(DeviceID).child(username).keepSynced(true);
+
 //        DBSQL db = new DBSQL(true);
 //        //u = ff.load();//OCM_FatController.lastUserActiveFromDB(db);
 //        //CurrrentUser = OC_FatController.lastUserActiveFromDB(db);
@@ -96,6 +97,9 @@ public class Firebase {
 
         DeviceID = OBSystemsManager.sharedManager.device_getUUID();
 
+//        firebaseDatabase.setPersistenceEnabled(true);
+//        databaseReference.child(DeviceID).child(username).keepSynced(true);
+        databaseReference.keepSynced(true);
 
         databaseReference.child(DeviceID).child(username).child(module).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
