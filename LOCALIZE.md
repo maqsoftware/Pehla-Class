@@ -2,9 +2,9 @@
 
 
 ## Process
-There are 8 key steps to localize onecourse. We work with local liguistic experts at each stage:
+There are 8 key steps to localize onecourse. We work with local linguistic experts at each stage:
 
-1. **Analyse target language and culture**. Examine the target language, and build a clear description of it, including: linguistic structure, alphabet, phonetic structure, order and frequency of graphemes, list of high frequency words, set of common first and last names.  Carry out a comprehensive analysis to understand the target area, in order to culturally adapt the course to that specific geographical area.
+1. **Analyse target language and culture**. Examine the target language, and build a clear description of it, including: linguistic structure, alphabet, phonetic structure, order and frequency of grapheme, list of high frequency words, set of common first and last names.  Carry out a comprehensive analysis to understand the target area, in order to culturally adapt the course to that specific geographical area.
 2. **Cross check target language**. Check the description of the new language against our existing learning activities. Develop new components or modes, if beneficial to the child.
 3. **Story selection**. Select appropriate stories from our extensive book library, and write or curate further stories as required.
 4. **Translation**. Translate the full database of words, instruction scripts for each activity, chosen stories, and numeracy learning units.
@@ -42,7 +42,7 @@ Each `letter` has a unique id and an optional set of `tags`. Possible values for
 ```
 
 ### 2. Phonemes, syllables and words
-The file `assets/oc-literacy-gen/local/LOCALE/wordcomponents.xml` defines the key phonemes, consonant clusters and syllables present in the language. It also contains a curated set of high-frequency and culturally specfic words for learning the language.
+The file `assets/oc-literacy-gen/local/LOCALE/wordcomponents.xml` defines the key phonemes, consonant clusters and syllables present in the language. It also contains a curated set of high-frequency and culturally specific words for learning the language.
 
 Each `phoneme` has a unique `id` with the prefix `is`. In Swahili, the phonemes _a, th_ and _ng'_ are represented like this:
 
@@ -93,7 +93,7 @@ For each `word`, an optional _.png_ image exists. In Swahili, the words _mbu, ki
 
 ### 4. Stories
 Localised stories each have an `id` and reside in `assets/oc-reading/books/xr-[id]/`. Each story has configuration file `book.xml`.
-Presentational apsects of the story are defined on the `book` element. Each `page` contains one or more localised `para`. A `page` can have an optional `picjustify` attribute to specify the page layout.
+Presentational aspects of the story are defined on the `book` element. Each `page` contains one or more localised `para`. A `page` can have an optional `picjustify` attribute to specify the page layout.
 
 In lower level stories, there is a syllable breakdown for each word, delimited by `/`. The title and first page of the _A very tall man_ story in Swahili are represented like this:
 
@@ -109,7 +109,7 @@ In lower level stories, there is a syllable breakdown for each word, delimited b
 ```
 
 
-Every `para` has a corresponding _.m4a_ recorded audio file and an accompanying _.etpa_ file which specifices the start time of each word in the audio file. For example, the breakdown of the first page of the story above can be seen in `p1_1.etpa`:
+Every `para` has a corresponding _.m4a_ recorded audio file and an accompanying _.etpa_ file which specifies the start time of each word in the audio file. For example, the breakdown of the first page of the story above can be seen in `p1_1.etpa`:
 
 
 ```xml
@@ -121,14 +121,20 @@ Every `para` has a corresponding _.m4a_ recorded audio file and an accompanying 
 …
 ```
 
-Each word within a `para` is also individually recorded, along with a version split into syllables for lower-level stories.
-Use [PhraseAnal](https://github.com/XPRIZE/GLEXP-Team-onebillion-PhraseAnal), to assist with generating _.etpa_ files from audio files.
+Each word within a `para` is also individually recorded, along with a version split into syllables for lower-level stories.  
+
+The English transcripts for stories are stored in `assets/transcripts/oc-reading/xr-[id]/english`. Create transcripts for local language and store them in `assets/transcripts/oc-reading/xr-[id]/LOCALE`. Generate audio files in local language and accent from these locale-specific transcripts by using [Amazon Polly](https://docs.aws.amazon.com/polly/latest/dg/what-is.html).  
+**Note:** Check for the languages supported by Amazon Polly [here](https://docs.aws.amazon.com/polly/latest/dg/voicelist.html).
+
+After the audio files have been generated, use [Amazon Polly's Speech Marks](https://docs.aws.amazon.com/polly/latest/dg/speechmarkexamples.html), to assist with generating _.txt_ files from transcripts. Create a custom script to generate _.etpa_ files from the text files generated by Amazon Polly.
 
 
 ### 5. Component audio
 Component localizations consist of a set of _.m4a_ recorded audio files. The file names tend to correspond to the english localization.
 For example in the numeracy component _Add and subtract_, `assets/oc-addsubtract/local/sw/q_sevenbees.m4a` is the Swahili translation of the phrase _"Seven bees"_. In the reading component _Making plurals_, `assets/oc-makingplurals/local/en_GB/mp2_goodtheyreinorder.m4a` is the english recording of _"Good, they are in order"_.
-We have provided mappings of all English audio to _.m4a_ filenames. These are xml files inside the `assets/localization` directory.
+We have provided mappings of all English audio to _.m4a_ filenames. These are xml files inside the `assets/localization` directory.  
+
+The English transcripts for all the audio files of a specific module are stored in `assets/transcripts/MODULE/english`. Create transcripts for local language and store them in `assets/transcripts/MODULE/LOCALE`. Generate audio files in local language and accent from these locale-specific transcripts by using [Amazon Polly](https://docs.aws.amazon.com/polly/latest/dg/what-is.html).
 
 
 ### 6. Learning journey
@@ -173,7 +179,7 @@ A `learning unit` has the following parameters:
 
 - `id` unique identifier.
 - `target` component the unit is using.
-- `param` list of component-specfic parameters in `key=value` form, each delimited by `/`.
+- `param` list of component-specific parameters in `key=value` form, each delimited by `/`.
 - `config` configuration directory for audio and video assets used by the component.
 - `lang` language pack to be used.
 - `targetDuration` upper bound on the time to should take an average child to complete the unit.
