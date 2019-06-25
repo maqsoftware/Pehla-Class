@@ -1,6 +1,7 @@
 package com.maq.xprize.onecourse.hindi.controls;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -23,7 +24,7 @@ public class OBCharacter
 
     public void showAnatomy(String parent,String chp,int idx)
     {
-        String targetId = String.format("%s%d",chp,idx);
+        String targetId = String.format(Locale.US, "%s%d",chp,idx);
         showOnly(targetId, (OBGroup) control.objectDict.get(parent));
         control.needsRetexture = true;
         control.invalidate();

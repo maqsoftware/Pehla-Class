@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 02/08/16.
@@ -47,13 +48,13 @@ public class OC_CountMore_S1n extends OC_SectionController
         float fontSize = 70.0f * stop.height()/338.0f;
         for(int i=0; i<5; i++)
         {
-            OBLabel label = new OBLabel(String.format("%d",i+1), font,fontSize);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",i+1), font,fontSize);
             label.setColour(Color.BLACK);
             attachControl(label);
             label.hide();
             labels.add(label);
 
-            OBGroup child = (OBGroup)objectDict.get(String.format("child_%d",i+1));
+            OBGroup child = (OBGroup)objectDict.get(String.format(Locale.US,"child_%d",i+1));
             child.setAnchorPoint(new PointF(0.5f, 1));
             PointF loc = OC_Generic.copyPoint(child.position());
             loc.y = bottomLoc;

@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBAnimationGroup;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBUtils.SimplePath;
 import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.PointDistance;
@@ -35,7 +36,7 @@ public class OC_Counting7To10_S4 extends OC_Generic_DragNumbersToSlots
         int audio_index = 1;
         for (int i = 0; i < 4; i++)
         {
-            OBControl dots = objectDict.get(String.format("dots_%d", i + 7));
+            OBControl dots = objectDict.get(String.format(Locale.US,"dots_%d", i + 7));
             OC_Generic.pointer_moveToObject(dots, -25, 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM, OC_Generic.Anchor.ANCHOR_LEFT), true, this);
             waitForSecs(0.3f);
             //
@@ -47,8 +48,8 @@ public class OC_Counting7To10_S4 extends OC_Generic_DragNumbersToSlots
             waitAudio();
             waitForSecs(0.3f);
             //
-            OBControl number = objectDict.get(String.format("number_%d", i + 1));
-            OBControl box = objectDict.get(String.format("box_%d", i + 1));
+            OBControl number = objectDict.get(String.format(Locale.US,"number_%d", i + 1));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d", i + 1));
             OC_Generic.pointer_moveToObject(box, -5, 0.6f - i * 0.1f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), false, this);
             //
             lockScreen();
@@ -63,7 +64,7 @@ public class OC_Counting7To10_S4 extends OC_Generic_DragNumbersToSlots
         }
         for (int i = 1; i <= 4; i++)
         {
-            OBControl number = objectDict.get(String.format("number_%d", i));
+            OBControl number = objectDict.get(String.format(Locale.US,"number_%d", i));
             PointF originalPosition = (PointF) number.propertyValue("originalPosition");
             float distance = PointDistance(number.position(), originalPosition);
             Path path = SimplePath(number.position(), originalPosition, -distance / 5);

@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -100,7 +101,7 @@ public class OC_Count100_S2 extends OC_SectionController
 
     public String currentPhase()
     {
-        return String.format("%s-%d",currentEvent(), currentIndex);
+        return String.format(Locale.US,"%s-%d",currentEvent(), currentIndex);
     }
 
 
@@ -256,7 +257,7 @@ public class OC_Count100_S2 extends OC_SectionController
     private void checkObject(OBControl obj) throws Exception
     {
         int targetNum = Integer.valueOf(nums.get(currentIndex-1));
-        if(obj == objectDict.get(String.format("box_%d",targetNum)))
+        if(obj == objectDict.get(String.format(Locale.US,"box_%d",targetNum)))
         {
             animateSelection(targetNum);
             nextPhase();
@@ -279,11 +280,11 @@ public class OC_Count100_S2 extends OC_SectionController
     public void animateSelection(int targetNum) throws Exception
     {
         gotItRightBigTick(false);
-        OBControl obj = objectDict.get(String.format("box_%d",targetNum));
+        OBControl obj = objectDict.get(String.format(Locale.US,"box_%d",targetNum));
         obj.setBackgroundColor ( hiliteColour);
         waitSFX();
 
-        OBLabel boxNum = (OBLabel)objectDict.get(String.format("num_%d",targetNum));
+        OBLabel boxNum = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d",targetNum));
 
         OBAnimationGroup.runAnims(Arrays.asList(OBAnim.colourAnim("backgroundColor",Color.WHITE,obj),OBAnim.colourAnim("colour",numPaintColour,boxNum)),0.25,true,OBAnim.ANIM_LINEAR,this);
 

@@ -1,9 +1,30 @@
 <resources>
-    <string name="device_admin_label">onebillion</string>
-    <string name="device_admin_description">Admin Device Policies Description</string>
     <string name="content_extraction_hindi" translatable="false">यह प्रक्रिया केवल एक बार की जाएगी। इसमें १० मिनट तक का समय लग सकता है।</string>
     <string name="content_extraction_english" translatable="false">This process will be done only once. It can take up to 10 minutes.</string>
     <string name="defaultPercentText">0 %</string>
     <string name="mainFileVersion">mainFileVersion</string>
     <string name="patchFileVersion">patchFileVersion</string>
+    <string name="todo">TODO</string>
+    <string name="back">back</string>
+    <string name="button">Button</string>
+    <string name="textview">TextView</string>
+    <string name="diagnostics_console">Diagnostics Console</string>
+    <string name="run_diagnostics">Run Diagnostics</string>
+    <string name="total_runs">Total Runs</string>
+    <string name="wrong_answers">Wrong Answers</string>
+    <string name="_888">888</string>
+    <string name="_00_00">00:00</string>
+    <string name="run_tests">Run Tests</string>
+    <string name="_0000">0000</string>
+    <string name="spin_like_a_record">SPIN LIKE A RECORD</string>
+    <string name="disable_administrator_privileges">Disable Administrator Privileges</string>
+    <string name="kill_services">Kill Services</string>
+    <string name="shutdown">Shutdown</string>
+    <string name="upload_backup">Upload Backup</string>
+    <string name="skip">SKIP</string>
+    <string name="new_day">new day</string>
+    <string name="reset">RESET</string>
+    <string name="playzone">Playzone</string>
+    <string name="next">Next</string>
+    <string name="cause_crash">Cause Crash</string>
 </resources>

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -187,7 +188,7 @@ public class OC_CountMore_S1 extends OC_SectionController
         List<OBAnim> anims = new ArrayList<>();
         for(int i = 1; i<=filterControls("child_.*").size(); i++)
         {
-            final OBGroup child = (OBGroup)objectDict.get(String.format("child_%d", i));
+            final OBGroup child = (OBGroup)objectDict.get(String.format(Locale.US,"child_%d", i));
             float duration =  Float.valueOf((String)child.attributes().get("duration"));
             float end = 0.72f + 0.06f*(i-1);
 
@@ -321,7 +322,7 @@ public class OC_CountMore_S1 extends OC_SectionController
         {
             setSceneXX(String.format("%s_child_%s", currentEvent(), num));
             if(!audioPlayed)
-                playAudioQueued((List<Object>)(Object)Arrays.asList(getAudioForScene("sfx","walk").get(0),new Integer(100)), false, -1);
+                playAudioQueued((List<Object>)(Object)Arrays.asList(getAudioForScene("sfx","walk").get(0),100), false, -1);
 
             audioPlayed= true;
             String childName = String.format("child_%s", num);
@@ -429,7 +430,7 @@ public class OC_CountMore_S1 extends OC_SectionController
             OBGroup shield = (OBGroup)orgShield.copy();
             shield.setScale(scale);
             OBPath path = (OBPath)shield.objectDict.get("place");
-            path.setFillColor(eventColours.get(String.format("place%d",place)));
+            path.setFillColor(eventColours.get(String.format(Locale.US,"place%d",place)));
             shield.show();
             attachControl(shield);
             OBMisc.insertLabelIntoGroup(shield,place,75.0f*shield.height()/95.0f, Color.BLACK,shield.getWorldPosition(),this);
@@ -476,7 +477,7 @@ public class OC_CountMore_S1 extends OC_SectionController
     {
         for(int i=0; i<nums.size(); i++)
         {
-            OBGroup child= (OBGroup)objectDict.get(String.format("place_child_%d", nums.get(i)));
+            OBGroup child= (OBGroup)objectDict.get(String.format(Locale.US,"place_child_%d", nums.get(i)));
             hiliteClothes(child,true,this);
             playAudioScene("DEMO",i,true);
             waitForSecs(0.3f);

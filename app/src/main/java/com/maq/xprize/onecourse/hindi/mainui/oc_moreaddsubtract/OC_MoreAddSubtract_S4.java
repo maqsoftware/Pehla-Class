@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -404,7 +405,7 @@ public class OC_MoreAddSubtract_S4 extends OC_SectionController
         OC_Numberlines_Additions.resetNumberLine(false, false, this);
         if(currentIndex >= 8)
         {
-            PointF firstLoc = objectDict.get(String.format("divline_%d", startNum)).position();
+            PointF firstLoc = objectDict.get(String.format(Locale.US,"divline_%d", startNum)).position();
             float dest;
             if(subtractMode)
                 dest = objectDict.get("numberline").right() - firstLoc.x;
@@ -450,7 +451,7 @@ public class OC_MoreAddSubtract_S4 extends OC_SectionController
                 OC_Numberlines_Additions.getLabelForEquation(3,(OBGroup)objectDict.get("equation")).show();
             }
             OBLabel label = OC_Numberlines_Additions.getLabelForEquation(3,(OBGroup)objectDict.get("equation"));
-            label.setString(String.format("%d", currentIndex));
+            label.setString(String.format(Locale.US,"%d", currentIndex));
             unlockScreen();
         }
         waitSFX();
@@ -483,7 +484,7 @@ public class OC_MoreAddSubtract_S4 extends OC_SectionController
             for(int i = startNum; i > startNum-9; i--)
             {
                 playSfxAudio("objectson",false);
-                objectDict.get(String.format("num_%d",i)).show();
+                objectDict.get(String.format(Locale.US,"num_%d",i)).show();
                 waitSFX();
                 waitForSecs(0.1f);
             }
@@ -493,7 +494,7 @@ public class OC_MoreAddSubtract_S4 extends OC_SectionController
             for(int i = startNum; i < startNum+9; i++)
             {
                 playSfxAudio("objectson",false);
-                objectDict.get(String.format("num_%d",i)).show();
+                objectDict.get(String.format(Locale.US,"num_%d",i)).show();
                 waitSFX();
                 waitForSecs(0.1f);
             }
@@ -503,7 +504,7 @@ public class OC_MoreAddSubtract_S4 extends OC_SectionController
 
     public void pointerPointEquation(OBGroup equation, int at, String audio, float duration) throws Exception
     {
-        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format("part%d",at)).getWorldFrame());
+        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format(Locale.US,"part%d",at)).getWorldFrame());
         point.y = equation.bottom() + equation.height()*0.2f;
         movePointerToPoint(point,-15,duration,true);
         OC_Numberlines_Additions.colourEquation(equation,at,at,Color.RED,this);

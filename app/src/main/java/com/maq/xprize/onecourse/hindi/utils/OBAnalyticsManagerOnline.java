@@ -2,21 +2,19 @@ package com.maq.xprize.onecourse.hindi.utils;
 
 import android.app.Activity;
 import android.graphics.PointF;
+import android.location.Location;
+import android.os.Environment;
+import android.os.StatFs;
 
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 import com.maq.xprize.onecourse.hindi.mainui.oc_playzone.OC_PlayZoneAsset;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
-import android.location.Location;
-import android.os.Environment;
-import android.os.StatFs;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -213,7 +211,8 @@ public class OBAnalyticsManagerOnline extends OBAnalyticsManager
     {
         Map<String, Object> parameters = new HashMap();
         //
-        Location loc = OBLocationManager.sharedManager.getLastKnownLocation();
+//        Location loc = OBLocationManager.sharedManager.getLastKnownLocation();
+        Location loc = null;
         if (loc != null)
         {
             parameters.put(OBAnalytics.Params.DEVICE_GPS_LATITUDE, Double.valueOf(loc.getLatitude()));

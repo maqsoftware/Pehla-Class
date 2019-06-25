@@ -20,6 +20,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 11/05/2017.
@@ -249,7 +250,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
             {
                 if(currentJump != startNum)
                 {
-                    String audioName = String.format("INCORRECT%d", Math.abs(currentJump-startNum)+1);
+                    String audioName = String.format(Locale.US,"INCORRECT%d", Math.abs(currentJump-startNum)+1);
                     if(getAudioForScene(currentEvent(),audioName) != null)
                     {
                         playAudioQueuedScene(audioName,0.3f,false);
@@ -310,11 +311,11 @@ public class OC_Numberlines_S4n extends OC_SectionController
         {
             if(num > 3 && currentTarget == TARGET_DIV)
                 num = 3;
-            String repeatAudioCat = String.format("PROMPT%d.REPEAT",num);
+            String repeatAudioCat = String.format(Locale.US,"PROMPT%d.REPEAT",num);
             if(getAudioForScene(currentEvent(),repeatAudioCat) != null)
             {
                 repeat = repeatAudioCat;
-                prompt = String.format("PROMPT%d", num);
+                prompt = String.format(Locale.US,"PROMPT%d", num);
             }
             else
             {
@@ -342,8 +343,8 @@ public class OC_Numberlines_S4n extends OC_SectionController
             int index = 1;
             for (int i=startNum+1; i<startNum+9; i++)
             {
-                objectDict.get(String.format("num_%d",i)).show();
-                playSfxAudio(String.format("scale%d",index),true);
+                objectDict.get(String.format(Locale.US,"num_%d",i)).show();
+                playSfxAudio(String.format(Locale.US,"scale%d",index),true);
                 index++;
             }
         }
@@ -352,8 +353,8 @@ public class OC_Numberlines_S4n extends OC_SectionController
             int index = 7;
             for (int i=startNum-1; i>startNum-9; i--)
             {
-                objectDict.get(String.format("num_%d",i)).show();
-                playSfxAudio(String.format("scale%d",index),true);
+                objectDict.get(String.format(Locale.US,"num_%d",i)).show();
+                playSfxAudio(String.format(Locale.US,"scale%d",index),true);
                 index--;
             }
         }
@@ -415,7 +416,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
                     OC_Numberlines_Additions.drawCurveLine(i,false,true,this);
                 }
             }
-            OBPath lastCurve = (OBPath)objectDict.get(String.format("curveline_%d",jumpNum > startNum ? jumpNum-1 : jumpNum +1));
+            OBPath lastCurve = (OBPath)objectDict.get(String.format(Locale.US,"curveline_%d",jumpNum > startNum ? jumpNum-1 : jumpNum +1));
             lastCurve.sizeToBox(new RectF(this.bounds()));
             objectDict.get("arrowhead").setPosition(lastCurve.lastPoint());
             objectDict.get("arrowhead").setRotation((float)Math.toRadians(180));
@@ -445,12 +446,12 @@ public class OC_Numberlines_S4n extends OC_SectionController
     public void showBoxes() throws Exception
     {
         int index = 1;
-        OBControl cont = objectDict.get(String.format("eqbox_%d",index));
+        OBControl cont = objectDict.get(String.format(Locale.US,"eqbox_%d",index));
         while(cont != null)
         {
             cont.show();
             playSfxAudio("sum_appear",true);
-            cont = objectDict.get(String.format("eqbox_%d",++index));
+            cont = objectDict.get(String.format(Locale.US,"eqbox_%d",++index));
         }
     }
 
@@ -475,7 +476,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
     public void colourLineLabel(int num, int colour, boolean equation)
     {
         lockScreen();
-        OBGroup group = (OBGroup)objectDict.get(String.format("linelabel_%d",num));
+        OBGroup group = (OBGroup)objectDict.get(String.format(Locale.US,"linelabel_%d",num));
         ((OBLabel)group.objectDict.get("eqLabel")).setColour(colour);
         ((OBLabel)group.objectDict.get("numLabel")).setColour(colour);
         if(equation)
@@ -486,14 +487,14 @@ public class OC_Numberlines_S4n extends OC_SectionController
     public void colourNum(int num, int part, int colour)
     {
         lockScreen();
-        ((OBLabel)objectDict.get(String.format("num_%d",num))).setColour(colour);
+        ((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",num))).setColour(colour);
         OC_Numberlines_Additions.colourEquation((OBGroup)objectDict.get("animbox"),part,part,colour,this);
         unlockScreen();
     }
 
     public void pointerPointEquation(OBGroup equation, int from, int to, List<String> audio, float duration, float wait) throws Exception
     {
-        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format("part%d",to)).getWorldFrame());
+        PointF point = OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format(Locale.US,"part%d",to)).getWorldFrame());
         point.y = equation.bottom() + equation.height()*0.2f;
         movePointerToPoint(point,-20,duration,true);
         OC_Numberlines_Additions.colourEquation(equation,from,to,Color.BLACK,this);
@@ -526,11 +527,11 @@ public class OC_Numberlines_S4n extends OC_SectionController
             pointerPointEquation((OBGroup)objectDict.get("equation"),1,1,Arrays.asList(getAudioForScene(currentEvent(),"DEMO").get(audioStart+4)),0.3f,0.5f);
         }
         playAudioScene("DEMO",audioStart+5,false);
-        movePointerToPoint(OB_Maths.locationForRect(0.6f,1.2f,objectDict.get(String.format("num_%d",startNum)).frame())
+        movePointerToPoint(OB_Maths.locationForRect(0.6f,1.2f,objectDict.get(String.format(Locale.US,"num_%d",startNum)).frame())
                 ,startNum<targetNum ? -35 : -15,1f,true);
         waitForAudio();
         waitForSecs(0.3f);
-        objectDict.get(String.format("num_%d",startNum)).show();
+        objectDict.get(String.format(Locale.US,"num_%d",startNum)).show();
         playSfxAudio(startNum<targetNum ? "scale0" : "scale8",true);
         waitForSecs(0.3f);
         thePointer.hide();
@@ -585,7 +586,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
         waitForSecs(0.3f);
         for(int i=4; i<8; i++)
         {
-            moveScenePointer(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format("linelabel_%d",i+10)).frame()),-30,0.35f,"DEMO",i,0.1f);
+            moveScenePointer(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format(Locale.US,"linelabel_%d",i+10)).frame()),-30,0.35f,"DEMO",i,0.1f);
         }
         moveScenePointer(OB_Maths.locationForRect(0.6f,1.1f,objectDict.get("num_18").frame()),-40,0.5f,"DEMO",8,0.3f);
         waitForSecs(0.5f);
@@ -629,7 +630,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
         playAudioScene("FINAL",0,true);
         waitForSecs(0.3f);
         loadPointer(POINTER_LEFT);
-        movePointerToPoint(OB_Maths.locationForRect(0.6f,1.1f,objectDict.get(String.format("num_%d",startNum)).frame()),startNum<targetNum ? -40:-15,0.5f,true);
+        movePointerToPoint(OB_Maths.locationForRect(0.6f,1.1f,objectDict.get(String.format(Locale.US,"num_%d",startNum)).frame()),startNum<targetNum ? -40:-15,0.5f,true);
         colourNum(startNum,1,Color.RED);
         playAudioScene("FINAL",1,true);
         colourNum(startNum,1,Color.BLACK);
@@ -641,7 +642,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
         {
             for(int i=startNum; i<targetNum; i++)
             {
-                movePointerToPoint(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format("linelabel_%d",i)).frame()),
+                movePointerToPoint(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format(Locale.US,"linelabel_%d",i)).frame()),
                         startNum<targetNum ? -30:-22,0.35f,true);
                 colourLineLabel(i,Color.RED, i == (targetNum-1) ? true : false);
                 playAudioScene("FINAL",index++,true);
@@ -654,7 +655,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
         {
             for(int i=startNum; i>targetNum; i--)
             {
-                movePointerToPoint(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format("linelabel_%d",i)).frame()),
+                movePointerToPoint(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format(Locale.US,"linelabel_%d",i)).frame()),
                         startNum<targetNum ? -30:-22,0.35f,true);
                 colourLineLabel(i,Color.RED, i == (targetNum+1) ? true : false);
                 playAudioScene("FINAL",index++,true);
@@ -666,7 +667,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
         OC_Numberlines_Additions.colourEquation((OBGroup)objectDict.get("animbox"),4,4,Color.RED,this);
         playAudioScene("FINAL",index++,true);
         OC_Numberlines_Additions.colourEquation((OBGroup)objectDict.get("animbox"),4,4,Color.BLACK,this);
-        movePointerToPoint(OB_Maths.locationForRect(0.6f,1.1f,objectDict.get(String.format("num_%d",targetNum)).frame()),
+        movePointerToPoint(OB_Maths.locationForRect(0.6f,1.1f,objectDict.get(String.format(Locale.US,"num_%d",targetNum)).frame()),
                 startNum<targetNum ? -40:-15,0.5f,true);
         colourNum(targetNum,5,Color.RED);
         playAudioScene("FINAL",index++,true);
@@ -696,7 +697,7 @@ public class OC_Numberlines_S4n extends OC_SectionController
         waitForSecs(0.3f);
         for(int i=3; i<6; i++)
         {
-            moveScenePointer(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format("linelabel_%d",13-i)).frame()),-25,0.35f,"DEMO",i,0.1f);
+            moveScenePointer(OB_Maths.locationForRect(0.6f,2f,objectDict.get(String.format(Locale.US,"linelabel_%d",13-i)).frame()),-25,0.35f,"DEMO",i,0.1f);
         }
         moveScenePointer(OB_Maths.locationForRect(0.6f,1.1f,objectDict.get("num_7").frame()),-20,0.5f,"DEMO",6,0.5f);
         thePointer.hide();

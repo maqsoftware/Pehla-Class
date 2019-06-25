@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -166,7 +167,7 @@ public class OC_Count100_S2j extends OC_SectionController
 
         }else if (status() == STATUS_AWAITING_CLICK)
         {
-            OBControl c =finger(0,0,Arrays.asList(objectDict.get(String.format("box_%d",currentIndex))),pt);
+            OBControl c =finger(0,0,Arrays.asList(objectDict.get(String.format(Locale.US,"box_%d",currentIndex))),pt);
             if(c != null)
             {
                 setStatus(STATUS_BUSY);
@@ -289,13 +290,13 @@ public class OC_Count100_S2j extends OC_SectionController
 
     public String currentPhase()
     {
-        return String.format("%s-%d",currentEvent(), currentIndex);
+        return String.format(Locale.US,"%s-%d",currentEvent(), currentIndex);
     }
 
 
     public void checkTargetClick() throws Exception
     {
-        objectDict.get(String.format("num_%d",currentIndex)).show();
+        objectDict.get(String.format(Locale.US,"num_%d",currentIndex)).show();
         OC_Count100_Additions.playNumberAudio(currentIndex,false,this);
         if(currentIndex == 1)
         {
@@ -346,7 +347,7 @@ public class OC_Count100_S2j extends OC_SectionController
         List<OBAnim> arr = new ArrayList<>();
         for(Integer num : nums)
         {
-            arr.add(OBAnim.colourAnim("backgroundColor",colour,objectDict.get(String.format("box_%d",num))));
+            arr.add(OBAnim.colourAnim("backgroundColor",colour,objectDict.get(String.format(Locale.US,"box_%d",num))));
         }
         return arr;
     }
@@ -398,7 +399,7 @@ public class OC_Count100_S2j extends OC_SectionController
 
 
             if(!performSel("demoFin",currentEvent())){
-                performSel("demoFin",String.format("%s%d",currentEvent(),currentIndex));
+                performSel("demoFin",String.format(Locale.US,"%s%d",currentEvent(),currentIndex));
             };
             waitForSecs(0.3f);
             clearDragNum(target);
@@ -540,7 +541,7 @@ public class OC_Count100_S2j extends OC_SectionController
         playSfxAudio("reset_grid",false);
         for(int i =50; i>0; i--)
         {
-            objectDict.get(String.format("num_%d", i)).hide();
+            objectDict.get(String.format(Locale.US,"num_%d", i)).hide();
             waitForSecs(0.01f);
         }
         waitSFX();
@@ -565,7 +566,7 @@ public class OC_Count100_S2j extends OC_SectionController
         String[] nums = ((String)cover.attributes().get("num")).split(",");
         String firstnum = nums[0];
         List<String> fullList = new ArrayList<>();
-        fullList.add(String.format("%d",Integer.valueOf(firstnum)-1));
+        fullList.add(String.format(Locale.US,"%d",Integer.valueOf(firstnum)-1));
         fullList.addAll(Arrays.asList(nums));
         demoCount(fullList);
         thePointer.hide();
@@ -586,7 +587,7 @@ public class OC_Count100_S2j extends OC_SectionController
         waitForSecs(0.3f);
 
         List<String> fullList = new ArrayList<>();
-        fullList.add(String.format("%d",Integer.valueOf(firstnum)-10));
+        fullList.add(String.format(Locale.US,"%d",Integer.valueOf(firstnum)-10));
         fullList.addAll(Arrays.asList(nums));
         demoCount(fullList);
         thePointer.hide();
@@ -595,10 +596,10 @@ public class OC_Count100_S2j extends OC_SectionController
     public void demoBox(int num,int audio)throws Exception
     {
         loadPointer(POINTER_MIDDLE);
-        movePointerToPoint(OB_Maths.locationForRect(new PointF(0.6f, 0.9f), objectDict.get(String.format("box_%d",num)).getWorldFrame()),0.5f,true);
+        movePointerToPoint(OB_Maths.locationForRect(new PointF(0.6f, 0.9f), objectDict.get(String.format(Locale.US,"box_%d",num)).getWorldFrame()),0.5f,true);
         playAudioScene(currentPhase(),"FINAL",audio);
         waitAudio();
-        movePointerToPoint(OB_Maths.locationForRect(new PointF(0.6f, 0.9f), objectDict.get(String.format("box_%d",num-1)).getWorldFrame()),0.2f,true);
+        movePointerToPoint(OB_Maths.locationForRect(new PointF(0.6f, 0.9f), objectDict.get(String.format(Locale.US,"box_%d",num-1)).getWorldFrame()),0.2f,true);
         waitForSecs(0.3f);
         thePointer.hide();
 

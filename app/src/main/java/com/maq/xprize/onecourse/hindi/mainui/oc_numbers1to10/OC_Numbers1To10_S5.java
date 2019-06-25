@@ -4,6 +4,7 @@ import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 12/07/16.
@@ -37,7 +38,7 @@ public class OC_Numbers1To10_S5 extends OC_Numbers1To10_S4
         //
         for (int i = 1; i <= 7; i++)
         {
-            OC_Generic.pointer_moveToObjectByName(String.format("obj_%d", i), (i < 4) ? -25+5*i : -20+5*i, (i == 1 || i == 4) ? 0.6f : 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
+            OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"obj_%d", i), (i < 4) ? -25+5*i : -20+5*i, (i == 1 || i == 4) ? 0.6f : 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
             action_playNextDemoSentence(true); // One. Two. Three. Four. Five. Six. Seven
         }
         action_playNextDemoSentence(false); // Seven flowers altogether.

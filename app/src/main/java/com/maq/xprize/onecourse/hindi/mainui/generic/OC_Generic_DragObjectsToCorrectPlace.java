@@ -7,6 +7,7 @@ import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * OC_Generic_DragObjectsToCorrectPlace
@@ -51,7 +52,7 @@ public class OC_Generic_DragObjectsToCorrectPlace extends OC_Generic_Event
         playAudioQueuedSceneIndex(currentEvent(), "CORRECT", number, false);
         waitForSecs(0.1);
         //
-        OBControl platform = objectDict.get(String.format("platform_%d", number));
+        OBControl platform = objectDict.get(String.format(Locale.US,"platform_%d", number));
         action_animatePlatform(platform, false);
     }
 

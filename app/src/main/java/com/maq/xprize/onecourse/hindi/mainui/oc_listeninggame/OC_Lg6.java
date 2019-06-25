@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -176,7 +177,7 @@ public class OC_Lg6 extends OC_Lg
         }
         String sign = addMode ? "+" : "–";
         OBPath eqBox =(OBPath) objectDict.get("eq_box");
-        OC_Numberlines_Additions.loadEquation(String.format("%d %s %d = %d",num1,sign,num2,result) ,"equation",eqBox,eqColour,false,this);
+        OC_Numberlines_Additions.loadEquation(String.format(Locale.US,"%d %s %d = %d",num1,sign,num2,result) ,"equation",eqBox,eqColour,false,this);
         currentEquation =(OBGroup) objectDict.get("equation");
         currentEquation.setZPosition(5);
         if(currentEquation.width() > 0.85*eqBox.width())
@@ -200,7 +201,7 @@ public class OC_Lg6 extends OC_Lg
         List<OBPhoneme> arr = new ArrayList<>();
         for(int i=from; i<=to; i++)
         {
-            String number = String.format("%d",i);
+            String number = String.format(Locale.US,"%d",i);
             if(number.length() > maxNumberLength)
                 maxNumberLength =  number.length();
             OBPhoneme pho = new OBPhoneme(number,number);

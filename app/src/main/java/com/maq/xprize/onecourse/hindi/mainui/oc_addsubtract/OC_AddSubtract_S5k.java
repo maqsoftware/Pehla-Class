@@ -21,6 +21,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -125,7 +126,7 @@ public class OC_AddSubtract_S5k extends OC_SectionController
             if(targetNumber == 6)
                 movePreviousEquations();
             gotItRight();
-            OBGroup equation = (OBGroup)objectDict.get(String.format("equation_%d",targetNumber));
+            OBGroup equation = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",targetNumber));
             OC_Numberlines_Additions.colourEquation(equation,1,5,Color.RED,this);
             equation.show();
             playAudioQueuedScene("FINAL",0.3f,true);
@@ -150,7 +151,7 @@ public class OC_AddSubtract_S5k extends OC_SectionController
 
     public void setCircle(int num,int colour)
     {
-        OBPath control = (OBPath)objectDict.get(String.format("num_%d",num));
+        OBPath control = (OBPath)objectDict.get(String.format(Locale.US,"num_%d",num));
         control.setFillColor(colour);
 
     }
@@ -165,7 +166,7 @@ public class OC_AddSubtract_S5k extends OC_SectionController
         List<OBAnim> anims = new ArrayList<>();
         for(int i=1; i<6; i++)
         {
-            OBGroup eq = (OBGroup)objectDict.get(String.format("equation_%d",i));
+            OBGroup eq = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",i));
             PointF loc = OBMisc.copyPoint(eq.position());
             loc.x -= bounds().width();
             anims.add(OBAnim.moveAnim(loc,eq));

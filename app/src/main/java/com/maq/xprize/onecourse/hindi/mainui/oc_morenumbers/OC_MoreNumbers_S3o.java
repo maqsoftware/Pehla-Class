@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -62,8 +63,8 @@ public class OC_MoreNumbers_S3o extends OC_SectionController
         {
             float xLoc = xLocs.get(i%3) ;
             float yLoc = yLocs.get((int)Math.round(Math.floor(i/3))) ;
-            oddLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format("box_%d", 1)).getWorldFrame()));
-            evenLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format("box_%d", 2)).getWorldFrame()));
+            oddLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format(Locale.US,"box_%d", 1)).getWorldFrame()));
+            evenLocs.add(OB_Maths.locationForRect(xLoc,yLoc,objectDict.get(String.format(Locale.US,"box_%d", 2)).getWorldFrame()));
 
         }
         textcolour = OBUtils.colorFromRGBString(eventAttributes.get("textcolour"));
@@ -292,7 +293,7 @@ public class OC_MoreNumbers_S3o extends OC_SectionController
         boolean inBox = false;
         for(int j=1 ; j<=2; j++)
         {
-            if(objectDict.get(String.format("box_%d",j)).getWorldFrame().contains(label.position().x, label.position().y))
+            if(objectDict.get(String.format(Locale.US,"box_%d",j)).getWorldFrame().contains(label.position().x, label.position().y))
             {
                 inBox = true;
                 PointF targetPoint = null;
@@ -357,7 +358,7 @@ public class OC_MoreNumbers_S3o extends OC_SectionController
             OC_MoreNumbers_Additions.buttonSet(0, this);
 
         }
-        performSel("demo",String.format("%s%d",currentEvent(),currentPhase));
+        performSel("demo",String.format(Locale.US,"%s%d",currentEvent(),currentPhase));
         OBMisc.doSceneAudio(4,getPhase(),currentPhase==1?setStatus(STATUS_AWAITING_CLICK): setStatus(STATUS_WAITING_FOR_DRAG),this);
     }
 
@@ -430,7 +431,7 @@ public class OC_MoreNumbers_S3o extends OC_SectionController
         for(int i=0; i<num.size(); i++)
         {
             int value = (int)num.get(i) ;
-            OBLabel numLabel = new OBLabel(String.format("%d",value),OBUtils.standardTypeFace(),fontSize);
+            OBLabel numLabel = new OBLabel(String.format(Locale.US,"%d",value),OBUtils.standardTypeFace(),fontSize);
             numLabel.setProperty("num_value", value);
             numLabel.setProperty("is_even", value%2 == 0);
             eventTargets.put(value,numLabel);
@@ -471,7 +472,7 @@ public class OC_MoreNumbers_S3o extends OC_SectionController
 
     public String getPhase()
     {
-        return String.format("%s%d", currentEvent(), currentPhase);
+        return String.format(Locale.US,"%s%d", currentEvent(), currentPhase);
 
     }
 
@@ -512,7 +513,7 @@ public class OC_MoreNumbers_S3o extends OC_SectionController
     public void pointerDragNum(int num, int boxNum, String audio) throws Exception
     {
         OBControl label = eventTargets.get(num);
-        OBControl box = objectDict.get(String.format("box_%d", boxNum));
+        OBControl box = objectDict.get(String.format(Locale.US,"box_%d", boxNum));
         movePointerToPoint(OB_Maths.locationForRect(0.6f, 1.1f, box.getWorldFrame())
                 , -30, 0.7f, true);
         playAudio(audio);

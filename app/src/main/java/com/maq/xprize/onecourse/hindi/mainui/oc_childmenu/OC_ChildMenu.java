@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -573,7 +574,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
     {
         for (int i = 1; i <= 10; i++)
         {
-            OBGroup trophy = (OBGroup) objectDict.get(String.format("trophy_%d", i));
+            OBGroup trophy = (OBGroup) objectDict.get(String.format(Locale.US,"trophy_%d", i));
             trophy.setProperty("level", i);
             trophy.setProperty("start_loc", OC_Generic.copyPoint(trophy.position()));
             trophy.show();
@@ -587,7 +588,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         float moveDist = moveLoc.x - objectDict.get("trophy_1").position().x;
         for (int i = 1; i <= 10; i++)
         {
-            OBGroup trophy = (OBGroup) objectDict.get(String.format("trophy_%d", i));
+            OBGroup trophy = (OBGroup) objectDict.get(String.format(Locale.US,"trophy_%d", i));
             trophy.setRight(trophy.right() + moveDist);
         }
     }
@@ -602,7 +603,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
             return new PointF(bounds().width() + 0.5f * con.width(), con.position().y);
         } else
         {
-            OBControl con = objectDict.get(String.format("trophy_%d", 11 - level));
+            OBControl con = objectDict.get(String.format(Locale.US,"trophy_%d", 11 - level));
             PointF loc = (PointF) con.propertyValue("start_loc");
             return loc;
         }
@@ -732,7 +733,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
 
     public OBGroup loadBigTrophy(int level)
     {
-        OBGroup trophy = (OBGroup) objectDict.get(String.format("trophy_%d", level));
+        OBGroup trophy = (OBGroup) objectDict.get(String.format(Locale.US,"trophy_%d", level));
         lockScreen();
         lowlightTrophy(trophy, false);
         OBGroup bigTrophy = (OBGroup) trophy.copy();
@@ -758,7 +759,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
 
         Map<Integer, String> starsDict = fatController.starsForLevel(level);
         OBControl topBar = objectDict.get("top_bar");
-        int barColour = coloursDict.get(String.format("bar_%d", level));
+        int barColour = coloursDict.get(String.format(Locale.US,"bar_%d", level));
         topBar.setProperty("dest_colour", barColour);
         if (show)
             topBar.setFillColor(barColour);
@@ -766,7 +767,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         //int maxStars = MlUnit.awardNumForLevel(level,lastUnitID-1);
         for (int i = 1; i <= 10; i++)
         {
-            OBGroup star = (OBGroup) objectDict.get(String.format("top_bar_star_%d", i));
+            OBGroup star = (OBGroup) objectDict.get(String.format(Locale.US,"top_bar_star_%d", i));
             OBPath path = (OBPath) star.objectDict.get("star");
             String colour = starsDict.get(i);
             if (colour != null)
@@ -784,7 +785,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
 
     public void colourStar(OBGroup star, String colourName)
     {
-        int starColour = coloursDict.get(String.format("star_%s", colourName));
+        int starColour = coloursDict.get(String.format(Locale.US,"star_%s", colourName));
         OBPath path = (OBPath) star.objectDict.get("star");
         path.setFillColor(starColour);
         path.setStrokeColor(OBUtils.highlightedColour(starColour));
@@ -795,8 +796,8 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
     {
         for (int i = 1; i <= 5; i++)
         {
-            OBGroup con = (OBGroup) objectDict.get(String.format("choice_star_%d", i));
-            colourStar(con, String.format("%d", i));
+            OBGroup con = (OBGroup) objectDict.get(String.format(Locale.US,"choice_star_%d", i));
+            colourStar(con, String.format(Locale.US,"%d", i));
         }
     }
 
@@ -825,7 +826,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         List<OBAnim> anims = new ArrayList<>();
         for (int i = 1; i <= 10; i++)
         {
-            final OBGroup star = (OBGroup) objectDict.get(String.format("top_bar_star_%d", 11 - i));
+            final OBGroup star = (OBGroup) objectDict.get(String.format(Locale.US,"top_bar_star_%d", 11 - i));
             final PointF destLoc = OC_Generic.copyPoint(star.position());
             star.setLeft(star.left() - bounds().width());
             final PointF startLoc = OC_Generic.copyPoint(star.position());
@@ -861,7 +862,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         final float destRadius = icon.height() * 0.55f;
         for (int i = 0; i < 10; i++)
         {
-            final OBControl star = objectDict.get(String.format("top_bar_star_%d", 10 - i));
+            final OBControl star = objectDict.get(String.format(Locale.US,"top_bar_star_%d", 10 - i));
             final float startRadius = OB_Maths.PointDistance(star.position(), center);
             final float startAngle = (float) Math.toDegrees(Math.atan2(star.position().y - center.y, star.position().x - center.x));
             final float snapAngle = 36 * i;
@@ -911,7 +912,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         PointF centre = icon.position();
         for (int i = 1; i <= 10; i++)
         {
-            OBControl star = objectDict.get(String.format("top_bar_star_%d", i));
+            OBControl star = objectDict.get(String.format(Locale.US,"top_bar_star_%d", i));
             float destRadius = OB_Maths.PointDistance(star.position(), centre) * 1.5f;
             float angle = 36 * (i - 1);
             PointF destPoint = new PointF(centre.x + destRadius * (float) Math.cos(Math.toRadians(angle)), centre.y + destRadius * (float) Math.sin(Math.toRadians(angle)));
@@ -934,7 +935,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         lockScreen();
         for (int i = 1; i <= 5; i++)
         {
-            final OBControl star = objectDict.get(String.format("choice_star_%d", i));
+            final OBControl star = objectDict.get(String.format(Locale.US,"choice_star_%d", i));
             if (skipStar == star)
                 continue;
             star.setOpacity(0);
@@ -989,7 +990,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
     {
         if(starNum > 10)
             starNum = 10;
-        OBGroup target = (OBGroup) objectDict.get(String.format("top_bar_star_%d", starNum));
+        OBGroup target = (OBGroup) objectDict.get(String.format(Locale.US,"top_bar_star_%d", starNum));
         float startScale = star.scale();
         playSfxAudio("starfly", false);
         final PointF center = OC_Generic.copyPoint(star.position());
@@ -1281,7 +1282,7 @@ public class OC_ChildMenu extends OC_Menu implements OC_FatReceiver
         waitForSecs(0.3f);
         presenter.speak((List<Object>) (Object) getAudioForScene("unit", "DEMO"), 0.5f, this);
         waitForSecs(0.5f);
-        presenter.speak((List<Object>) (Object) getAudioForScene("unit", String.format("DEMO%d", OB_Maths.randomInt(2, 6))), 1.1f, this);
+        presenter.speak((List<Object>) (Object) getAudioForScene("unit", String.format(Locale.US,"DEMO%d", OB_Maths.randomInt(2, 6))), 1.1f, this);
 
         waitForSecs(0.3f);
         walkPresenterOut();

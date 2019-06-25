@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_MutInt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -75,7 +76,7 @@ public class OC_2dShapes_S6 extends OC_SectionController
             int i = 1, j = 1;
             while(true)
             {
-                OBControl cont = objectDict.get(String.format("obj_%d_%d", i,j));
+                OBControl cont = objectDict.get(String.format(Locale.US,"obj_%d_%d", i,j));
                 if(cont instanceof OBPath)
                     ((OBPath)cont).sizeToBoundingBoxIncludingStroke();
                 if(cont == null)

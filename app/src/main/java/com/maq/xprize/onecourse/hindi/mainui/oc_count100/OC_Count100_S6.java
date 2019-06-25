@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 30/08/16.
@@ -397,7 +398,7 @@ public class OC_Count100_S6 extends OC_SectionController
         playSfxAudio("score",false);
         for(int i=1;i<=(score*2);i++)
         {
-            counter.setString(String.format("%d",i));
+            counter.setString(String.format(Locale.US,"%d",i));
             objectDict.get("scorebar2").setHeight((i/100.0f)*objectDict.get("scoreborder").height());
             waitForSecs(0.02f);
 
@@ -468,7 +469,7 @@ public class OC_Count100_S6 extends OC_SectionController
                 for(String row : rows)
                 {
                     int rowNum = Integer.valueOf(row);
-                    final OBControl box = objectDict.get(String.format("box_%d",(rowNum -1)*10 + i));
+                    final OBControl box = objectDict.get(String.format(Locale.US,"box_%d",(rowNum -1)*10 + i));
                     onAnims.add(OBAnim.colourAnim("backgroundColor",hiliteColour,box));
                     offAnims.add(OBAnim.colourAnim("backgroundColor",Color.WHITE,box));
                 }
@@ -524,9 +525,9 @@ public class OC_Count100_S6 extends OC_SectionController
 
     public void doPhaseAudio(int phase) throws Exception
     {
-        setReplayAudio(OBUtils.insertAudioInterval(getAudioForScene(currentEvent(),String.format("REPEAT%d",phase)),300));
+        setReplayAudio(OBUtils.insertAudioInterval(getAudioForScene(currentEvent(),String.format(Locale.US,"REPEAT%d",phase)),300));
         if(currentNumIndex == 1 || currentNumIndex == 0)
-            playAudioQueued(OBUtils.insertAudioInterval(getAudioForScene(currentEvent(),String.format("PROMPT%d",phase)),300),false);
+            playAudioQueued(OBUtils.insertAudioInterval(getAudioForScene(currentEvent(),String.format(Locale.US,"PROMPT%d",phase)),300),false);
 
     }
 
@@ -577,12 +578,12 @@ public class OC_Count100_S6 extends OC_SectionController
         for(int j=1;j<=10;j++)
         {
             int num = (rowNum-1) *10 + j;
-            objectDict.get(String.format("box_%d",num )).show();
+            objectDict.get(String.format(Locale.US,"box_%d",num )).show();
             if(!correctNums.contains(String.valueOf(num)))
-                objectDict.get(String.format("num_%d",num )).show();
+                objectDict.get(String.format(Locale.US,"num_%d",num )).show();
 
         }
-        objectDict.get(String.format("frame_%d", rowNum)).show();
+        objectDict.get(String.format(Locale.US,"frame_%d", rowNum)).show();
         unlockScreen();
     }
 

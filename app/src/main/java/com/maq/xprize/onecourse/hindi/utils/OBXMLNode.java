@@ -3,6 +3,7 @@ package com.maq.xprize.onecourse.hindi.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -116,7 +117,7 @@ public class OBXMLNode
         boolean bval = false;
         if (val != null)
         {
-            val = val.toLowerCase();
+            val = val.toLowerCase(Locale.US);
             bval = (val == "yes" || val == "true" || val == "y");
         }
         return bval;

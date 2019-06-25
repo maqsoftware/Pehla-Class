@@ -57,6 +57,12 @@ public class DownloadExpansionFile extends Activity implements IDownloaderClient
                     9, // the version of the APK that the file was uploaded
                     // against
                     1989909475L // the length of the file in bytes
+            ),
+            new XAPKFile(
+                    false, // false signifies a patch file
+                    12, // the version of the APK that the file was uploaded
+                    // against
+                    188120L // the length of the file in bytes
             )
     };
     /* expansion service*/
@@ -523,9 +529,10 @@ public class DownloadExpansionFile extends Activity implements IDownloaderClient
         progress.mOverallTotal = progress.mOverallTotal;
         mPB.setMax((int) (progress.mOverallTotal >> 8));
         mPB.setProgress((int) (progress.mOverallProgress >> 8));
-        mProgressPercent.setText(Long.toString(progress.mOverallProgress
+        String Overallprogress = progress.mOverallProgress
                 * 100 /
-                progress.mOverallTotal) + "%");
+                progress.mOverallTotal + "%";
+        mProgressPercent.setText(Overallprogress);
         mProgressFraction.setText(Helpers.getDownloadProgressString
                 (progress.mOverallProgress,
                         progress.mOverallTotal));

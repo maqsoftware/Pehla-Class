@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kParameterMaxWordLength;
@@ -64,7 +65,7 @@ public class OC_Diagnostics_TouchCorrectWord_InitialSound extends OC_Diagnostics
         //
         for (int i = 0; i < totalParameters; i++)
         {
-            OBControl labelBox = objectDict.get(String.format("label%d", i + 1));
+            OBControl labelBox = objectDict.get(String.format(Locale.US,"label%d", i + 1));
             String wordUUID = currentQuestion.distractors.get(i);
             OBWord word = (OBWord) OC_DiagnosticsManager.sharedManager().WordComponents().get(wordUUID);
             if (word == null)

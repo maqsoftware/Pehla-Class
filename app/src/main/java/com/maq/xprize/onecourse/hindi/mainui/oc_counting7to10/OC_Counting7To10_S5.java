@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 23/06/16.
@@ -56,7 +57,7 @@ public class OC_Counting7To10_S5 extends OC_Generic_Event
         if (title != null)
         {
             Typeface tf = OBUtils.standardTypeFace();
-            label = new OBLabel(String.format("%d", number), tf, applyGraphicScale(150));
+            label = new OBLabel(String.format(Locale.US,"%d", number), tf, applyGraphicScale(150));
             label.setColour(Color.BLACK);
             label.setPosition(title.position());
             label.setZPosition(OC_Generic.getNextZPosition(this));
@@ -128,7 +129,7 @@ public class OC_Counting7To10_S5 extends OC_Generic_Event
         //
         for (int i = 1; i <= 3; i++)
         {
-            OC_Generic.pointer_moveToObjectByName(String.format("obj_%d", i), -25, 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
+            OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"obj_%d", i), -25, 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
             action_playNextDemoSentence(true); // Five counters. Five Counter. Six Counter.
             waitForSecs(0.3);
         }

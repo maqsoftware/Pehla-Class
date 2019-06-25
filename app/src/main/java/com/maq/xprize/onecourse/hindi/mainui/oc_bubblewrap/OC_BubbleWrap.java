@@ -23,6 +23,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 19/01/2018.
@@ -657,7 +658,7 @@ public class OC_BubbleWrap extends OC_SectionController
                 animateEarthAndPin();
             OBLabel label = textLabels.get(i);
             label.setColour(Color.RED);
-            playAudio(String.format("%d_%d",currentObjectId,i+1));
+            playAudio(String.format(Locale.US,"%d_%d",currentObjectId,i+1));
             waitAudio();
             if(!first && statusChanged(time))
                 break;

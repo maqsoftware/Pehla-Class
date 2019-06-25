@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Created by michal on 06/03/2018.
@@ -54,15 +55,15 @@ public class OC_2dShapes_S3i extends OC_SectionController
         int index = 1;
         for(String num : nums)
         {
-            OBControl drop = objectDict.get(String.format("drop_%d",index));
+            OBControl drop = objectDict.get(String.format(Locale.US,"drop_%d",index));
             drop.setProperty("num_val",OBUtils.getIntValue(num));
             OBLabel label = new OBLabel(num,OBUtils.StandardReadingFontOfSize(70));
             label.setColour(Color.BLACK);
-            PointF loc = OBMisc.copyPoint(objectDict.get(String.format("line_%d",index)).position());
+            PointF loc = OBMisc.copyPoint(objectDict.get(String.format(Locale.US,"line_%d",index)).position());
             loc.y = OB_Maths.locationForRect(0f,0.5f,objectDict.get("bottombar").frame()).y;
             label.setPosition(loc);
             attachControl(label);
-            objectDict.put(String.format("num_%d", index), label);
+            objectDict.put(String.format(Locale.US,"num_%d", index), label);
             label.setZPosition(5);
             index++;
         }

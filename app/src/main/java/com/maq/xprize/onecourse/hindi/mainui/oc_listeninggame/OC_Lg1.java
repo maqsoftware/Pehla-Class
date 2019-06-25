@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -139,9 +140,9 @@ public class OC_Lg1 extends OC_Lg
                 {
                     pho = componentDict.get(phonemeId).copy();
                     if(pho.text.length() > 1)
-                        pho.text = pho.text.substring(0, 1).toUpperCase() + pho.text.substring(1);
+                        pho.text = pho.text.substring(0, 1).toUpperCase(Locale.US) + pho.text.substring(1);
                     else
-                        pho.text = pho.text.toUpperCase();
+                        pho.text = pho.text.toUpperCase(Locale.US);
                 }
                 else
                 {

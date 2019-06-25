@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBUtils.StandardReadingFontOfSize;
@@ -146,13 +147,13 @@ public class OC_AddSubCountersPt1 extends OC_AddSubCounters
     public void layOutEquation(ocasc_equation equ,RectF rect)
     {
         StringBuilder str = new StringBuilder();
-        str.append(String.format("%d ",equ.lh));
+        str.append(String.format(Locale.US,"%d ",equ.lh));
         str.append(equ.isPlus?"+":"–");
-        str.append(String.format(" %d",equ.rh));
+        str.append(String.format(Locale.US," %d",equ.rh));
         str.append(" = ");
         int val = equ.lh;
         val +=(equ.isPlus?1:-1) * equ.rh;
-        str.append(String.format("%d",val));
+        str.append(String.format(Locale.US,"%d",val));
         equLabel = new OBLabel(str.toString(),equfont);
         equLabel.setPosition(new PointF(rect.centerX() ,rect.centerY()));
         equLabel.setColour(Color.BLACK);
@@ -202,7 +203,7 @@ public class OC_AddSubCountersPt1 extends OC_AddSubCounters
         List<OBLabel>labs = new ArrayList<>();
         for(Integer n : numbers)
         {
-            OBLabel l = new OBLabel(String.format("%d",n.intValue()),panelfont);
+            OBLabel l = new OBLabel(String.format(Locale.US,"%d",n.intValue()),panelfont);
             l.setColour(col);
             attachControl(l);
             labs.add(l);

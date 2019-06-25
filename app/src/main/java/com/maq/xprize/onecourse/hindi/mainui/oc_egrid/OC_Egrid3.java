@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 17/01/2018.
@@ -55,7 +56,7 @@ public class OC_Egrid3 extends OC_Egrid
             labelsOrder.addAll(labels);
             for(OBLabel lab : labels)
             {
-                String eventName = String.format("%d", index);
+                String eventName = String.format(Locale.US,"%d", index);
                 if(audioScenes.get(eventName) != null)
                 {
                     eventsArray.add(eventName);

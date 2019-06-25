@@ -9,6 +9,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -63,10 +64,10 @@ public class OC_Lg2 extends OC_Lg
 
         for(String letter : letters)
         {
-            String audioId = String.format("alph_%s",letter.toLowerCase());
+            String audioId = String.format("alph_%s",letter.toLowerCase(Locale.US));
             String letterId = audioId;
-            if(letter.toUpperCase().equals(letter))
-                letterId = String.format("cap_%s",letterId);
+            if(letter.toUpperCase(Locale.US).equals(letter))
+                letterId = String.format(Locale.US,"cap_%s",letterId);
 
             if(tempLetterPhonemes.get(letterId) != null)
             {

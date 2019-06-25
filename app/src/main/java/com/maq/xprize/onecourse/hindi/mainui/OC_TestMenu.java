@@ -27,6 +27,7 @@ import com.maq.xprize.onecourse.hindi.utils.OC_FatController;
 
 
 import java.util.Arrays;
+import java.util.Locale;
 
 
 /**
@@ -408,11 +409,11 @@ public class OC_TestMenu extends OBSectionController
 
             if(startAudio > -1)
             {
-                unitName.setText(String.format("%d %d - %s", level, startAudio, unitKey));
+                unitName.setText(String.format(Locale.US,"%d %d - %s", level, startAudio, unitKey));
             }
             else
             {
-                unitName.setText(String.format("%d 0 - %s", level, unitKey));
+                unitName.setText(String.format(Locale.US,"%d 0 - %s", level, unitKey));
             }
 
             int awardStar = cursor.getInt(cursor.getColumnIndex("awardStar"));
