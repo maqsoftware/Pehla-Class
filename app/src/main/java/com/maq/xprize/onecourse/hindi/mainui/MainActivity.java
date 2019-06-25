@@ -209,7 +209,7 @@ public class MainActivity extends Activity {
 
         //        setContentView(glSurfaceView);
         try {
-            new OBAudioManager(mainActivity);
+            new OBAudioManager();
             //
             setUpConfig();
             checkForFirstSetupAndRun();
