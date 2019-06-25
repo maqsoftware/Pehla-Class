@@ -2488,8 +2488,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
 
     public boolean batteryStatusLow()
     {
-        float batteryLevel = OBSystemsManager.sharedManager.getBatteryLevel();
-        return batteryLevel <= lockBatteryLevel;
+        return false;
     }
 
     public void deleteDBProgressAndReboot()
