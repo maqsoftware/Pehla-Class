@@ -16,9 +16,6 @@
 
 package com.google.android.vending.licensing;
 
-import com.google.android.vending.licensing.util.Base64;
-import com.google.android.vending.licensing.util.Base64DecoderException;
-
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
@@ -31,6 +28,9 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings.Secure;
 import android.util.Log;
+
+import com.google.android.vending.licensing.util.Base64;
+import com.google.android.vending.licensing.util.Base64DecoderException;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -151,7 +151,29 @@ public class LicenseChecker implements ServiceConnection {
                             .bindService(
                                     new Intent(
                                             new String(
-                                                    Base64.decode("Y29tLmFuZHJvaWQudmVuZGluZy5saWNlbnNpbmcuSUxpY2Vuc2luZ1NlcnZpY2U="))),
+                                                    // Base64 encoded -
+                                                    // com.android.vending.licensing.ILicensingService
+                                                    // Consider encoding this in another way in your
+                                                    // code to improve security
+                                                    Base64.decode(
+                                                            "Y29tLmFuZHJvaWQudmVuZGluZy5saWNlbnNpbmcuSUxpY2Vuc2luZ1NlcnZpY2U=")))
+                                            // As of Android 5.0, implicit
+                                            // Service Intents are no longer
+                                            // allowed because it's not
+                                            // possible for the user to
+                                            // participate in disambiguating
+                                            // them. This does mean we break
+                                            // compatibility with Android
+                                            // Cupcake devices with this
+                                            // release, since setPackage was
+                                            // added in Donut.
+                                            .setPackage(
+                                                    new String(
+                                                            // Base64
+                                                            // encoded -
+                                                            // com.android.vending
+                                                            Base64.decode(
+                                                                    "Y29tLmFuZHJvaWQudmVuZGluZw=="))),
                                     this, // ServiceConnection.
                                     Context.BIND_AUTO_CREATE);
 

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -63,7 +64,6 @@ public class SplashScreenActivity extends Activity {
             isExtractionRequired = isExpansionExtractionRequired(storedMainFileVersion, storedPatchFileVersion);
             // If main or patch file is updated, the extraction process needs to be performed again
             if (isExtractionRequired) {
-                System.out.println("Splash onCreate: isExtractionRequired = " + isExtractionRequired);
                 new DownloadFile().execute(null, null, null);
             }
         }
@@ -71,7 +71,7 @@ public class SplashScreenActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         // If request is cancelled, the result arrays are empty.
         if (requestCode == 1) {
             if (grantResults.length > 0
@@ -84,7 +84,6 @@ public class SplashScreenActivity extends Activity {
                 isExtractionRequired = isExpansionExtractionRequired(storedMainFileVersion, storedPatchFileVersion);
                 // If main or patch file is updated, the extraction process needs to be performed again
                 if (isExtractionRequired) {
-                    System.out.println("Splash onRequestPermissionsResult: isExtractionRequired = " + isExtractionRequired);
                     new DownloadFile().execute(null, null, null);
                 }
             } else {
@@ -176,15 +175,18 @@ public class SplashScreenActivity extends Activity {
             if (isStorageSpaceAvailable()) {
                 unzipFile();
             } else {
-                Toast.makeText(SplashScreenActivity.this, "Insufficient storage space! Please free up your storage to use this application.", Toast.LENGTH_LONG).show();
-
-                // Call finish after the toast message disappears
-                new Handler().postDelayed(new Runnable() {
-                    @Override
+                SplashScreenActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        SplashScreenActivity.this.finish();
+                        Toast.makeText(SplashScreenActivity.this, "Insufficient storage space! Please free up your storage to use this application.", Toast.LENGTH_LONG).show();
+                        // Call finish after the toast message disappears
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                SplashScreenActivity.this.finish();
+                            }
+                        }, Toast.LENGTH_LONG);
                     }
-                }, Toast.LENGTH_LONG);
+                });
             }
             return null;
         }
