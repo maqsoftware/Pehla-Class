@@ -240,19 +240,11 @@ public class OC_FatController extends OBFatController
     {
         loadLastSessionFromDB(db, user.userid);
         currentUser = user;
-        firebase_user = currentUser.toString();
         if(currentSessionId == -1)
             prepareNewSessionInDB(db, user.userid);
 
     }
 
-    public static String getFirebase_user(){
-        if(firebase_user == null || firebase_user.isEmpty()){
-            return "Default_user";
-        }
-
-        return firebase_user;
-    }
 
     public void loadUser()
     {
@@ -397,7 +389,7 @@ public class OC_FatController extends OBFatController
         return showUserName;
     }
 
-    public static String currentUserName()
+    public String currentUserName()
     {
         if(currentUser != null)
         {

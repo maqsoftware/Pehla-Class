@@ -277,9 +277,6 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
     public void setCurrentUserDB(DBSQL db, OCM_User user)
     {
         loadLastSessionFromDB(db, user.userid);
-        //getuserID(user.userid);
-        userIID = user.userid;
-        OBMainViewController.getuserID(userIID);
         currentUser = user;
         currentStudyListMaxWeek = maxLevelForListDB(db, user.studylistid);
         currentPlayzoneListMaxDay = maxLevelForListDB(db, user.playzonelistid);
@@ -287,10 +284,6 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
             prepareNewSessionInDB(db, user.userid);
 
     }
-
-//    public static int getuserID() {
-//        return userIID ;//= userid;
-//    }
 
     /* Date/Time functions
     */
@@ -962,7 +955,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
             String[] disallowArray = disallowHours.split(",");
             disallowStartHour = Integer.valueOf(disallowArray[0]);
             disallowEndHour = Integer.valueOf(disallowArray[1]);
-            showUserName = true;//OBConfigManager.sharedManager.shouldFatControllerShowUserName();
+            showUserName = OBConfigManager.sharedManager.shouldFatControllerShowUserName();
             allowsTimeOuts = OBConfigManager.sharedManager.isFatControllerSessionTimeoutEnabled();
             playzoneActiveHour = OBConfigManager.sharedManager.getFatControllerPlayzoneActiveHour();
             lockBatteryLevel = OBConfigManager.sharedManager.getBatteryMaxValueForLevel(OBConfigManager.BATTERY_LEVEL_CRITICAL);
