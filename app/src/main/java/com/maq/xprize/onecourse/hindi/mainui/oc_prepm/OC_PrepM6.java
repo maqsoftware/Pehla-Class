@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -90,7 +91,7 @@ public class OC_PrepM6 extends OC_SectionController
         {
             int num = randAnswers.get(i);
             OBControl buttonCopy = button.copy();
-            OBLabel numLabel = new OBLabel(String.format("%d", num) , OBUtils.StandardReadingFontOfSize(60));
+            OBLabel numLabel = new OBLabel(String.format(Locale.US,"%d", num) , OBUtils.StandardReadingFontOfSize(60));
             numLabel.setColour(Color.BLACK);
             numLabel.setPosition(buttonCopy.position());
             numLabel.show();
@@ -135,7 +136,7 @@ public class OC_PrepM6 extends OC_SectionController
             List<List<OBControl>> countersDist = new ArrayList<>();
             for(int i=0; i<num1; i++)
             {
-                OBControl child = objectDict.get(String.format("child_%d",i+1));
+                OBControl child = objectDict.get(String.format(Locale.US,"child_%d",i+1));
                 feedbackObjects.add(child);
                 PointF loc = OB_Maths.locationForRect(0.1f,(1.0f/(num1+1))*(i+1),objectDict.get("work_rect").frame());
                 child.setProperty("dest_loc",loc);
@@ -158,18 +159,18 @@ public class OC_PrepM6 extends OC_SectionController
                 {
                     OBControl counterObj = countersDist.get(j) .get(i);
                     feedbackCounters.add(counterObj);
-                    counterObj.setPosition(objectDict.get(String.format("loc_%d",(int)(i*countersDist.size()) +j+1)).position());
+                    counterObj.setPosition(objectDict.get(String.format(Locale.US,"loc_%d",(int)(i*countersDist.size()) +j+1)).position());
                 }
             }
         }
         currentQuestionAudio = new ArrayList<>();
-        currentQuestionAudio.add(audioForQuestion(String.format("%s_str_%d", currentEvent() , num1)));
-        currentQuestionAudio.add(audioForQuestion(String.format("%s_%s_%d", currentEvent() ,mode, num2)));
+        currentQuestionAudio.add(audioForQuestion(String.format(Locale.US,"%s_str_%d", currentEvent() , num1)));
+        currentQuestionAudio.add(audioForQuestion(String.format(Locale.US,"%s_%s_%d", currentEvent() ,mode, num2)));
         currentQuestionAudio.add(audioForQuestion(String.format("%s_end", currentEvent())));
         audioAnswer = null;
-        List<String> ansAud = getAudioForScene(String.format("%s_ans_%d", currentEvent() , correctAnswer) ,"DEMO");
+        List<String> ansAud = getAudioForScene(String.format(Locale.US,"%s_ans_%d", currentEvent() , correctAnswer) ,"DEMO");
         if(ansAud != null && ansAud.size()>0)
-            audioAnswer = getAudioForScene(String.format("%s_ans_%d", currentEvent() , correctAnswer) ,"DEMO") .get(0);
+            audioAnswer = getAudioForScene(String.format(Locale.US,"%s_ans_%d", currentEvent() , correctAnswer) ,"DEMO") .get(0);
     }
 
     @Override

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 29/07/16.
@@ -89,10 +90,10 @@ public class OC_Numberlines_S3 extends OC_SectionController
         {
             loadLine(i,true);
             loadLine(i,false);
-            OBLabel numCont = (OBLabel)objectDict.get(String.format("num_%d", i+1));
+            OBLabel numCont = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d", i+1));
             numCont.setProperty("startpos",OC_Generic.copyPoint(numCont.position()));
 
-            OBControl rock = objectDict.get(String.format("rock%d",i+1));
+            OBControl rock = objectDict.get(String.format(Locale.US,"rock%d",i+1));
             numCont.setPosition ( OB_Maths.locationForRect(0.5f,0.7f,rock.frame()));
             rock.setProperty("num_value",i+1);
         }
@@ -126,8 +127,8 @@ public class OC_Numberlines_S3 extends OC_SectionController
             {
                 for(int i=0; i<5; i++)
                 {
-                    OBLabel numCont = (OBLabel)objectDict.get(String.format("num_%d", i+1));
-                    numCont.setString ( String.format("%d", startNum+i));
+                    OBLabel numCont = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d", i+1));
+                    numCont.setString ( String.format(Locale.US,"%d", startNum+i));
                 }
 
             }
@@ -287,7 +288,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
         if((int)cont.settings.get("num_value")  == currentJump)
         {
             if(currentJump == hiliteNum)
-                ((OBLabel)objectDict.get(String.format("num_%d",hiliteNum))).setColour(Color.RED);
+                ((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",hiliteNum))).setColour(Color.RED);
 
             OC_Numberlines_Additions.animateCurve(currentJump,currentJump<targetNum,0.65f,true,false,this);
 
@@ -325,7 +326,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
             {
                 if(currentJump > 1)
                 {
-                    String audioName = String.format("INCORRECT%d", currentJump);
+                    String audioName = String.format(Locale.US,"INCORRECT%d", currentJump);
                     List<String> audios = getAudioForScene(currentEvent(),audioName);
                     if(audios != null)
                     {
@@ -346,7 +347,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
 
     private void checkRockNum(OBControl cont) throws Exception
     {
-        OBLabel numControl = (OBLabel)objectDict.get(String.format("num_%d",cont.settings.get("num_value")));
+        OBLabel numControl = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d",cont.settings.get("num_value")));
         numControl.setColour(Color.RED);
         if((int)cont.settings.get("num_value")  == targetNum)
         {
@@ -472,8 +473,8 @@ public class OC_Numberlines_S3 extends OC_SectionController
         int rocknum = num;
         if(rocknum == 0)
             rocknum = 1;
-        PointF position1 = OB_Maths.locationForRect(0.5f,0.01f,objectDict.get(String.format("rock%d", rocknum )).frame());
-        PointF position2 = OB_Maths.locationForRect(0.5f,0.01f,objectDict.get(String.format("rock%d", rocknum+1 )).frame());
+        PointF position1 = OB_Maths.locationForRect(0.5f,0.01f,objectDict.get(String.format(Locale.US,"rock%d", rocknum )).frame());
+        PointF position2 = OB_Maths.locationForRect(0.5f,0.01f,objectDict.get(String.format(Locale.US,"rock%d", rocknum+1 )).frame());
 
         OBPath curveLine = new OBPath();
         Path path = new Path();
@@ -491,7 +492,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
         attachControl(curveLine);
         curveLine.sizeToBoundingBoxIncludingStroke();
 
-        objectDict.put(String.format("line_%d_%d",clockwise ? 1 : 2, num),curveLine);
+        objectDict.put(String.format(Locale.US,"line_%d_%d",clockwise ? 1 : 2, num),curveLine);
     }
 
     public void flipFrog(boolean flipped)
@@ -508,7 +509,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
 
     public void animateJump(int num,boolean clockwise) throws Exception
     {
-        final OBPath curveLine =(OBPath)objectDict.get(String.format("line_%d_%d",clockwise ? 1 : 2, clockwise ? num : num-1));
+        final OBPath curveLine =(OBPath)objectDict.get(String.format(Locale.US,"line_%d_%d",clockwise ? 1 : 2, clockwise ? num : num-1));
         curveLine.setStrokeEnd(0);
 
         final OBControl frogJump = objectDict.get("frog_jump");
@@ -546,7 +547,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
         lockScreen();
         if(!(num ==1 && !clockwise))
         {
-            frogSit.setPosition(OB_Maths.locationForRect(frogPosition.x, frogPosition.y,objectDict.get(String.format("rock%d", clockwise ? num+1 : num-1)).frame()));
+            frogSit.setPosition(OB_Maths.locationForRect(frogPosition.x, frogPosition.y,objectDict.get(String.format(Locale.US,"rock%d", clockwise ? num+1 : num-1)).frame()));
             frogSit.show();
         }
 
@@ -607,8 +608,8 @@ public class OC_Numberlines_S3 extends OC_SectionController
     {
         for(int i=1; i<=5; i++)
         {
-            playSfxAudio(String.format("note%d",i),false);
-            objectDict.get(String.format("num_%d",i)).show();
+            playSfxAudio(String.format(Locale.US,"note%d",i),false);
+            objectDict.get(String.format(Locale.US,"num_%d",i)).show();
             waitForSecs(0.3f);
         }
         waitSFX();
@@ -688,7 +689,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
 
     public void pointCurveAndHilite(int num,int audioIndex, float duration, boolean clockwise) throws Exception
     {
-        OBPath curve = (OBPath)objectDict.get(String.format("line_%d_%d", clockwise ? 1:2, num));
+        OBPath curve = (OBPath)objectDict.get(String.format(Locale.US,"line_%d_%d", clockwise ? 1:2, num));
 
         PointF point = curve.convertPointToControl(curve.sAlongPath(0.5f,null), null);
         point.y += objectDict.get("numberline").height()/10.0f;
@@ -843,8 +844,8 @@ public class OC_Numberlines_S3 extends OC_SectionController
 
     public void pointerTouchDiv(int num,boolean hilite, boolean clockwise, int audioIndex) throws Exception
     {
-        PointF clickLoc = OB_Maths.locationForRect(0.5f,0.8f,objectDict.get(String.format("divline_%d",num)).frame());
-        PointF prevLoc = OB_Maths.locationForRect(0.5f,1f,objectDict.get(String.format("divline_%d",num)).frame());
+        PointF clickLoc = OB_Maths.locationForRect(0.5f,0.8f,objectDict.get(String.format(Locale.US,"divline_%d",num)).frame());
+        PointF prevLoc = OB_Maths.locationForRect(0.5f,1f,objectDict.get(String.format(Locale.US,"divline_%d",num)).frame());
 
         prevLoc.x = prevLoc.x+objectDict.get("numberline").width()/18.0f;
 
@@ -856,7 +857,7 @@ public class OC_Numberlines_S3 extends OC_SectionController
         movePointerToPoint(clickLoc,-40+(num*5),0.2f,true);
 
         if(hilite)
-            ((OBLabel)objectDict.get(String.format("num_%d",num))).setColour(Color.RED);
+            ((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",num))).setColour(Color.RED);
 
         playSfxAudio("div_line",true);
         OC_Numberlines_Additions.animateCurve(num,clockwise,0.65f,true,false,this);

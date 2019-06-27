@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBAudioManager.AM_MAIN_CHANNEL;
 import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.clamp01;
@@ -331,7 +332,7 @@ public class OC_ListeningComprehension extends OC_Comprehension {
 
     public void playStorySentence(int sno) throws Exception
     {
-        String fn = String.format("%s_%s_p_p_%d",audioPrefix,currPassage.passageID,sno + 1);
+        String fn = String.format(Locale.US,"%s_%s_p_p_%d",audioPrefix,currPassage.passageID,sno + 1);
         playAudioQueued(Arrays.asList((Object)fn),true);
     }
 

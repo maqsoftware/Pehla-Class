@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -117,13 +118,13 @@ public class OC_Twrd_Text extends OC_Twrd
         for(int i=0; i< eventText.length(); i++)
         {
             String letter = eventText.substring(i, i+1);
-            if(typewriterManager.keyboardKeys.containsKey(letter.toLowerCase()))
+            if(typewriterManager.keyboardKeys.containsKey(letter.toLowerCase(Locale.US)))
             {
                 Map<String,Object> dict = new ArrayMap();
                 dict.put("letter",letter);
                 dict.put("display",letter);
                 dict.put("index",i);
-                dict.put("key",typewriterManager.keyboardKeys.get(letter.toLowerCase()));
+                dict.put("key",typewriterManager.keyboardKeys.get(letter.toLowerCase(Locale.US)));
                 currentWordData.add(dict);
             }
             else if(currentWordData.size() > 0)

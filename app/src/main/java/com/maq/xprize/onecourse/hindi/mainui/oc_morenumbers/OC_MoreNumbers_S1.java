@@ -22,6 +22,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 05/04/2017.
@@ -87,7 +88,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
         {
             targetColumn = OBUtils.getIntValue(eventAttributes.get("column"));
             for(int i=0; i<10; i++)
-                targetBoxes.add(objectDict.get(String.format("box_%d", i*10 + targetColumn)));
+                targetBoxes.add(objectDict.get(String.format(Locale.US,"box_%d", i*10 + targetColumn)));
 
         }
         if(eventAttributes.get("numcolour")  != null)
@@ -345,15 +346,15 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
     public void hiliteColumn(int column) throws Exception
     {
         lockScreen();
-        RectF rect = new RectF(objectDict.get(String.format("box_%d", column)).getWorldFrame());
-        rect.union(objectDict.get(String.format("box_%d", 90+column)).getWorldFrame());
+        RectF rect = new RectF(objectDict.get(String.format(Locale.US,"box_%d", column)).getWorldFrame());
+        rect.union(objectDict.get(String.format(Locale.US,"box_%d", 90+column)).getWorldFrame());
 
         rowBorder.setFrame(rect);
         rowBorder.show();
         for(int i=0; i<10; i++)
         {
-            markLastNum((OBLabel)objectDict.get(String.format("num_%d", i*10 + column)));
-            objectDict.get(String.format("box_%d", i*10 + column)).setBackgroundColor(hilitecolour);
+            markLastNum((OBLabel)objectDict.get(String.format(Locale.US,"num_%d", i*10 + column)));
+            objectDict.get(String.format(Locale.US,"box_%d", i*10 + column)).setBackgroundColor(hilitecolour);
 
         }
         unlockScreen();
@@ -368,7 +369,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
         for(int i=0; i<10; i++)
         {
             int num = i*10 + column;
-            OBControl label = objectDict.get(String.format("num_%d", num));
+            OBControl label = objectDict.get(String.format(Locale.US,"num_%d", num));
             if(mark != -1)
             {
                 if(mark == num)
@@ -381,7 +382,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
             {
                 colourEntireLabel((OBLabel)label,colour);
             }
-            objectDict.get(String.format("box_%d", num)).setBackgroundColor(Color.WHITE);
+            objectDict.get(String.format(Locale.US,"box_%d", num)).setBackgroundColor(Color.WHITE);
 
         }
         if(targetMasks.size() > 0)
@@ -444,7 +445,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
 
     public String getPhase()
     {
-        return String.format("%s%d", currentEvent(), currentPhase);
+        return String.format(Locale.US,"%s%d", currentEvent(), currentPhase);
 
     }
     public void nextPhase() throws Exception
@@ -538,7 +539,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
             {
                 for(int i=0; i<10; i++)
                 {
-                    OBControl box = objectDict.get(String.format("box_%d", i*10 + column));
+                    OBControl box = objectDict.get(String.format(Locale.US,"box_%d", i*10 + column));
                     if(box.backgroundColor != hilitecolour && thePointer.position().y > box.getWorldFrame().top)
                         box.setBackgroundColor(hilitecolour);
 
@@ -553,7 +554,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
         waitForSecs(0.3f);
         loadPointer(POINTER_MIDDLE);
         List<String> demoAudio = currentPhase == 0 ?  getAudioForScene(currentEvent(),"DEMO") : getAudioForScene(getPhase(),"DEMO");
-        PointF startPoint = OB_Maths.locationForRect((targetColumn == 10 ? 0.7f : 0.5f),0,objectDict.get(String.format("num_%d",targetColumn)).getWorldFrame());
+        PointF startPoint = OB_Maths.locationForRect((targetColumn == 10 ? 0.7f : 0.5f),0,objectDict.get(String.format(Locale.US,"num_%d",targetColumn)).getWorldFrame());
         List<OBAnim> pointerAnims = new ArrayList<>();
         movePointerToPoint(startPoint,0.5f,true);
         waitForSecs(0.1f);
@@ -574,14 +575,14 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
         {
             playAudio(demoAudio.get(i+2));
             int labelNum = i*10 + targetColumn;
-            OBLabel label = (OBLabel)objectDict.get(String.format("num_%d",labelNum));
+            OBLabel label = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d",labelNum));
             lockScreen();
             label.setColour(Color.RED);
             label.setHighRange(0,label.text().length()-1, Color.BLACK);
             unlockScreen();
 
             OBAnimationGroup.runAnims(Arrays.asList(firstNumsAnim(label,Color.RED),
-                    OBAnim.colourAnim("backgroundColor",hilitecolour2,objectDict.get(String.format("box_%d",labelNum))))
+                    OBAnim.colourAnim("backgroundColor",hilitecolour2,objectDict.get(String.format(Locale.US,"box_%d",labelNum))))
                     ,0.3f,true,OBAnim.ANIM_LINEAR,this);
             waitAudio();
         }
@@ -605,9 +606,9 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
 
     public void pointerPointColumn(int column,int audioIndex, boolean hide) throws Exception
     {
-        movePointerToPoint(OB_Maths.locationForRect(0.5f,0,objectDict.get(String.format("num_%d", column)).getWorldFrame()),0.5f,true);
+        movePointerToPoint(OB_Maths.locationForRect(0.5f,0,objectDict.get(String.format(Locale.US,"num_%d", column)).getWorldFrame()),0.5f,true);
         playAudioScene("DEMO",audioIndex,false);
-        OBAnimationGroup.runAnims(Arrays.asList(OBAnim.moveAnim(OB_Maths.locationForRect(0.5f,1.05f,objectDict.get(String.format("num_%d", column+90)).getWorldFrame()),thePointer),
+        OBAnimationGroup.runAnims(Arrays.asList(OBAnim.moveAnim(OB_Maths.locationForRect(0.5f,1.05f,objectDict.get(String.format(Locale.US,"num_%d", column+90)).getWorldFrame()),thePointer),
                 pointerHiliteAnim(column)),1,true,OBAnim.ANIM_EASE_IN_EASE_OUT,this);
         waitForSecs(1.5f);
         waitAudio();
@@ -616,7 +617,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
             lockScreen();
             for(int i=0; i<10; i++)
             {
-                objectDict.get(String.format("box_%d",i*10 + column)).setBackgroundColor(Color.WHITE);
+                objectDict.get(String.format(Locale.US,"box_%d",i*10 + column)).setBackgroundColor(Color.WHITE);
             }
             unlockScreen();
 
@@ -687,7 +688,7 @@ public class OC_MoreNumbers_S1 extends OC_SectionController
         waitAudio();
         peelMask(mask,0.4f);
         waitForSecs(0.3f);
-        PointF loc = OB_Maths.locationForRect(0.5f,0f,objectDict.get(String.format("num_%d",targetColumn)).frame());
+        PointF loc = OB_Maths.locationForRect(0.5f,0f,objectDict.get(String.format(Locale.US,"num_%d",targetColumn)).frame());
         movePointerToPoint(loc,0.5f,true);
         waitForSecs(0.1f);
         playAudioScene("DEMO",4,false);

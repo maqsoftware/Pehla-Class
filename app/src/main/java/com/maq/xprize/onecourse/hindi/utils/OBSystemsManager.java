@@ -69,6 +69,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -150,24 +151,16 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
 
     public boolean isScreenOn(Context context)
     {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH)
+        DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+        boolean screenOn = false;
+        for (Display display : dm.getDisplays())
         {
-            DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
-            boolean screenOn = false;
-            for (Display display : dm.getDisplays())
+            if (display.getState() != Display.STATE_OFF)
             {
-                if (display.getState() != Display.STATE_OFF)
-                {
-                    screenOn = true;
-                }
+                screenOn = true;
             }
-            return screenOn;
-        } else
-        {
-            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            //noinspection deprecation
-            return pm.isScreenOn();
         }
+        return screenOn;
     }
 
 
@@ -452,7 +445,7 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
                     @Override
                     public boolean accept(File dir, String filename)
                     {
-                        return filename.toLowerCase().endsWith(".zip");
+                        return filename.toLowerCase(Locale.US).endsWith(".zip");
                     }
                 }));
                 //
@@ -559,7 +552,7 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
                 @Override
                 public boolean accept(File dir, String filename)
                 {
-                    return filename.toLowerCase().endsWith(".zip");
+                    return filename.toLowerCase(Locale.US).endsWith(".zip");
                 }
             }));
             // Start unzipping the rest
@@ -1230,7 +1223,7 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
             String output = log.toString();
             MainActivity.log("OBSystemsManager.output from toggleNavigationBar: " + output);
             //
-            if (output.contains(String.format("%d", value)))
+            if (output.contains(String.format(Locale.US,"%d", value)))
             {
                 MainActivity.log("OBSystemsManager.toggleNavigationBar. the system value is the same. nothing to do here");
                 return;
@@ -1470,7 +1463,7 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
                         {
                             MainActivity.log("OBSystemsManager.backup_uploadDatabase_ftp updating lastBackupTimeStamp");
                             long currentTime = System.currentTimeMillis() / 1000;
-                            OBPreferenceManager.setPreference("lastBackupTimeStamp", String.format("%d", currentTime));
+                            OBPreferenceManager.setPreference("lastBackupTimeStamp", String.format(Locale.US,"%d", currentTime));
                             //
                             OBUtils.runOnMainThread(new OBUtils.RunLambda()
                             {
@@ -1583,7 +1576,7 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
                 //
                 MainActivity.log("OBSystemsManager.backup_uploadDatabase_php updating lastBackupTimeStamp");
                 long currentTime = System.currentTimeMillis() / 1000;
-                OBPreferenceManager.setPreference("lastBackupTimeStamp", String.format("%d", currentTime));
+                OBPreferenceManager.setPreference("lastBackupTimeStamp", String.format(Locale.US,"%d", currentTime));
                 //
                 MainActivity.log("OBSystemsManager.backup_uploadDatabase_php disconnecting from wifi");
 
@@ -1922,7 +1915,7 @@ public class OBSystemsManager implements TimePickerDialog.OnTimeSetListener, Dat
             }
             //
             // trying to find path in sdcard folder
-            externalAssets = new File("/sdcard/" + externalAssetsFolderPath);
+            externalAssets = new File(android.os.Environment.getExternalStorageDirectory().getPath() + externalAssetsFolderPath);
             //
             if (externalAssets.exists())
             {

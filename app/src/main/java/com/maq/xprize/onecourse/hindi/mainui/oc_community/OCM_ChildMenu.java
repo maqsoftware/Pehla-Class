@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -566,7 +567,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
                         if(unitData.get("unitOrder") != null)
                         {
                             lastUnitOrder = (int) unitData.get("unitOrder");
-                            String eventName = String.format("unit_%d", lastUnitOrder);
+                            String eventName = String.format(Locale.US,"unit_%d", lastUnitOrder);
                             String demoPrefix = currentDay > 4 ? "demo_default_" : "demo_start_";
                             if (!(audioAvailable(eventName) && performSel(demoPrefix, eventName)))
                             {
@@ -681,7 +682,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
     {
         if (unit == null)
             return;
-        currentLevelLabel.setString(String.format("%d - %d", currentDay, unit.unitIndex));
+        currentLevelLabel.setString(String.format(Locale.US,"%d - %d", currentDay, unit.unitIndex));
     }
 
     public void refreshCurrentLabelArray(List<OCM_MlUnit> units)
@@ -690,7 +691,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
         {
             OCM_MlUnit unit1 = units.get(0);
             OCM_MlUnit unit2 = units.get(units.size() - 1);
-            currentLevelLabel.setString(String.format("%d - %d - %d", currentDay, unit1.unitIndex, unit2.unitIndex));
+            currentLevelLabel.setString(String.format(Locale.US,"%d - %d - %d", currentDay, unit1.unitIndex, unit2.unitIndex));
         }
     }
 
@@ -849,7 +850,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
             OBControl blockCopy = weekBlock.copy();
             blockCopy.show();
             blockCopy.setPosition(OB_Maths.locationForRect(startX + (i-1)*blockDist, 0.5f,workRect.frame()));
-            blocks.put(String.format("week_%d",i),blockCopy);
+            blocks.put(String.format(Locale.US,"week_%d",i),blockCopy);
         }
 
         weekBar = new OBGroup(new ArrayList<OBControl>(blocks.values()));
@@ -868,10 +869,10 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
             week++;
         for(int i=1; i<week; i++)
         {
-            OBControl weekSquare = weekBar.objectDict.get(String.format("week_%d",i));
+            OBControl weekSquare = weekBar.objectDict.get(String.format(Locale.US,"week_%d",i));
             if(weekSquare != null)
             {
-                int fillCol = coloursDict.get(String.format("week_%d",(i%4)+1));
+                int fillCol = coloursDict.get(String.format(Locale.US,"week_%d",(i%4)+1));
                 weekSquare.setProperty("fill",fillCol);
                 if(fill)
                     weekSquare.setFillColor(fillCol);
@@ -913,7 +914,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
 
     public void colourStarNum(int starNum,int colourNum)
     {
-        OBGroup star = (OBGroup)objectDict.get(String.format("top_bar_star_%d",starNum));
+        OBGroup star = (OBGroup)objectDict.get(String.format(Locale.US,"top_bar_star_%d",starNum));
         if(star == null)
             return;
         colourStar(star,colourNum);
@@ -924,7 +925,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
         OBPath path = (OBPath)star.objectDict.get("star");
         if(colourNum > 0)
         {
-            int starColour = coloursDict.get(String.format("star_%d",colourNum));
+            int starColour = coloursDict.get(String.format(Locale.US,"star_%d",colourNum));
             path.setFillColor(starColour);
             path.setStrokeColor(Color.TRANSPARENT);
         }
@@ -939,7 +940,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
     public OBLabel loadDayOfTheWeekLabel(int dayNum)
     {
         OBControl box = objectDict.get("text_box");
-        String dayName = this.localisations.get(String.format("day_%d",dayNum));
+        String dayName = this.localisations.get(String.format(Locale.US,"day_%d",dayNum));
         OBLabel label = new OBLabel(dayName,OBUtils.standardTypeFace(),box.height()/82.0f*80);
         label.setColour(Color.BLACK);
         label.setPosition(box.position());
@@ -1054,7 +1055,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
 
     public void animateAwardStar(int starNum,int colourNum) throws Exception
     {
-        OBGroup target = (OBGroup)objectDict.get(String.format("top_bar_star_%d",starNum));
+        OBGroup target = (OBGroup)objectDict.get(String.format(Locale.US,"top_bar_star_%d",starNum));
         if(target.hidden)
             showControls("top_bar_star_.*");
         OBGroup star = (OBGroup)target.copy();
@@ -1196,7 +1197,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
         List<List<OBAnim>> gemAnimsOff = new ArrayList<>();
         for(int i = 1; i<6; i++)
         {
-            OBGroup gem = (OBGroup)box.objectDict.get(String.format("gem_%d",i));
+            OBGroup gem = (OBGroup)box.objectDict.get(String.format(Locale.US,"gem_%d",i));
             List<OBAnim> onAnim = new ArrayList<>();
             List<OBAnim> offAnim = new ArrayList<>();
             for(OBControl cont : gem.filterMembers("glow.*"))
@@ -1319,7 +1320,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
                 for(int i=0; i<15; i++)
                 {
                     float partFrac = OB_Maths.clamp01((frac - animDelayFrac *i)/singleAnimFrac);
-                    OBControl con = objectDict.get(String.format("top_bar_star_%d",i+1));
+                    OBControl con = objectDict.get(String.format(Locale.US,"top_bar_star_%d",i+1));
                     float startScale = (float)con.propertyValue("start_scale") ;
                     con.setScale(startScale + 0.5f*startScale*OB_Maths.bezef((float)OB_Maths.clamp01((1.0-Math.abs((partFrac * 2) - 1)))));
                 }
@@ -1371,7 +1372,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
         final List<OBAnim> rotateAnims = new ArrayList<>();
         for(int i=0; i<communityModeIcons.size(); i++)
         {
-            OBControl star = objectDict.get(String.format("top_bar_star_%d",i+1));
+            OBControl star = objectDict.get(String.format(Locale.US,"top_bar_star_%d",i+1));
             OBGroup targetButton= communityModeIcons.get(i);
             OBControl targetStar = targetButton.objectDict.get("star");
 
@@ -1395,7 +1396,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
                     for(int j=0; j<5; j++)
                     {
                         int currentNum = (currentInt*5)+j;
-                        OBControl star = objectDict.get(String.format("top_bar_star_%d",currentNum+1));
+                        OBControl star = objectDict.get(String.format(Locale.US,"top_bar_star_%d",currentNum+1));
                         if(star != null)
                         {
                             float partFrac = OB_Maths.bezef((float)OB_Maths.clamp01((frac - ((0.5/4)*j))/0.5));
@@ -1427,7 +1428,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
         final List<OBControl> animSquares = new ArrayList<>();
         for(int i=1; i<=fatController.getMaxStudyWeek(); i++)
         {
-            OBControl square = weekBar.objectDict.get(String.format("week_%d",i));
+            OBControl square = weekBar.objectDict.get(String.format(Locale.US,"week_%d",i));
             if(square.propertyValue("fill") != null)
             {
                 int col = (int)square.propertyValue("fill");
@@ -1526,8 +1527,8 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
                 List<String> weekAudio2 = null;
                 if(week <3 || week == 35 || week == 68)
                 {
-                    weekAudio1 = getAudioForScene(String.format("week_%d",week),"DEMO");
-                    weekAudio2 =  getAudioForScene(String.format("week_%d",week),"DEMO2");
+                    weekAudio1 = getAudioForScene(String.format(Locale.US,"week_%d",week),"DEMO");
+                    weekAudio2 =  getAudioForScene(String.format(Locale.US,"week_%d",week),"DEMO2");
                 }
                 else
                 {
@@ -1587,7 +1588,7 @@ public class OCM_ChildMenu extends OC_Menu implements OCM_FatReceiver, TimePicke
 
     public void demo_study_star_award() throws Exception
     {
-        String eventName = String.format("unit_%d", lastUnitOrder);
+        String eventName = String.format(Locale.US,"unit_%d", lastUnitOrder);
         if(!audioAvailable(eventName))
         {
             eventName = "unit_default";

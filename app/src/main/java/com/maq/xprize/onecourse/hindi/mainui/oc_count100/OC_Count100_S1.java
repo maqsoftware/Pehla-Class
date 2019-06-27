@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 16/06/16.
@@ -268,7 +269,7 @@ public class OC_Count100_S1 extends OC_SectionController
         int col2 = Color.argb(255,255,255,255);
         for(int i=1; i<=maxTarget; i++)
         {
-            OBGroup group = (OBGroup) objectDict.get(String.format("obj%d", i));
+            OBGroup group = (OBGroup) objectDict.get(String.format(Locale.US,"obj%d", i));
             anims1.add(OBAnim.colourAnim("highlightColour",col1,group));
             anims2.add(OBAnim.colourAnim("highlightColour",col2,group));
         }
@@ -324,7 +325,7 @@ public class OC_Count100_S1 extends OC_SectionController
         playSfxAudio("apples1",false);
         for(int i=1; i<11; i++)
         {
-            OBControl apple = objectDict.get(String.format("obj%d", i));
+            OBControl apple = objectDict.get(String.format(Locale.US,"obj%d", i));
             OBAnim rotateAnim = OBAnim.rotationAnim((float) Math.toRadians(180),apple);
             OBAnim rotateAnim2 = OBAnim.rotationAnim((float) Math.toRadians(360),apple);
 
@@ -502,9 +503,9 @@ public class OC_Count100_S1 extends OC_SectionController
             {
                 if(i%2 == 0)
                 {
-                    anims.add(OBAnim.rotationAnim((float)Math.toRadians(360),objectDict.get(String.format("obj%d",(i*10)+(j*2)+1))));
+                    anims.add(OBAnim.rotationAnim((float)Math.toRadians(360),objectDict.get(String.format(Locale.US,"obj%d",(i*10)+(j*2)+1))));
                 }else{
-                    anims.add(OBAnim.rotationAnim((float)Math.toRadians(360),objectDict.get(String.format("obj%d",(i*10)+(j*2)))));
+                    anims.add(OBAnim.rotationAnim((float)Math.toRadians(360),objectDict.get(String.format(Locale.US,"obj%d",(i*10)+(j*2)))));
                 }
 
             }

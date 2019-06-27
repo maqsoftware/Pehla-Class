@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -143,7 +144,7 @@ public class OC_Alpha1 extends OC_Wordcontroller
         {
             String text = letters.get(i);
             //
-            if (text.toUpperCase().equals(text))
+            if (text.toUpperCase(Locale.US).equals(text))
             {
                 text = OC_Generic.toTitleCase(text);
                 fontSize = textSize * 0.75f;
@@ -205,12 +206,11 @@ public class OC_Alpha1 extends OC_Wordcontroller
         List reparr = new ArrayList<>();
         reparr.addAll(currentAudio("PROMPT.REPEAT"));
         reparr.add(300);
-        reparr.add(String.format("alph_%s",targetLetters.get(currNo).toLowerCase()));
+        reparr.add(String.format("alph_%s",targetLetters.get(currNo).toLowerCase(Locale.US)));
         setReplayAudio(reparr);
         playAudioQueuedScene("PROMPT",true);
-
         waitForSecs(0.3f);
-        List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase()));
+        List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase(Locale.US)));
         playAudioQueued(ls,false);
 
     }
@@ -238,7 +238,7 @@ public class OC_Alpha1 extends OC_Wordcontroller
                         {
                             if(sttime == statusTime)
                             {
-                                List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase()));
+                                List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase(Locale.US)));
                                 playAudioQueued(ls,false);
                             }
                         }
@@ -299,7 +299,7 @@ public class OC_Alpha1 extends OC_Wordcontroller
         playAudioScene("DEMO",0,true);
         waitForSecs(0.3f);
 
-        List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase()));
+        List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase(Locale.US)));
         playAudioQueued(ls,false);
 
         movePointerToPoint(OB_Maths.locationForRect(0.7f, 0.7f, box.frame()),-0.7f,true);
@@ -339,7 +339,7 @@ public class OC_Alpha1 extends OC_Wordcontroller
             {
                 playSfxAudio("click",true);
                 waitForSecs(0.4f);
-                List ls = Arrays.asList(String.format("alph_%s",letters.get(idx).toLowerCase()));
+                List ls = Arrays.asList(String.format("alph_%s",letters.get(idx).toLowerCase(Locale.US)));
                 playAudioQueued(ls,true);
 
                 waitForSecs(0.4f);
@@ -353,7 +353,7 @@ public class OC_Alpha1 extends OC_Wordcontroller
                 waitSFX();
                 setReplayAudio(saverep);
                 highlightBox(targ,false);
-                List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase()));
+                List ls = Arrays.asList(String.format("alph_%s",targetLetters.get(currNo).toLowerCase(Locale.US)));
                 playAudioQueued(ls,false);
                 setStatus(saveStatus);
             }

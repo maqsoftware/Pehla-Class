@@ -1,10 +1,11 @@
 package com.maq.xprize.onecourse.hindi.utils;
 
-import android.renderscript.ScriptGroup;
+import android.content.Context;
 
 import com.maq.xprize.onecourse.hindi.BuildConfig;
-import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
+import com.maq.xprize.onecourse.hindi.mainui.SplashScreenActivity;
+
 
 import java.io.File;
 import java.io.InputStream;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -20,8 +22,7 @@ import java.util.StringTokenizer;
  * Created by pedroloureiro on 02/11/2017.
  */
 
-public class OBConfigManager
-{
+public class OBConfigManager {
     public static String MULTIPLE_APP_DIR_SEPARATOR = ",";
     //
     private static String EXTENSIONS_IMAGE = "extensions_image";
@@ -144,37 +145,33 @@ public class OBConfigManager
     //
     private float internalGraphicScale;
     //
+    private Context mainActivityContext;
+
     public static OBConfigManager sharedManager;
 
-    public OBConfigManager ()
-    {
+    public OBConfigManager(Context mainActivityContext) {
         sharedManager = this;
+        this.mainActivityContext = mainActivityContext;
         //
-        try
-        {
+        try {
             loadConfigPLIST();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             MainActivity.log("Exception caught while trying to load the config PLIST");
             e.printStackTrace();
         }
     }
 
 
-    void loadSFXVolumesPLIST () throws Exception
-    {
+    void loadSFXVolumesPLIST() throws Exception {
         InputStream pis = MainActivity.mainActivity.getAssets().open("sfxvols.plist");
         OBXMLManager xmlManager = new OBXMLManager();
         Map<String, String> smap = (Map<String, String>) xmlManager.parsePlist(pis);
-        for (String k : smap.keySet())
-        {
+        for (String k : smap.keySet()) {
             internalSfxVolumes.put(k, Float.parseFloat(smap.get(k)));
         }
     }
 
-    public void loadConfigPLIST () throws Exception
-    {
+    public void loadConfigPLIST() throws Exception {
         String configPath = BuildConfig.SETTINGS_FILE;
         InputStream fileInputStream = MainActivity.mainActivity.getAssets().open(configPath);
         OBXMLManager xmlManager = new OBXMLManager();
@@ -185,8 +182,7 @@ public class OBConfigManager
         // Convert string colours into integer colours
         List<String> cols = (List<String>) internalConfig.get(SKIN_COLOURS);
         List<Integer> newSkinColours = new ArrayList<Integer>();
-        for (String s : cols)
-        {
+        for (String s : cols) {
             int col = OBUtils.colorFromRGBString(s);
             newSkinColours.add(Integer.valueOf(col));
         }
@@ -194,8 +190,7 @@ public class OBConfigManager
         //
         // Convert cloth colour string into colour
         String clothColourString = (String) internalConfig.get(LOCALISATION_CLOTH_COLOUR);
-        if (clothColourString != null && clothColourString instanceof String)
-        {
+        if (clothColourString != null && clothColourString instanceof String) {
             int clothColour = OBUtils.colorFromRGBString(clothColourString);
             internalConfig.put(LOCALISATION_CLOTH_COLOUR, Integer.valueOf(clothColour));
         }
@@ -205,56 +200,46 @@ public class OBConfigManager
         currentLanguage = getLanguageID();
     }
 
-    public Boolean isJumpToSetupPasswordCorrect(String password)
-    {
+    public Boolean isJumpToSetupPasswordCorrect(String password) {
         String correctValue = getStringValue(DEBUG_JUMP_TO_SETUP_PASSWORD);
         return correctValue != null && correctValue.equals(password);
     }
 
-    public Boolean isChangeDatePasswordCorrect(String password)
-    {
+    public Boolean isChangeDatePasswordCorrect(String password) {
         String correctValue = getStringValue(DEBUG_CHANGE_DATE_PASSWORD);
         return correctValue != null && correctValue.equals(password);
     }
 
-    public Boolean isCommunityModeOverrideEnabled()
-    {
+    public Boolean isCommunityModeOverrideEnabled() {
         return getBooleanValue(DEBUG_COMMUNITY_MODE_OVERRIDE);
     }
 
-    public Boolean isActivateCommunityModeOverridePasswordCorrect(String password)
-    {
+    public Boolean isActivateCommunityModeOverridePasswordCorrect(String password) {
         String correctValue = getStringValue(DEBUG_ACTIVATE_COMMUNITY_MODE_OVERRIDE_PASSWORD);
         return correctValue != null && correctValue.equals(password);
     }
 
-    public Boolean isRevertCommunityModePasswordCorrect(String password)
-    {
+    public Boolean isRevertCommunityModePasswordCorrect(String password) {
         String correctValue = getStringValue(DEBUG_REVERT_COMMUNITY_MODE_PASSWORD);
         return correctValue != null && correctValue.equals(password);
     }
 
-    public String getAwardSoundEffect()
-    {
+    public String getAwardSoundEffect() {
         return getStringValue(SFX_STAR);
     }
 
-    public List<String> getAudioSearchPaths()
-    {
+    public List<String> getAudioSearchPaths() {
         return internalAudioSearchPaths;
     }
 
-    private List<String> generateSearchPathsForFolders(String appDir, String genDir)
-    {
+    private List<String> generateSearchPathsForFolders(String appDir, String genDir) {
         List result = new ArrayList();
         //
         StringTokenizer mainFolderTokens = new StringTokenizer(appDir, MULTIPLE_APP_DIR_SEPARATOR);
-        while (mainFolderTokens.hasMoreTokens())
-        {
+        while (mainFolderTokens.hasMoreTokens()) {
             String token = mainFolderTokens.nextToken();
             //
-            if (OBUtils.lastPathComponent(OBUtils.stringByDeletingLastPathComponent(token)).equals("books"))
-            {
+            if (OBUtils.lastPathComponent(OBUtils.stringByDeletingLastPathComponent(token)).equals("books")) {
                 String extraFolder = OBUtils.stringByDeletingLastPathComponent(OBUtils.stringByDeletingLastPathComponent(token));
                 //
                 result.add(extraFolder);
@@ -268,8 +253,7 @@ public class OBConfigManager
         return result;
     }
 
-    public List<String> getAudioSearchPaths (String appDir, String genDir, String language)
-    {
+    public List<String> getAudioSearchPaths(String appDir, String genDir, String language) {
         List result = new ArrayList();
         List<String> searchPaths = generateSearchPathsForFolders(appDir, genDir);
         //
@@ -278,27 +262,22 @@ public class OBConfigManager
         if (!languages.contains(getLanguageID())) languages.add(getLanguageID());
         if (!languages.contains(getFallbackLanguageID())) languages.add(getFallbackLanguageID());
         //
-        for (String availableLanguage : languages)
-        {
-            for (String dir : searchPaths)
-            {
+        for (String availableLanguage : languages) {
+            for (String dir : searchPaths) {
                 if (dir == null) continue;
                 //
                 String newPath = OBUtils.stringByAppendingPathComponent(OBUtils.stringByAppendingPathComponent(dir, "local"), availableLanguage);
-                if (OBUtils.assetsDirectoryExists(newPath))
-                {
+                if (OBUtils.assetsDirectoryExists(newPath)) {
                     result.add(newPath);
                 }
             }
         }
         //
-        for (String dir : searchPaths)
-        {
+        for (String dir : searchPaths) {
             if (dir == null) continue;
             //
             String newPath = OBUtils.stringByAppendingPathComponent(dir, "sfx");
-            if (OBUtils.assetsDirectoryExists(newPath))
-            {
+            if (OBUtils.assetsDirectoryExists(newPath)) {
                 result.add(newPath);
             }
         }
@@ -306,25 +285,20 @@ public class OBConfigManager
         return result;
     }
 
-    public List<String> getImageSearchPaths()
-    {
+    public List<String> getImageSearchPaths() {
         return internalImageSearchPaths;
     }
 
-    public List<String> getImageSearchPaths (String appDir, String genDir)
-    {
+    public List<String> getImageSearchPaths(String appDir, String genDir) {
         List result = new ArrayList();
         List<String> searchPaths = generateSearchPathsForFolders(appDir, genDir);
         //
-        for (String resolution : Arrays.asList("img/shared_4", "img/shared_3"))
-        {
-            for (String dir : searchPaths)
-            {
+        for (String resolution : Arrays.asList("img/shared_4", "img/shared_3")) {
+            for (String dir : searchPaths) {
                 if (dir == null) continue;
                 //
                 String newPath = OBUtils.stringByAppendingPathComponent(dir, resolution);
-                if (OBUtils.assetsDirectoryExists(newPath))
-                {
+                if (OBUtils.assetsDirectoryExists(newPath)) {
                     result.add(newPath);
                 }
             }
@@ -332,23 +306,19 @@ public class OBConfigManager
         return result;
     }
 
-    public List<String> getConfigSearchPaths()
-    {
+    public List<String> getConfigSearchPaths() {
         return internalConfigSearchPaths;
     }
 
-    public List<String> getConfigSearchPaths (String appDir, String genDir)
-    {
+    public List<String> getConfigSearchPaths(String appDir, String genDir) {
         List result = new ArrayList();
         List<String> searchPaths = generateSearchPathsForFolders(appDir, genDir);
         //
-        for (String dir : searchPaths)
-        {
+        for (String dir : searchPaths) {
             if (dir == null) continue;
             //
             String newPath = OBUtils.stringByAppendingPathComponent(dir, "config");
-            if (OBUtils.assetsDirectoryExists(newPath))
-            {
+            if (OBUtils.assetsDirectoryExists(newPath)) {
                 result.add(newPath);
             }
         }
@@ -356,23 +326,19 @@ public class OBConfigManager
         return result;
     }
 
-    public List<String> getVectorSearchPaths()
-    {
+    public List<String> getVectorSearchPaths() {
         return internalVectorSearchPaths;
     }
 
-    public List<String> getVectorSearchPaths (String appDir, String genDir)
-    {
+    public List<String> getVectorSearchPaths(String appDir, String genDir) {
         List result = new ArrayList();
         List<String> searchPaths = generateSearchPathsForFolders(appDir, genDir);
         //
-        for (String dir : searchPaths)
-        {
+        for (String dir : searchPaths) {
             if (dir == null) continue;
             //
             String newPath = OBUtils.stringByAppendingPathComponent(dir, "img/vector");
-            if (OBUtils.assetsDirectoryExists(newPath))
-            {
+            if (OBUtils.assetsDirectoryExists(newPath)) {
                 result.add(newPath);
             }
         }
@@ -380,29 +346,24 @@ public class OBConfigManager
         return result;
     }
 
-    public List<String> getVideoSearchPaths()
-    {
+    public List<String> getVideoSearchPaths() {
         return internalVideoSearchPaths;
     }
 
-    public List<String> getVideoSearchPaths (String appDir, String genDir, String languageCode)
-    {
+    public List<String> getVideoSearchPaths(String appDir, String genDir, String languageCode) {
         List result = new ArrayList();
         List<String> searchPaths = generateSearchPathsForFolders(appDir, genDir);
         //
-        for (String dir : searchPaths)
-        {
+        for (String dir : searchPaths) {
             if (dir == null) continue;
             //
             String newPath = OBUtils.stringByAppendingPathComponent(dir, "/img/movies");
-            if (OBUtils.assetsDirectoryExists(newPath))
-            {
+            if (OBUtils.assetsDirectoryExists(newPath)) {
                 result.add(newPath);
             }
             //
             newPath = OBUtils.stringByAppendingPathComponent(dir, String.format("/local/%s", languageCode));
-            if (OBUtils.assetsDirectoryExists(newPath))
-            {
+            if (OBUtils.assetsDirectoryExists(newPath)) {
                 result.add(newPath);
             }
         }
@@ -410,11 +371,9 @@ public class OBConfigManager
         return result;
     }
 
-    public void updateGraphicScale(float newWidth, float newHeight)
-    {
-        MainActivity.log(String.format("updateGraphicScale called: %f %f",newWidth,newHeight));
-        if (newHeight > newWidth)
-        {
+    public void updateGraphicScale(float newWidth, float newHeight) {
+        MainActivity.log(String.format(Locale.US, "updateGraphicScale called: %f %f", newWidth, newHeight));
+        if (newHeight > newWidth) {
             float temp = newWidth;
             newWidth = newHeight;
             newHeight = temp;
@@ -422,49 +381,39 @@ public class OBConfigManager
         internalGraphicScale = newHeight / 768;
     }
 
-    public float applyGraphicScale (float val)
-    {
+    public float applyGraphicScale(float val) {
         return val * internalGraphicScale;
     }
 
-    public float getGraphicScale()
-    {
+    public float getGraphicScale() {
         return internalGraphicScale;
     }
 
-    public String getCurrentActivityFolder()
-    {
+    public String getCurrentActivityFolder() {
         String value = currentActivityFolder;
-        if (value == null)
-        {
+        if (value == null) {
             value = getMainFolder();
         }
         return value;
     }
 
-    public String getCurrentLanguage()
-    {
+    public String getCurrentLanguage() {
         String value = currentLanguage;
-        if (value == null)
-        {
+        if (value == null) {
             value = getLanguageID();
         }
-        if (value == null)
-        {
+        if (value == null) {
             value = getFallbackLanguageID();
         }
         return value;
     }
 
-    public void updateConfigPaths (String newActivityFolder, Boolean force)
-    {
+    public void updateConfigPaths(String newActivityFolder, Boolean force) {
         updateConfigPaths(newActivityFolder, force, null);
     }
 
-    public void updateConfigPaths (String newActivityFolder, Boolean force, String newLanguage)
-    {
-        if (currentActivityFolder != null && currentActivityFolder.equals(newActivityFolder) && currentLanguage != null && currentLanguage.equals(newLanguage) && !force)
-        {
+    public void updateConfigPaths(String newActivityFolder, Boolean force, String newLanguage) {
+        if (currentActivityFolder != null && currentActivityFolder.equals(newActivityFolder) && currentLanguage != null && currentLanguage.equals(newLanguage) && !force) {
             MainActivity.log("OBConfigManager.updateConfigPath no need to update as new values are the current ones");
             return;
         }
@@ -482,42 +431,34 @@ public class OBConfigManager
         //
         OBImageManager.sharedImageManager().clearCaches();
         //
-        if (OBAudioManager.audioManager != null)
-        {
+        if (OBAudioManager.audioManager != null) {
             OBAudioManager.audioManager.clearCaches();
         }
     }
 
 
-    public void setValue(String key, Object value)
-    {
+    public void setValue(String key, Object value) {
         MainActivity.log(String.format("OBConfigManager:setValue [%s] for key [%s]", value, key));
         internalConfig.put(key, value);
     }
 
-    public Object getValue (String key)
-    {
+    public Object getValue(String key) {
         return internalConfig.get(key);
     }
 
-    public Boolean getBooleanValue (String key)
-    {
+    public Boolean getBooleanValue(String key) {
         String result = getStringValue(key);
-        if (result != null)
-        {
+        if (result != null) {
             return result.equalsIgnoreCase("true");
         }
         return false;
     }
 
 
-    public List<String> getArrayValue (String key)
-    {
+    public List<String> getArrayValue(String key) {
         Object result = (Object) internalConfig.get(key);
-        if (result != null)
-        {
-            if (result instanceof List)
-            {
+        if (result != null) {
+            if (result instanceof List) {
                 return (List<String>) result;
             }
         }
@@ -525,17 +466,12 @@ public class OBConfigManager
     }
 
 
-    public String getStringValue (String key)
-    {
+    public String getStringValue(String key) {
         String result = (String) internalConfig.get(key);
-        if (result != null)
-        {
-            if (result instanceof String)
-            {
+        if (result != null) {
+            if (result instanceof String) {
                 return result;
-            }
-            else
-            {
+            } else {
                 return String.valueOf(result);
             }
         }
@@ -543,8 +479,7 @@ public class OBConfigManager
     }
 
 
-    public int getIntValue (String key)
-    {
+    public int getIntValue(String key) {
         Object result = internalConfig.get(key);
         //
         if (result == null) return -1;
@@ -555,8 +490,7 @@ public class OBConfigManager
     }
 
 
-    public float getFloatValue (String key)
-    {
+    public float getFloatValue(String key) {
         Object result = internalConfig.get(key);
         //
         if (result == null) return -1;
@@ -568,225 +502,184 @@ public class OBConfigManager
     }
 
 
-    protected List<String> getExtensions (String key)
-    {
+    protected List<String> getExtensions(String key) {
         Object value = internalConfig.get(key);
-        if (value instanceof String)
-        {
+        if (value instanceof String) {
             List<String> result = new ArrayList<>();
             result.add((String) value);
             //
             return result;
-        }
-        else if (value instanceof List)
-        {
+        } else if (value instanceof List) {
             return (List) value;
-        }
-        else
-        {
+        } else {
             MainActivity.log("OBConfigManager.getExtensions.unknown value from internal config --> " + value.toString());
         }
         return null;
     }
 
 
-    public List<String> getAudioExtensions ()
-    {
+    public List<String> getAudioExtensions() {
         return getExtensions(EXTENSIONS_AUDIO);
     }
 
-    public List<String> getImageExtensions ()
-    {
+    public List<String> getImageExtensions() {
         return getExtensions(EXTENSIONS_IMAGE);
     }
 
-    public List<String> getVideoExtensions ()
-    {
+    public List<String> getVideoExtensions() {
         return getExtensions(EXTENSIONS_VIDEO);
     }
 
-    public List<String> getVectorExtensions()
-    {
+    public List<String> getVectorExtensions() {
         return getExtensions(EXTENSIONS_VECTOR);
     }
 
 
-    public int getPresenterColourIndex ()
-    {
+    public int getPresenterColourIndex() {
         int value = getIntValue(LOCALISATION_SKIN_COLOUR);
-        if (value == -1)
-        {
+        if (value == -1) {
             MainActivity.log("ERROR --> [" + LOCALISATION_SKIN_COLOUR + "] not set in the CONFIG");
             return 0;
         }
         return value;
     }
 
-    public int getSkinColour (int offset)
-    {
+    public int getSkinColour(int offset) {
         List<Integer> skinColours = (List<Integer>) internalConfig.get(SKIN_COLOURS);
         Integer index = (getPresenterColourIndex() + offset) % skinColours.size();
         return skinColours.get(index);
     }
 
-    public int getClothColour ()
-    {
+    public int getClothColour() {
         Integer result = (Integer) internalConfig.get(LOCALISATION_CLOTH_COLOUR);
         return result.intValue();
     }
 
-    public String getLanguageID ()
-    {
+    public String getLanguageID() {
         String result = (String) internalConfig.get(LOCALISATION_LANGUAGE_ID);
         return result;
     }
 
-    public String getFallbackLanguageID ()
-    {
+    public String getFallbackLanguageID() {
         String result = (String) internalConfig.get(LOCALISATION_FALLBACK_LANGUAGE_ID);
         return result;
     }
 
 
-    public Boolean isSetupMenuEnabled ()
-    {
+    public Boolean isSetupMenuEnabled() {
         return getBooleanValue(SETUP_MENU_ENABLED);
     }
 
-    public String getSetupMenuFolder ()
-    {
+    public String getSetupMenuFolder() {
         return getStringValue(SETUP_MENU_FOLDER);
     }
 
-    public String getSetupMenuClassName ()
-    {
+    public String getSetupMenuClassName() {
         return getStringValue(SETUP_MENU_CLASS);
     }
 
 
-    public Boolean isBrightnessManagerEnabled ()
-    {
+    public Boolean isBrightnessManagerEnabled() {
         return getBooleanValue(BRIGHTNESS_MANAGER_ENABLED);
     }
 
-    public int getBrightnessCheckIntervalInSeconds ()
-    {
+    public int getBrightnessCheckIntervalInSeconds() {
         return getIntValue(BRIGHTNESS_CHECK_INTERVAL_SECONDS);
     }
 
-    public float getBrightnessTurnOffThresholdValue ()
-    {
+    public float getBrightnessTurnOffThresholdValue() {
         return getFloatValue(BRIGHTNESS_TURN_OFF_VALUE);
     }
 
-    public int getBrightnessMaxScreenTimeInSeconds ()
-    {
+    public int getBrightnessMaxScreenTimeInSeconds() {
         return getIntValue(BRIGHTNESS_MAX_SCREEN_TIMEOUT_SECONDS);
     }
 
 
-    public Boolean isTimeServerEnabled ()
-    {
+    public Boolean isTimeServerEnabled() {
         return getBooleanValue(NTP_ENABLED);
     }
 
-    public String getTimeServerWifiSSID ()
-    {
+    public String getTimeServerWifiSSID() {
         return getStringValue(NTP_WIFI_SSID);
     }
 
-    public String getTimeServerWifiPassword ()
-    {
+    public String getTimeServerWifiPassword() {
         return getStringValue(NTP_WIFI_PASSWORD);
     }
 
-    public String getTimeServerURL ()
-    {
+    public String getTimeServerURL() {
         return getStringValue(NTP_URL);
     }
 
 
-    public Boolean isBackupWhenChargingEnabled ()
-    {
+    public Boolean isBackupWhenChargingEnabled() {
         return getBooleanValue(BACKUP_ENABLED_WHEN_CHARGING);
     }
 
-    public String getBackupWifiSSID ()
-    {
+    public String getBackupWifiSSID() {
         return getStringValue(BACKUP_WIFI_SSID);
     }
 
-    public String getBackupWifiPassword ()
-    {
+    public String getBackupWifiPassword() {
         return getStringValue(BACKUP_WIFI_PASSWORD);
     }
 
-    public String getBackupURL ()
-    {
+    public String getBackupURL() {
         return getStringValue(BACKUP_URL);
     }
 
-    public String getBackupWorkingDirectory ()
-    {
+    public String getBackupWorkingDirectory() {
         return getStringValue(BACKUP_WORKING_DIRECTORY);
     }
 
-    public int getBackupIntervalInMinutes ()
-    {
+    public int getBackupIntervalInMinutes() {
         return getIntValue(BACKUP_INTERVAL_MINUTES);
     }
 
 
-    public Boolean isEnablingAdministratorServicesRequired ()
-    {
+    public Boolean isEnablingAdministratorServicesRequired() {
         return getBooleanValue(STARTUP_ENABLE_ADMINISTRATOR_SERVICES);
     }
 
-    public Boolean isRequestingDeviceOwnerRequired ()
-    {
+    public Boolean isRequestingDeviceOwnerRequired() {
         return getBooleanValue(STARTUP_REQUEST_DEVICE_OWNER);
     }
 
-    public Boolean shouldPinApplication ()
-    {
+    public Boolean shouldPinApplication() {
         return getBooleanValue(STARTUP_PIN_APPLICATION);
     }
 
 
-    public int getMinimumAudioVolumePercentage ()
-    {
+    public int getMinimumAudioVolumePercentage() {
         return getIntValue(AUDIO_MIN_VOLUME);
     }
 
 
-    public int getDefaultAudioVolumePercentage()
-    {
+    public int getDefaultAudioVolumePercentage() {
         return getIntValue(AUDIO_DEFAULT_VOLUME);
     }
 
 
-    public Boolean shouldAppRestartAfterCrash ()
-    {
+    public Boolean shouldAppRestartAfterCrash() {
         return getBooleanValue(RECOVERY_RESTART_AFTER_CRASH);
     }
 
 
-    public Boolean isBatteryManagerEnabled ()
-    {
+    public Boolean isBatteryManagerEnabled() {
         return getBooleanValue(BATTERY_MANAGER_ENABLED);
     }
 
-    public Set<String> getBatteryLevelKeys ()
-    {
+    public Set<String> getBatteryLevelKeys() {
         Object value = internalConfig.get(BATTERY_LEVELS);
         //
-        if (value != null && value instanceof HashMap) return ((HashMap<String, Object>) value).keySet();
+        if (value != null && value instanceof HashMap)
+            return ((HashMap<String, Object>) value).keySet();
         //
         return null;
     }
 
-    protected HashMap<String, Object> getBatteryLevels ()
-    {
+    protected HashMap<String, Object> getBatteryLevels() {
         Object value = internalConfig.get(BATTERY_LEVELS);
         //
         if (value != null && value instanceof HashMap) return (HashMap<String, Object>) value;
@@ -794,8 +687,7 @@ public class OBConfigManager
         return null;
     }
 
-    public HashMap<String, Object> getBatteryDataForLevel (String levelKey)
-    {
+    public HashMap<String, Object> getBatteryDataForLevel(String levelKey) {
         HashMap<String, Object> data = getBatteryLevels();
         Object value = data.get(levelKey);
         //
@@ -804,8 +696,7 @@ public class OBConfigManager
         return null;
     }
 
-    protected Object getBatteryValueForLevel (String levelKey, String propertyKey)
-    {
+    protected Object getBatteryValueForLevel(String levelKey, String propertyKey) {
         HashMap<String, Object> data = getBatteryDataForLevel(levelKey);
         //
         if (data != null) return data.get(propertyKey);
@@ -813,8 +704,7 @@ public class OBConfigManager
         return null;
     }
 
-    public int getBatteryMaxValueForLevel (String levelKey)
-    {
+    public int getBatteryMaxValueForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_MAX_VALUE);
         if (value != null) return Integer.parseInt(String.valueOf(value));
         //
@@ -822,8 +712,7 @@ public class OBConfigManager
         return -1;
     }
 
-    public int getBatteryMinValueForLevel (String levelKey)
-    {
+    public int getBatteryMinValueForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_MIN_VALUE);
         if (value != null) return Integer.parseInt(String.valueOf(value));
         //
@@ -831,8 +720,7 @@ public class OBConfigManager
         return -1;
     }
 
-    public float getBatteryMaxBrightnessForLevel (String levelKey)
-    {
+    public float getBatteryMaxBrightnessForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_MAX_BRIGHTNESS);
         if (value != null) return Float.parseFloat(String.valueOf(value));
         //
@@ -840,8 +728,7 @@ public class OBConfigManager
         return -1;
     }
 
-    public int getBatteryMaxScreenTimeoutInSecondsForLevel (String levelKey)
-    {
+    public int getBatteryMaxScreenTimeoutInSecondsForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_MAX_SCREEN_TIMEOUT_SECONDS);
         if (value != null) return Integer.parseInt(String.valueOf(value));
         //
@@ -849,8 +736,7 @@ public class OBConfigManager
         return -1;
     }
 
-    public int getBatteryChargeReminderIntervalInMinutesForLevel (String levelKey)
-    {
+    public int getBatteryChargeReminderIntervalInMinutesForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_CHARGE_REMINDER_INTERNAL_MINUTES);
         if (value != null) return Integer.parseInt(String.valueOf(value));
         //
@@ -858,8 +744,7 @@ public class OBConfigManager
         return -1;
     }
 
-    public Boolean isBatteryChargeReminderEnabledForLevel (String levelKey)
-    {
+    public Boolean isBatteryChargeReminderEnabledForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_CHARGE_REMINDER_ENABLED);
         if (value != null) return String.valueOf(value).equalsIgnoreCase("true");
         //
@@ -867,8 +752,7 @@ public class OBConfigManager
         return false;
     }
 
-    public Boolean isBatteryLockScreenEnabledForLevel (String levelKey)
-    {
+    public Boolean isBatteryLockScreenEnabledForLevel(String levelKey) {
         Object value = getBatteryValueForLevel(levelKey, BATTERY_LOCK_SCREEN_ENABLED);
         if (value != null) return String.valueOf(value).equalsIgnoreCase("true");
         //
@@ -877,196 +761,158 @@ public class OBConfigManager
     }
 
 
-    public Boolean isFatControllerSessionTimeoutEnabled ()
-    {
+    public Boolean isFatControllerSessionTimeoutEnabled() {
         return getBooleanValue(FAT_CONTROLLER_SESSION_TIMEOUT_ENABLED);
     }
 
-    public int getFatControllerSessionTimeoutInSeconds ()
-    {
+    public int getFatControllerSessionTimeoutInSeconds() {
         return getIntValue(FAT_CONTROLLER_SESSION_TIMEOUT_SECONDS);
     }
 
-    public int getFatControllerMaxUnitAttempts ()
-    {
+    public int getFatControllerMaxUnitAttempts() {
         return getIntValue(FAT_CONTROLLER_MAX_UNIT_ATTEMPTS);
     }
 
-    public String getFatControllerNightModeHours ()
-    {
+    public String getFatControllerNightModeHours() {
         return getStringValue(FAT_CONTROLLER_NIGHT_MODE_HOURS);
     }
 
-    public int getFatControllerPlayzoneActiveHour ()
-    {
+    public int getFatControllerPlayzoneActiveHour() {
         return getIntValue(FAT_CONTROLLER_PLAYZONE_ACTIVE_HOUR);
     }
 
-    public Boolean shouldFatControllerShowUserName()
-    {
+    public Boolean shouldFatControllerShowUserName() {
         return getBooleanValue(FAT_CONTROLLER_SHOW_USER_NAME);
     }
 
-    public int getFatControllerPlayzoneLockTimeout()
-    {
+    public int getFatControllerPlayzoneLockTimeout() {
         return getIntValue(FAT_CONTROLLER_LOCK_TIMEOUT);
     }
 
-    public int getFatControllerStudyLoopWeek()
-    {
+    public int getFatControllerStudyLoopWeek() {
         return getIntValue(FAT_CONTROLLER_STUDY_LOOP_WEEK);
     }
 
 
-    public String getAssetsExternalPath ()
-    {
-        return getStringValue(ASSETS_EXTERNAL_PATH);
+    public String getAssetsExternalPath() {
+        return SplashScreenActivity.assetsPath + File.separator + "assets";
     }
 
-    public List<File> getExternalAssetsSearchPaths()
-    {
-        if (internalAssetsSearchPaths == null)
-        {
+    public List<File> getExternalAssetsSearchPaths() {
+        if (internalAssetsSearchPaths == null) {
             internalAssetsSearchPaths = OBSystemsManager.sharedManager.getExternalAssetsFolders();
         }
         return internalAssetsSearchPaths;
     }
 
-    public Boolean shouldLookForZippedAsssets()
-    {
+    public Boolean shouldLookForZippedAsssets() {
         return getBooleanValue(ASSETS_LOOK_FOR_ZIPPED_FILES);
     }
 
-    public Boolean shouldUnzipAllAssetsOnStartup()
-    {
+    public Boolean shouldUnzipAllAssetsOnStartup() {
         return getBooleanValue(ASSETS_UNZIP_ALL_ON_STARTUP);
     }
 
-    public List<String> getZippedAssetsPriorityFolders()
-    {
+    public List<String> getZippedAssetsPriorityFolders() {
         String value = getStringValue(ASSETS_PRIORITY_FOLDERS);
         return Arrays.asList(value.split(","));
     }
 
-    public Boolean areAssetsReadyToBeUsed()
-    {
+    public Boolean areAssetsReadyToBeUsed() {
         return getBooleanValue(ASSETS_READY_TO_BE_USED);
     }
 
-    public void setAssetsReadyToBeUsed(Boolean value)
-    {
+    public void setAssetsReadyToBeUsed(Boolean value) {
         internalConfig.put(ASSETS_READY_TO_BE_USED, (value ? "true" : "false"));
     }
 
 
-    public Boolean isDebugEnabled ()
-    {
+    public Boolean isDebugEnabled() {
         return getBooleanValue(DEBUG_ENABLED);
     }
 
-    public Boolean shouldShowTestMenu ()
-    {
+    public Boolean shouldShowTestMenu() {
         return getBooleanValue(DEBUG_SHOW_TEST_MENU);
     }
 
-    public Boolean shouldShowBackArrow ()
-    {
+    public Boolean shouldShowBackArrow() {
         return getBooleanValue(DEBUG_SHOW_BACK_ARROW);
     }
 
-    public Boolean shouldShowUnitID ()
-    {
+    public Boolean shouldShowUnitID() {
         return getBooleanValue(DEBUG_SHOW_UNIT_ID);
     }
 
-    public String getBuildNumber ()
-    {
+    public String getBuildNumber() {
         return getStringValue(DEBUG_BUILD_NUMBER);
     }
 
 
-    public String getGenFolder ()
-    {
+    public String getGenFolder() {
         return getStringValue(APP_GEN_FOLDER);
     }
 
-    public String getMainFolder ()
-    {
+    public String getMainFolder() {
         return getStringValue(APP_MAIN_FOLDER);
     }
 
-    public String getMenuClassName ()
-    {
+    public String getMenuClassName() {
         return getStringValue(APP_MENU_CLASS);
     }
 
-    public Boolean hasSplashScreen()
-    {
+    public Boolean hasSplashScreen() {
         return getBooleanValue(APP_SPLASH_SCREEN);
     }
 
-    public String getFatControllerClassName ()
-    {
+    public String getFatControllerClassName() {
         String value = getStringValue(APP_FAT_CONTROLLER_CLASS);
-        if (value == null || value.length() == 0)
-        {
+        if (value == null || value.length() == 0) {
             return "OBFatController";
         }
         return value;
     }
 
-    public String getMasterlist ()
-    {
+    public String getMasterlist() {
         return getStringValue(APP_MASTERLIST);
     }
 
-    public String getMasterlistForPlayzone ()
-    {
+    public String getMasterlistForPlayzone() {
         return getStringValue(APP_MASTERLIST_PLAYZONE);
     }
 
-    public String getMasterlistForLibrary ()
-    {
+    public String getMasterlistForLibrary() {
         return getStringValue(APP_MASTERLIST_LIBRARY);
     }
 
 
-
-    public Boolean isAnalyticsEnabled ()
-    {
+    public Boolean isAnalyticsEnabled() {
         return getBooleanValue(ANALYTICS_ENABLED);
     }
 
-    public String getAnalyticsClassName ()
-    {
+    public String getAnalyticsClassName() {
         return getStringValue(ANALYTICS_CLASS);
     }
 
-    public int getAnalyticsDeviceStatusRefreshIntervalMinutes()
-    {
+    public int getAnalyticsDeviceStatusRefreshIntervalMinutes() {
         return getIntValue(ANALYTICS_DEVICE_STATUS_REFRESH_INTERVAL_MINUTES);
     }
 
-    public Map<String,Float> getSfxVolumes()
-    {
-        if(internalSfxVolumes != null)
+    public Map<String, Float> getSfxVolumes() {
+        if (internalSfxVolumes != null)
             return internalSfxVolumes;
         else
             return new HashMap<>();
     }
 
 
-    public Boolean getShowJudgesPopupMenu()
-    {
+    public Boolean getShowJudgesPopupMenu() {
         return getBooleanValue(JUDGES_MENU_SHOW_POPUP);
     }
 
 
-
-
-    public Boolean isLocationEnabled()
-    {
-        return getBooleanValue(LOCATION_ENABLED);
+    public Boolean isLocationEnabled() {
+//        return getBooleanValue(LOCATION_ENABLED);
+        return false;
     }
 
 }

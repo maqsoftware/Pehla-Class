@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 09/05/2017.
@@ -51,8 +52,8 @@ public class OC_Sharing_S3 extends OC_Generic_Event
         playAudioScene("DEMO", 1, false); // I share them into two equal sets.;
         for (int i = 1; i <= 4; i++)
         {
-            OBControl control = objectDict.get(String.format("object_%d", i));
-            OBControl place = objectDict.get(String.format("place_%d", i));
+            OBControl control = objectDict.get(String.format(Locale.US,"object_%d", i));
+            OBControl place = objectDict.get(String.format(Locale.US,"place_%d", i));
             OC_Generic.pointer_moveToObject(control, -20, (i == 1) ? 0.3f : 0.6f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
             OC_Generic.pointer_moveToPointWithObject(control, place.getWorldPosition(), -15, 0.6f, true, this);
             playSfxAudio("place_object", false);

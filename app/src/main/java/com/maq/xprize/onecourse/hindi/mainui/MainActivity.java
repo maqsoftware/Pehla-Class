@@ -19,6 +19,7 @@ import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
@@ -41,7 +42,6 @@ import com.maq.xprize.onecourse.hindi.utils.OBAudioManager;
 import com.maq.xprize.onecourse.hindi.utils.OBConfigManager;
 import com.maq.xprize.onecourse.hindi.utils.OBFatController;
 import com.maq.xprize.onecourse.hindi.utils.OBImageManager;
-import com.maq.xprize.onecourse.hindi.utils.OBLocationManager;
 import com.maq.xprize.onecourse.hindi.utils.OBPreferenceManager;
 import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
 import com.maq.xprize.onecourse.hindi.utils.OBUser;
@@ -72,7 +72,6 @@ import static com.maq.xprize.onecourse.hindi.mainui.DownloadExpansionFile.xAPKS;
 public class MainActivity extends Activity {
     public static final int REQUEST_EXTERNAL_STORAGE = 1,
             REQUEST_MICROPHONE = 2,
-            REQUEST_CAMERA = 3,
             REQUEST_ALL = 4,
             REQUEST_FIRST_SETUP_DATE_TIME = 5,
             REQUEST_FIRST_SETUP_PERMISSIONS = 6,
@@ -85,8 +84,8 @@ public class MainActivity extends Activity {
     public static OBConfigManager configManager;
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
-    public static OBLocationManager locationManager;
     public static MainActivity mainActivity;
+    public static SharedPreferences sharedPref;
     public static OBMainViewController mainViewController;
     public static Typeface standardTypeFace, writingTypeFace;
 
@@ -94,20 +93,12 @@ public class MainActivity extends Activity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-    private static String[] PERMISSIONS_MICROPHONE = {
-            Manifest.permission.RECORD_AUDIO
-    };
-    private static String[] PERMISSIONS_CAMERA = {
-            Manifest.permission.CAMERA
-    };
 
     private static String[] PERMISSION_ALL = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.CAMERA,
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE
     };
@@ -119,8 +110,8 @@ public class MainActivity extends Activity {
     public ReentrantLock suspendLock = new ReentrantLock();
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
+    private int b;
     private static FirebaseAnalytics FirebaseAnalytics;
-
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
@@ -155,37 +146,44 @@ public class MainActivity extends Activity {
     }
 
 
+    //  Method to check if SD card is mounted
+    public boolean isSDcard() {
+        File[] fileList = getObbDirs();
+        return fileList.length >= 2;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         FirebaseAnalytics = FirebaseAnalytics.getInstance(this);                                                       // creating Firebase instance.
 
-        SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
+
+        sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 
-        String flagFilePath = "/storage/emulated/0/Android/data/com.maq.xprize.onecourse.hindi/files/.success.txt";
-        File flagFile = new File(flagFilePath);
-        if (!flagFile.exists()) {
-            // Set main and patch file version to 0, if the extractions takes place for the first time
+        // Retrieve the stored values of main and patch file version
+        int storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
+        int storedPatchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), defaultFileVersion);
+        boolean isExtractionRequired = false;
+        needExtraction();
+        if ((sharedPref.getInt("dataPath", 0) == 0)) {
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt(getString(R.string.mainFileVersion), 0);
-            editor.putInt(getString(R.string.patchFileVersion), 0);
-            editor.commit();
+            editor.putInt("mainFileVersion", defaultFileVersion);
+            editor.putInt("patchFileVersion", defaultFileVersion);
+            editor.apply();
+            isExtractionRequired = true;
+        } else {
+            for (DownloadExpansionFile.XAPKFile xf : xAPKS) {
+                if ((xf.mIsMain && xf.mFileVersion != storedMainFileVersion) || (!xf.mIsMain && xf.mFileVersion != storedPatchFileVersion)) {
+                    isExtractionRequired = true;
+                    break;
+                }
+            }
+        }
+        if (isExtractionRequired) {
             Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            // Retrieve the stored values of main and patch file version
-            int mainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
-            int patchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), defaultFileVersion);
-            boolean isExtractionRequired = isExpansionExtractionRequired(mainFileVersion, patchFileVersion);
-            // If main or patch file is updated, the extraction process needs to be performed again
-            if (isExtractionRequired) {
-                Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);
-                startActivity(intent);
-                finish();
-            }
         }
 
         MainActivity.log("MainActivity.onCreate");
@@ -215,21 +213,16 @@ public class MainActivity extends Activity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         //
         // Hide Status Bar
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //
         mainActivity = this;
         //
-        configManager = new OBConfigManager();
+        configManager = new OBConfigManager(this.getApplicationContext());
         //
         analyticsManager = new OBAnalyticsManager(this);
-        locationManager = new OBLocationManager(this);
         //
         // this flag disables screenshots
         // Commented code to enable capturing of screenshots
@@ -266,14 +259,25 @@ public class MainActivity extends Activity {
         }
     }
 
-    private boolean isExpansionExtractionRequired(int mainFileVersion, int patchFileVersion) {
-        for (DownloadExpansionFile.XAPKFile xf : xAPKS) {
-            // If main or patch file is updated set isExtractionRequired to true
-            if (xf.mIsMain && xf.mFileVersion != mainFileVersion || !xf.mIsMain && xf.mFileVersion != patchFileVersion) {
-                return true;
+    private void needExtraction() {
+        File[] fileList = getExternalFilesDirs(null);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        for (File file : fileList) {
+            File flagFile = new File(".success.txt");
+            file = new File(file + File.separator + flagFile);
+            /*
+             * Checks if any older version has been installed and extracted successfully
+             * if extracted successfully, then set the existing path location as the preference.
+             */
+            if (file.exists()) {
+                if (file.toString().contains("emulated")) {
+                    editor.putInt(getString(R.string.dataPath), 1);
+                } else {
+                    editor.putInt(getString(R.string.dataPath), 2);
+                }
+                editor.apply();
             }
         }
-        return false;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -458,13 +462,7 @@ public class MainActivity extends Activity {
         // app is running on an emulator, and assume that it supports
         // OpenGL ES 2.0.
         final boolean supportsEs2 =
-                configurationInfo.reqGlEsVersion >= 0x20000
-                        || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
-                        && (Build.FINGERPRINT.startsWith("generic")
-                        || Build.FINGERPRINT.startsWith("unknown")
-                        || Build.MODEL.contains("google_sdk")
-                        || Build.MODEL.contains("Emulator")
-                        || Build.MODEL.contains("Android SDK built for x86")));
+                configurationInfo.reqGlEsVersion >= 0x20000 || Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") || Build.MODEL.contains("Android SDK built for x86");
 
         if (supportsEs2) {
             // Request an OpenGL ES 2.0 compatible context.
@@ -589,26 +587,6 @@ public class MainActivity extends Activity {
         return result;
     }
 
-
-    public boolean isMicrophonePermissionGranted() {
-        Boolean micPermission = selfPermissionGranted(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
-        //
-        if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_MICROPHONE, REQUEST_MICROPHONE);
-        //
-        return micPermission;
-    }
-
-    public boolean isCameraPermissionGranted() {
-        Boolean micPermission = selfPermissionGranted(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-        //
-        if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA, REQUEST_CAMERA);
-        //
-        return micPermission;
-    }
-
-
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == REQUEST_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             log("received permission to access external storage. attempting to download again");
@@ -682,7 +660,6 @@ public class MainActivity extends Activity {
     public int selfPermissionGranted(String permission) {
         // For Android < Android M, self permissions are always granted.
         int result = PackageManager.PERMISSION_GRANTED;
-
         //
         if (isSDKCompatible()) {
             return ActivityCompat.checkSelfPermission(MainActivity.mainActivity.getApplicationContext(), permission);

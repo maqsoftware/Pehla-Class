@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kLetterCase;
@@ -35,7 +36,7 @@ public class OC_Diagnostics_TouchCorrectLetter extends OC_Diagnostics_TouchCorre
         //
         OC_DiagnosticsQuestion currentQuestion = questions.get(currNo);
         String letterName = (String) currentQuestion.correctAnswers.get(0);
-        String phonemeAudio = String.format("is_%s", letterName.toLowerCase());
+        String phonemeAudio = String.format("is_%s", letterName.toLowerCase(Locale.US));
         //
         List replayAudio = new ArrayList();
         replayAudio.addAll(getAudioForScene(scene, "PROMPT"));
@@ -58,7 +59,7 @@ public class OC_Diagnostics_TouchCorrectLetter extends OC_Diagnostics_TouchCorre
         String letterCase = (String) exerciseData.get(kLetterCase);
         for (int i = 0; i < totalParameters; i++)
         {
-            OBControl labelBox = objectDict.get(String.format("label%d", i + 1));
+            OBControl labelBox = objectDict.get(String.format(Locale.US,"label%d", i + 1));
             String letterName = currentQuestion.distractors.get(i);
             if (letterCase.equals(kUppercase))
             {
@@ -66,7 +67,7 @@ public class OC_Diagnostics_TouchCorrectLetter extends OC_Diagnostics_TouchCorre
             }
             else if (letterName.equals(kLowercase))
             {
-                letterName = letterName.toLowerCase();
+                letterName = letterName.toLowerCase(Locale.US);
             }
             OBLabel letterLabel = OC_Generic.action_createLabelForControl(labelBox, letterName, 1.0f, false, OBUtils.standardTypeFace(), Color.BLACK, this);
             letterLabel.setProperty("letter", letterName);
@@ -84,7 +85,7 @@ public class OC_Diagnostics_TouchCorrectLetter extends OC_Diagnostics_TouchCorre
         ListIterator<String> iterator = strings.listIterator();
         while (iterator.hasNext())
         {
-            iterator.set(iterator.next().toLowerCase());
+            iterator.set(iterator.next().toLowerCase(Locale.US));
         }
     }
 
@@ -96,7 +97,7 @@ public class OC_Diagnostics_TouchCorrectLetter extends OC_Diagnostics_TouchCorre
         correctAnswers.addAll(currentQuestion.correctAnswers);
         convertAllToLowerCase(correctAnswers);
         //
-        String userAnswer = ((String) label.propertyValue("letter")).toLowerCase();
+        String userAnswer = ((String) label.propertyValue("letter")).toLowerCase(Locale.US);
         //
         if (saveInformation)
         {
@@ -143,7 +144,7 @@ public class OC_Diagnostics_TouchCorrectLetter extends OC_Diagnostics_TouchCorre
             {
                 if (letterCase.equalsIgnoreCase(kLowercase))
                 {
-                    letterName = letterName.toLowerCase();
+                    letterName = letterName.toLowerCase(Locale.US);
                 }
                 if (letterCase.equalsIgnoreCase(kUppercase))
                 {

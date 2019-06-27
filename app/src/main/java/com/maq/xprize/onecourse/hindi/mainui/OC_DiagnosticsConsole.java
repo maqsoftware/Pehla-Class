@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.view.View.INVISIBLE;
@@ -81,7 +82,7 @@ public class OC_DiagnosticsConsole extends OBSectionController
             {
                 MainActivity.log("Running Diagnostics");
                 //
-                String params = String.format("diagnostics/debug=true/questions=10/week=%d", week_slider.getProgress());
+                String params = String.format(Locale.US,"diagnostics/debug=true/questions=10/week=%d", week_slider.getProgress());
                 MainActivity.mainViewController.pushViewControllerWithNameConfig("OC_DiagnosticsIntro", "oc-diagnostics,oc-literacy-gen,oc-numeracy-gen", true, true, params);
             }
         });
@@ -362,7 +363,7 @@ public class OC_DiagnosticsConsole extends OBSectionController
                     Integer usages = unitUsage.get(remedialUnit);
                     if (usages == null)
                     {
-                        usages = new Integer(0);
+                        usages = 0;
                     }
                     unitUsage.put(remedialUnit, usages + 1);
                 }
@@ -370,7 +371,7 @@ public class OC_DiagnosticsConsole extends OBSectionController
                 Double totalTimeForQuestion = loadTimes.get(questionUUID);
                 if (totalTimeForQuestion == null)
                 {
-                    totalTimeForQuestion = new Double(0);
+                    totalTimeForQuestion = Double.valueOf(0);
                 }
                 loadTimes.put(questionUUID, totalTimeForQuestion + elapsed);
                 //
@@ -438,7 +439,7 @@ public class OC_DiagnosticsConsole extends OBSectionController
                     }
                     //
                     String parameters = (String) unitAttributes.get("params");
-                    String output = String.format("%02.2f%% (%03d) - %s - %s", percentage, usages, unit, parameters);
+                    String output = String.format(Locale.US,"%02.2f%% (%03d) - %s - %s", percentage, usages, unit, parameters);
                     //
                     testResultsForEntry.add(output);
                     //MainActivity.log(questionUUID + " " + output);

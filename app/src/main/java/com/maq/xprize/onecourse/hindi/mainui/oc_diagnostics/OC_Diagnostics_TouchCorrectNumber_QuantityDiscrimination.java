@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kNumberComparison;
@@ -43,7 +44,7 @@ public class OC_Diagnostics_TouchCorrectNumber_QuantityDiscrimination extends OC
         List allParameters = new ArrayList<>();
         for (int i = min; i <= max; i++)
         {
-            allParameters.add(String.format("%d", i));
+            allParameters.add(String.format(Locale.US,"%d", i));
         }
         int totalQuestions = Integer.parseInt((String) exerciseData.get(kTotalQuestions));
         int possibleAnswerCount = Integer.parseInt((String) exerciseData.get(kTotalAvailableOptions));
@@ -66,7 +67,7 @@ public class OC_Diagnostics_TouchCorrectNumber_QuantityDiscrimination extends OC
                 {
                     maxValue = Math.max(Integer.parseInt(value), maxValue);
                 }
-                correctAnswer = String.format("%d", maxValue);
+                correctAnswer = String.format(Locale.US,"%d", maxValue);
             }
             else if (comparison.equals(kNumberComparisonSmaller))
             {
@@ -75,7 +76,7 @@ public class OC_Diagnostics_TouchCorrectNumber_QuantityDiscrimination extends OC
                 {
                     minValue = Math.min(Integer.parseInt(value), minValue);
                 }
-                correctAnswer = String.format("%d", minValue);
+                correctAnswer = String.format(Locale.US,"%d", minValue);
             }
             //
             List distractors = selectedParameters;

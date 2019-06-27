@@ -20,6 +20,7 @@ import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 06/04/2017.
@@ -78,7 +79,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         {
             int rowNum = OBUtils.getIntValue(eventAttributes.get("hiliterow"));
             for(int i=1; i<=10; i++)
-                activeBoxes.add( objectDict.get(String.format("box_%d", (rowNum-1)*10 + i)));
+                activeBoxes.add( objectDict.get(String.format(Locale.US,"box_%d", (rowNum-1)*10 + i)));
 
         }
         if(eventAttributes.get("target").equals("box")||
@@ -90,7 +91,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         if(eventAttributes.get("target").equals("column"))
         {
             for(int num : targetNums)
-                activeBoxes.add( objectDict.get(String.format("box_%d", num)));
+                activeBoxes.add( objectDict.get(String.format(Locale.US,"box_%d", num)));
             if((int)targetNums.get(0) %2 == 0)
                 currentcolour = evencolour;
             else
@@ -259,7 +260,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
     public void checkNum(OBControl cont) throws Exception
     {
         int val = (int)cont.propertyValue("num_value") ;
-        OBLabel numCont = (OBLabel)objectDict.get(String.format("num_%d",val));
+        OBLabel numCont = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d",val));
         numCont.setColour(Color.RED);
         if(val%2 == 0)
         {
@@ -332,7 +333,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         {
             int val = (int)cont.settings.get("num_value") ;
             for(int i=0; i<10; i++)
-                targetBoxes.add(objectDict.get(String.format("box_%d", val + i*10)));
+                targetBoxes.add(objectDict.get(String.format(Locale.US,"box_%d", val + i*10)));
             cont.setBackgroundColor ( currentcolour);
             setStatus(STATUS_DRAGGING);
         }
@@ -391,7 +392,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
     {
         lockScreen();
         for(int i=0; i<10; i++)
-            markLastNum((OBLabel)objectDict.get(String.format("num_%d",column+i*10)));
+            markLastNum((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",column+i*10)));
         unlockScreen();
     }
 
@@ -473,7 +474,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
 
     public void hiliteBox(int num, int colour)
     {
-        OBControl cont = objectDict.get(String.format("box_%d", num));
+        OBControl cont = objectDict.get(String.format(Locale.US,"box_%d", num));
         cont.setBackgroundColor(colour);
         cont.disable();
     }
@@ -482,7 +483,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
     {
         for(int num : nums)
         {
-            OBControl cont = objectDict.get(String.format("box_%d", num));
+            OBControl cont = objectDict.get(String.format(Locale.US,"box_%d", num));
             cont.setBackgroundColor(Color.WHITE);
             cont.enable();
             ((OBLabel)objectDict.get(String.format("num_%s", num))).setColour(textcolour);
@@ -514,12 +515,12 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         List<OBAnim> anims  = new ArrayList<>();
         for(int i=51; i<=100; i++)
         {
-            OBControl box = objectDict.get(String.format("box_%d",i));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d",i));
             if(blendOut)
                 box.disable();
             else
                 box.enable();
-            anims.add(OBAnim.opacityAnim(blendOut ? 0.2f : 1, objectDict.get(String.format("num_%d",i))));
+            anims.add(OBAnim.opacityAnim(blendOut ? 0.2f : 1, objectDict.get(String.format(Locale.US,"num_%d",i))));
 
         }
         OBAnimationGroup.runAnims(anims,0.5,true,OBAnim.ANIM_LINEAR,this);
@@ -527,7 +528,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
 
     public float rotationForNum(int num)
     {
-        PointF target = OBMisc.copyPoint(objectDict.get(String.format("box_%d", num)).getWorldPosition());
+        PointF target = OBMisc.copyPoint(objectDict.get(String.format(Locale.US,"box_%d", num)).getWorldPosition());
         return ((1-(target.x/this.bounds().width()*1.0f))*-40.0f)-10;
     }
 
@@ -549,7 +550,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
             {
                 for(int i=0; i<10; i++)
                 {
-                    OBControl box = objectDict.get(String.format("box_%d", i*10 + column));
+                    OBControl box = objectDict.get(String.format(Locale.US,"box_%d", i*10 + column));
                     if(box.backgroundColor != currentcolour && thePointer.position().y > box.getWorldFrame().top)
                         box.setBackgroundColor(currentcolour);
                 }
@@ -564,7 +565,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         {
             for(int i=0; i<10; i++)
             {
-                OBControl box = objectDict.get(String.format("box_%d", i*10 + num));
+                OBControl box = objectDict.get(String.format(Locale.US,"box_%d", i*10 + num));
                 box.setBackgroundColor(colour);
             }
         }
@@ -608,10 +609,10 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
             lockScreen();
             for(int j=1; j<=10; j++)
             {
-                objectDict.get(String.format("num_%d",i*10+j)).show();
+                objectDict.get(String.format(Locale.US,"num_%d",i*10+j)).show();
 
             }
-            playSFX(String.format("note_%d",i));
+            playSFX(String.format(Locale.US,"note_%d",i));
             unlockScreen();
             waitForSecs(0.35f);
             waitSFX();
@@ -622,7 +623,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         int index = 1;
         for(int i=2; i<=20; i+=2)
         {
-            OBControl box = objectDict.get(String.format("box_%d",i));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d",i));
             movePointerToPoint(OB_Maths.locationForRect(0.7f,1.1f,box.getWorldFrame()),rotationForNum(i),0.4f,true);
             box.setBackgroundColor ( evencolour);
             box.disable();
@@ -647,12 +648,12 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
         int index = 1;
         for(int i=22; i<=30; i+=2)
         {
-            OBControl box = objectDict.get(String.format("box_%d",i+10));
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d",i+10));
             movePointerToPoint(OB_Maths.locationForRect(1.1f,1f,box.getWorldFrame()),rotationForNum(i),0.5f,true);
             lockScreen();
             for(int j=0; j<5; j++)
             {
-                markLastNum((OBLabel)objectDict.get(String.format("num_%d",(index*2)+ j*10)));
+                markLastNum((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",(index*2)+ j*10)));
 
             }
 
@@ -662,7 +663,7 @@ public class OC_MoreNumbers_S3 extends OC_SectionController
             lockScreen();
             for(int j=0; j<5; j++)
             {
-                colourEntireLabel((OBLabel)objectDict.get(String.format("num_%d",(index*2)+ j*10)),textcolour);
+                colourEntireLabel((OBLabel)objectDict.get(String.format(Locale.US,"num_%d",(index*2)+ j*10)),textcolour);
             }
             unlockScreen();
             index++;

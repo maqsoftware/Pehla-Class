@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBReadingWord.WORD_SPEAKABLE;
@@ -194,7 +195,7 @@ public class OC_PhraseSentenceMake extends OC_PhraseSentence
         float r = l.right();
         l.setProperty("right",r);
         String s = l.text();
-        String lcs = s.toLowerCase();
+        String lcs = s.toLowerCase(Locale.US);
         if(s.equals(lcs))
             return;
         PointF pos = l.position();
@@ -257,8 +258,8 @@ public class OC_PhraseSentenceMake extends OC_PhraseSentence
         int i = 1;
         for(OBReadingPara p : paragraphs)
         {
-            loadTimingsPara(p,getLocalPath(String.format("%s_%d.etpa",currComponentKey,i)),false);
-            loadTimingsPara(p,getLocalPath(String.format("%s_%d.etpa",SlowVersion(currComponentKey,true),i)),true);
+            loadTimingsPara(p,getLocalPath(String.format(Locale.US,"%s_%d.etpa",currComponentKey,i)),false);
+            loadTimingsPara(p,getLocalPath(String.format(Locale.US,"%s_%d.etpa",SlowVersion(currComponentKey,true),i)),true);
             i++;
         }
 

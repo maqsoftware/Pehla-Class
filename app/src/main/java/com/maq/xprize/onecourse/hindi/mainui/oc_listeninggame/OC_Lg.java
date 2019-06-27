@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -106,7 +107,7 @@ public class OC_Lg extends OC_SectionController
             controlsGrid.add(new ArrayList<OBGroup>());
             for(int j=0; j<columns; j++)
             {
-                OBControl control =  objectDict.get(String.format("top_%d_%d",i,j));
+                OBControl control =  objectDict.get(String.format(Locale.US,"top_%d_%d",i,j));
 
                 OBGroup shutter = null;
                 if(control.getClass() == OBGroup.class)
@@ -392,7 +393,7 @@ public class OC_Lg extends OC_SectionController
         OBLabel letterLabel = new OBLabel(phon.text,font,fontSize);
         letterLabel.setColour(Color.WHITE);
         PointF loc = OBMisc.copyPoint(bg.position());
-        if(!phon.text.substring(0,1).toUpperCase().equals(phon.text.substring(0,1)))
+        if(!phon.text.substring(0,1).toUpperCase(Locale.US).equals(phon.text.substring(0,1)))
             loc.y -= OBUtils.getFontCapHeight(font, fontSize) / 2.0 - OBUtils.getFontXHeight(font, fontSize) / 2.0;
 
         letterLabel.setPosition(loc);

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -223,8 +224,8 @@ public class OC_Count100_S5 extends OC_SectionController
 
     public void demoRow(int row, String audio, int index)  throws Exception
     {
-        OBControl firstBox = objectDict.get(String.format("box_%d", 1 + (row-1)*10));
-        OBControl lastBox = objectDict.get(String.format("box_%d", row*10));
+        OBControl firstBox = objectDict.get(String.format(Locale.US,"box_%d", 1 + (row-1)*10));
+        OBControl lastBox = objectDict.get(String.format(Locale.US,"box_%d", row*10));
 
         movePointerToPoint(OB_Maths.worldLocationForControl(0.5f,0.5f,firstBox),0.5f,true);
         waitForSecs(0.2f);
@@ -235,7 +236,7 @@ public class OC_Count100_S5 extends OC_SectionController
         int lastRow = 1;
         while(lastRow <= 10)
         {
-            OBControl nextControl = objectDict.get(String.format("box_%d", lastRow + (row-1)*10));
+            OBControl nextControl = objectDict.get(String.format(Locale.US,"box_%d", lastRow + (row-1)*10));
             if(convertRectFromControl(nextControl.frame(),nextControl.parent).left < thePointer.position().x)
             {
                 nextControl.setBackgroundColor(hilitecolour);
@@ -248,7 +249,7 @@ public class OC_Count100_S5 extends OC_SectionController
         List<OBAnim> resetAnim = new ArrayList<>();
         for(int i = 1; i<=10; i++)
         {
-            OBControl cBox = objectDict.get(String.format("box_%d", i + (row-1)*10 ));
+            OBControl cBox = objectDict.get(String.format(Locale.US,"box_%d", i + (row-1)*10 ));
             resetAnim.add(OBAnim.colourAnim("backgroundColor",Color.WHITE,cBox));
         }
 
@@ -268,8 +269,8 @@ public class OC_Count100_S5 extends OC_SectionController
             targetNums.clear();
             for(int i=1; i<=10; i++)
             {
-                targetBoxes.add(objectDict.get(String.format("box_%d", i + (correctNum - 1)*10)));
-                targetNums.add(objectDict.get(String.format("num_%d", i + (correctNum - 1)*10)));
+                targetBoxes.add(objectDict.get(String.format(Locale.US,"box_%d", i + (correctNum - 1)*10)));
+                targetNums.add(objectDict.get(String.format(Locale.US,"num_%d", i + (correctNum - 1)*10)));
             }
 
             RectF rect = new RectF(convertRectFromControl(targetBoxes.get(0).frame(),targetBoxes.get(0).parent));
@@ -304,7 +305,7 @@ public class OC_Count100_S5 extends OC_SectionController
                     newMask.setFrame(maskRect);
                     newMask.setBackgroundColor(col);
 
-                    OBControl alignBox = objectDict.get(String.format("box_%d", 1 + (maskNumInt - 1) * 10));
+                    OBControl alignBox = objectDict.get(String.format(Locale.US,"box_%d", 1 + (maskNumInt - 1) * 10));
                     RectF alignRect = alignBox.getWorldFrame();
                     newMask.setLeft(alignRect.left + alignBox.borderWidth / 2);
                     newMask.setTop(alignRect.top + alignBox.borderWidth / 2);
@@ -325,7 +326,7 @@ public class OC_Count100_S5 extends OC_SectionController
                         newMask.setProperty("correct", true);
                     }
 
-                    OBControl alignBox = objectDict.get(String.format("box_%d", maskNumInt));
+                    OBControl alignBox = objectDict.get(String.format(Locale.US,"box_%d", maskNumInt));
                     RectF maskRect = convertRectFromControl(alignBox.frame(),alignBox.parent);
                     maskRect.inset(alignBox.borderWidth / 2.0f, alignBox.borderWidth / 2.0f);
                     newMask.setBackgroundColor(col);
@@ -355,7 +356,7 @@ public class OC_Count100_S5 extends OC_SectionController
 
             if (eventAttributes.get("single") != null)
             {
-                OBLabel label = (OBLabel) objectDict.get(String.format("num_%d", correctNum));
+                OBLabel label = (OBLabel) objectDict.get(String.format(Locale.US,"num_%d", correctNum));
                 label.setColour(Color.RED);
             }
 
@@ -478,7 +479,7 @@ public class OC_Count100_S5 extends OC_SectionController
         waitForSecs(0.4f);
         OBAnimationGroup.runAnims(Collections.singletonList(OBAnim.colourAnim("colour",
                 OBUtils.colorFromRGBString(eventAttributes.get("numcol")),
-                objectDict.get(String.format("num_%d", correctNum)))),
+                objectDict.get(String.format(Locale.US,"num_%d", correctNum)))),
                 0.25f,true,OBAnim.ANIM_LINEAR,this);
     }
 

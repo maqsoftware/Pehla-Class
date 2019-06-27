@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 07/04/2017.
@@ -275,7 +276,7 @@ public class OC_MoreNumbers_S5 extends OC_SectionController
 
     public void pointerPointBaloonNums(int num,int audioIndex, int numCount) throws Exception
     {
-        OBGroup baloon = (OBGroup)objectDict.get(String.format("obj_%d",num));
+        OBGroup baloon = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",num));
         moveScenePointer(OB_Maths.locationForRect(0.6f,0.5f,baloon.frame())
                 ,((1-(baloon.position().x/bounds().width()*1.0f))*-40.0f)-10
                 ,0.5f,"FINAL",audioIndex,0.3f);
@@ -300,7 +301,7 @@ public class OC_MoreNumbers_S5 extends OC_SectionController
 
     public void pointerPointBaloonHilite(int num,int audioIndex) throws Exception
     {
-        OBGroup baloon = (OBGroup)objectDict.get(String.format("obj_%d",num));
+        OBGroup baloon = (OBGroup)objectDict.get(String.format(Locale.US,"obj_%d",num));
         movePointerToPoint(OB_Maths.locationForRect(0.8f,0.7f,baloon.frame())
                 ,((1-(baloon.position().x/bounds().width()*1.0f))*-40.0f)-10
                 ,0.3f,true);

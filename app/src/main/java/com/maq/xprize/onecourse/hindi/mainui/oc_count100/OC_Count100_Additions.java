@@ -13,6 +13,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -109,8 +110,8 @@ public class OC_Count100_Additions
                 box.setMasksToBounds(true);
                 box.setProperty("num_value", n);
 
-                controller.objectDict.put(String.format("box_%d",n), box);
-                controller.objectDict.put(String.format("num_%d",n), txt);
+                controller.objectDict.put(String.format(Locale.US,"box_%d",n), box);
+                controller.objectDict.put(String.format(Locale.US,"num_%d",n), txt);
 
                 controller.attachControl(box);
                 controller.attachControl(txt);
@@ -159,7 +160,7 @@ public class OC_Count100_Additions
             frame.setFrame(r);
             frame.setBorderWidth(lineSize *1.5f);
             frame.setBorderColor(borderColour);
-            controller.objectDict.put(String.format("frame_%d",count), frame);
+            controller.objectDict.put(String.format(Locale.US,"frame_%d",count), frame);
             controller.attachControl(frame);
         }
 
@@ -221,7 +222,7 @@ public class OC_Count100_Additions
     {
         Map<String,Object> colourEventDict =  (Map<String,Object>)controller.eventsDict.get("colours");
         Map<String,Object> eventAttrs =  (Map<String,Object>)colourEventDict.get("attrs");
-        return OBUtils.colorFromRGBString((String)eventAttrs.get(String.format("col%d",index)));
+        return OBUtils.colorFromRGBString((String)eventAttrs.get(String.format(Locale.US,"col%d",index)));
     }
 
 }

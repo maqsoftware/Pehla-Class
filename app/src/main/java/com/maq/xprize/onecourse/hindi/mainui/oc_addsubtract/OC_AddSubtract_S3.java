@@ -25,6 +25,7 @@ import com.maq.xprize.onecourse.hindi.utils.USubPath;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -82,16 +83,16 @@ public class OC_AddSubtract_S3 extends OC_SectionController
             rightColour = OBUtils.colorFromRGBString((String)obj2.attributes().get("fill"));
             for(int i=0; i<=correct; i++)
             {
-                OBControl eqBox = objectDict.get(String.format("eq_box_%d",i));
+                OBControl eqBox = objectDict.get(String.format(Locale.US,"eq_box_%d",i));
                 String[] eqParts = ((String)eqBox.attributes().get("equation")).split(",");
                 String equation = String.format("%s + %s = %s", eqParts[0], eqParts[1], eqParts[2]);
-                String equationName = String.format("equation_%d",i);
+                String equationName = String.format(Locale.US,"equation_%d",i);
                 OC_Numberlines_Additions.loadEquation(equation,equationName,eqBox,Color.BLACK,false,0,1,this);
                 OC_Numberlines_Additions.hideEquation((OBGroup)objectDict.get(equationName),this);
                 OC_Numberlines_Additions.colourEquation((OBGroup)objectDict.get(equationName),1,1,leftColour,this);
                 OC_Numberlines_Additions.colourEquation((OBGroup)objectDict.get(equationName),3,3,rightColour,this);
                 objectDict.get(equationName).setZPosition(20-i);
-                OBControl box = objectDict.get(String.format("box_%d",i));
+                OBControl box = objectDict.get(String.format(Locale.US,"box_%d",i));
                 for(int j=0; j<correct; j++)
                 {
                     OBGroup copy = null;
@@ -120,7 +121,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
                     copy.setPosition ( OB_Maths.locationForRect(j*1.0f/(correct-1),0.5f,box.frame()));
                     copy.setZPosition ( 20-i);
                     copy.hide();
-                    objectDict.put(String.format("con_%d_%d",i,j+1),copy);
+                    objectDict.put(String.format(Locale.US,"con_%d_%d",i,j+1),copy);
                 }
             }
         }
@@ -153,7 +154,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
         {
             if(currentPhase == 1)
             {
-                List<OBControl> targets = filterControls(String.format("con_%d_.*",currentNum));
+                List<OBControl> targets = filterControls(String.format(Locale.US,"con_%d_.*",currentNum));
                 OBControl targ = null;
                 for(OBControl con : targets)
                 {
@@ -224,7 +225,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
             waitForSecs(0.3f);
             showSecondPhase();
             waitForSecs(0.1f);
-            performSel("demoFin",String.format("%s%d",currentEvent(),currentPhase));
+            performSel("demoFin",String.format(Locale.US,"%s%d",currentEvent(),currentPhase));
             currentPhase = 2;
             startPhase();
         }
@@ -242,7 +243,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
             gotItRightBigTick(true);
             waitForSecs(0.3f);
             box.objectDict.get("box").setBackgroundColor(eventColour.get("box"));
-            OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get(String.format("equation_%d",currentNum)),4,5,"equation",this);
+            OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",currentNum)),4,5,"equation",this);
             waitForSecs(0.8f);
             nextScene();
         }
@@ -260,14 +261,14 @@ public class OC_AddSubtract_S3 extends OC_SectionController
     public void startPhase() throws Exception
     {
         OBMisc.doSceneAudio(4,currentEvent(),setStatus(STATUS_AWAITING_CLICK)
-                ,currentPhase == 1? "": String.format("%d",currentPhase),this);
+                ,currentPhase == 1? "": String.format(Locale.US,"%d",currentPhase),this);
     }
 
     public void showRow(int row) throws Exception
     {
         lockScreen();
-        showControls(String.format("con_%d_.*",row));
-        OBGroup equation = (OBGroup)objectDict.get(String.format("equation_%d",row));
+        showControls(String.format(Locale.US,"con_%d_.*",row));
+        OBGroup equation = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",row));
         OC_Numberlines_Additions.showEquation(equation,1,1,null,this);
         OBControl stripe = objectDict.get("stripe");
         PointF loc = OBMisc.copyPoint(equation.position());
@@ -288,7 +289,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
 
     public void showSecondPhase() throws Exception
     {
-        OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get(String.format("equation_%d",currentNum)),2,3,"equation",this);
+        OC_Numberlines_Additions.showEquation((OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",currentNum)),2,3,"equation",this);
     }
 
     public void demo3a() throws Exception
@@ -322,7 +323,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
     {
         for(int i=0; i<=correct; i++)
         {
-            OBGroup equation = (OBGroup)objectDict.get(String.format("equation_%d",i));
+            OBGroup equation = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",i));
             movePointerToPoint(OB_Maths.locationForRect(1.05f,0.9f,equation.frame()),-20,0.5f,true);
             OC_Numberlines_Additions.colourEquation(equation,1,5,Color.RED,this);
             playAudioScene("DEMO2",i,true);
@@ -346,8 +347,8 @@ public class OC_AddSubtract_S3 extends OC_SectionController
             for(int i=1; i<4; i++)
             {
                 List<OBAnim> anim = new ArrayList<>();
-                OBGroup eq2 = (OBGroup)objectDict.get(String.format("equation_%d",4-i));
-                anim.add(OBMisc.attachedAnim(eq2,filterControls(String.format("con_%d_.*",4-i))));
+                OBGroup eq2 = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",4-i));
+                anim.add(OBMisc.attachedAnim(eq2,filterControls(String.format(Locale.US,"con_%d_.*",4-i))));
                 anim.add(attAnim);
                 anim.add(OBAnim.moveAnim(eq2.position(),eq1));
                 anim.add(OBAnim.moveAnim(eq1.position(),eq2));
@@ -362,7 +363,7 @@ public class OC_AddSubtract_S3 extends OC_SectionController
 
         moveScenePointer(OB_Maths.locationForRect(0.15f,1f,objectDict.get("equation_0").frame()),-20 ,0.5f,"DEMO",0,0.3f);
         playAudioScene("DEMO",1,false);
-        movePointerToPoint(OB_Maths.locationForRect(1f,1f,objectDict.get(String.format("equation_%d",correct)).frame()),-5,2f,true);
+        movePointerToPoint(OB_Maths.locationForRect(1f,1f,objectDict.get(String.format(Locale.US,"equation_%d",correct)).frame()),-5,2f,true);
         waitAudio();
         waitForSecs(0.3f);
         moveScenePointer(OB_Maths.locationForRect(0.95f,0.35f,this.bounds()),-15,0.5f,"DEMO",2,0.3f);

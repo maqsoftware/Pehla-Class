@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -183,7 +184,7 @@ public class OC_Pws3 extends OC_Pws
         for(int i=0; i<columnCount; i++)
         {
             String pattern = keys.get(i);
-            int colour = eventColours.get(String.format("column_%d",i+1));
+            int colour = eventColours.get(String.format(Locale.US,"column_%d",i+1));
             OBControl columnBox = new OBControl();
             columnBox.setFrame(new RectF(0, 0, columnWidth, columnHeight));
             columnBox.setBackgroundColor(colour);

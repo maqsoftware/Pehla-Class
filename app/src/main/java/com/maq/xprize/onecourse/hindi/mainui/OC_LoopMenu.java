@@ -31,6 +31,7 @@ import com.maq.xprize.onecourse.hindi.utils.USubPath;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -162,7 +163,7 @@ public class OC_LoopMenu extends OC_Menu implements OC_FatReceiver
     public void setCurrentLevel(MlUnit unit)
     {
         String xmlid = unit.key.split("\\.")[0];
-        String postfix = String.format("   %d", unit.level);
+        String postfix = String.format(Locale.US,"   %d", unit.level);
         String fullString = String.format("%s%s", xmlid,postfix);
         currentLevelLabel.setString(fullString);
         int st = fullString.lastIndexOf(postfix);

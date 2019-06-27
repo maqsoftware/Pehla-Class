@@ -9,6 +9,7 @@ import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic_AddRemoveObjects
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 04/05/2017.
@@ -63,8 +64,8 @@ public class OC_AddTakeAway_S2 extends OC_Generic_AddRemoveObjects_SelectCorrect
         //
         for (int i = 0; i < 3; i++)
         {
-            OBControl obj = objectDict.get(String.format("obj_%d", i + 4));
-            OBControl dash = objectDict.get(String.format("dash_%d", i + 1));
+            OBControl obj = objectDict.get(String.format(Locale.US,"obj_%d", i + 4));
+            OBControl dash = objectDict.get(String.format(Locale.US,"dash_%d", i + 1));
             OC_Generic.pointer_moveToObject(obj, -5 + i * 5, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
             playAudioScene("DEMO", i + 3, false); // One. Two. Three.;
             //
@@ -83,7 +84,7 @@ public class OC_AddTakeAway_S2 extends OC_Generic_AddRemoveObjects_SelectCorrect
         //
         for (int i = 0; i < 6; i++)
         {
-            String objectName = String.format("obj_%d", i + 1);
+            String objectName = String.format(Locale.US,"obj_%d", i + 1);
             float rotation = -10 + i * 5;
             float time = (i == 0 ? 0.6f : 0.3f);
             OC_Generic.pointer_moveToObjectByName(objectName, rotation, time, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
@@ -142,7 +143,7 @@ public class OC_AddTakeAway_S2 extends OC_Generic_AddRemoveObjects_SelectCorrect
         //
         for (int i = 0; i < 4; i++)
         {
-            OBControl obj = objectDict.get(String.format("obj_%d", i + 1));
+            OBControl obj = objectDict.get(String.format(Locale.US,"obj_%d", i + 1));
             OC_Generic.pointer_moveToObject(obj, -25 + 5 * i, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
             playAudioScene("DEMO", i + 4, false); // One. Two. Three. Four;
             playSfxAudio("remove_object", false);

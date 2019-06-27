@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBReadingWord.WORD_SPEAKABLE;
@@ -145,7 +146,7 @@ public class OC_ClozePhrase extends OC_Cloze
         int i = 1;
         for(OBReadingPara pa : paragraphs)
         {
-            loadTimingsPara(pa,getLocalPath(String.format("%s_%d.etpa",currComponentKey,i)),false);
+            loadTimingsPara(pa,getLocalPath(String.format(Locale.US,"%s_%d.etpa",currComponentKey,i)),false);
             i++;
         }
 
@@ -206,7 +207,7 @@ public class OC_ClozePhrase extends OC_Cloze
                     offset += (dashWidth - coalesce((Float)rw.settings.get("wordwidth"),0f));
                 }
             else
-                rw.settings.put("width",coalesce(rw.settings.get("wordwidth"),new Float(0)));
+                rw.settings.put("width",coalesce(rw.settings.get("wordwidth"),Float.valueOf(0)));
                 idx++;
             }
         }
@@ -275,12 +276,12 @@ public class OC_ClozePhrase extends OC_Cloze
                 pos.y += 0.35 * rw.label.height();
                 pos.x +=(dash.width()  - rw.label.width() ) / 2;
                 dash.setProperty("pos",pos);
-                if(!phraseMode && rw.settings.get("firstword") != null  && !rw.text.equals(rw.text.toLowerCase() ) )
+                if(!phraseMode && rw.settings.get("firstword") != null  && !rw.text.equals(rw.text.toLowerCase(Locale.US) ) )
                 {
                     OBLabel label = (OBLabel)rw.settings.get("lclabel");
                     if(label == null)
                     {
-                        OBLabel l = createLabel(rw,rw.text.toLowerCase(),font);
+                        OBLabel l = createLabel(rw,rw.text.toLowerCase(Locale.US),font);
                         rw.settings.put("lclabel",l);
                         textBox.insertMember(l,0,"");
                         l.hide();
@@ -520,7 +521,7 @@ public class OC_ClozePhrase extends OC_Cloze
         OBReadingWord rw = dashedWord();
         while(rw != null)
         {
-            OBLabel l = candidateLabelWithText(rw.text.toLowerCase());
+            OBLabel l = candidateLabelWithText(rw.text.toLowerCase(Locale.US));
             movePointerToPoint(OB_Maths.locationForRect(0.5f, 0.7f, l .frame()),-1,true);
             PointF pos = (PointF) labelOfTargetWord(rw).settings.get("pos");
             pos = convertPointFromControl(pos,textBox);
@@ -666,7 +667,7 @@ public class OC_ClozePhrase extends OC_Cloze
                 return;
             }
             OBReadingWord rw = wordForDash(targetDash);
-            String lctext = rw.text.toLowerCase();
+            String lctext = rw.text.toLowerCase(Locale.US);
             if(lctext.equals(targ.text()))
             {
                 OBLabel wLabel = labelOfTargetWord(rw);

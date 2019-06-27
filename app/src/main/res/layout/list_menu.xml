@@ -14,20 +14,20 @@
     <Button
         android:layout_width="143dp"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:text="@string/next"
         android:id="@+id/nextButton"/>
 
     <Button
         android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:text="RESET"
+        android:text="@string/reset"
         android:id="@+id/refreshButton"
         android:enabled="true"/>
 
     <Button
         android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:text="Cause Crash"
+        android:text="@string/cause_crash"
         android:id="@+id/crashButton"
         android:enabled="true"/>
 
