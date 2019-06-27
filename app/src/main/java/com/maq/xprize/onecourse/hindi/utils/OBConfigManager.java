@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.maq.xprize.onecourse.hindi.BuildConfig;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
+import com.maq.xprize.onecourse.hindi.mainui.SplashScreenActivity;
+
 
 import java.io.File;
 import java.io.InputStream;
@@ -793,7 +795,7 @@ public class OBConfigManager {
 
 
     public String getAssetsExternalPath() {
-        return mainActivityContext.getExternalFilesDir(null).getPath() + File.separator + "assets";
+        return SplashScreenActivity.assetsPath + File.separator + "assets";
     }
 
     public List<File> getExternalAssetsSearchPaths() {
