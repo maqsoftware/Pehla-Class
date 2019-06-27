@@ -53,12 +53,11 @@ public class OC_FatController extends OBFatController
     private int unitAttemptsCount, disallowStartHour,disallowEndHour;
 
     private MlUnitInstance currentUnitInstance;
-    private static OC_User currentUser;
+    private OC_User currentUser;
     private int currentSessionId;
     private long currentSessionStartTime, currentSessionEndTime;
     private boolean  allowsTimeOuts, showUserName;
 
-    public static String firebase_user;
 
 
     private Handler timeoutHandler;
@@ -193,18 +192,6 @@ public class OC_FatController extends OBFatController
     }
 
     public void loadUserDB(DBSQL db)
-    {
-        OC_User u = lastUserActiveFromDB(db);
-        if (u == null)
-        {
-            u = OC_User.initAndSaveUserInDB(db, "Student");
-        }
-        setCurrentUserDB(db,u);
-        checkAndPrepareNewSession();
-
-    }
-
-    public void loadUserDBSQL(DBSQL db)
     {
         OC_User u = lastUserActiveFromDB(db);
         if (u == null)

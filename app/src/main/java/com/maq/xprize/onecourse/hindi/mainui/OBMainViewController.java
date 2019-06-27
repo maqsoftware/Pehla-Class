@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,9 +26,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 
-
-public class OBMainViewController extends OBViewController
-{
+public class OBMainViewController extends OBViewController {
     public static final int SHOW_TOP_LEFT_BUTTON = 1,
             SHOW_TOP_RIGHT_BUTTON = 2,
             SHOW_BOTTOM_LEFT_BUTTON = 4,
@@ -44,13 +41,11 @@ public class OBMainViewController extends OBViewController
     private Integer currentTouchID;
     private Handler lowlightButtonHandler = new Handler();
 
-    private String lastModuleName ;
+    private String lastModuleName;
     private long StartTime;
-    private long EndTime;
-    public static int userIID;
 
-    public OBMainViewController (Activity a)
-    {
+
+    public OBMainViewController(Activity a) {
         super(a);
         viewControllers = new ArrayList<OBSectionController>();
         glView().controller = this;
@@ -60,8 +55,7 @@ public class OBMainViewController extends OBViewController
     }
 
 
-    public void addButtons ()
-    {
+    public void addButtons() {
         if (topLeftButton != null)
             return;
 
@@ -78,13 +72,11 @@ public class OBMainViewController extends OBViewController
         setBottomRightButton("std");
 
         float amt = applyGraphicScale(2f);
-        for (OBControl c : Arrays.asList(topLeftButton,topRightButton,bottomLeftButton,bottomRightButton))
-        {
-            c.setShadow(0,0.3f,amt,amt,Color.BLACK);
+        for (OBControl c : Arrays.asList(topLeftButton, topRightButton, bottomLeftButton, bottomRightButton)) {
+            c.setShadow(0, 0.3f, amt, amt, Color.BLACK);
         }
         //
-        if (OBConfigManager.sharedManager.isDebugEnabled())
-        {
+        if (OBConfigManager.sharedManager.isDebugEnabled()) {
             Typeface tf = OBUtils.standardTypeFace();
             topLabel = new OBLabel("ALL WORK AND NO PLAY MAKES JACK A DULL BOY. ALL WORK AND NO PLAY MAKES JACK A DULL BOY. ALL WORK AND NO PLAY MAKES JACK A DULL BOY", tf, applyGraphicScale(15));
             topLabel.setColour(Color.BLACK);
@@ -97,19 +89,18 @@ public class OBMainViewController extends OBViewController
         }
     }
 
-    public void setBottomRightButton(String itype)
-    {
-        String k = (itype.equals("std"))?"next":"next_star";
+    public void setBottomRightButton(String itype) {
+        String k = (itype.equals("std")) ? "next" : "next_star";
         if (bottomRightButton != null && k == bottomRightButton.textureKey)
             return;
         bottomRightButton = OBUtils.buttonFromSVGName(k);
         bottomRightButton.setRight(bounds().width());
         bottomRightButton.setBottom(bounds().height());
         float amt = applyGraphicScale(2f);
-        bottomRightButton.setShadow(0,0.3f,amt,amt,Color.BLACK);
+        bottomRightButton.setShadow(0, 0.3f, amt, amt, Color.BLACK);
     }
-    public void buttonHit (PointF pt)
-    {
+
+    public void buttonHit(PointF pt) {
         OBSectionController cont = viewControllers.get(viewControllers.size() - 1);
         if (topLeftButton.frame().contains(pt.x, pt.y))
             cont.exitEvent();
@@ -121,8 +112,7 @@ public class OBMainViewController extends OBViewController
             cont.nextPage();
     }
 
-    public void showButtons (int flags)
-    {
+    public void showButtons(int flags) {
         if (topLeftButton == null)
             addButtons();
         if ((flags & SHOW_TOP_LEFT_BUTTON) == 0)
@@ -143,8 +133,7 @@ public class OBMainViewController extends OBViewController
             bottomRightButton.setOpacity(1.0f);
     }
 
-    public void showHideButtons (int flags)
-    {
+    public void showHideButtons(int flags) {
         if (topLeftButton == null)
             addButtons();
         topLeftButton.setHidden((flags & SHOW_TOP_LEFT_BUTTON) == 0);
@@ -154,99 +143,82 @@ public class OBMainViewController extends OBViewController
         invalidateView(0, 0, glView().getRight(), (int) topLeftButton.height());
     }
 
-    public void viewWasLaidOut (boolean changed, int l, int t, int r, int b)
-    {
-        if (!inited)
-        {
+    public void viewWasLaidOut(boolean changed, int l, int t, int r, int b) {
+        if (!inited) {
             prepare();
             inited = true;
         }
     }
 
-    public void drawControls (Canvas canvas)
-    {
+    public void drawControls(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
     }
 
-    public void highlightButton (OBControl but)
-    {
+    public void highlightButton(OBControl but) {
         but.highlight();
         glView().requestRender();
         downButton = but;
     }
 
-    OBControl buttonForPoint (float x, float y)
-    {
-        for (OBControl but : Arrays.asList(topLeftButton, topRightButton, bottomLeftButton, bottomRightButton))
-        {
+    OBControl buttonForPoint(float x, float y) {
+        for (OBControl but : Arrays.asList(topLeftButton, topRightButton, bottomLeftButton, bottomRightButton)) {
             if ((!but.hidden) && but.frame().contains(x, y))
                 return but;
         }
         return null;
     }
 
-    public void setTouchTime()
-    {
+    public void setTouchTime() {
         lastTouchActivity = System.currentTimeMillis();
     }
-    public void touchDownAtPoint (float x, float y, OBGLView v)
-    {
+
+    public void touchDownAtPoint(float x, float y, OBGLView v) {
         setTouchTime();
         OBControl but = buttonForPoint(x, y);
         if (but == null)
             topController().touchDownAtPoint(new PointF(x, y), v);
-        else
-        {
+        else {
             highlightButton(but);
 
         }
     }
 
-    void scheduleLowLightButton(final OBControl button)
-    {
+    void scheduleLowLightButton(final OBControl button) {
         Runnable runnable = (Runnable) button.propertyValue("lowlightrunnable");
-        if (runnable == null)
-        {
-            runnable = new Runnable()
-            {
+        if (runnable == null) {
+            runnable = new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     button.lowlight();
                     glView().requestRender();
                 }
             };
-            button.setProperty("lowlightrunnable",runnable);
+            button.setProperty("lowlightrunnable", runnable);
         }
         lowlightButtonHandler.removeCallbacks(runnable);
-        lowlightButtonHandler.postDelayed(runnable,300);
+        lowlightButtonHandler.postDelayed(runnable, 300);
     }
 
-    public void touchUpAtPoint (float x, float y, OBGLView v)
-    {
+    public void touchUpAtPoint(float x, float y, OBGLView v) {
         setTouchTime();
         final OBControl db = downButton;
         if (db != null)
             scheduleLowLightButton(db);
-         else
-        {
+        else {
             topController().touchUpAtPoint(new PointF(x, y), v);
             return;
         }
         OBControl but = buttonForPoint(x, y);
         if (db != but)
             topController().touchUpAtPoint(new PointF(x, y), v);
-        else
-        {
+        else {
             downButton = null;
             if (but == topLeftButton)
                 topController().goBack();
-            else if (but == topRightButton)
-            {
+            else if (but == topRightButton) {
                 MainActivity.mainActivity.fatController.onReplayAudioButtonPressed();
                 topController().replayAudio();
-            }
-            else if (but == bottomLeftButton)
+            } else if (but == bottomLeftButton)
                 topController().prevPage();
             else if (but == bottomRightButton)
                 topController().nextPage();
@@ -255,30 +227,22 @@ public class OBMainViewController extends OBViewController
 
     @Override
 
-    public void prepare ()
-    {
+    public void prepare() {
         addButtons();
-        glView().setOnTouchListener(new View.OnTouchListener()
-        {
-            public boolean onTouch (View v, MotionEvent event)
-            {
+        glView().setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
                 int pointerIndex = event.getActionIndex();
                 int pointerID = event.getPointerId(pointerIndex);
                 int action = event.getAction() & event.ACTION_MASK;
                 //
-                if (currentTouchID == null && (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN))
-                {
+                if (currentTouchID == null && (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN)) {
                     currentTouchID = pointerID;
                     touchDownAtPoint(event.getX(), event.getY(), (OBGLView) v);
                     OBBrightnessManager.sharedManager.registeredTouchOnScreen(false);
-                }
-                else if (action == MotionEvent.ACTION_MOVE && currentTouchID != null && currentTouchID == pointerID)
-                {
+                } else if (action == MotionEvent.ACTION_MOVE && currentTouchID != null && currentTouchID == pointerID) {
                     OBGLView ov = (OBGLView) v;
                     topController().touchMovedToPoint(new PointF(event.getX(), event.getY()), ov);
-                }
-                else if (currentTouchID != null && currentTouchID == pointerID && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP))
-                {
+                } else if (currentTouchID != null && currentTouchID == pointerID && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP)) {
                     currentTouchID = null;
                     touchUpAtPoint(event.getX(), event.getY(), (OBGLView) v);
                 }
@@ -288,60 +252,49 @@ public class OBMainViewController extends OBViewController
         MainActivity.mainActivity.fatController.startUp();
     }
 
-    public OBGLView glView ()
-    {
+    public OBGLView glView() {
         return MainActivity.mainActivity.glSurfaceView;
     }
 
-    public boolean glMode ()
-    {
-        long t = 28829384;
-        t = System.currentTimeMillis()/1000;                                                                          //timeStamp in seconds.
+    public boolean glMode() {
+        long endTime;
+        endTime = System.currentTimeMillis() / 1000;                                                                          //timeStamp in seconds.
 
-        if(lastModuleName != null ){
-            EndTime = t;
-            MainActivity.logEvent(lastModuleName,StartTime, t, "Completed");                                   // calling the event log for ending the module.
+        if (lastModuleName != null) {
+
+            MainActivity.logEvent(lastModuleName, StartTime, endTime, "Completed");                                   // calling the event log for ending the module.
         }
         lastModuleName = null;
         return glView().getParent() != null;
     }
 
-    public void enterGLMode ()
-    {
-        if (!glMode())
-        {
+    public void enterGLMode() {
+        if (!glMode()) {
             addView(glView());
         }
     }
 
-    public void exitGLMode ()
-    {
-        if (glMode())
-        {
+    public void exitGLMode() {
+        if (glMode()) {
             removeView(glView());
         }
     }
 
-    public void addView (View v)
-    {
+    public void addView(View v) {
         ViewGroup rootView = (ViewGroup) MainActivity.mainActivity.findViewById(android.R.id.content);
         rootView.addView(v, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //rootView.addView(v, 0);
     }
 
-    public void removeView (View v)
-    {
+    public void removeView(View v) {
         ViewGroup rootView = (ViewGroup) MainActivity.mainActivity.findViewById(android.R.id.content);
         rootView.removeView(v);
     }
 
-    public Class controllerClass (String name, String configPath)
-    {
-        try
-        {
+    public Class controllerClass(String name, String configPath) {
+        try {
             String config = "";
-            if (configPath != null)
-            {
+            if (configPath != null) {
                 String[] sarr = configPath.split(",");
                 configPath = sarr[0];
                 String[] paths = configPath.split("/");
@@ -353,9 +306,7 @@ public class OBMainViewController extends OBViewController
 
             Class cnm = Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);
             return cnm;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             if (configPath != null)
                 return controllerClass(name, null);
         }
@@ -363,14 +314,12 @@ public class OBMainViewController extends OBViewController
     }
 
 
-    public boolean pushViewControllerWithNameConfig (String nm, String configPath, boolean animate, boolean fromRight, Object _params)
-    {
-        return pushViewControllerWithNameConfig(nm, configPath,animate,fromRight,_params,false);
+    public boolean pushViewControllerWithNameConfig(String nm, String configPath, boolean animate, boolean fromRight, Object _params) {
+        return pushViewControllerWithNameConfig(nm, configPath, animate, fromRight, _params, false);
     }
 
 
-    public boolean pushViewControllerWithNameConfig (String nm, String configPath, boolean animate, boolean fromRight, Object _params, boolean pop)
-    {
+    public boolean pushViewControllerWithNameConfig(String nm, String configPath, boolean animate, boolean fromRight, Object _params, boolean pop) {
         Class cnm = controllerClass(nm, configPath);
         if (cnm == null)
             return false;
@@ -379,62 +328,48 @@ public class OBMainViewController extends OBViewController
         return true;
     }
 
-    public boolean pushViewControllerWithName (String nm, boolean animate, boolean fromRight, Object _params)
-    {
-        try
-        {
+    public boolean pushViewControllerWithName(String nm, boolean animate, boolean fromRight, Object _params) {
+        try {
             Class cnm = Class.forName("com.maq.xprize.onecourse.hindi.mainui." + nm);
             pushViewController(cnm, animate, fromRight, _params, false);
             return true;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public void pushViewController (Class<?> vcClass, Boolean animate, boolean fromRight, Object _params, boolean pop)
-    {
-        pushViewController(vcClass,animate,fromRight,_params,pop,false,null);
+    public void pushViewController(Class<?> vcClass, Boolean animate, boolean fromRight, Object _params, boolean pop) {
+        pushViewController(vcClass, animate, fromRight, _params, pop, false, null);
     }
 
-    public void pushViewController (final Class<?> vcClass, Boolean animate, boolean fromRight, Object _params, boolean pop, boolean zoom, RectF zoomRect)
-    {
+    public void pushViewController(final Class<?> vcClass, Boolean animate, boolean fromRight, Object _params, boolean pop, boolean zoom, RectF zoomRect) {
         Constructor<?> cons;
         OBSectionController controller;
-        try
-        {
+        try {
             cons = vcClass.getConstructor();
             controller = (OBSectionController) cons.newInstance();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return;
         }
         OBRenderer renderer = MainActivity.mainActivity.renderer;
-        if (renderer != null)
-        {
-            controller.setViewPort(0,0,renderer.w,renderer.h);
+        if (renderer != null) {
+            controller.setViewPort(0, 0, renderer.w, renderer.h);
         }
 
         controller.params = _params;
-        if(zoom)
+        if (zoom)
             controller.setPopAnimationZoom(zoomRect);
         controller.viewWillAppear(animate);
         controller.prepare();
-        if (viewControllers.size() >= 1 && animate)
-        {
-            if (fromRight)
-            {
+        if (viewControllers.size() >= 1 && animate) {
+            if (fromRight) {
                 if (!zoom)
                     transition(topController(), controller, fromRight, 0.6);
                 else
-                    transitionZoom(topController(), controller, fromRight, zoomRect,0.4);
-            }
-            else
-            {
+                    transitionZoom(topController(), controller, fromRight, zoomRect, 0.4);
+            } else {
                 if (!zoom)
                     transition(controller, topController(), fromRight, 0.6);
                 else
@@ -442,62 +377,53 @@ public class OBMainViewController extends OBViewController
             }
         }
         viewControllers.add(controller);
-        if (pop && viewControllers.size() > 1)
-        {
+        if (pop && viewControllers.size() > 1) {
             viewControllers.remove(viewControllers.size() - 2);
         }
-        if (controller.requiresOpenGL)
-        {
+        if (controller.requiresOpenGL) {
             enterGLMode();
             showButtons(controller.buttonFlagsWithFatController());
             showHideButtons(controller.buttonFlagsWithFatController());
-        }
-        else
-        {
+        } else {
             ViewGroup vg = (ViewGroup) glView().getParent();
-            if (vg != null)
-            {
+            if (vg != null) {
                 vg.removeView(glView());
             }
         }
 
         final OBSectionController vc = controller;
         MainActivity.mainActivity.fatController.onSectionStarted(controller);
-        new Handler().post(new Runnable()
-        {
+        new Handler().post(new Runnable() {
             @Override
-            public void run ()
-            {
+            public void run() {
 
 
                 String value = vc.getClass().getName();                                                                     // getting the name of the class
 
-                String moduleNamePath = value.replace("com.maq.xprize.onecourse.hindi.mainui.","");      // getting the name of the module which need to be loaded
-                boolean isFound = moduleNamePath.contains("OCM_Child");                                                    // checking the module if contain the OCM_child which is in oc_community. Used at the very start for menu.
-                boolean isFound1 = moduleNamePath.contains("OC_PlayZone");
+                String moduleNamePath = value.replace("com.maq.xprize.onecourse.hindi.mainui.", "");      // getting the name of the module which need to be loaded
+                boolean isCommunity = moduleNamePath.contains("OCM_Child");                                                    // checking the module if contain the OCM_child which is in oc_community. Used at the very start for menu.
+                boolean isPlayZone = moduleNamePath.contains("OC_PlayZone");
 
-                String moduleName = moduleNamePath.replace(".","/");
-                if(!isFound && !isFound1){                                                                                              // we don't need to load the OCM_child, it's a menu
-                    long t;
-                    t = System.currentTimeMillis()/1000;                                                                   // timeStamp in seconds
+                String moduleName = moduleNamePath.replace(".", "/");
+                if (!isCommunity && !isPlayZone) {                                                                                              // we don't need to load the OCM_child, it's a menu
+                    long endTime;
+                    endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
 
-                    if(lastModuleName != null ){
-                        MainActivity.logEvent(lastModuleName,StartTime, t,"Completed");                             // calling the event log for ending the module.
+                    if (lastModuleName != null) {
+                        MainActivity.logEvent(lastModuleName, StartTime, endTime, "Completed");                             // calling the event log for ending the module.
                     }
 
-                    StartTime = t;
+                    StartTime = endTime;
                     lastModuleName = moduleName;
-                }
-                else if(isFound1){
-                    long t ;
-                    t = System.currentTimeMillis()/1000;                                                                   // timeStamp in seconds
+                } else if (isPlayZone) {
+                    long endTime;
+                    endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
 
-                    if(lastModuleName != null ){
-                        MainActivity.logEvent(lastModuleName,StartTime, t,"Completed");                             // calling the event log for ending the module.
+                    if (lastModuleName != null) {
+                        MainActivity.logEvent(lastModuleName, StartTime, endTime, "Completed");                             // calling the event log for ending the module.
                     }
                     lastModuleName = null;
                 }
-
 
 
                 vc.start();
@@ -506,15 +432,8 @@ public class OBMainViewController extends OBViewController
 
     }
 
-    public static void getuserID(int userID){                                                                             //get the userID;
-        userIID = userID;
-    }
 
-    //protected void finalize(){}
-
-
-    public void transition (OBSectionController l, OBSectionController r, boolean fromRight, double duration)
-    {
+    public void transition(OBSectionController l, OBSectionController r, boolean fromRight, double duration) {
         OBRenderer renderer = MainActivity.mainActivity.renderer;
         renderer.transitionFrac = 0;
         renderer.transitionScreenL = l;
@@ -524,8 +443,7 @@ public class OBMainViewController extends OBViewController
 
         long startms = SystemClock.uptimeMillis();
         double frac = 0;
-        while (frac <= 1.0)
-        {
+        while (frac <= 1.0) {
             long currtime = SystemClock.uptimeMillis();
             frac = (currtime - startms) / (duration * 1000);
             float f = (float) OB_Maths.clamp01(frac);
@@ -534,25 +452,21 @@ public class OBMainViewController extends OBViewController
             renderer.transitionFrac = f;
             glv.requestRender();
             if (l == null)
-                try
-                {
+                try {
                     Thread.sleep(10);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                 }
             else
                 l.waitForSecsNoThrow(0.01);
         }
-        renderer.transitionScreenR.setViewPort(0,0,renderer.w,renderer.h);
-        renderer.transitionScreenL.setViewPort(0,0,renderer.w,renderer.h);
+        renderer.transitionScreenR.setViewPort(0, 0, renderer.w, renderer.h);
+        renderer.transitionScreenL.setViewPort(0, 0, renderer.w, renderer.h);
         glv.requestRender();
         renderer.transitionScreenR = renderer.transitionScreenL = null;
         renderer.resetViewport();
     }
 
-    public void transitionZoom (OBSectionController l, OBSectionController r, boolean fromRight, RectF zoomRect, double duration)
-    {
+    public void transitionZoom(OBSectionController l, OBSectionController r, boolean fromRight, RectF zoomRect, double duration) {
         OBRenderer renderer = MainActivity.mainActivity.renderer;
         renderer.transitionFrac = 0;
         renderer.transitionScreenL = l;
@@ -563,8 +477,7 @@ public class OBMainViewController extends OBViewController
 
         long startms = SystemClock.uptimeMillis();
         double frac = 0;
-        while (frac <= 1.0)
-        {
+        while (frac <= 1.0) {
             long currtime = SystemClock.uptimeMillis();
             frac = (currtime - startms) / (duration * 1000);
             float f = (float) OB_Maths.clamp01(frac);
@@ -573,33 +486,27 @@ public class OBMainViewController extends OBViewController
             renderer.transitionFrac = f;
             glv.requestRender();
             if (l == null)
-                try
-                {
+                try {
                     Thread.sleep(10);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                 }
             else
                 l.waitForSecsNoThrow(0.01);
         }
-        renderer.transitionScreenR.setViewPort(0,0,renderer.w,renderer.h);
-        renderer.transitionScreenL.setViewPort(0,0,renderer.w,renderer.h);
+        renderer.transitionScreenR.setViewPort(0, 0, renderer.w, renderer.h);
+        renderer.transitionScreenL.setViewPort(0, 0, renderer.w, renderer.h);
         glv.requestRender();
         renderer.transitionScreenR = renderer.transitionScreenL = null;
         renderer.resetViewport();
     }
 
-    public void popViewController ()
-    {
+    public void popViewController() {
         OBSectionController topvc = viewControllers.get(viewControllers.size() - 1);
         OBSectionController nextvc = viewControllers.get(viewControllers.size() - 2);
         nextvc.viewWillAppear(false);
-        if (glMode() && !nextvc.requiresOpenGL)
-        {
+        if (glMode() && !nextvc.requiresOpenGL) {
             exitGLMode();
-        }
-        else
+        } else
             transition(nextvc, topvc, false, 0.5);
         viewControllers.remove(viewControllers.size() - 1);
         showButtons(nextvc.buttonFlagsWithFatController());
@@ -607,8 +514,7 @@ public class OBMainViewController extends OBViewController
         nextvc.start();
     }
 
-    public void popViewControllerZoom (RectF zoomRect)
-    {
+    public void popViewControllerZoom(RectF zoomRect) {
         OBSectionController topvc = viewControllers.get(viewControllers.size() - 1);
         OBSectionController nextvc = viewControllers.get(viewControllers.size() - 2);
         nextvc.viewWillAppear(false);
@@ -619,18 +525,16 @@ public class OBMainViewController extends OBViewController
         nextvc.start();
     }
 
-    public void popViewControllerToBottom(boolean animate)
-    {
-        if(viewControllers.size() > 1)
-        {
+    public void popViewControllerToBottom(boolean animate) {
+        if (viewControllers.size() > 1) {
             OBSectionController topvc = viewControllers.get(viewControllers.size() - 1);
             OBSectionController bottomvc = viewControllers.get(0);
             bottomvc.viewWillAppear(false);
             transition(bottomvc, topvc, false, 0.5);
             List<OBSectionController> toRemove = new ArrayList<>();
-            for(int i=1; i<viewControllers.size(); i++)
+            for (int i = 1; i < viewControllers.size(); i++)
                 toRemove.add(viewControllers.get(i));
-            if(toRemove.size() > 0)
+            if (toRemove.size() > 0)
                 viewControllers.removeAll(toRemove);
             showButtons(bottomvc.buttonFlagsWithFatController());
             showHideButtons(bottomvc.buttonFlagsWithFatController());
@@ -638,16 +542,14 @@ public class OBMainViewController extends OBViewController
         }
     }
 
-    public OBSectionController topController ()
-    {
+    public OBSectionController topController() {
         if (viewControllers.size() > 0)
             return viewControllers.get(viewControllers.size() - 1);
         return null;
 
     }
 
-    public void render (OBRenderer renderer)
-    {
+    public void render(OBRenderer renderer) {
         TextureShaderProgram textureShader = (TextureShaderProgram) renderer.textureProgram;
         textureShader.useProgram();
         topLeftButton.render(renderer, this, renderer.projectionMatrix);
@@ -655,64 +557,55 @@ public class OBMainViewController extends OBViewController
         bottomRightButton.render(renderer, this, renderer.projectionMatrix);
         bottomLeftButton.render(renderer, this, renderer.projectionMatrix);
         //
-        if (topLabel != null)
-        {
+        if (topLabel != null) {
             topLabel.render(renderer, this, renderer.projectionMatrix);
         }
     }
 
-    public void onResume()
-    {
-        if(viewControllers != null && viewControllers.size() > 0)
-        {
-            OBSectionController controller = viewControllers.get(viewControllers.size()-1);
-            long t = 28829384;
-            t = System.currentTimeMillis()/1000;                                                                 // timeStamps in seconds
+    public void onResume() {
+        if (viewControllers != null && viewControllers.size() > 0) {
+            OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
+            long endTime;
+            endTime = System.currentTimeMillis() / 1000;                                                                 // timeStamps in seconds
 
-            if(lastModuleName != null ){
+            if (lastModuleName != null) {
 
-                StartTime = t;                                                                                   // setting the time when the app is resumed
+                StartTime = endTime;                                                                                   // setting the time when the app is resumed
             }
-            if(controller != null)
+            if (controller != null)
                 controller.onResume();
         }
 
     }
 
-    public void onPause()
-    {
-        if(viewControllers != null && viewControllers.size() > 0)
-        {
-            OBSectionController controller = viewControllers.get(viewControllers.size()-1);
-            long t = 28829384;
-            t = System.currentTimeMillis()/1000;
+    public void onPause() {
+        if (viewControllers != null && viewControllers.size() > 0) {
+            OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
+            long endTime;
+            endTime = System.currentTimeMillis() / 1000;                                                                // timeStamps in seconds
 
-            if(lastModuleName != null ){
+            if (lastModuleName != null) {
 
-                MainActivity.logEvent(lastModuleName,StartTime, t,"In Progress");                        // calling the event log for pausing the module.
+                MainActivity.logEvent(lastModuleName, StartTime, endTime, "In Progress");                        // calling the event log for pausing the module.
             }
-            if(controller != null)
+            if (controller != null)
                 controller.onPause();
         }
     }
 
-    public void onAlarmReceived(Intent intent)
-    {
-        if(viewControllers != null && viewControllers.size() > 0)
-        {
-            OBSectionController controller = viewControllers.get(viewControllers.size()-1);
-            if(controller != null)
+    public void onAlarmReceived(Intent intent) {
+        if (viewControllers != null && viewControllers.size() > 0) {
+            OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
+            if (controller != null)
                 controller.onAlarmReceived(intent);
         }
     }
 
-    public void onBatteryStatusReceived(float level, boolean charging)
-    {
-        if(viewControllers != null && viewControllers.size() > 0)
-        {
-            OBSectionController controller = viewControllers.get(viewControllers.size()-1);
-            if(controller != null)
-                controller.onBatteryStatusReceived(level,charging);
+    public void onBatteryStatusReceived(float level, boolean charging) {
+        if (viewControllers != null && viewControllers.size() > 0) {
+            OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
+            if (controller != null)
+                controller.onBatteryStatusReceived(level, charging);
         }
     }
 }

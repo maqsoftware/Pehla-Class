@@ -30,10 +30,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.analytics.FirebaseAnalytics.Param;
-import com.google.firebase.analytics.FirebaseAnalytics.*;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
@@ -122,7 +119,6 @@ public class MainActivity extends Activity {
     public ReentrantLock suspendLock = new ReentrantLock();
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
-    private int b;
     private static FirebaseAnalytics FirebaseAnalytics;
 
 
@@ -144,19 +140,17 @@ public class MainActivity extends Activity {
         return arm;
     }
 
-    public static void logEvent(/*String id,*/String name,long st, long et/*, long elpT*/,String status){
-        String s = name;
-        long elpT;
-        int module_index = s.lastIndexOf("/");
+    public static void logEvent(String moduleName,long moduleStartTime, long moduleEndTime,String moduleStatus){                         // method to log the events in Firebase Analytics
 
-        String p = s.substring(module_index+1);
-        elpT = et - st;
+        long moduleElapsedTime;
+        int moduleIndex = moduleName.lastIndexOf("/");
+
+        String finalModuleName = moduleName.substring(moduleIndex+1);
+        moduleElapsedTime = moduleEndTime - moduleStartTime;
         Bundle bundle = new Bundle();
-
-        bundle.putString("module_name", p);
-        bundle.putLong("elapseTime", elpT);
-        bundle.putString("status", status);
-        //FirebaseAnalytics.logEvent(p, bundle);
+        bundle.putString("module_name", finalModuleName);
+        bundle.putLong("elapseTime", moduleElapsedTime);
+        bundle.putString("status", moduleStatus);
         FirebaseAnalytics.logEvent("module_complete", bundle);
     }
 
@@ -165,7 +159,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics = FirebaseAnalytics.getInstance(this);                                                       // creating Firebase instance.
+
         SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 
@@ -687,7 +682,7 @@ public class MainActivity extends Activity {
     public int selfPermissionGranted(String permission) {
         // For Android < Android M, self permissions are always granted.
         int result = PackageManager.PERMISSION_GRANTED;
-        ;
+
         //
         if (isSDKCompatible()) {
             return ActivityCompat.checkSelfPermission(MainActivity.mainActivity.getApplicationContext(), permission);

@@ -60,7 +60,6 @@ public class OC_Mwyh1 extends OC_Generic_WordsEvent
         super();
     }
 
-   // protected void finalize(){}
 
     public void miscSetup()
     {
@@ -87,9 +86,6 @@ public class OC_Mwyh1 extends OC_Generic_WordsEvent
         currNo = 0;
     }
 
-    public void onStop(){
-
-    }
 
 
     @Override

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 15
@@ -21,7 +21,3 @@ android {
         }
     }
 }
-
-//dependencies {
- //   implementation 'com.google.firebase:firebase-database:16.0.4'
-//}

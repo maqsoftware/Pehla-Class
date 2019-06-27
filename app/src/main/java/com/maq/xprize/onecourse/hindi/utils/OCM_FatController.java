@@ -52,7 +52,6 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
     public Map<String,Integer> colourDict;
     public long sessionSegmentLastActive;
     public OCM_FatReceiver menu;
-    public static int userIID;
 
     private float lockBatteryLevel;
     private int unitAttemptsCount, disallowStartHour, disallowEndHour, playzoneActiveHour, playzoneLockTimeout, studyListLoopWeek;
