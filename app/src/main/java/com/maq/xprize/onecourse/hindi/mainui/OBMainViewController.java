@@ -26,11 +26,6 @@ import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
 import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
-import com.maq.xprize.onecourse.hindi.utils.Firebase;
-import com.maq.xprize.onecourse.hindi.utils.OCM_FatController;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class OBMainViewController extends OBViewController
@@ -50,6 +45,8 @@ public class OBMainViewController extends OBViewController
     private Handler lowlightButtonHandler = new Handler();
 
     private String lastModuleName ;
+    private long StartTime;
+    private long EndTime;
     public static int userIID;
 
     public OBMainViewController (Activity a)
@@ -299,10 +296,11 @@ public class OBMainViewController extends OBViewController
     public boolean glMode ()
     {
         long t = 28829384;
-        t = System.currentTimeMillis()/1000;
+        t = System.currentTimeMillis()/1000;                                                                          //timeStamp in seconds.
 
         if(lastModuleName != null ){
-            Firebase.endTime(lastModuleName,t,userIID);
+            EndTime = t;
+            MainActivity.logEvent(lastModuleName,StartTime, t, "Completed");                                   // calling the event log for ending the module.
         }
         lastModuleName = null;
         return glView().getParent() != null;
@@ -351,12 +349,7 @@ public class OBMainViewController extends OBViewController
                 config = config.replace("-", "_");
                 config += ".";
             }
- //!config.equals("generic") && !config.equals("oc_childmenu") &&
-//            boolean isFound = config.contains("oc_community");
-//            if(!isFound){
-//                config = "oc_handwriting.";
-//                name = "OC_Hw2";
-//            }
+
 
             Class cnm = Class.forName("com.maq.xprize.onecourse.hindi.mainui." + config + name);
             return cnm;
@@ -476,40 +469,31 @@ public class OBMainViewController extends OBViewController
             public void run ()
             {
 
-                //String id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
-//        //TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//
-//        return id;
+
                 String value = vc.getClass().getName();                                                                     // getting the name of the class
-                //String uid = vc.ge;
-               // String fireclas = vc.getClass().get.;
-                //OBSectionController gg = vc;
-               // JSONObject fatcon = vc.getClass().asSubclass();
+
                 String moduleNamePath = value.replace("com.maq.xprize.onecourse.hindi.mainui.","");      // getting the name of the module which need to be loaded
                 boolean isFound = moduleNamePath.contains("OCM_Child");                                                    // checking the module if contain the OCM_child which is in oc_community. Used at the very start for menu.
                 boolean isFound1 = moduleNamePath.contains("OC_PlayZone");
 
                 String moduleName = moduleNamePath.replace(".","/");
                 if(!isFound && !isFound1){                                                                                              // we don't need to load the OCM_child, it's a menu
-                   // String s = "oc_phraseMake";                                                                          // hard code to check the Firebase.java is loading the module and the time to the database.
-                    long t = 28829384;
+                    long t;
                     t = System.currentTimeMillis()/1000;                                                                   // timeStamp in seconds
 
                     if(lastModuleName != null ){
-                        Firebase.endTime(lastModuleName,t,userIID);
+                        MainActivity.logEvent(lastModuleName,StartTime, t,"Completed");                             // calling the event log for ending the module.
                     }
 
-
-                   // Firebase.load(s,t);                                                                                  // checking if the connection is established.
-                    Firebase.getValue(moduleName,t,userIID);
+                    StartTime = t;
                     lastModuleName = moduleName;
                 }
                 else if(isFound1){
-                    long t = 28829384;
+                    long t ;
                     t = System.currentTimeMillis()/1000;                                                                   // timeStamp in seconds
 
                     if(lastModuleName != null ){
-                        Firebase.endTime(lastModuleName,t,userIID);
+                        MainActivity.logEvent(lastModuleName,StartTime, t,"Completed");                             // calling the event log for ending the module.
                     }
                     lastModuleName = null;
                 }
@@ -683,10 +667,11 @@ public class OBMainViewController extends OBViewController
         {
             OBSectionController controller = viewControllers.get(viewControllers.size()-1);
             long t = 28829384;
-            t = System.currentTimeMillis()/1000;
+            t = System.currentTimeMillis()/1000;                                                                 // timeStamps in seconds
 
             if(lastModuleName != null ){
-                Firebase.getValue(lastModuleName,t,userIID);
+
+                StartTime = t;                                                                                   // setting the time when the app is resumed
             }
             if(controller != null)
                 controller.onResume();
@@ -703,7 +688,8 @@ public class OBMainViewController extends OBViewController
             t = System.currentTimeMillis()/1000;
 
             if(lastModuleName != null ){
-                Firebase.endTime(lastModuleName,t,userIID);
+
+                MainActivity.logEvent(lastModuleName,StartTime, t,"In Progress");                        // calling the event log for pausing the module.
             }
             if(controller != null)
                 controller.onPause();

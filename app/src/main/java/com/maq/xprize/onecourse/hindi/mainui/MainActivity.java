@@ -124,8 +124,6 @@ public class MainActivity extends Activity {
     Map<String, Float> sfxVolumes = new HashMap<>();
     private int b;
     private static FirebaseAnalytics FirebaseAnalytics;
-    private static FirebaseDatabase firebaseDatabase;// = FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    private static DatabaseReference databaseReference;// = firebaseDatabase.getReference("main");
 
 
     public static OBGroup armPointer() {
@@ -146,39 +144,28 @@ public class MainActivity extends Activity {
         return arm;
     }
 
-    public static void logEvent(String id, String name,long st, long et, long elpT){
+    public static void logEvent(/*String id,*/String name,long st, long et/*, long elpT*/,String status){
         String s = name;
-
+        long elpT;
         int module_index = s.lastIndexOf("/");
 
         String p = s.substring(module_index+1);
+        elpT = et - st;
         Bundle bundle = new Bundle();
-        bundle.putString("userId", id);
-        //bundle.putString("module_name", name);
-        bundle.putLong("startTime", st);
-        bundle.putLong("endTime", et);
+
+        bundle.putString("module_name", p);
         bundle.putLong("elapseTime", elpT);
-        FirebaseAnalytics.logEvent(p, bundle);
+        bundle.putString("status", status);
+        //FirebaseAnalytics.logEvent(p, bundle);
+        FirebaseAnalytics.logEvent("module_complete", bundle);
     }
 
-//    public static void keepsynced(int ){
-//        databaseReference.child(DeviceID).child(username).keepSynced(true);
-//    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-//        if (firebaseDatabase == null) {
-//            firebaseDatabase = FirebaseDatabase.getInstance();
-//            firebaseDatabase.setPersistenceEnabled(true);
-//        }
-//       // firebaseDatabase.setPersistenceEnabled(true);
-//       // DatafirebaseDatabase.getInstance().getReference().
-//        String DeviceID = OBSystemsManager.sharedManager.device_getUUID();
-//        databaseReference.child(DeviceID).keepSynced(true);
-
         SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 
