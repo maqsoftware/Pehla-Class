@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
         bundle.putString("module_name", finalModuleName);
         bundle.putLong("elapseTime", moduleElapsedTime);
         bundle.putString("status", moduleStatus);
-        FirebaseAnalytics.logEvent("module_complete", bundle);
+        FirebaseAnalytics.logEvent("module_play_status", bundle);
     }
 
 
