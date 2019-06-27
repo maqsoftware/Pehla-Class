@@ -2,6 +2,7 @@ package com.maq.xprize.onecourse.hindi.controls;
 
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.telecom.Call;
 
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 import com.maq.xprize.onecourse.hindi.mainui.OBSectionController;
@@ -12,9 +13,13 @@ import com.maq.xprize.onecourse.hindi.utils.OBConfigManager;
 import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by alan on 07/06/16.
@@ -141,36 +146,60 @@ public class OBPresenter extends OBCharacter
         speak(audioFiles, 0.3f, controller);
     }
 
-    public void speak(List<Object> audioFiles, float interval, OBSectionController controller)
+    public void speak(List<Object> audioFiles, float interval, final OBSectionController controller)
     {
-        OBAudioManager audioMan = OBAudioManager.audioManager;
-        OBGroup mouth = (OBGroup) control.objectDict.get("mouth");
+        final OBAudioManager audioMan = OBAudioManager.audioManager;
+        final OBGroup mouth = (OBGroup) control.objectDict.get("mouth");
         long token = controller.takeSequenceLockInterrupt(true);
         try
         {
-            for (Object af : OBUtils.insertAudioInterval(audioFiles, (int)(interval * 1000)))
+            for (final Object af : OBUtils.insertAudioInterval(audioFiles, (int)(interval * 1000)))
             {
                 if (af instanceof String)
                 {
-                    controller.playAudio((String) af);
-                    int mframe = 1, nframe = 1;
-                    while (audioMan.isPlaying() || audioMan.isPreparing())
-                    {
-                        controller.lockScreen();
-                        showOnly(String.format(Locale.US, "mouth_%d", mframe), mouth);
-                        nframe = OB_Maths.randomInt(1, 6);
-                        if (mframe == nframe)
-                        {
-                            mframe = (nframe + 1) % 6 + 1;
-                        } else
-                        {
-                            mframe = nframe;
+                    Callable<Void> c1 = new Callable<Void>() {
+                        @Override
+                        public Void call() throws Exception {
+                            controller.playAudio((String) af);
+                            return null;
                         }
-                        control.needsRetexture = true;
-                        control.invalidate();
-                        controller.unlockScreen();
-                        controller.waitForSecs(0.07 + OB_Maths.rndom() / 10);
+                    };
+                    Callable<Void> c2 = new Callable<Void>() {
+                        @Override
+                        public Void call() throws Exception {
+                            int mframe = 1, nframe = 1;
+                            int count = 11;
+                            while (count > 0)
+                            {
+                                count--;
+                                controller.lockScreen();
+                                showOnly(String.format(Locale.US, "mouth_%d", mframe), mouth);
+                                nframe = OB_Maths.randomInt(1, 6);
+                                if (mframe == nframe)
+                                {
+                                    mframe = (nframe + 1) % 6 + 1;
+                                } else
+                                {
+                                    mframe = nframe;
+                                }
+                                control.needsRetexture = true;
+                                control.invalidate();
+                                controller.unlockScreen();
+                                controller.waitForSecs(0.07 + OB_Maths.rndom() / 10);
+                            }
+                            return null;
+                        }
+                    };
+                    List<Callable<Void>> taskList = new ArrayList<>();
+                    taskList.add(c1);
+                    taskList.add(c2);
+                    ExecutorService es = Executors.newFixedThreadPool(2);
+                    try {
+                        es.invokeAll(taskList);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    es.shutdown();
                 } else
                 {
                     controller.lockScreen();
