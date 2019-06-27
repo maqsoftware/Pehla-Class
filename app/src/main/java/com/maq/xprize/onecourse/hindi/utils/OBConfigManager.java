@@ -795,7 +795,7 @@ public class OBConfigManager {
 
 
     public String getAssetsExternalPath() {
-        return SplashScreenActivity.Assetspath + File.separator + "assets";
+        return SplashScreenActivity.assetsPath + File.separator + "assets";
     }
 
     public List<File> getExternalAssetsSearchPaths() {

@@ -45,7 +45,7 @@ public class SplashScreenActivity extends Activity {
     boolean flagSwitchToInternal = false;
     boolean isExtractionRequired = false;
 
-    public static String Assetspath;
+    public static String assetsPath;
     public Dialog sdCardPreferenceDialog() {
         final SharedPreferences.Editor editor = sharedPref.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -144,7 +144,7 @@ public class SplashScreenActivity extends Activity {
     public String getDataFilePath() {
         String internalDataFilePath = null;
         String externalDataFilePath = null;
-        String DataFilePath = null;
+        String dataFilePath = null;
         File[] fileList = getExternalFilesDirs(null);
         for (File file : fileList) {
             if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + getPackageName() + "/files") &&
@@ -160,18 +160,18 @@ public class SplashScreenActivity extends Activity {
             }
         }
         if (externalDataFilePath == null) {
-            DataFilePath = internalDataFilePath;
+            dataFilePath = internalDataFilePath;
         } else if (sharedPref.getInt(getString(R.string.dataPath), 0) == 2) {
-            DataFilePath = externalDataFilePath;
+            dataFilePath = externalDataFilePath;
         }
-        Assetspath = DataFilePath;
-        return DataFilePath;
+        assetsPath = dataFilePath;
+        return dataFilePath;
     }
 
     public File getOBBFilePath(DownloadExpansionFile.XAPKFile xf) {
         sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
-        storedMainFileVersion = sharedPref.getInt("mainFileVersion", 0);
-        storedPatchFileVersion = sharedPref.getInt("patchFileVersion", 0);
+        storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), 0);
+        storedPatchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), 0);
         String internalOBBFilePath = null;
         String externalOBBFilePath = null;
         File externalOBBFile = null;

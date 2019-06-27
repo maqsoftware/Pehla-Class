@@ -140,8 +140,8 @@ public class MainActivity extends Activity {
         int defaultFileVersion = 0;
 
         // Retrieve the stored values of main and patch file version
-        int storedMainFileVersion = sharedPref.getInt("mainFileVersion", defaultFileVersion);
-        int storedPatchFileVersion = sharedPref.getInt("patchFileVersion", defaultFileVersion);
+        int storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
+        int storedPatchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), defaultFileVersion);
         boolean isExtractionRequired = false;
         needExtraction();
         if ((sharedPref.getInt("dataPath", 0) == 0)) {
