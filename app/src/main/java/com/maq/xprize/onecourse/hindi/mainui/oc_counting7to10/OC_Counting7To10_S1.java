@@ -5,6 +5,7 @@ import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic;
 import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic_AddRemoveObjectsToScene;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 08/09/16.
@@ -36,7 +37,7 @@ public class OC_Counting7To10_S1 extends OC_Generic_AddRemoveObjectsToScene
         //
         for (int i = 1; i < 11; i++)
         {
-            OBControl dot = objectDict.get(String.format("obj_%d", i));
+            OBControl dot = objectDict.get(String.format(Locale.US,"obj_%d", i));
             OC_Generic.pointer_moveToObject(dot, -25+OC_Generic.randomInt(0, 10), 0.4f, EnumSet.of(OC_Generic.Anchor.ANCHOR_MIDDLE), true, this);
             playSfxAudio("place_object", false);
             dot.show();

@@ -13,6 +13,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 06/03/2018.
@@ -157,8 +158,8 @@ public class OC_2dShapes_S2 extends OC_SectionController
         for(int i=1; i<= filterControls("line_.*").size(); i++)
         {
             lockScreen();
-            objectDict.get(String.format("line_%d",i)).show();
-            playSfxAudio(String.format("note_%d",i),false);
+            objectDict.get(String.format(Locale.US,"line_%d",i)).show();
+            playSfxAudio(String.format(Locale.US,"note_%d",i),false);
             unlockScreen();
             waitForSecs(0.4f);
         }

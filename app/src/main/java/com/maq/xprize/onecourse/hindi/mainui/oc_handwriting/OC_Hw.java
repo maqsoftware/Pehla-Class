@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -553,7 +554,7 @@ public class OC_Hw extends OC_SectionController
                 OBPath p = paths.get(j);
 
                 Map<String, Object> dict = new HashMap<String,Object>(p.attributes());
-                dict.put("id", String.format("Path%d_%d",i+1,j+1));
+                dict.put("id", String.format(Locale.US,"Path%d_%d",i+1,j+1));
                 p.setProperty("attrs",dict);
                 p.setProperty("name",p.attributes().get("id"));
                 letterGrp.objectDict.put((String)p.attributes().get("id"),p);
@@ -564,7 +565,7 @@ public class OC_Hw extends OC_SectionController
         {
             OBControl x = xboxes.get(i);
             Map<String, Object> dict = new HashMap<String,Object>(x.attributes());
-            dict.put("id",String.format("xbox%d",i+1));
+            dict.put("id",String.format(Locale.US,"xbox%d",i+1));
             x.setProperty("attrs",dict);
             x.setProperty("name",x.attributes().get("id"));
             letterGrp.objectDict.put((String)x.attributes().get("id"),x);

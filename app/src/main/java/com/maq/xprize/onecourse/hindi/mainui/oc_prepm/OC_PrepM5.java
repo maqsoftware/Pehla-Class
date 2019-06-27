@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -67,7 +68,7 @@ public class OC_PrepM5 extends OC_PrepMWithVideo
         maxNum = OBUtils.getIntValue(eventAttributes.get("max"));
         loadEquationAndNumbers(num1,num2,maxNum,additionMode);
         currentQuestionAudio= new ArrayList<>();
-        currentQuestionAudio.add(audioForQuestion(String.format("%s_str_%d", currentEvent() , num1)));
+        currentQuestionAudio.add(audioForQuestion(String.format(Locale.US,"%s_str_%d", currentEvent() , num1)));
         currentQuestionAudio.add(audioForQuestion(String.format(additionMode ? "%s_add_%d" : "%s_sub_%d", currentEvent() , num2)));
         currentQuestionAudio.add(audioForQuestion(String.format("%s_end", currentEvent())));
     }
@@ -179,7 +180,7 @@ public class OC_PrepM5 extends OC_PrepMWithVideo
             if(shouldCollectMiscData())
             {
                 int num1 = currentEquationValues.get(0) , num2 = currentEquationValues.get(1);
-                String userAnswer = String.format("%d %s %d = %s",num1,additionMode ? "+" : "–",num2,targ.text());
+                String userAnswer = String.format(Locale.US,"%d %s %d = %s",num1,additionMode ? "+" : "–",num2,targ.text());
                 collectMiscData("wrong",userAnswer);
             }
             objectDict.get("wrong_cross").show();
@@ -191,7 +192,7 @@ public class OC_PrepM5 extends OC_PrepMWithVideo
 
     public void demoCount() throws Exception
     {
-        prepareCountingVideo(String.format("counting-%d",maxNum));
+        prepareCountingVideo(String.format(Locale.US,"counting-%d",maxNum));
         waitForSecs(1f);
         lockScreen();
         for(OBControl con : eventTargets)
@@ -209,7 +210,7 @@ public class OC_PrepM5 extends OC_PrepMWithVideo
         unlockScreen();
         playSfxAudio("video",true);
         waitForSecs(0.5f);
-        List<String> audio = getAudioForScene(String.format("counting_%d",maxNum),"DEMO");
+        List<String> audio = getAudioForScene(String.format(Locale.US,"counting_%d",maxNum),"DEMO");
         if(audio != null)
             playAudio(audio.get(0));
         waitAudio();
@@ -238,7 +239,7 @@ public class OC_PrepM5 extends OC_PrepMWithVideo
         OC_Numberlines_Additions.colourEquation(currentEquation,5,5,eventColours.get("highlight"),this);
         OC_Numberlines_Additions.showEquation(currentEquation,5,5,"equation",this);
         waitForSecs(0.3f);
-        playAudio(audioForQuestion(String.format("%s_ans_%d",currentEvent() , answear)));
+        playAudio(audioForQuestion(String.format(Locale.US,"%s_ans_%d",currentEvent() , answear)));
         waitAudio();
         waitForSecs(1f);
         waitForSecs(5f);

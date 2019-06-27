@@ -24,6 +24,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -88,11 +89,11 @@ public class OC_ReadingIRead extends OC_Reading
         if (localPath != null)
         {
             String dirPath = OBUtils.stringByDeletingLastPathComponent(localPath);
-            String slowPath = OBUtils.stringByAppendingPathComponent(dirPath,String.format("ps%d_%d.etpa",pageNo,1));
+            String slowPath = OBUtils.stringByAppendingPathComponent(dirPath,String.format(Locale.US,"ps%d_%d.etpa",pageNo,1));
             if (OBUtils.fileExistsAtPath(slowPath))
                 return true;
             List<String> files = OBUtils.filesAtPath(dirPath);
-            String prefix = String.format("psyl%d_.*",pageNo);
+            String prefix = String.format(Locale.US,"psyl%d_.*",pageNo);
             Pattern p = Pattern.compile(prefix);
             for (String s : files)
             {
@@ -213,7 +214,7 @@ public class OC_ReadingIRead extends OC_Reading
         {
             String dirPath = OBUtils.stringByDeletingLastPathComponent(localPath);
             String txt = CrunchedString(rw.text);
-            String syllPath = OBUtils.stringByAppendingPathComponent(dirPath,String.format("psyl%d_%s.etpa",pageNo,txt));
+            String syllPath = OBUtils.stringByAppendingPathComponent(dirPath,String.format(Locale.US,"psyl%d_%s.etpa",pageNo,txt));
             if (syllPath != null && OBUtils.fileExistsAtPath(syllPath))
                 return true;
         }
@@ -235,7 +236,7 @@ public class OC_ReadingIRead extends OC_Reading
     public void speakSyllablesForWord(OBReadingWord w,long token) throws Exception
     {
         //long token = sequenceToken;
-        String fileName = String.format("psyl%d_%s",pageNo,CrunchedString(w.text));
+        String fileName = String.format(Locale.US,"psyl%d_%s",pageNo,CrunchedString(w.text));
         List<List<Double>> timings = loadSyllableTimingsForWord(w,getLocalPath(fileName+".etpa"));
         playAudio(fileName);
         long startTime = SystemClock.uptimeMillis();

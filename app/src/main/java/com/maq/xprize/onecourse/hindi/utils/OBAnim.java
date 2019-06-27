@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * OBAnim
@@ -46,7 +47,7 @@ public class OBAnim {
         typeType = ty;
         if (ky == null || obj == null)
             return;
-        String u1 = ky.substring(0, 1).toUpperCase() + ky.substring(1);
+        String u1 = ky.substring(0, 1).toUpperCase(Locale.US) + ky.substring(1);
         try
         {
             getter = obj.getClass().getMethod("get" + u1);

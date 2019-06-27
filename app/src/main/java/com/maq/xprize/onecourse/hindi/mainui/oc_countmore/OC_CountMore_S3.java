@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -169,7 +170,7 @@ public class OC_CountMore_S3  extends OC_SectionController
             box.setBorderWidth(applyGraphicScale(2));
             box.setPosition(OB_Maths.locationForRect(1/10.0f * i,0.5f,numbox.frame()));
             box.setLeft(numbox.position().x - (5-i)*(box.width() - box.borderWidth));
-            OBLabel label = new OBLabel(String.format("%d",(i+1)*2),OBUtils.standardTypeFace(), fontSize);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",(i+1)*2),OBUtils.standardTypeFace(), fontSize);
             label.setColour(Color.BLACK);
             label.setPosition(box.position());
 

@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 30/06/16.
@@ -78,8 +79,8 @@ public class OC_Alpha3 extends OC_Alpha
         }
         else
         {
-            audio = currentAudio(String.format("PROMPT%d", phase + 1));
-            replayAudio = currentAudio(String.format("REPEAT%d", phase + 1));
+            audio = currentAudio(String.format(Locale.US,"PROMPT%d", phase + 1));
+            replayAudio = currentAudio(String.format(Locale.US,"REPEAT%d", phase + 1));
         }
         setReplayAudio(replayAudio);
         playAudioQueued(audio, false);
@@ -265,7 +266,7 @@ public class OC_Alpha3 extends OC_Alpha
             label.show();
             unlockScreen();
             //
-            String letterAudioName = letters.get(i).toLowerCase();
+            String letterAudioName = letters.get(i).toLowerCase(Locale.US);
             if (!letterAudioName.startsWith("alph_"))
             {
                 letterAudioName = String.format("alph_%s", letterAudioName);
@@ -356,7 +357,7 @@ public class OC_Alpha3 extends OC_Alpha
             label.show();
             unlockScreen();
             //
-            String letterAudioName = letters.get(i).toLowerCase();
+            String letterAudioName = letters.get(i).toLowerCase(Locale.US);
             if (!letterAudioName.startsWith("alph_"))
             {
                 letterAudioName = String.format("alph_%s", letterAudioName);

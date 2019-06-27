@@ -24,6 +24,7 @@ import com.maq.xprize.onecourse.hindi.utils.OCM_FatReceiver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -530,7 +531,7 @@ public class OCM_LockScreen extends OC_Menu implements OCM_FatReceiver
             OBGroup tablet = (OBGroup)objectDict.get("tablet");
             tablet.hideMembers("level_.*");
             if(status >= 0)
-                tablet.objectDict.get(String.format("level_%d",status)).show();
+                tablet.objectDict.get(String.format(Locale.US,"level_%d",status)).show();
             unlockScreen();
         }
     }

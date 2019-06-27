@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_MutInt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -79,9 +80,9 @@ public class OC_WordProblems extends OC_SectionController
             if(values.size() > 1)
             {
                 questionParams.add(values);
-                String questionScene = String.format("%d_%d", values.get(0).intValue() , values.get(1).intValue());
+                String questionScene = String.format(Locale.US,"%d_%d", values.get(0).intValue() , values.get(1).intValue());
                 eventList.add(questionScene);
-                String eventName = String.format("%d", audioSceneList.size()+1);
+                String eventName = String.format(Locale.US,"%d", audioSceneList.size()+1);
                 if(i == questionGroups.length-1)
                     eventName = "last";
                 else if(audioScenes.get(eventName) == null)
@@ -131,56 +132,56 @@ public class OC_WordProblems extends OC_SectionController
         if(currentMode.equals(MODE_ADD))
         {
             eqPart3 = eqPart1 + eqPart2;
-            equationString = String.format("%d + %d = %d",eqPart1,eqPart2,eqPart3);
+            equationString = String.format(Locale.US,"%d + %d = %d",eqPart1,eqPart2,eqPart3);
         }
         else if(currentMode.equals(MODE_SUBTRACT))
         {
             eqPart3 = eqPart1 - eqPart2;
             if(type == 2)
-                equationString = String.format("%d – %d = %d",eqPart1,eqPart2,eqPart3);
+                equationString = String.format(Locale.US,"%d – %d = %d",eqPart1,eqPart2,eqPart3);
             else
-                equationString = String.format("%d + %d = %d",eqPart2,eqPart3,eqPart1);
+                equationString = String.format(Locale.US,"%d + %d = %d",eqPart2,eqPart3,eqPart1);
 
         }
         else if(currentMode.equals(MODE_REVERSE_SUBTRACT))
         {
             eqPart3 = eqPart2 - eqPart1;
-            equationString = String.format("%d + %d = %d",eqPart3,eqPart1,eqPart2);
+            equationString = String.format(Locale.US,"%d + %d = %d",eqPart3,eqPart1,eqPart2);
         }
         else if(currentMode.equals(MODE_MULTIPLY))
         {
             eqPart3 = eqPart1 * eqPart2;
-            equationString = String.format("%d",eqPart2);
+            equationString = String.format(Locale.US,"%d",eqPart2);
             for(int i=1; i<eqPart1; i++)
             {
-                equationString += String.format(" + %d",eqPart2);
+                equationString += String.format(Locale.US," + %d",eqPart2);
             }
-            equationString += String.format(" = %d",eqPart3);
+            equationString += String.format(Locale.US," = %d",eqPart3);
         }
         else if(currentMode.equals(MODE_DIVIDE))
         {
             eqPart3 = eqPart1/eqPart2;
-            equationString = String.format("%d",eqPart3);
+            equationString = String.format(Locale.US,"%d",eqPart3);
             for(int i=1; i<eqPart2; i++)
             {
-                equationString += String.format(" + %d",eqPart3);
+                equationString += String.format(Locale.US," + %d",eqPart3);
             }
-            equationString += String.format(" = %d",eqPart1);
+            equationString += String.format(Locale.US," = %d",eqPart1);
         }
         else  if(currentMode.equals(MODE_REVERSE_DIVIDE))
         {
             eqPart3 = eqPart2/eqPart1;
-            equationString = String.format("%d",eqPart3);
+            equationString = String.format(Locale.US,"%d",eqPart3);
             for(int i=1; i<eqPart1; i++)
             {
-                equationString += String.format(" + %d",eqPart3);
+                equationString += String.format(Locale.US," + %d",eqPart3);
             }
-            equationString += String.format(" = %d",eqPart2);
+            equationString += String.format(Locale.US," = %d",eqPart2);
         }
-        String part1Audio = String.format("wpt%d_q%d_str_%d", currentQuestionType, currentQuestionNum, eqPart1);
-        String part2Audio = String.format("wpt%d_q%d_%s_%d", currentQuestionType,currentQuestionNum,currentMode, eqPart2);
-        String endAudio = String.format("wpt%d_q%d_end", currentQuestionType,currentQuestionNum);
-        String answerAudio = String.format("wpt%d_q%d_ans_%d", currentQuestionType,currentQuestionNum, eqPart3);
+        String part1Audio = String.format(Locale.US,"wpt%d_q%d_str_%d", currentQuestionType, currentQuestionNum, eqPart1);
+        String part2Audio = String.format(Locale.US,"wpt%d_q%d_%s_%d", currentQuestionType,currentQuestionNum,currentMode, eqPart2);
+        String endAudio = String.format(Locale.US,"wpt%d_q%d_end", currentQuestionType,currentQuestionNum);
+        String answerAudio = String.format(Locale.US,"wpt%d_q%d_ans_%d", currentQuestionType,currentQuestionNum, eqPart3);
         questionAudio  = Arrays.asList(part1Audio,part2Audio,endAudio);
         feedbackAudio  = Arrays.asList(part1Audio,part2Audio,answerAudio);
         List<Integer> choices = new ArrayList<>();
@@ -200,7 +201,7 @@ public class OC_WordProblems extends OC_SectionController
         {
             int num = randAnswers.get(i);
             OBControl buttonCopy = button.copy();
-            OBLabel numLabel = new OBLabel(String.format("%d",num), OBUtils.StandardReadingFontOfSize(70));
+            OBLabel numLabel = new OBLabel(String.format(Locale.US,"%d",num), OBUtils.StandardReadingFontOfSize(70));
             numLabel.setColour(Color.BLACK);
             numLabel.setPosition(buttonCopy.position());
             numLabel.show();
@@ -252,7 +253,7 @@ public class OC_WordProblems extends OC_SectionController
             waitAudio();
             waitForSecs(0.6f);
         }
-        performSel("demoEvent",String.format("%d",eventIndex+1));
+        performSel("demoEvent",String.format(Locale.US,"%d",eventIndex+1));
         waitForSecs(0.5f);
         List<Object> audio = OBUtils.insertAudioInterval(questionAudio, 1000);
         setReplayAudio(audio);
@@ -267,7 +268,7 @@ public class OC_WordProblems extends OC_SectionController
         waitSFX();
 
         waitForSecs(0.3f);
-        performSel("demo2Event",String.format("%d",eventIndex+1));
+        performSel("demo2Event",String.format(Locale.US,"%d",eventIndex+1));
         setStatus(STATUS_AWAITING_CLICK);
     }
 
@@ -324,7 +325,7 @@ public class OC_WordProblems extends OC_SectionController
             waitForSecs(0.5f);
             playCurrentAudio("INCORRECT",1,true);
             waitForSecs(0.5f);
-            performSel("demoFeedback",String.format("%d",currentQuestionType));
+            performSel("demoFeedback",String.format(Locale.US,"%d",currentQuestionType));
             if(shouldCollectMiscData())
             {
                 List<Integer> ans = new ArrayList<>();
@@ -711,7 +712,7 @@ public class OC_WordProblems extends OC_SectionController
         float maxHeight = -1;
         for(int i=1; i<=eqPart1; i++)
         {
-            OBControl con = objectDict.get(String.format("obj_%d",i));
+            OBControl con = objectDict.get(String.format(Locale.US,"obj_%d",i));
             if(con.height() > maxHeight)
                 maxHeight = con.height();
             children.add(con);

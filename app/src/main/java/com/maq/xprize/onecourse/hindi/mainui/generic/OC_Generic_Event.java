@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -868,7 +869,7 @@ public class OC_Generic_Event extends OC_SectionController
                 List<String> sfx_array = (List<String>) sfx_map.get(soundEffectOnFloorCollision);
                 String soundEffect = sfx_array.get(0);
 //                MainActivity.log("OC_Generic_Event:physics:bounceObjectsWithPlacements:soundEffect:" + soundEffect);
-                OBAudioManager.audioManager.prepareForChannel(soundEffect, String.format("bounce_%d", i));
+                OBAudioManager.audioManager.prepareForChannel(soundEffect, String.format(Locale.US,"bounce_%d", i));
             }
             //
             boolean animationComplete = false;
@@ -905,7 +906,7 @@ public class OC_Generic_Event extends OC_SectionController
                             control.setProperty("floorCollision", true);
                             newPosition = OC_Generic.copyPoint(midway);
                             //
-                            OBGeneralAudioPlayer player = OBAudioManager.audioManager.playerForChannel(String.format("bounce_%d", i));
+                            OBGeneralAudioPlayer player = OBAudioManager.audioManager.playerForChannel(String.format(Locale.US,"bounce_%d", i));
                             player.play();
                         }
                     }

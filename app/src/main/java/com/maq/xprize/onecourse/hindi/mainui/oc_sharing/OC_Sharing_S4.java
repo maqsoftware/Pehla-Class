@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -217,7 +218,7 @@ public class OC_Sharing_S4 extends OC_Generic_Event
         lockScreen();
         for (int i = 1; i <= filterControls("group.*").size(); i++)
         {
-            objectDict.get(String.format("place_%d", i + 1)).show();
+            objectDict.get(String.format(Locale.US,"place_%d", i + 1)).show();
         }
         unlockScreen();
         //
@@ -235,7 +236,7 @@ public class OC_Sharing_S4 extends OC_Generic_Event
                 lockScreen();
                 for (int i = 1; i <= filterControls("group.*").size(); i++)
                 {
-                    objectDict.get(String.format("place_%d", i + 1)).hide();
+                    objectDict.get(String.format(Locale.US,"place_%d", i + 1)).hide();
                 }
                 unlockScreen();
             }

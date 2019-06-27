@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
@@ -292,7 +293,7 @@ public class OC_PhraseSentence extends OC_Reading
 
     public void speakWordAsPartial(OBReadingWord w,String key,boolean wait) throws Exception
     {
-        String fn = String.format("%s_%d",key,w.paraNo);
+        String fn = String.format(Locale.US,"%s_%d",key,w.paraNo);
         double ts = w.timeStart,te = w.timeEnd;
         if(slowWordsAvailable)
         {
@@ -425,7 +426,7 @@ public class OC_PhraseSentence extends OC_Reading
 
     public void readParagraph(int pidx,long token,boolean canInterrupt) throws Exception
     {
-        String fn = String.format("%s_%d",currComponentKey,pidx+1);
+        String fn = String.format(Locale.US,"%s_%d",currComponentKey,pidx+1);
         readParagraph(pidx,fn,token,canInterrupt);
     }
 
@@ -459,7 +460,7 @@ public class OC_PhraseSentence extends OC_Reading
 
     public void readParagraph(int pidx,long timestamp) throws Exception
     {
-        String fn = String.format("%s_%d",currComponentKey,pidx+1);
+        String fn = String.format(Locale.US,"%s_%d",currComponentKey,pidx+1);
         readParagraph(pidx,fn,timestamp);
     }
 
@@ -492,7 +493,7 @@ public class OC_PhraseSentence extends OC_Reading
 
     public boolean syllableAudioExistsForWord(OBReadingWord rw,String key)
     {
-        String localPath = OBAudioManager.audioManager.getAudioPath(String.format("%s_%d",key,rw.paraNo));
+        String localPath = OBAudioManager.audioManager.getAudioPath(String.format(Locale.US,"%s_%d",key,rw.paraNo));
         if(localPath != null)
         {
             String dirPath = OBUtils.stringByDeletingLastPathComponent(localPath);

@@ -5,6 +5,7 @@ import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic;
 import com.maq.xprize.onecourse.hindi.mainui.generic.OC_Generic_CompleteSequence;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 12/07/16.
@@ -27,7 +28,7 @@ public class OC_Patterns_S1 extends OC_Generic_CompleteSequence
             action_playNextDemoSentence(true); // Leaf. Flower. Leaf. Flower. Leaf. Flower.
             if (i < 6)
             {
-                OC_Generic.pointer_moveToObjectByName(String.format("obj_%d", i + 1), -25 + i * 5, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
+                OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"obj_%d", i + 1), -25 + i * 5, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
             }
         }
         waitForSecs(0.3);
@@ -72,7 +73,7 @@ public class OC_Patterns_S1 extends OC_Generic_CompleteSequence
             action_playNextDemoSentence(true); // Shoe. Shoe. Sock. Sock. Shoe. Shoe. Sock.
             if (i < 7)
             {
-                OC_Generic.pointer_moveToObjectByName(String.format("obj_%d", i + 1), -25 + i * 5, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
+                OC_Generic.pointer_moveToObjectByName(String.format(Locale.US,"obj_%d", i + 1), -25 + i * 5, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
             }
         }
         waitForSecs(0.3);

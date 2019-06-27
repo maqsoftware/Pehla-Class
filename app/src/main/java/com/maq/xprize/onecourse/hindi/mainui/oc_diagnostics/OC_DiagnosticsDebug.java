@@ -11,6 +11,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.mainui.OBMainViewController.SHOW_TOP_LEFT_BUTTON;
 
@@ -59,7 +60,7 @@ public class OC_DiagnosticsDebug extends OC_Diagnostics
         //
         for (int i = 1; i <= 15; i++)
         {
-            OBControl labelBox = objectDict.get(String.format("label%d_day1", i));
+            OBControl labelBox = objectDict.get(String.format(Locale.US,"label%d_day1", i));
             if (labelBox == null) continue;
             //
             String unit = remedialUnits_day1.size() >= i ? (String) remedialUnits_day1.get(i-1) : "";
@@ -73,7 +74,7 @@ public class OC_DiagnosticsDebug extends OC_Diagnostics
         //
         for (int i = 1; i <= 15; i++)
         {
-            OBControl labelBox = objectDict.get(String.format("label%d_day2", i));
+            OBControl labelBox = objectDict.get(String.format(Locale.US,"label%d_day2", i));
             if (labelBox == null) continue;
             //
             String unit = remedialUnits_day2.size() >= i ? (String) remedialUnits_day2.get(i-1) : "";

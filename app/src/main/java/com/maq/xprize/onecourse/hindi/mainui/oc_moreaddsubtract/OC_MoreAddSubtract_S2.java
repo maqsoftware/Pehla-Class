@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 16/03/2017.
@@ -585,7 +586,7 @@ public class OC_MoreAddSubtract_S2 extends OC_SectionController
 
         playSfxAudio("buttonpress",false);
         OBLabel label = OC_Numberlines_Additions.getLabelForEquation(3, equation);
-        label.setString(String.format("%d", currentNum +1));
+        label.setString(String.format(Locale.US,"%d", currentNum +1));
 
         if(freeMode)
             label.setOpacity(0.5f);
@@ -647,7 +648,7 @@ public class OC_MoreAddSubtract_S2 extends OC_SectionController
 
     public void pointerPointEquation(OBGroup equation, int at, String audio, float duration) throws Exception
     {
-        PointF point = OBMisc.copyPoint(OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format("part%d",at)).getWorldFrame()));
+        PointF point = OBMisc.copyPoint(OB_Maths.locationForRect(0.6f,1f,equation.objectDict.get(String.format(Locale.US,"part%d",at)).getWorldFrame()));
         point.y = equation.bottom() + equation.height() * 0.2f;
         movePointerToPoint(point, -30, duration, true);
         OC_Numberlines_Additions.colourEquation(equation, at, at, Color.RED, this);

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 23/08/16.
@@ -115,7 +116,7 @@ public class OC_Count100_S3 extends OC_SectionController
                 OBControl cont =  objectDict.get("obj").copy();
                 cont.texturise(true,this);
                 cont.setZPosition(0.5f);
-                cont.setPosition ( objectDict.get(String.format("box_%d",i)).getWorldPosition());
+                cont.setPosition ( objectDict.get(String.format(Locale.US,"box_%d",i)).getWorldPosition());
                 eventObjects.add(cont);
                 attachControl(cont);
             }
@@ -427,8 +428,8 @@ public class OC_Count100_S3 extends OC_SectionController
         hideControls("num_.*");
         for(int i = 1; i<=correctNum; i++)
         {
-            objectDict.get(String.format("num_%d",i)).show();
-            objectDict.get(String.format("box_%d",i)).show();
+            objectDict.get(String.format(Locale.US,"num_%d",i)).show();
+            objectDict.get(String.format(Locale.US,"box_%d",i)).show();
         }
         anim1.add(OBAnim.opacityAnim(1,objectDict.get("grid_box")));
         anim2.add(OBAnim.opacityAnim(0,objectDict.get("grid_box")));

@@ -26,6 +26,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -126,7 +127,7 @@ public class OC_FlappyWord extends OC_SectionController
         for(int i=0; i<4; i++)
         {
             List<OBControl> landscapes = new ArrayList<>();
-            for(OBControl landscape : filterControls(String.format("landscape_%d_.*",i)))
+            for(OBControl landscape : filterControls(String.format(Locale.US,"landscape_%d_.*",i)))
             {
                 landscape.show();
                 OBControl renderedImage = landscape.copy();
@@ -945,7 +946,7 @@ public class OC_FlappyWord extends OC_SectionController
 
     public void setCurrentScore(int count)
     {
-        letterBoxCounter.setString ( String.format("%d",count));
+        letterBoxCounter.setString ( String.format(Locale.US,"%d",count));
         currentScore = count;
     }
 

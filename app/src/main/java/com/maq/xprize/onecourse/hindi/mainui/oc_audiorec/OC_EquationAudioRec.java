@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -223,7 +224,7 @@ public class OC_EquationAudioRec extends OC_AudioRecSection
         List<String> eventsList = new ArrayList<>();
         for(int i=0; i<eventsData.size(); i++)
         {
-            String eventName = String.format("%d",i+1);
+            String eventName = String.format(Locale.US,"%d",i+1);
             if(audioScenes.get(eventName) == null)
                 eventName = "default";
             eventsList.add(eventName);
@@ -263,7 +264,7 @@ public class OC_EquationAudioRec extends OC_AudioRecSection
             detachControl(currentEquation);
         int result = addition ? num1 + num2 : num1 - num2;
         String sign = addition ? "+" : "–";
-        OC_Numberlines_Additions.loadEquation(String.format("%d %s %d = %d",num1,sign,num2,result) ,"equation",objectDict.get("eq_box") , Color.BLACK,false,this);
+        OC_Numberlines_Additions.loadEquation(String.format(Locale.US,"%d %s %d = %d",num1,sign,num2,result) ,"equation",objectDict.get("eq_box") , Color.BLACK,false,this);
         currentEquation =(OBGroup)objectDict.get("equation");
 
         OC_Numberlines_Additions.showEquation(currentEquation,1,5,this);
@@ -271,8 +272,8 @@ public class OC_EquationAudioRec extends OC_AudioRecSection
         currentEquation.hide();
         targetLabel = OC_Numberlines_Additions.getLabelForEquation(5, currentEquation);
         targetLabel.hide();
-        String audioId = String.format("n_%d",result);
-        currentPhoneme = new OBPhoneme(String.format("%d",result), audioId);
+        String audioId = String.format(Locale.US,"n_%d",result);
+        currentPhoneme = new OBPhoneme(String.format(Locale.US,"%d",result), audioId);
         RectF part3Frame = currentEquation.objectDict.get("part3").getWorldFrame();
         RectF part4Frame = currentEquation.objectDict.get("part4").getWorldFrame();
         float leftDist = part4Frame.left -(part3Frame.left + part3Frame.width());

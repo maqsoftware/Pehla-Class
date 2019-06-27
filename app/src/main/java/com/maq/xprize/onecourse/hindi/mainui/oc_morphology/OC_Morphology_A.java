@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class OC_Morphology_A extends OC_Morphology
 {
@@ -116,7 +117,7 @@ public class OC_Morphology_A extends OC_Morphology
 
     public OBControl bullet(int i)
     {
-        String bname = String.format("bullet_%d",i);
+        String bname = String.format(Locale.US,"bullet_%d",i);
         return objectDict.get(bname);
     }
 
@@ -178,7 +179,7 @@ public class OC_Morphology_A extends OC_Morphology
             String[] cmps = skeys.get(i).split("\\.");
             String sid = cmps[1];
             ocm_sentence se = sentenceDict.get(sid);
-            OBControl rect = objectDict.get(String.format("textbox_%d",i));
+            OBControl rect = objectDict.get(String.format(Locale.US,"textbox_%d",i));
             RectF f = rect.frame();
             float w = rect.left() - bullet.left();
             f.right = f.left + (bounds().width() - w);
@@ -465,7 +466,7 @@ public class OC_Morphology_A extends OC_Morphology
         playSfxAudio("buttonson",false);
         lockScreen();
         for(int i = 0;i < screens.get(screenNo).sentenceIDs.size();i++)
-            showControls(String.format("bullet_%d",i));
+            showControls(String.format(Locale.US,"bullet_%d",i));
         unlockScreen();
     }
 
@@ -497,7 +498,7 @@ public class OC_Morphology_A extends OC_Morphology
         }
         List<OBControl> arr = new ArrayList<>();
         for(int i = 0;i < screens.get(screenNo).sentenceIDs.size();i++)
-            arr.add(objectDict.get(String.format("bullet_%d",i)));
+            arr.add(objectDict.get(String.format(Locale.US,"bullet_%d",i)));
 
         PointF dest = OB_Maths.locationForRect(new PointF(1.3f, 0.5f) , arr.get(0).frame());
 

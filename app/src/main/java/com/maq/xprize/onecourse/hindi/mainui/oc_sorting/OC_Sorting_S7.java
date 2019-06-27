@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by alan on 06/05/16.
@@ -81,7 +82,7 @@ public class OC_Sorting_S7 extends OC_SectionController
         List<OBControl> crds = new ArrayList<>();
         for (int i = 0;i < 6;i++)
         {
-            String nm = String.format("group%d",i);
+            String nm = String.format(Locale.US,"group%d",i);
             OBControl c = objectDict.get(nm);
             crds.add(c);
             c.setProperty("tag",i);

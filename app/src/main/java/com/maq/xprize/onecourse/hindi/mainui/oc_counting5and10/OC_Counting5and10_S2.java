@@ -17,6 +17,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 15/03/2017.
@@ -57,7 +58,7 @@ public class OC_Counting5and10_S2 extends OC_Generic_Event
                 label.hide();
                 number.show();
                 //
-                objectDict.put(String.format("label_%d", count), label);
+                objectDict.put(String.format(Locale.US,"label_%d", count), label);
                 count++;
             }
             //
@@ -207,7 +208,7 @@ public class OC_Counting5and10_S2 extends OC_Generic_Event
         {
             gotItRightBigTick(false);
             //
-            OBControl slot = objectDict.get(String.format("number_%d", correctNumber));
+            OBControl slot = objectDict.get(String.format(Locale.US,"number_%d", correctNumber));
             OBAnim moveAnim = OBAnim.moveAnim(slot.getWorldPosition(), number);
             //
             List animations = new ArrayList();

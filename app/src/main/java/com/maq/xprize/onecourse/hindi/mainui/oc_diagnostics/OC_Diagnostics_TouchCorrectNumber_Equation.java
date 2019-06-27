@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.mainui.oc_diagnostics.OC_DiagnosticsManager.kDistractorsNumberRange;
@@ -73,7 +74,7 @@ public class OC_Diagnostics_TouchCorrectNumber_Equation extends OC_Diagnostics_T
         List allParameters = new ArrayList<>();
         for (int i = min; i <= max; i++)
         {
-            allParameters.add(String.format("%d", i));
+            allParameters.add(String.format(Locale.US,"%d", i));
         }
         //
         int totalQuestions = Integer.parseInt((String) exerciseData.get(kTotalQuestions));
@@ -114,14 +115,14 @@ public class OC_Diagnostics_TouchCorrectNumber_Equation extends OC_Diagnostics_T
             String minDistractorString = distractorsRangeArray.get(0);
             if (minDistractorString.contains("n"))
             {
-                minDistractorString = minDistractorString.replace("n", String.format("%d", correctValue));
+                minDistractorString = minDistractorString.replace("n", String.format(Locale.US,"%d", correctValue));
                 minDistractorString = String.valueOf(Math.round(OC_Diagnostics.evalExpression(minDistractorString)));
             }
             //
             String maxDistractorString = distractorsRangeArray.get(1);
             if (maxDistractorString.contains("n"))
             {
-                maxDistractorString = maxDistractorString.replace("n", String.format("%d", correctValue));
+                maxDistractorString = maxDistractorString.replace("n", String.format(Locale.US,"%d", correctValue));
                 maxDistractorString = String.valueOf(Math.round(OC_Diagnostics.evalExpression(maxDistractorString)));
             }
             //
@@ -131,15 +132,15 @@ public class OC_Diagnostics_TouchCorrectNumber_Equation extends OC_Diagnostics_T
             List allDistractors = new ArrayList<>();
             for (int j = minDistractor; j <= maxDistractor; j++)
             {
-                allDistractors.add(String.format("%d", j));
+                allDistractors.add(String.format(Locale.US,"%d", j));
             }
             //
-            equation = String.format("%d %s %d =", number1, operator, number2);
+            equation = String.format(Locale.US,"%d %s %d =", number1, operator, number2);
             //
             List unitsUsed = new ArrayList<>();
             //
             // TODO: still missing the remedial units for numeracy exercises;
-            String correctAnswer = String.format("%d", correctValue);
+            String correctAnswer = String.format(Locale.US,"%d", correctValue);
             //
             List possibleDistractors = new ArrayList();
             possibleDistractors.addAll(allDistractors);

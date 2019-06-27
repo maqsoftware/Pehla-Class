@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -165,7 +166,7 @@ public class OC_TalkingHead extends OC_Generic_WordsEvent
             {
                 OBLabel label = action_setupLabel(word.text);
                 labels.add(label);
-                OBControl marker = objectDict.get(String.format("pos_%d_%d", wordsPerSet, i));
+                OBControl marker = objectDict.get(String.format(Locale.US,"pos_%d_%d", wordsPerSet, i));
                 label.setPosition(new PointF(midWayX, marker.position().y));
             }
         }

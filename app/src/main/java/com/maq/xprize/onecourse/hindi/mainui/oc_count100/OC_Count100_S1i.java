@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 03/08/16.
@@ -59,8 +60,8 @@ public class OC_Count100_S1i extends OC_SectionController
             int lastnum = 10*(i+1);
 
 
-            OBControl box = objectDict.get(String.format("box_%d",lastnum));
-            OBLabel numLabelLarge = new OBLabel(String.format("%d",lastnum),font,fontSize);
+            OBControl box = objectDict.get(String.format(Locale.US,"box_%d",lastnum));
+            OBLabel numLabelLarge = new OBLabel(String.format(Locale.US,"%d",lastnum),font,fontSize);
 
             numLabelLarge.setColour(hilitecolour);
 
@@ -69,7 +70,7 @@ public class OC_Count100_S1i extends OC_SectionController
             largenum.sizeToTightBoundingBox();
 
 
-            OBGroup testGroup = new OBGroup(Collections.singletonList(objectDict.get(String.format("num_%d",lastnum)).copy()));
+            OBGroup testGroup = new OBGroup(Collections.singletonList(objectDict.get(String.format(Locale.US,"num_%d",lastnum)).copy()));
             testGroup.sizeToTightBoundingBox();
 
             largenum.setProperty("dest_scale", testGroup.height()*1.0f/largenum.height());
@@ -168,8 +169,8 @@ public class OC_Count100_S1i extends OC_SectionController
                     List<OBAnim> offAnims = new ArrayList<>();
                     for(int boxNum : getDiagonals(i))
                     {
-                        onAnims.add(OBAnim.colourAnim("backgroundColor", Color.YELLOW,objectDict.get(String.format("box_%d",boxNum))));
-                        offAnims.add(OBAnim.colourAnim("backgroundColor",Color.WHITE,objectDict.get(String.format("box_%d",boxNum))));
+                        onAnims.add(OBAnim.colourAnim("backgroundColor", Color.YELLOW,objectDict.get(String.format(Locale.US,"box_%d",boxNum))));
+                        offAnims.add(OBAnim.colourAnim("backgroundColor",Color.WHITE,objectDict.get(String.format(Locale.US,"box_%d",boxNum))));
                     }
                     OBAnimationGroup.chainAnimations(Arrays.asList(onAnims, offAnims),Arrays.asList(0.12f,0.12f),false,Arrays.asList(OBAnim.ANIM_LINEAR, OBAnim.ANIM_LINEAR),1, this);
                     waitForSecs(0.05f);
@@ -214,10 +215,10 @@ public class OC_Count100_S1i extends OC_SectionController
 
         lockScreen();
         for(int i = (rowNum-1)*10; i<rowNum*10; i++)
-            objectDict.get(String.format("box_%d",i+1)).show();
+            objectDict.get(String.format(Locale.US,"box_%d",i+1)).show();
 
         unlockScreen();
-        playSfxAudio(String.format("note%d",rowNum),true);
+        playSfxAudio(String.format(Locale.US,"note%d",rowNum),true);
 
     }
 
@@ -247,7 +248,7 @@ public class OC_Count100_S1i extends OC_SectionController
         OBGroup largenum = (OBGroup)largenums.get(currentrow-1);
         for(int i = (currentrow-1)*10; i<currentrow*10; i++)
         {
-            OBLabel num = (OBLabel)objectDict.get(String.format("num_%d",i+1));
+            OBLabel num = (OBLabel)objectDict.get(String.format(Locale.US,"num_%d",i+1));
 
 
             if((i+1)%10==0){

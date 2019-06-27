@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OCM_MlUnitInstance;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 
@@ -212,7 +213,7 @@ public class OC_TypewriterManager
                 boolean unicodeChar = displayLetter.startsWith("#");
                 if(unicodeChar)
                 {
-                    int codevalue = (new Integer(displayLetter.substring(1))).intValue();
+                    int codevalue = (Integer.valueOf(displayLetter.substring(1))).intValue();
 
                     displayLetter =  Character.toString((char)codevalue);
                     if(!specialKey)
@@ -234,7 +235,7 @@ public class OC_TypewriterManager
                     arr.add(lowerCaseLabel);
                     if(!specialKey && !unicodeChar)
                     {
-                        upperCaseLabel = labelForKey(key,font,displayLetter.toUpperCase(),false);
+                        upperCaseLabel = labelForKey(key,font,displayLetter.toUpperCase(Locale.US),false);
                         upperCaseLabel.hide();
                         arr.add(upperCaseLabel);
                     }
@@ -248,7 +249,7 @@ public class OC_TypewriterManager
                 if(upperCaseLabel != null)
                 {
                     buttonGroup.objectDict.put("label_upper",upperCaseLabel);
-                    buttonGroup.setProperty("value_upper",value.toUpperCase());
+                    buttonGroup.setProperty("value_upper",value.toUpperCase(Locale.US));
                 }
                 buttonGroup.setProperty("value",value);
                 buttonGroup.enable();

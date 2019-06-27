@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -174,7 +175,7 @@ public class OC_MoreAddSubtract_S6 extends OC_SectionController
         {
             lockScreen();
             objectDict.get("cover").hide();
-            OC_Numberlines_Additions.getLabelForEquation(5,(OBGroup)objectDict.get(String.format("equation_%d",currentPhase <= 2 ? 1 : 2))).show();
+            OC_Numberlines_Additions.getLabelForEquation(5,(OBGroup)objectDict.get(String.format(Locale.US,"equation_%d",currentPhase <= 2 ? 1 : 2))).show();
             unlockScreen();
             gotItRightBigTick(true);
             currentPhase++;
@@ -186,7 +187,7 @@ public class OC_MoreAddSubtract_S6 extends OC_SectionController
                 label.setColour(Color.BLACK);
                 for(int i = 0; i<2; i++)
                 {
-                    OBGroup equ = (OBGroup)objectDict.get(String.format("equation_%d", i+1));
+                    OBGroup equ = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d", i+1));
                     OC_Numberlines_Additions.colourEquation(equ,1,5,Color.RED, this);
                     playAudioScene("FINAL",i,true);
                     waitForSecs(0.3f);
@@ -260,15 +261,15 @@ public class OC_MoreAddSubtract_S6 extends OC_SectionController
 
     public void startScene() throws Exception
     {
-        OBMisc.doSceneAudio(4,currentEvent(),setStatus(STATUS_AWAITING_CLICK),currentPhase==1 ? "":String.format("%d", currentPhase), this);
+        OBMisc.doSceneAudio(4,currentEvent(),setStatus(STATUS_AWAITING_CLICK),currentPhase==1 ? "":String.format(Locale.US,"%d", currentPhase), this);
     }
 
     public void startPhase() throws Exception
     {
-        if(!performSel("demo",String.format("%s%d",currentEvent(), currentPhase)))
+        if(!performSel("demo",String.format(Locale.US,"%s%d",currentEvent(), currentPhase)))
         {
             waitForSecs(0.3f);
-            playAudioQueuedScene(currentPhase == 1 ? "DEMO" : String.format("DEMO%d",currentPhase),0.3f,true);
+            playAudioQueuedScene(currentPhase == 1 ? "DEMO" : String.format(Locale.US,"DEMO%d",currentPhase),0.3f,true);
             waitForSecs(0.3f);
             if(currentPhase == 1 || currentPhase == 3)
                 showPhaseEquation();
@@ -291,7 +292,7 @@ public class OC_MoreAddSubtract_S6 extends OC_SectionController
 
     public void showPhaseEquation() throws Exception
     {
-        String eqname = String.format("equation_%d",currentPhase <= 2 ? 1 : 2);
+        String eqname = String.format(Locale.US,"equation_%d",currentPhase <= 2 ? 1 : 2);
         lockScreen();
         OBGroup equation = (OBGroup)objectDict.get(eqname);
         if(currentPhase == 1 || currentPhase == 3)

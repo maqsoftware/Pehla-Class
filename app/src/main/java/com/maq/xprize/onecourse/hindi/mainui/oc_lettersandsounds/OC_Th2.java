@@ -25,6 +25,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 29/06/16.
@@ -366,7 +367,7 @@ public class OC_Th2 extends OC_Generic_WordsEvent
         //
         for (int i = 1; i <= touchables.size(); i++)
         {
-            OBGroup control = (OBGroup) objectDict.get(String.format("obj_%d", i));
+            OBGroup control = (OBGroup) objectDict.get(String.format(Locale.US,"obj_%d", i));
             action_showState(control, "normal");
             action_showMouthFrame(control, "mouth_0");
             control.setProperty("value", sets.get(currNo).get(i - 1));
@@ -605,7 +606,7 @@ public class OC_Th2 extends OC_Generic_WordsEvent
                     //
                     for (int i = 1; i <= touchables.size(); i++)
                     {
-                        OBGroup head = (OBGroup) objectDict.get(String.format("obj_%d", i));
+                        OBGroup head = (OBGroup) objectDict.get(String.format(Locale.US,"obj_%d", i));
                         String value = (String) head.propertyValue("value");
                         //
                         if (!value.equals(correctAnswer)) continue;
@@ -622,7 +623,7 @@ public class OC_Th2 extends OC_Generic_WordsEvent
         }
         for (int i = 1; i <= touchables.size(); i++)
         {
-            OBGroup head = (OBGroup) objectDict.get(String.format("obj_%d", i));
+            OBGroup head = (OBGroup) objectDict.get(String.format(Locale.US,"obj_%d", i));
             //
             if (statusChanged(timestamp)) break;
             action_playSound(head, timestamp, highlight);

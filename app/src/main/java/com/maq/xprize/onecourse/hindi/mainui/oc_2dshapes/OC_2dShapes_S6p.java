@@ -16,6 +16,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -218,7 +219,7 @@ public class OC_2dShapes_S6p extends OC_SectionController
 
     public void pointerClickOnPot(int potNum) throws Exception
     {
-        OBGroup pot =(OBGroup ) objectDict.get(String.format("pot_%d",potNum));
+        OBGroup pot =(OBGroup ) objectDict.get(String.format(Locale.US,"pot_%d",potNum));
         movePointerToPoint(OB_Maths.locationForRect(0.5f,1.1f,pot.frame()),-10,0.6f,true);
         waitForSecs(0.3f);
         movePointerToPoint(OB_Maths.locationForRect(0.5f,0.5f,pot.frame()),-10,0.25f,true);
