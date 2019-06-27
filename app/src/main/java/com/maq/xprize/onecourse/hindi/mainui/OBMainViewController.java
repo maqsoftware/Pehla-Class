@@ -49,7 +49,7 @@ public class OBMainViewController extends OBViewController {
     private Handler lowlightButtonHandler = new Handler();
 
     private String lastModuleName;
-    private long StartTime;
+    private long startTime;
 
 
     public OBMainViewController(Activity a) {
@@ -270,7 +270,7 @@ public class OBMainViewController extends OBViewController {
 
         if (lastModuleName != null) {
 
-            MainActivity.logEvent(lastModuleName, StartTime, endTime, "Completed");                                   // calling the event log for ending the module.
+            MainActivity.logEvent(lastModuleName, startTime, endTime, "Completed");                                   // calling the event log for ending the module.
         }
         lastModuleName = null;
         return glView().getParent() != null;
@@ -414,17 +414,17 @@ public class OBMainViewController extends OBViewController {
                     endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
 
                     if (lastModuleName != null) {
-                        MainActivity.logEvent(lastModuleName, StartTime, endTime, "Completed");                             // calling the event log for ending the module.
+                        MainActivity.logEvent(lastModuleName, startTime, endTime, "Completed");                             // calling the event log for ending the module.
                     }
 
-                    StartTime = endTime;
+                    startTime = endTime;
                     lastModuleName = moduleName;
                 } else if (isPlayZone) {
                     long endTime;
                     endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
 
                     if (lastModuleName != null) {
-                        MainActivity.logEvent(lastModuleName, StartTime, endTime, "Completed");                             // calling the event log for ending the module.
+                        MainActivity.logEvent(lastModuleName, startTime, endTime, "Completed");                             // calling the event log for ending the module.
                     }
                     lastModuleName = null;
                 }
@@ -568,12 +568,10 @@ public class OBMainViewController extends OBViewController {
     public void onResume() {
         if (viewControllers != null && viewControllers.size() > 0) {
             OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
-            long endTime;
-            endTime = System.currentTimeMillis() / 1000;                                                                 // timeStamps in seconds
 
             if (lastModuleName != null) {
 
-                StartTime = endTime;                                                                                   // setting the time when the app is resumed
+                startTime = System.currentTimeMillis() / 1000;;                                                                                   // setting the time when the app is resumed
             }
             if (controller != null)
                 controller.onResume();
@@ -589,7 +587,7 @@ public class OBMainViewController extends OBViewController {
 
             if (lastModuleName != null) {
 
-                MainActivity.logEvent(lastModuleName, StartTime, endTime, "In Progress");                        // calling the event log for pausing the module.
+                MainActivity.logEvent(lastModuleName, startTime, endTime, "In Progress");                        // calling the event log for pausing the module.
             }
             if (controller != null)
                 controller.onPause();

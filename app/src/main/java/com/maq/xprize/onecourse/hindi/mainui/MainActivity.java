@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
     private int b;
-    private static FirebaseAnalytics FirebaseAnalytics;
+    private static FirebaseAnalytics firebaseAnalytics;
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
         bundle.putString("module_name", finalModuleName);
         bundle.putLong("elapseTime", moduleElapsedTime);
         bundle.putString("status", moduleStatus);
-        FirebaseAnalytics.logEvent("module_play_status", bundle);
+        firebaseAnalytics.logEvent("module_play_status", bundle);
     }
 
 
@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        FirebaseAnalytics = FirebaseAnalytics.getInstance(this);                                                       // creating Firebase instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);                                                       // creating Firebase instance.
 
 
         sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
