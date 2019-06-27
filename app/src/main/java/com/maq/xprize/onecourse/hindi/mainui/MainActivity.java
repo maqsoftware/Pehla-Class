@@ -134,34 +134,6 @@ public class MainActivity extends Activity {
         return fileList.length >= 2;
     }
 
-    public String getDataFilePath() {
-        String internalDataFilePath = null;
-        String externalDataFilePath = null;
-        String dataFilePath = null;
-        File[] fileList = getExternalFilesDirs(null);
-        for (File file : fileList) {
-            if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + getPackageName() + "/files") &&
-                    file.isDirectory() &&
-                    file.canRead() &&
-                    isSDcard() &&
-                    sharedPref.getInt("dataPath", 0) == 2) {
-//              For external storage path
-                externalDataFilePath = file.getAbsolutePath() + File.separator;
-            } else if (sharedPref.getInt("dataPath", 0) == 1 && internalDataFilePath == null) {
-//              For internal storage path
-                internalDataFilePath = file.getAbsolutePath() + File.separator;
-            }
-        }
-        if (externalDataFilePath == null) {
-            dataFilePath = internalDataFilePath;
-        } else if (sharedPref.getInt("dataPath", 0) == 2) {
-            dataFilePath = externalDataFilePath;
-        }
-
-        return dataFilePath;
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
