@@ -2,7 +2,6 @@ package com.maq.xprize.onecourse.hindi.controls;
 
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.telecom.Call;
 
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 import com.maq.xprize.onecourse.hindi.mainui.OBSectionController;
@@ -327,6 +326,22 @@ public class OBPresenter extends OBCharacter
         control.objectDict.get("faceright").hide();
         control.objectDict.get("body").show();
         control.objectDict.get("head").show();
+        control.unlockScreen();
+    }
+
+    public void onlyHeadRight()
+    {
+        control.lockScreen();
+        control.objectDict.get("faceright").show();
+        control.objectDict.get("head").hide();
+        control.objectDict.get("body").hide();
+        OBControl c = control.objectDict.get("faceright");
+        if (c.scaleX < 0)
+        {
+            c.reflectInAncestor(control);
+            control.objectDict.get("hairlock").setZPosition(1);
+        }
+        control.invalidate();
         control.unlockScreen();
     }
 
