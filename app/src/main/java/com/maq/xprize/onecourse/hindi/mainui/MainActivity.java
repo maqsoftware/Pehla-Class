@@ -19,19 +19,17 @@ import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-
 import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
@@ -46,7 +44,6 @@ import com.maq.xprize.onecourse.hindi.utils.OBPreferenceManager;
 import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
 import com.maq.xprize.onecourse.hindi.utils.OBUser;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
-import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -57,8 +54,8 @@ import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static android.R.attr.targetSdkVersion;
 import static com.maq.xprize.onecourse.hindi.mainui.DownloadExpansionFile.xAPKS;
+import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.relativePointInRectForLocation;
 
 /**
  * MainActivity
@@ -71,7 +68,6 @@ import static com.maq.xprize.onecourse.hindi.mainui.DownloadExpansionFile.xAPKS;
 
 public class MainActivity extends Activity {
     public static final int REQUEST_EXTERNAL_STORAGE = 1,
-            REQUEST_MICROPHONE = 2,
             REQUEST_ALL = 4,
             REQUEST_FIRST_SETUP_DATE_TIME = 5,
             REQUEST_FIRST_SETUP_PERMISSIONS = 6,
@@ -87,12 +83,7 @@ public class MainActivity extends Activity {
     public static MainActivity mainActivity;
     public static SharedPreferences sharedPref;
     public static OBMainViewController mainViewController;
-    public static Typeface standardTypeFace, writingTypeFace;
-
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
+    public static Typeface standardTypeFace;
 
     private static String[] PERMISSION_ALL = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -102,7 +93,7 @@ public class MainActivity extends Activity {
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE
     };
-
+    private static FirebaseAnalytics firebaseAnalytics;
     public List<OBUser> users;
     public OBFatController fatController;
     public OBGLView glSurfaceView;
@@ -110,33 +101,28 @@ public class MainActivity extends Activity {
     public ReentrantLock suspendLock = new ReentrantLock();
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
-    private int b;
-    private static FirebaseAnalytics firebaseAnalytics;
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
         OBControl anchor = arm.objectDict.get("anchor");
         if (anchor != null) {
             PointF pt = arm.convertPointFromControl(anchor.position(), anchor.parent);
-            PointF rpt = OB_Maths.relativePointInRectForLocation(pt, arm.bounds());
-            arm.anchorPoint = rpt;
+            arm.anchorPoint = relativePointInRectForLocation(pt, arm.bounds());
         } else
             arm.anchorPoint = new PointF(0.64f, 0);
         //
         int skincol = OBConfigManager.sharedManager.getSkinColour(0);
         arm.substituteFillForAllMembers("skin.*", skincol);
         arm.setRasterScale(OBConfigManager.sharedManager.getGraphicScale());
-        //arm.borderColour = 0xff000000;
-        //arm.borderWidth = 1;
         return arm;
     }
 
-    public static void logEvent(String moduleName,long moduleStartTime, long moduleEndTime,String moduleStatus){                         // method to log the events in Firebase Analytics
+    public static void logEvent(String moduleName, long moduleStartTime, long moduleEndTime, String moduleStatus) {                         // method to log the events in Firebase Analytics
 
         long moduleElapsedTime;
         int moduleIndex = moduleName.lastIndexOf("/");
 
-        String finalModuleName = moduleName.substring(moduleIndex+1);
+        String finalModuleName = moduleName.substring(moduleIndex + 1);
         moduleElapsedTime = moduleEndTime - moduleStartTime;
         Bundle bundle = new Bundle();
         bundle.putString("module_name", finalModuleName);
@@ -145,11 +131,22 @@ public class MainActivity extends Activity {
         firebaseAnalytics.logEvent("module_play_status", bundle);
     }
 
+    public static void log(String message) {
+        if (message == null) return;
+        Log.v(TAG, message);
+    }
 
-    //  Method to check if SD card is mounted
-    public boolean isSDcard() {
-        File[] fileList = getObbDirs();
-        return fileList.length >= 2;
+    public static void log(String format, Object... args) {
+        try {
+            log(String.format(format, args));
+        } catch (Exception e) {
+            MainActivity.log("Exception caught in log with format: %s", format);
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean isSDKCompatible() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
     @Override
@@ -161,11 +158,14 @@ public class MainActivity extends Activity {
         sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 
+        SplashScreenActivity splashScreenActivity = new SplashScreenActivity();
+
         // Retrieve the stored values of main and patch file version
         int storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
         int storedPatchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), defaultFileVersion);
         boolean isExtractionRequired = false;
         needExtraction();
+        splashScreenActivity.getDataFilePath(this);
         if ((sharedPref.getInt("dataPath", 0) == 0)) {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("mainFileVersion", defaultFileVersion);
@@ -187,18 +187,14 @@ public class MainActivity extends Activity {
         }
 
         MainActivity.log("MainActivity.onCreate");
-        //
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         systemsManager = new OBSystemsManager(this);
-        //
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
                 MainActivity.log("Details of unhandled exception:");
-                //
                 paramThrowable.printStackTrace();
-                //
                 if (OBConfigManager.sharedManager.shouldAppRestartAfterCrash()) {
                     MainActivity.log("Caught unhandled exception. Restarting App");
                     // TODO: restart?
@@ -209,49 +205,24 @@ public class MainActivity extends Activity {
                 System.exit(0);
             }
         });
-        //
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        //
         // Hide Status Bar
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //
         mainActivity = this;
-        //
         configManager = new OBConfigManager(this.getApplicationContext());
-        //
         analyticsManager = new OBAnalyticsManager(this);
-        //
-        // this flag disables screenshots
-        // Commented code to enable capturing of screenshots
-        /*if (!OBConfigManager.sharedManager.isDebugEnabled()) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }*/
-        //
-        /*if (OBConfigManager.sharedManager.shouldPinApplication()) {
-            OBSystemsManager.disableStatusBar();
-        }*/
-        //
         OBSystemsManager.printBuildVersion();
-        //
         doGLStuff();
-        //
         setupWindowVisibilityFlags();
-        //
-        users = new ArrayList<OBUser>();
+        users = new ArrayList<>();
         setContentView(R.layout.activity_main);
-        //ViewGroup rootView = (ViewGroup) findViewById(android.R.id.content);
-        //rootView.addView(glSurfaceView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        //        setContentView(glSurfaceView);
         try {
             new OBAudioManager();
-            //
             setUpConfig();
             checkForFirstSetupAndRun();
-            //
             ((ThreadPoolExecutor) AsyncTask.THREAD_POOL_EXECUTOR).setCorePoolSize(20);
             log("onCreate ended");
         } catch (Exception e) {
@@ -316,7 +287,6 @@ public class MainActivity extends Activity {
         }
     }
 
-
     public void setupWindowVisibilityFlags() {
         final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -324,7 +294,6 @@ public class MainActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        //
         final View decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
 
@@ -335,14 +304,8 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        //
         decorView.setSystemUiVisibility(flags);
-        //
-        // disable the lock screen when the app is running
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     }
-
 
     public void checkForFirstSetupAndRun() {
         OBUtils.runOnMainThread(new OBUtils.RunLambda() {
@@ -413,7 +376,6 @@ public class MainActivity extends Activity {
         });
     }
 
-
     public void runChecksAndLoadMainViewController() {
         MainActivity.log("MainActivity.startup block. memory dump");
         OBSystemsManager.sharedManager.printMemoryStatus("Before mainViewController");
@@ -422,26 +384,14 @@ public class MainActivity extends Activity {
         mainViewController = new OBMainViewController(MainActivity.mainActivity);
     }
 
-
     // This bypasses the power button (long press), preventing shutdown
     public void onWindowFocusChanged(boolean hasFocus) {
-//        if (!hasFocus)
-//        {
-//            // Close every kind of system dialog
-//            Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-//            sendBroadcast(closeDialog);
-//        }
-//        else
-//        {
         super.onWindowFocusChanged(hasFocus);
-//        }
     }
-
 
     public void onBackPressed() {
         // do nothing
     }
-
 
     public void doGLStuff() {
         glSurfaceView = new OBGLView(this);
@@ -452,10 +402,7 @@ public class MainActivity extends Activity {
 
         final ConfigurationInfo configurationInfo =
                 activityManager.getDeviceConfigurationInfo();
-        /*
 
-        final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
-         */
         // Even though the latest emulator supports OpenGL ES 2.0,
         // it has a bug where it doesn't set the reqGlEsVersion so
         // the above check doesn't work. The below will detect if the
@@ -517,7 +464,6 @@ public class MainActivity extends Activity {
         OBSystemsManager.sharedManager.onPause();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -541,8 +487,7 @@ public class MainActivity extends Activity {
         //
         try {
             suspendLock.unlock();
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
 
     }
@@ -557,10 +502,9 @@ public class MainActivity extends Activity {
         OBSystemsManager.sharedManager.runChecks();
     }
 
-
     @Override
     protected void onStop() {
-        systemsManager.sharedManager.onStop();
+        OBSystemsManager.sharedManager.onStop();
         analyticsManager.onStop();
         super.onStop();
     }
@@ -575,19 +519,7 @@ public class MainActivity extends Activity {
             mainViewController.onBatteryStatusReceived(level, charging);
     }
 
-
-    public boolean isStoragePermissionGranted() {
-        Boolean writePermission = selfPermissionGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        Boolean readPermission = selfPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        //
-        Boolean result = writePermission && readPermission;
-        if (!result)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
-        //
-        return result;
-    }
-
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             log("received permission to access external storage. attempting to download again");
             runChecksAndLoadMainViewController();
@@ -601,7 +533,7 @@ public class MainActivity extends Activity {
     }
 
     public boolean isAllPermissionGranted(boolean requestIfNotGranted) {
-        Boolean allPermissionsOK = true;
+        boolean allPermissionsOK = true;
         for (String permission : PERMISSION_ALL) {
             boolean permissionGranted = selfPermissionGranted(permission) == PackageManager.PERMISSION_GRANTED;
             MainActivity.log("MainActivity.Permission " + (permissionGranted ? "" : "NOT ") + "granted: " + permission);
@@ -613,41 +545,6 @@ public class MainActivity extends Activity {
         return allPermissionsOK;
     }
 
-
-    public void addToPreferences(String key, String value) {
-        SharedPreferences sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString(key, value);
-        edit.apply();
-        //
-        log("Preferences SET [" + key + "] --> " + value);
-    }
-
-
-    public String getPreferences(String key) {
-        SharedPreferences sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        String result = sharedPreferences.getString(key, null);
-        //
-        log("Preferences GET [" + key + "] --> " + result);
-        //
-        return result;
-    }
-
-    public static void log(String message) {
-        if (message == null) return;
-        Log.v(TAG, message);
-    }
-
-    public static void log(String format, Object... args) {
-        try {
-            log(String.format(format, args));
-        } catch (Exception e) {
-            MainActivity.log("Exception caught in log with format: %s", format);
-            e.printStackTrace();
-        }
-    }
-
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             if (!OBSystemsManager.sharedManager.settingsContentObserver.allowsLowerVolume())
@@ -655,7 +552,6 @@ public class MainActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
     public int selfPermissionGranted(String permission) {
         // For Android < Android M, self permissions are always granted.
@@ -665,11 +561,6 @@ public class MainActivity extends Activity {
             return ActivityCompat.checkSelfPermission(MainActivity.mainActivity.getApplicationContext(), permission);
         }
         return result;
-    }
-
-
-    public static boolean isSDKCompatible() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && targetSdkVersion >= Build.VERSION_CODES.M;
     }
 
     public void restartApplication() {
@@ -688,4 +579,3 @@ public class MainActivity extends Activity {
     }
 
 }
-

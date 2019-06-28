@@ -26,9 +26,9 @@ public class ExpansionDownloaderService extends DownloaderService {
     // stuff for LVL -- MODIFY FOR YOUR APPLICATION!
     private static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsfpinGZXhG9UGAUfun/Uk173248Hesc6OSPQ1N5LPwDJqhtt3biBPHM/OeFUB+lVOShs7YlAHr0owJ6nwgdIaG8subt7SYn4qyD74icVVZwK2hqQEf0iiJddXmi/QujwN2xbs0KmhKDKg5SYNcJ0hvKmUMHyVIP3KFH8vwSd8ER8qKvmrS9dNfTYEpHlxV44NYWJ73w3ci+swPJKF3zUmd/cLoOL6P4in5xcTaPINkGQqoEnzqRCwKDTTUL5DLtC6Au4de/7sveFymTUHcfdFBalHr/6GbqzB1grmrOw/XQveDmVAMf0z411bTxJ284f7qxBcVy2EhdyJWU4Jwf66QIDAQAB";
     // used by the preference obfuscater
-    private static final byte[] SALT = new byte[] {
-            1, 43, -12, -1, 54, 98,
-            -100, -12, 43, 2, -8, -4, 9, 5, -106, -108, -33, 45, -1, 84
+    private static final byte[] SALT = new byte[]{
+            76, -119, -11, -102, 17, -81,
+            -124, 28, -82, 13, -52, -19, 15, -112, -107, 43, 54, -33, -108, 70
     };
 
     /**

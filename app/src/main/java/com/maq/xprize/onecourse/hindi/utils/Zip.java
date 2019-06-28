@@ -21,10 +21,11 @@ import static android.content.ContentValues.TAG;
 
 public class Zip {
 
+    private static int count = 0;
     private ZipFile _zipFile;
     private TextView percentText;
     private Activity zipActivity;
-    private static int count = 0;
+    private boolean isExpansionSuccessful = false;
 
     public Zip(ZipFile zipFile, Activity _activity) {
         this._zipFile = zipFile;
@@ -100,19 +101,19 @@ public class Zip {
                     while ((currByte = inputStream.read()) != -1) {
                         outputStream.write(currByte);
                     }
-                    if (isMain) {
-                        editor.putInt("mainFileVersion", expansionFileVersion);
-                    } else {
-                        editor.putInt("patchFileVersion", expansionFileVersion);
-                    }
-                    editor.commit();
+                    isExpansionSuccessful = true;
                 } catch (Exception e) {
                     e.printStackTrace();
+                    isExpansionSuccessful = false;
                 } finally {
                     outputStream.close();
                     inputStream.close();
                 }
             }
+        }
+        if (isExpansionSuccessful) {
+            editor.putInt(isMain? "mainFileVersion" : "patchFileVersion", expansionFileVersion);
+            editor.commit();
         }
     }
 }

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -33,6 +35,7 @@ import static com.maq.xprize.onecourse.hindi.mainui.MainActivity.sharedPref;
 
 public class SplashScreenActivity extends Activity {
 
+    public static String assetsPath;
     Intent mainActivityIntent = null;
     String unzipDataFilePath;
     File expansionFile;
@@ -45,7 +48,6 @@ public class SplashScreenActivity extends Activity {
     boolean flagSwitchToInternal = false;
     boolean isExtractionRequired = false;
 
-    public static String assetsPath;
     public Dialog sdCardPreferenceDialog() {
         final SharedPreferences.Editor editor = sharedPref.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -93,7 +95,7 @@ public class SplashScreenActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         // If request is cancelled, the result arrays are empty.
         if (requestCode == 1) {
             if (grantResults.length > 0
@@ -106,7 +108,6 @@ public class SplashScreenActivity extends Activity {
                 isExtractionRequired = isExpansionExtractionRequired(storedMainFileVersion, storedPatchFileVersion);
                 // If main or patch file is updated, the extraction process needs to be performed again
                 if (isExtractionRequired) {
-                    System.out.println("Splash onRequestPermissionsResult: isExtractionRequired = " + isExtractionRequired);
                     new DownloadFile().execute(null, null, null);
                 }
             } else {
@@ -141,27 +142,27 @@ public class SplashScreenActivity extends Activity {
         }
     }
 
-    public String getDataFilePath() {
+    public String getDataFilePath(Context activityContext) {
         String internalDataFilePath = null;
         String externalDataFilePath = null;
         String dataFilePath = null;
-        File[] fileList = getExternalFilesDirs(null);
+        File[] fileList = activityContext.getExternalFilesDirs(null);
         for (File file : fileList) {
-            if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + getPackageName() + "/files") &&
+            if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + activityContext.getPackageName() + "/files") &&
                     file.isDirectory() &&
                     file.canRead() &&
                     isSDcard() &&
                     sharedPref.getInt(getString(R.string.dataPath), 0) == 2) {
 //              For external storage path
                 externalDataFilePath = file.getAbsolutePath() + File.separator;
-            } else if ((sharedPref.getInt(getString(R.string.dataPath), 0) == 1 || !flagSwitchToInternal) && internalDataFilePath == null) {
+            } else if ((sharedPref.getInt(activityContext.getString(R.string.dataPath), 0) == 1 || !flagSwitchToInternal) && internalDataFilePath == null) {
 //              For internal storage path
                 internalDataFilePath = file.getAbsolutePath() + File.separator;
             }
         }
         if (externalDataFilePath == null) {
             dataFilePath = internalDataFilePath;
-        } else if (sharedPref.getInt(getString(R.string.dataPath), 0) == 2) {
+        } else if (sharedPref.getInt(activityContext.getString(R.string.dataPath), 0) == 2) {
             dataFilePath = externalDataFilePath;
         }
         assetsPath = dataFilePath;
@@ -218,7 +219,7 @@ public class SplashScreenActivity extends Activity {
                     expansionFile = getOBBFilePath(xf);
                     expansionZipFile = new ZipFile(expansionFile);
                     zipHandler = new Zip(expansionZipFile, this);
-                    unzipDataFilePath = getDataFilePath();
+                    unzipDataFilePath = getDataFilePath(this);
                     packageNameDir = new File(unzipDataFilePath);
                     if (xf.mIsMain && !packageNameDir.exists()) {
                         packageNameDir.mkdir();
@@ -271,15 +272,18 @@ public class SplashScreenActivity extends Activity {
             if (isStorageSpaceAvailable()) {
                 unzipFile();
             } else {
-                Toast.makeText(SplashScreenActivity.this, "Insufficient storage space! Please free up your storage to use this application.", Toast.LENGTH_LONG).show();
-
-                // Call finish after the toast message disappears
-                new Handler().postDelayed(new Runnable() {
-                    @Override
+                SplashScreenActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        SplashScreenActivity.this.finish();
+                        Toast.makeText(SplashScreenActivity.this, "Insufficient storage space! Please free up your storage to use this application.", Toast.LENGTH_LONG).show();
+                        // Call finish after the toast message disappears
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                SplashScreenActivity.this.finish();
+                            }
+                        }, Toast.LENGTH_LONG);
                     }
-                }, Toast.LENGTH_LONG);
+                });
             }
             return null;
         }
