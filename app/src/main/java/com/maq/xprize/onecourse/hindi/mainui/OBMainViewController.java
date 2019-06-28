@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBLabel;
 import com.maq.xprize.onecourse.hindi.controls.OBTextLayer;
@@ -270,7 +271,7 @@ public class OBMainViewController extends OBViewController {
 
         if (lastModuleName != null) {
 
-            MainActivity.logEvent(lastModuleName, startTime, endTime, "Completed");                                   // calling the event log for ending the module.
+            MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.completed));                                   // calling the event log for ending the module.
         }
         lastModuleName = null;
         return glView().getParent() != null;
@@ -414,7 +415,7 @@ public class OBMainViewController extends OBViewController {
                     endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
 
                     if (lastModuleName != null) {
-                        MainActivity.logEvent(lastModuleName, startTime, endTime, "Completed");                             // calling the event log for ending the module.
+                        MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.completed));                             // calling the event log for ending the module.
                     }
 
                     startTime = endTime;
@@ -424,7 +425,7 @@ public class OBMainViewController extends OBViewController {
                     endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
 
                     if (lastModuleName != null) {
-                        MainActivity.logEvent(lastModuleName, startTime, endTime, "Completed");                             // calling the event log for ending the module.
+                        MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.completed));                             // calling the event log for ending the module.
                     }
                     lastModuleName = null;
                 }
@@ -587,7 +588,7 @@ public class OBMainViewController extends OBViewController {
 
             if (lastModuleName != null) {
 
-                MainActivity.logEvent(lastModuleName, startTime, endTime, "In Progress");                        // calling the event log for pausing the module.
+                MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.inProgress));                        // calling the event log for pausing the module.
             }
             if (controller != null)
                 controller.onPause();
