@@ -151,26 +151,26 @@ public class OBAudioManager
         AssetFileDescriptor fd = pathCacheDict.get(fileName);
         if (fd == null)
         {
-            String audio_suffix = OBConfigManager.sharedManager.getAudioExtensions().get(0);
-            String txt_suffix = OBConfigManager.sharedManager.getTextExtensions().get(0);
+            String audioSuffix = OBConfigManager.sharedManager.getAudioExtensions().get(0);
+            String txtSuffix = OBConfigManager.sharedManager.getTextExtensions().get(0);
             for (String path: OBConfigManager.sharedManager.getAudioSearchPaths()) {
                 String fullPath;
                 // this checks whether the audio to be played is on sfx or on main channel
                 if (path.split("/", 0)[1].equals("sfx")) {
-                    fullPath = path + "/" + fileName + "." + audio_suffix;
+                    fullPath = path + "/" + fileName + "." + audioSuffix;
                     fd = OBUtils.getAssetFileDescriptorForPath(fullPath);
                     isAudioFile = true;
                 }
                 else {
                     // The conditions check whether the file is a text file or an audio file
                     // (for ETPA audios)
-                    fullPath = path + "/" + fileName + "." + txt_suffix;
+                    fullPath = path + "/" + fileName + "." + txtSuffix;
                     fd = OBUtils.getAssetFileDescriptorForPath(fullPath);
                     if (fd != null) {
                         isAudioFile = false;
                         break;
                     }
-                    fullPath = path + "/" + fileName + "." + audio_suffix;
+                    fullPath = path + "/" + fileName + "." + audioSuffix;
                     fd = OBUtils.getAssetFileDescriptorForPath(fullPath);
                     isAudioFile = true;
                 }

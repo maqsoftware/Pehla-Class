@@ -181,7 +181,7 @@ public class OBConfigManager
         OBXMLManager xmlManager = new OBXMLManager();
         //
         internalConfig = (Map<String, Object>) xmlManager.parsePlist(fileInputStream);
-        setValue("extensions_text", "txt");
+        setValue(EXTENSIONS_TEXT, "txt");
         loadSFXVolumesPLIST();
         //
         // Convert string colours into integer colours
