@@ -20,6 +20,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.rndom;
@@ -361,7 +362,7 @@ public class OC_EgmaSubTest1 extends OC_SectionController
 
     public OBLabel mainLabelForNumber(int n,PointF pt)
     {
-        String s = String.format("%d",n);
+        String s = String.format(Locale.US,"%d",n);
         OBLabel l = new OBLabel(s,font);
         l.setZPosition(10);
         l.setPosition(pt);
@@ -606,7 +607,7 @@ public class OC_EgmaSubTest1 extends OC_SectionController
 
     public void playNumber(int n) throws OBUserPressedBackException
     {
-        String fn = String.format("nums/n_%d",n);
+        String fn = String.format(Locale.US,"nums/n_%d",n);
         playAudioQueued(Arrays.asList((Object)fn),true);
     }
 
@@ -661,7 +662,7 @@ public class OC_EgmaSubTest1 extends OC_SectionController
 
     public OBLabel smallLabelForNumber(int n,OBControl bg,OBFont fnt)
     {
-        String s = String.format("%d",n);
+        String s = String.format(Locale.US,"%d",n);
         OBLabel l = new OBLabel(s,fnt);
         l.setZPosition(bg.zPosition() +1);
         l.setPosition(bg.position() );
@@ -695,11 +696,11 @@ public class OC_EgmaSubTest1 extends OC_SectionController
         int greycol = swatch.fillColor();
         for(int i = 1;i <= 10;i++)
         {
-            OBControl sq = machine.objectDict.get(String.format("squ_%d",i));
+            OBControl sq = machine.objectDict.get(String.format(Locale.US,"squ_%d",i));
             smallLabelForNumber(i,sq,fnt);
             sq.setProperty("origcol",sq.fillColor());
             sq.setFillColor(greycol);
-            OBControl star = machine.objectDict.get(String.format("star_%d",i));
+            OBControl star = machine.objectDict.get(String.format(Locale.US,"star_%d",i));
             star.setProperty("origcol",star.fillColor());
             star.setFillColor(greycol);
         }
@@ -746,7 +747,7 @@ public class OC_EgmaSubTest1 extends OC_SectionController
     static String CatNameForIdx(String c,int idx)
     {
         if(idx > 1)
-            return String.format("%s%d",c,idx);
+            return String.format(Locale.US,"%s%d",c,idx);
         return c;
     }
 
@@ -757,8 +758,8 @@ public class OC_EgmaSubTest1 extends OC_SectionController
         OBGroup machine = (OBGroup)objectDict.get("machine");
         for(int i = 1;i <= score;i++)
         {
-            OBControl sq = machine.objectDict.get(String.format("squ_%d",i));
-            OBControl star = machine.objectDict.get(String.format("star_%d",i));
+            OBControl sq = machine.objectDict.get(String.format(Locale.US,"squ_%d",i));
+            OBControl star = machine.objectDict.get(String.format(Locale.US,"star_%d",i));
             playSfxAudio("ding",false);
             lockScreen();
             sq.setFillColor((Integer)sq.propertyValue("origcol"));
@@ -773,7 +774,7 @@ public class OC_EgmaSubTest1 extends OC_SectionController
         {
             OBControl swatch = objectDict.get("swatch");
             int greycol = swatch.fillColor();
-            OBControl sq = machine.objectDict.get(String.format("squ_%d",score));
+            OBControl sq = machine.objectDict.get(String.format(Locale.US,"squ_%d",score));
             int col = (Integer)sq.propertyValue("origcol");
             for(int i = 0;i < 5;i++)
             {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OB_Maths.randomInt;
 
@@ -107,7 +108,7 @@ public class OC_Th7 extends OC_TalkingHead
             OBPhoneme word = (OBPhoneme) set.get(i - 1);
             OBLabel label = action_setupLabel(word.text);
             labels.add(label);
-            OBControl marker = objectDict.get(String.format("pos_%d_%d", wordsPerSet, i));
+            OBControl marker = objectDict.get(String.format(Locale.US,"pos_%d_%d", wordsPerSet, i));
             label.setPosition(new PointF(midWayX, marker.position().y));
         }
     }

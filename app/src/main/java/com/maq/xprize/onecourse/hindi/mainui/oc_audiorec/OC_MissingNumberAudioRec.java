@@ -15,6 +15,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -55,7 +56,7 @@ public class OC_MissingNumberAudioRec extends OC_AudioRecSection
         for(int i=0; i<nums.size(); i++)
         {
             int num = nums.get(i).intValue();
-            OBLabel label = new OBLabel(String.format("%d",num) ,font);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",num) ,font);
             OBControl box = screenBoxes.get(i);
             label.setZPosition(10);
             label.setPosition(box.position());
@@ -70,7 +71,7 @@ public class OC_MissingNumberAudioRec extends OC_AudioRecSection
                 label.hide();
             attachControl(label);
             numLabels.add(label);
-            label.setProperty("audio",String.format("n_%d",num));
+            label.setProperty("audio",String.format(Locale.US,"n_%d",num));
             label.setProperty("num_val",num);
             box.setProperty("label",label);
             label.setProperty("box",box);
@@ -228,7 +229,7 @@ public class OC_MissingNumberAudioRec extends OC_AudioRecSection
             dict.put("index",indexList.get(index));
             index++;
             eventsData.add(dict);
-            String eventName = String.format("%d",i+1);
+            String eventName = String.format(Locale.US,"%d",i+1);
             if(audioScenes.get(eventName) == null)
                 eventName = "default";
             eventsList.add(eventName);

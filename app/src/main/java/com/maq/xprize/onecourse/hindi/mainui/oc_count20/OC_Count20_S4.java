@@ -21,6 +21,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -43,11 +44,11 @@ public class OC_Count20_S4 extends OC_SectionController
         for (int i = 0;i < 10;i++)
         {
             int j = i + 11;
-            OBGroup circle = (OBGroup)objectDict.get(String.format("obj%d",i+1));
+            OBGroup circle = (OBGroup)objectDict.get(String.format(Locale.US,"obj%d",i+1));
             OBPath cp = (OBPath)circle.objectDict.get("col");
             int col = cp.fillColor();
             circle.setProperty("origcolour", col);
-            OBLabel txt = new OBLabel(String.format("%d",j),tf,textSize);
+            OBLabel txt = new OBLabel(String.format(Locale.US,"%d",j),tf,textSize);
             txt.setColour(Color.BLACK);
             txt.setPosition(circle.position());
             numbers.add(txt);
@@ -110,7 +111,7 @@ public class OC_Count20_S4 extends OC_SectionController
         if (currentSceneIsPriorToScene("4l"))
         {
             currNo++;
-            OBControl obj = objectDict.get(String.format("obj%d",currNo+1));
+            OBControl obj = objectDict.get(String.format(Locale.US,"obj%d",currNo+1));
             RectF f = obj.frame;
             PointF currPos = obj.position();
             PointF origPos = (PointF)obj.propertyValue("origpos");
@@ -199,7 +200,7 @@ public class OC_Count20_S4 extends OC_SectionController
         waitForSecs(0.4);
         for (int i = 0;i < 10;i++)
         {
-            OBControl obj = objectDict.get(String.format("obj%d",i+1));
+            OBControl obj = objectDict.get(String.format(Locale.US,"obj%d",i+1));
             obj.show();
             playAudioQueuedSceneIndex(currentEvent(), "DEMO2", i, true);
         }
@@ -255,7 +256,7 @@ public class OC_Count20_S4 extends OC_SectionController
 
     public void highlightCircle(int i,boolean high)
     {
-        final OBGroup obj = (OBGroup)objectDict.get(String.format("obj%d",i));
+        final OBGroup obj = (OBGroup)objectDict.get(String.format(Locale.US,"obj%d",i));
         obj.unCache();
         int c;
         if (high)
@@ -269,7 +270,7 @@ public class OC_Count20_S4 extends OC_SectionController
 
     public void highlightText(int i,boolean high)
     {
-        final OBGroup obj = (OBGroup)objectDict.get(String.format("obj%d",i));
+        final OBGroup obj = (OBGroup)objectDict.get(String.format(Locale.US,"obj%d",i));
         obj.unCache();
         OBLabel txt = (OBLabel)obj.objectDict.get("txt");
         int c;

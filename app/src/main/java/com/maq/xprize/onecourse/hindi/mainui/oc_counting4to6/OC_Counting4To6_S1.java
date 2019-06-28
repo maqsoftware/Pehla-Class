@@ -8,6 +8,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 11/07/16.
@@ -47,7 +48,7 @@ public class OC_Counting4To6_S1 extends OC_Generic_SelectCorrectObject
         int i;
         for (i = 1; i <= correctAnswer; i++)
         {
-            OBControl control = objectDict.get(String.format("obj_%d_%d", correctAnswer, i));
+            OBControl control = objectDict.get(String.format(Locale.US,"obj_%d_%d", correctAnswer, i));
             control.highlight();
             playSceneAudioIndex("CORRECT", i-1, true);
             waitForSecs(0.3);
@@ -77,7 +78,7 @@ public class OC_Counting4To6_S1 extends OC_Generic_SelectCorrectObject
         for (int i = 1; i <= 4; i++)
         {
             action_playNextDemoSentence(true); // One. Two. Three. Four.
-            OBControl control = objectDict.get(String.format("obj_4_%d", i+1));
+            OBControl control = objectDict.get(String.format(Locale.US,"obj_4_%d", i+1));
             if (control != null)
             {
                 OC_Generic.pointer_moveToObject(control, -25 + i * 2, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
@@ -94,7 +95,7 @@ public class OC_Counting4To6_S1 extends OC_Generic_SelectCorrectObject
         for (int i = 1; i <= 5; i++)
         {
             action_playNextDemoSentence(true); // One. Two. Three. Four. Five.
-            OBControl control = objectDict.get(String.format("obj_5_%d", i+1));
+            OBControl control = objectDict.get(String.format(Locale.US,"obj_5_%d", i+1));
             if (control != null)
             {
                 OC_Generic.pointer_moveToObject(control, -25 + i * 2, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
@@ -111,7 +112,7 @@ public class OC_Counting4To6_S1 extends OC_Generic_SelectCorrectObject
         for (int i = 1; i <= 6; i++)
         {
             action_playNextDemoSentence(true); // One. Two. Three. Four. Five. Six.
-            OBControl control = objectDict.get(String.format("obj_6_%d", i+1));
+            OBControl control = objectDict.get(String.format(Locale.US,"obj_6_%d", i+1));
             if (control != null)
             {
                 OC_Generic.pointer_moveToObject(control, -25 + i * 2, 0.3f, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);
@@ -139,7 +140,7 @@ public class OC_Counting4To6_S1 extends OC_Generic_SelectCorrectObject
         lockScreen();
         String[] components = ((String) control.attributes().get("id")).split("_");
         int objectNumber = Integer.parseInt(components[components.length - 1]);
-        List<OBControl> controls = filterControls(String.format("obj_%d.*", objectNumber));
+        List<OBControl> controls = filterControls(String.format(Locale.US,"obj_%d.*", objectNumber));
         for (OBControl c : controls)
         {
             c.highlight();
@@ -154,7 +155,7 @@ public class OC_Counting4To6_S1 extends OC_Generic_SelectCorrectObject
         lockScreen();
         String[] components = ((String) control.attributes().get("id")).split("_");
         int objectNumber = Integer.parseInt(components[components.length - 1]);
-        List<OBControl> controls = filterControls(String.format("obj_%d.*", objectNumber));
+        List<OBControl> controls = filterControls(String.format(Locale.US,"obj_%d.*", objectNumber));
         for (OBControl c : controls)
         {
             c.lowlight();

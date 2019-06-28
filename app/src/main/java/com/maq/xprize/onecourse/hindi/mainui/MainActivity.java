@@ -39,7 +39,6 @@ import com.maq.xprize.onecourse.hindi.utils.OBAudioManager;
 import com.maq.xprize.onecourse.hindi.utils.OBConfigManager;
 import com.maq.xprize.onecourse.hindi.utils.OBFatController;
 import com.maq.xprize.onecourse.hindi.utils.OBImageManager;
-import com.maq.xprize.onecourse.hindi.utils.OBLocationManager;
 import com.maq.xprize.onecourse.hindi.utils.OBPreferenceManager;
 import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
 import com.maq.xprize.onecourse.hindi.utils.OBUser;
@@ -69,7 +68,6 @@ import static com.maq.xprize.onecourse.hindi.mainui.DownloadExpansionFile.xAPKS;
 public class MainActivity extends Activity {
     public static final int REQUEST_EXTERNAL_STORAGE = 1,
             REQUEST_MICROPHONE = 2,
-            REQUEST_CAMERA = 3,
             REQUEST_ALL = 4,
             REQUEST_FIRST_SETUP_DATE_TIME = 5,
             REQUEST_FIRST_SETUP_PERMISSIONS = 6,
@@ -82,7 +80,6 @@ public class MainActivity extends Activity {
     public static OBConfigManager configManager;
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
-    public static OBLocationManager locationManager;
     public static MainActivity mainActivity;
     public static OBMainViewController mainViewController;
     public static Typeface standardTypeFace, writingTypeFace;
@@ -91,20 +88,12 @@ public class MainActivity extends Activity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-    private static String[] PERMISSIONS_MICROPHONE = {
-            Manifest.permission.RECORD_AUDIO
-    };
-    private static String[] PERMISSIONS_CAMERA = {
-            Manifest.permission.CAMERA
-    };
 
     private static String[] PERMISSION_ALL = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.CAMERA,
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_NETWORK_STATE
     };
@@ -186,21 +175,16 @@ public class MainActivity extends Activity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         //
         // Hide Status Bar
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //
         mainActivity = this;
         //
-        configManager = new OBConfigManager();
+        configManager = new OBConfigManager(this.getApplicationContext());
         //
         analyticsManager = new OBAnalyticsManager(this);
-        locationManager = new OBLocationManager(this);
         //
         // this flag disables screenshots
         // Commented code to enable capturing of screenshots
@@ -435,13 +419,7 @@ public class MainActivity extends Activity {
         // app is running on an emulator, and assume that it supports
         // OpenGL ES 2.0.
         final boolean supportsEs2 =
-                configurationInfo.reqGlEsVersion >= 0x20000
-                        || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
-                        && (Build.FINGERPRINT.startsWith("generic")
-                        || Build.FINGERPRINT.startsWith("unknown")
-                        || Build.MODEL.contains("google_sdk")
-                        || Build.MODEL.contains("Emulator")
-                        || Build.MODEL.contains("Android SDK built for x86")));
+                configurationInfo.reqGlEsVersion >= 0x20000 || Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") || Build.MODEL.contains("Android SDK built for x86");
 
         if (supportsEs2) {
             // Request an OpenGL ES 2.0 compatible context.
@@ -565,26 +543,6 @@ public class MainActivity extends Activity {
         //
         return result;
     }
-
-
-    public boolean isMicrophonePermissionGranted() {
-        Boolean micPermission = selfPermissionGranted(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
-        //
-        if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_MICROPHONE, REQUEST_MICROPHONE);
-        //
-        return micPermission;
-    }
-
-    public boolean isCameraPermissionGranted() {
-        Boolean micPermission = selfPermissionGranted(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-        //
-        if (!micPermission)
-            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA, REQUEST_CAMERA);
-        //
-        return micPermission;
-    }
-
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (requestCode == REQUEST_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

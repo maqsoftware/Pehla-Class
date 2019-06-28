@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -756,7 +757,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
         if(totalExtraUnitCount > 0)
         {
             //if extra units are found check how many of them have been completed this week
-            cursor = db.prepareRawQuery(String.format("SELECT MAX(orderIndex) as orderIndex,  COUNT(*) as count, " +
+            cursor = db.prepareRawQuery(String.format(Locale.US,"SELECT MAX(orderIndex) as orderIndex,  COUNT(*) as count, " +
                     "SUM(CASE WHEN sessionid = %d THEN 1 ELSE 0 END) as sessionCount " +
                     "FROM (SELECT EU.unitid AS unitid,  EU.orderIndex AS orderIndex, MAX(S.sessionid) as sessionid " +
                     "FROM %s AS EU " +
@@ -1109,7 +1110,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
         {
             try {
                 if (cont instanceof OC_SectionController && starColour > 0)
-                    ((OC_SectionController) cont).displayAward2(colourDict.get(String.format("star_%d", starColour)));
+                    ((OC_SectionController) cont).displayAward2(colourDict.get(String.format(Locale.US,"star_%d", starColour)));
                 else
                     cont.displayAward();
             } catch (Exception e) {
@@ -1304,7 +1305,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
             if(cursor.getCount() != SESSION_UNIT_COUNT)
             {
                 cursor.close();
-                cursor = db.prepareRawQuery(String.format("SELECT unitid, unitIndex, 0 as extraunitid FROM %s "+
+                cursor = db.prepareRawQuery(String.format(Locale.US,"SELECT unitid, unitIndex, 0 as extraunitid FROM %s "+
                                 "WHERE unitid IN (SELECT unitid FROM %s "+
                                 "WHERE level = ? AND masterlistid = ? AND typeid = ? ORDER BY unitIndex DESC LIMIT %d) AND masterlistid = ? "+
                                 "GROUP BY unitid ORDER BY unitIndex ASC",DBSQL.TABLE_UNITS,DBSQL.TABLE_UNITS,SESSION_UNIT_COUNT),

@@ -13,6 +13,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -42,7 +43,7 @@ public class OC_Cwys_Additions {
             }
             lastBlock = unitBlock;
             blocksArray.add(unitBlock);
-            dict.put(String.format("block_%d",i+1), unitBlock);
+            dict.put(String.format(Locale.US,"block_%d",i+1), unitBlock);
         }
 
         OBGroup blocksGroup = new OBGroup(blocksArray);
@@ -82,7 +83,7 @@ public class OC_Cwys_Additions {
                 else
                     unitCopy.disable();
                 unitCopy.hide();
-                unitDict.put(String.format("unit_%d",j+1),unitCopy);
+                unitDict.put(String.format(Locale.US,"unit_%d",j+1),unitCopy);
             }
             OBGroup column = new OBGroup(new ArrayList<>(unitDict.values()));
             column.objectDict = unitDict;
@@ -92,7 +93,7 @@ public class OC_Cwys_Additions {
             }
             lastColumn = column;
             column.setZPosition(i+1);
-            columnDict.put(String.format("column_%d",i+1),column);
+            columnDict.put(String.format(Locale.US,"column_%d",i+1),column);
         }
         OBGroup completeBlock = new OBGroup(new ArrayList<>(columnDict.values()));
         completeBlock.objectDict = columnDict;
@@ -138,7 +139,7 @@ public class OC_Cwys_Additions {
         long blockCount = currentNum%100 == 0 ? count : count -1;
         for(int i=0; i<blockCount; i++)
         {
-            hundredBlocks.add((OBGroup)blockGroup.objectDict.get(String.format("block_%d",i+1)));
+            hundredBlocks.add((OBGroup)blockGroup.objectDict.get(String.format(Locale.US,"block_%d",i+1)));
         }
         return hundredBlocks;
 
@@ -147,7 +148,7 @@ public class OC_Cwys_Additions {
     static public List<OBGroup> getTenColumnsFromBlockGroup(OBGroup blockGroup)
     {
         List<OBGroup> tenColumns = new ArrayList<>();
-        OBGroup lastBlock =(OBGroup)blockGroup.objectDict.get(String.format("block_%d",blockGroup.objectDict.size()));
+        OBGroup lastBlock =(OBGroup)blockGroup.objectDict.get(String.format(Locale.US,"block_%d",blockGroup.objectDict.size()));
         int currentNum = (int)blockGroup.propertyValue("num_val");
         if(currentNum%100 == 0)
             return tenColumns;
@@ -156,7 +157,7 @@ public class OC_Cwys_Additions {
             i<columnCount;
             i++)
         {
-            OBGroup column =(OBGroup)lastBlock.objectDict.get(String.format("column_%d",i+1));
+            OBGroup column =(OBGroup)lastBlock.objectDict.get(String.format(Locale.US,"column_%d",i+1));
             tenColumns.add(column);
 
         }
@@ -168,11 +169,11 @@ public class OC_Cwys_Additions {
         List<OBControl> units = new ArrayList<>();
         int currentNum = (int)blockGroup.propertyValue("num_val");
         if(currentNum%10 == 0)        return units;
-        OBGroup lastBlock =(OBGroup)blockGroup.objectDict.get(String.format("block_%d",blockGroup.objectDict.size()));
-        OBGroup lastColumn =(OBGroup)lastBlock.objectDict.get(String.format("column_%d",lastBlock.objectDict.size()));
+        OBGroup lastBlock =(OBGroup)blockGroup.objectDict.get(String.format(Locale.US,"block_%d",blockGroup.objectDict.size()));
+        OBGroup lastColumn =(OBGroup)lastBlock.objectDict.get(String.format(Locale.US,"column_%d",lastBlock.objectDict.size()));
         for(int i=0; i<10; i++)
         {
-            OBControl unit = lastColumn.objectDict.get(String.format("unit_%d",i+1));
+            OBControl unit = lastColumn.objectDict.get(String.format(Locale.US,"unit_%d",i+1));
             if(unit.isEnabled())
             {
                 units.add(unit);

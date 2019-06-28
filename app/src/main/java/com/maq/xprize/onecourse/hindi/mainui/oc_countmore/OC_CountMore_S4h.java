@@ -21,6 +21,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 15/03/2017.
@@ -49,7 +50,7 @@ public class OC_CountMore_S4h extends OC_SectionController
         targets = new ArrayList<>();
         for (int i = 1; i <= 10; i++)
         {
-            OBGroup control = (OBGroup) objectDict.get(String.format("obj_%d", i));
+            OBGroup control = (OBGroup) objectDict.get(String.format(Locale.US,"obj_%d", i));
             //OBControl img = control.renderedImageControl();
             //control.setPosition(OBMisc.copyPoint(control.position()));
             OBLabel label = new OBLabel((String) control.attributes().get("num"), OBUtils.standardTypeFace(), 65.0f * control.height() / 131.0f);
@@ -265,7 +266,7 @@ public class OC_CountMore_S4h extends OC_SectionController
                     try
                     {
                         if(!statusChanged(time))
-                            playSFX(String.format("note%d", 10 - targets.size()));
+                            playSFX(String.format(Locale.US,"note%d", 10 - targets.size()));
                         if(!statusChanged(time))
                             waitSFX();
                         if(!statusChanged(time))

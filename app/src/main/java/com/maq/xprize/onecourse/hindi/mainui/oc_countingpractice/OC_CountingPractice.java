@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
@@ -322,7 +323,7 @@ public class OC_CountingPractice extends OC_Generic_Event
             MainActivity.log("No objects starting in the jar");
         }
         //
-        jarLabel.setString(String.format("%d", startingObjectsInContainer));
+        jarLabel.setString(String.format(Locale.US,"%d", startingObjectsInContainer));
         //
         hideControls("clump.*");
         hideControls("colour.*");
@@ -512,7 +513,7 @@ public class OC_CountingPractice extends OC_Generic_Event
                     atRestObjects.removeAll(objectsToBeRemoved);
                 }
                 //
-                jarLabel.setString(String.format("%d", (int) physicsControls.size()));
+                jarLabel.setString(String.format(Locale.US,"%d", (int) physicsControls.size()));
                 jarLabel.setColour(colourTextNormal);
                 //
                 unlockScreen();
@@ -750,7 +751,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         {
             return;
         }
-        clumpTemplate = (OBGroup) objectDict.get(String.format("clump_%d", clumpOfObjectsForUnit));
+        clumpTemplate = (OBGroup) objectDict.get(String.format(Locale.US,"clump_%d", clumpOfObjectsForUnit));
         double safeRadius = 1.3f * Math.max(clumpTemplate.width(), clumpTemplate.height());
         //
         List<OBControl> newControls = new ArrayList<>();
@@ -885,7 +886,7 @@ public class OC_CountingPractice extends OC_Generic_Event
                                         playNumberAudio();
                                         //
                                         lockScreen();
-                                        jarLabel.setString(String.format("%d", counter_final));
+                                        jarLabel.setString(String.format(Locale.US,"%d", counter_final));
                                         jarLabel.setColour(colourTextHilite);
                                         unlockScreen();
                                         //
@@ -939,7 +940,7 @@ public class OC_CountingPractice extends OC_Generic_Event
                                 playSfxAudio("number_decrement", false);
                                 //
                                 lockScreen();
-                                jarLabel.setString(String.format("%d", (int) physicsControls.size()));
+                                jarLabel.setString(String.format(Locale.US,"%d", (int) physicsControls.size()));
                                 unlockScreen();
                             }
                         }
@@ -1804,7 +1805,7 @@ public class OC_CountingPractice extends OC_Generic_Event
             playSfxAudio("ping", false);
             //
             lockScreen();
-            jarLabel.setString(String.format("%d", (int) physicsControls.size()));
+            jarLabel.setString(String.format(Locale.US,"%d", (int) physicsControls.size()));
             jarLabel.setColour(colourTextNormal);
             jarLabel.show();
             jarLabelContainer.show();
@@ -1812,7 +1813,7 @@ public class OC_CountingPractice extends OC_Generic_Event
             //
             waitSFX();
             //
-            playAudio(String.format("n_%d", (int) physicsControls.size()));
+            playAudio(String.format(Locale.US,"n_%d", (int) physicsControls.size()));
             waitAudio();
             //
             gotItRightBigTick(true);
@@ -1979,7 +1980,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         populatePeasWithAnimation();
         //
         lockScreen();
-        jarLabel.setString(String.format("%d", physicsControls.size()));
+        jarLabel.setString(String.format(Locale.US,"%d", physicsControls.size()));
         unlockScreen();
         waitForSecs(0.3f);
         //
@@ -1988,7 +1989,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         waitForAudio();
         waitForSecs(0.3f);
         //
-        playAudio(String.format("n_%d", physicsControls.size()));
+        playAudio(String.format(Locale.US,"n_%d", physicsControls.size()));
         lockScreen();
         jarLabel.setColour(colourTextHilite);
         unlockScreen();
@@ -2046,7 +2047,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         playNumberIncrement();
         //
         lockScreen();
-        jarLabel.setString(String.format("%d", (int) physicsControls.size()));
+        jarLabel.setString(String.format(Locale.US,"%d", (int) physicsControls.size()));
         jarLabel.setColour(colourTextHilite);
         unlockScreen();
         //
@@ -2079,7 +2080,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         playNumberIncrement();
         //
         lockScreen();
-        jarLabel.setString(String.format("%d", (int) physicsControls.size()));
+        jarLabel.setString(String.format(Locale.US,"%d", (int) physicsControls.size()));
         jarLabel.setColour(colourTextHilite);
         unlockScreen();
         //
@@ -2199,7 +2200,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         waitAudio();
         waitForSecs(0.3f);
         //
-        playAudio(String.format("n_%d", physicsControls.size()));
+        playAudio(String.format(Locale.US,"n_%d", physicsControls.size()));
         lockScreen();
         jarLabel.setColour(colourTextHilite);
         unlockScreen();
@@ -2238,11 +2239,11 @@ public class OC_CountingPractice extends OC_Generic_Event
             playSfxAudio("number_increment", false);
             //
             lockScreen();
-            jarLabel.setString(String.format("%d", (int) (startingCounter + groupCounter * clumpOfObjectsForUnit)));
+            jarLabel.setString(String.format(Locale.US,"%d", (int) (startingCounter + groupCounter * clumpOfObjectsForUnit)));
             jarLabel.setColour(colourTextHilite);
             unlockScreen();
             //
-            playAudio(String.format("n_%d", (startingCounter + groupCounter * clumpOfObjectsForUnit)));
+            playAudio(String.format(Locale.US,"n_%d", (startingCounter + groupCounter * clumpOfObjectsForUnit)));
             waitAudio();
             //
             lockScreen();
@@ -2282,7 +2283,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         waitAudio();
         waitForSecs(0.3f);
         //
-        playAudio(String.format("n_%d", physicsControls.size()));
+        playAudio(String.format(Locale.US,"n_%d", physicsControls.size()));
         //
         lockScreen();
         correctLabel.setColour(colourTextHilite);
@@ -2340,7 +2341,7 @@ public class OC_CountingPractice extends OC_Generic_Event
         waitAudio();
         waitForSecs(0.3f);
         //
-        playAudio(String.format("n_%d", physicsControls.size()));
+        playAudio(String.format(Locale.US,"n_%d", physicsControls.size()));
         //
         lockScreen();
         jarLabel.setColour(colourTextHilite);
@@ -2453,7 +2454,7 @@ public class OC_CountingPractice extends OC_Generic_Event
 
     public void prepareNumberAudio (int number)
     {
-        preparedAudio = String.format("n_%d", number);
+        preparedAudio = String.format(Locale.US,"n_%d", number);
         OBAudioManager.audioManager.prepareForChannel(preparedAudio, AM_MAIN_CHANNEL);
     }
 

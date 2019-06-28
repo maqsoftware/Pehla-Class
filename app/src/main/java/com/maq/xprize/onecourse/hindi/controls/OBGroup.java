@@ -105,7 +105,7 @@ public class OBGroup extends OBControl
             //col = Color.argb(intop,Color.red(col),Color.green(col),Color.blue(col));
             col = (intop << 24) | (col & 0x00ffffff);
         }
-        return new Integer(col);
+        return col;
     }
 
     public static void GetObjectIdsFromArray (List<OBControl> arr, Map<String, OBControl> dict)
@@ -333,7 +333,7 @@ public class OBGroup extends OBControl
         String s = attrs.get("gradientUnits");
         if (s != null)
         {
-            if (s.toLowerCase().equals("userspaceonuse"))
+            if (s.toLowerCase(Locale.US).equals("userspaceonuse"))
                 grad.useBboxUnits = false;
         }
         s = attrs.get("spreadMethod");
@@ -387,7 +387,7 @@ public class OBGroup extends OBControl
         String s = attrs.get("gradientUnits");
         if (s != null)
         {
-            if (s.toLowerCase().equals("userspaceonuse"))
+            if (s.toLowerCase(Locale.US).equals("userspaceonuse"))
                 grad.useBboxUnits = false;
         }
         s = attrs.get("spreadMethod");
@@ -487,9 +487,9 @@ public class OBGroup extends OBControl
         if ((s = attrs.get("patternTransform")) != null)
             pat.transform = transformFromString(s);
         if ((s = attrs.get("patternUnits")) != null)
-            pat.useBboxUnitsForPatternUnits = !(s.toLowerCase().equals("userspaceonuse"));
+            pat.useBboxUnitsForPatternUnits = !(s.toLowerCase(Locale.US).equals("userspaceonuse"));
         if ((s = attrs.get("patternContentUnits")) != null)
-            pat.useBboxUnitsForPatternContentUnits = !(s.toLowerCase().equals("userspaceonuse"));
+            pat.useBboxUnitsForPatternContentUnits = !(s.toLowerCase(Locale.US).equals("userspaceonuse"));
         if ((s = attrs.get("viewBox")) != null)
             pat.viewBox = rectFromString(s);
         if ((s = attrs.get("preserveAspectRatio")) != null)

@@ -19,6 +19,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michal on 06/04/2017.
@@ -193,7 +194,7 @@ public class OC_MoreNumbers_S3na extends OC_SectionController
             float fontSize = 58*control.height()/62.0f;
             int val = OBUtils.getIntValue((String)control.attributes().get("num"));
             boolean correct = OBUtils.getBooleanValue((String)control.attributes().get("correct"));
-            OBLabel numLabel = new OBLabel(String.format("%d",val),OBUtils.standardTypeFace(),fontSize);
+            OBLabel numLabel = new OBLabel(String.format(Locale.US,"%d",val),OBUtils.standardTypeFace(),fontSize);
             control.setZPosition(1);
             numLabel.setZPosition(2);
             numLabel.setColour(textcolour);

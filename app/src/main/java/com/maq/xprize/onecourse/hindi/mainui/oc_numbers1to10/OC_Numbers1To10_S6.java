@@ -10,6 +10,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 04/05/2017.
@@ -112,7 +113,7 @@ public class OC_Numbers1To10_S6 extends OC_Generic_AddRemoveObjects_SelectCorrec
         //
         for (int i = 1; i <= 4; i++)
         {
-            String objectName = String.format("obj_%d", i);
+            String objectName = String.format(Locale.US,"obj_%d", i);
             float rotation = -25 + i * 5;
             float time = (i == 1 ? 0.6f : 0.3f);
             OC_Generic.pointer_moveToObjectByName(objectName, rotation, time, EnumSet.of(OC_Generic.Anchor.ANCHOR_BOTTOM), true, this);

@@ -18,6 +18,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -146,7 +147,7 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
         //
         for (int i = 1; i <= 10; i++)
         {
-            OBLabel label = (OBLabel) objectDict.get(String.format("label_%d", i));
+            OBLabel label = (OBLabel) objectDict.get(String.format(Locale.US,"label_%d", i));
             //
             action_highlight(label);
             playSceneAudioIndex("DEMO2", i, true); // FIVE. TEN. FIFTEEN. TWENTY. TWENTY-FIVE. THIRTY. THIRTY-FIVE. FORTY. FORTY-FIVE. FIFTY.
@@ -165,7 +166,7 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
             OBPath frame = (OBPath) group.objectDict.get("frame");
             frame.setFillColor(Color.WHITE);
         }
-        OBGroup group = (OBGroup) objectDict.get(String.format("number_%d", correctAnswer));
+        OBGroup group = (OBGroup) objectDict.get(String.format(Locale.US,"number_%d", correctAnswer));
         if (group != null)
         {
             OBPath frame = (OBPath) group.objectDict.get("frame");
@@ -207,7 +208,7 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
         for (int i = 1; i <= totalCount; i++)
         {
             OBControl object = labels.get(i - 1);
-            OBControl placement = objectDict.get(String.format("place_%d", i));
+            OBControl placement = objectDict.get(String.format(Locale.US,"place_%d", i));
             PointF initialPosition = new PointF(object.position().x, object.position().y);
             PointF destination = new PointF(placement.position().x, placement.position().y);
 //            PointF destination = new PointF(object.position().x, placement.position().y);
@@ -233,7 +234,7 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
             //
             object.setProperty("phase1", phase1);
             object.setProperty("phase2", phase2);
-            object.setProperty("startTime", new Double(OC_Generic.currentTime() + i * 0.1));
+            object.setProperty("startTime", OC_Generic.currentTime() + i * 0.1);
             object.setProperty("floorCollision", false);
             object.setProperty("atRest", false);
             object.setProperty("initialPosition", initialPosition);
@@ -279,11 +280,11 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
                     newPosition.set(newX, newY);
                     if (newPosition.y > floorHeight)
                     {
-                        object.setProperty("startTime", new Double(OC_Generic.currentTime()));
+                        object.setProperty("startTime", OC_Generic.currentTime());
                         object.setProperty("floorCollision", true);
                         newPosition.set(midWay);
                         //
-                        OBAudioManager.audioManager.startPlaying(sfx, String.format("bounce_%d", i));
+                        OBAudioManager.audioManager.startPlaying(sfx, String.format(Locale.US,"bounce_%d", i));
                     }
                 }
                 else
@@ -325,7 +326,7 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
         try
         {
             final OBLabel label = (OBLabel) targ;
-            OBLabel correctLabel = (OBLabel) objectDict.get(String.format("label_%d", correctAnswer));
+            OBLabel correctLabel = (OBLabel) objectDict.get(String.format(Locale.US,"label_%d", correctAnswer));
             //
             if (label.equals(correctLabel))
             {
@@ -333,7 +334,7 @@ public class OC_Counting5and10_S4g extends OC_Generic_SelectCorrectObject
                 //
                 gotItRightBigTick(false);
                 //
-                OBControl slot = objectDict.get(String.format("number_%d", correctAnswer));
+                OBControl slot = objectDict.get(String.format(Locale.US,"number_%d", correctAnswer));
                 final OBAnim moveAnim = OBAnim.moveAnim(slot.getWorldPosition(), label);
                 final OBSectionController sc = this;
                 //

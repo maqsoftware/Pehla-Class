@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBAudioManager.AM_SFX_CHANNEL;
 
@@ -264,7 +265,7 @@ public class OC_Counting5and10_S6 extends OC_Generic_Event
 
     public void action_tracePath (int pathNumber) throws Exception
     {
-        final OBPath line = (OBPath) objectDict.get(String.format("path_%d", pathNumber));
+        final OBPath line = (OBPath) objectDict.get(String.format(Locale.US,"path_%d", pathNumber));
         if (line == null) return;
         //
         lockScreen();
@@ -309,10 +310,10 @@ public class OC_Counting5and10_S6 extends OC_Generic_Event
         setStatus(STATUS_CHECKING);
         //saveStatusClearReplayAudioSetChecking();
         //
-        OBControl correctDot = objectDict.get(String.format("dot_%d", currentAnswer));
+        OBControl correctDot = objectDict.get(String.format(Locale.US,"dot_%d", currentAnswer));
         String dotID = (String) dot.attributes().get("id");
         OBLabel selectedNumber = (OBLabel) objectDict.get(dotID.replace("dot", "label"));
-        OBLabel previousNumber = (OBLabel) objectDict.get(String.format("label_%d", currentAnswer - 1));
+        OBLabel previousNumber = (OBLabel) objectDict.get(String.format(Locale.US,"label_%d", currentAnswer - 1));
         //
         try
         {

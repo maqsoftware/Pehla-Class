@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -53,17 +54,17 @@ public class OC_Numberlines_Additions
             divLine.sizeToBoundingBoxIncludingStroke();
             divLine.setAnchorPoint(new PointF(0.5f,1));
             controller.attachControl(divLine);
-            controller.objectDict.put(String.format("divline_%d", start+i),divLine);
+            controller.objectDict.put(String.format(Locale.US,"divline_%d", start+i),divLine);
 
             OBLabel numLabel = new OBLabel("00", OBUtils.standardTypeFace(), fontSize);
-            numLabel.setString(String.format("%d",start+i));
+            numLabel.setString(String.format(Locale.US,"%d",start+i));
             numLabel.setPosition(OB_Maths.worldLocationForControl(i*1.0f/(size-1),0.86f,rect));
             numLabel.setColour(numColour);
             numLabel.setProperty("num_value",start+i);
             numLabel.setProperty("num_colour",numColour);
             numLabel.setZPosition(5);
                 controller.attachControl(numLabel);
-            controller.objectDict.put(String.format("num_%d", start+i),numLabel);
+            controller.objectDict.put(String.format(Locale.US,"num_%d", start+i),numLabel);
         }
 
         if(controller.objectDict.get("arrowhead") != null)
@@ -80,7 +81,7 @@ public class OC_Numberlines_Additions
     {
         drawCurveLine(num,clockwise,label, colour, controller);
 
-        final OBPath curveLine = (OBPath)controller.objectDict.get(String.format("curveline_%d", num));
+        final OBPath curveLine = (OBPath)controller.objectDict.get(String.format(Locale.US,"curveline_%d", num));
         final OBControl arrowHead = controller.objectDict.get("arrowhead");
         arrowHead.setPosition(curveLine.convertPointToControl(curveLine.firstPoint(), null));
         arrowHead.setRotation(0);
@@ -105,7 +106,7 @@ public class OC_Numberlines_Additions
 
         if(label)
         {
-            final OBGroup linelabel = (OBGroup)controller.objectDict.get(String.format("linelabel_%d",num));
+            final OBGroup linelabel = (OBGroup)controller.objectDict.get(String.format(Locale.US,"linelabel_%d",num));
             linelabel.setOpacity(0);
             linelabel.show();
             anims.add(new OBAnimBlock()
@@ -132,7 +133,7 @@ public class OC_Numberlines_Additions
 
     public static void shortenDiv(int num, OC_SectionController controller)
     {
-        OBPath divline = (OBPath)controller.objectDict.get(String.format("divline_%d", num));
+        OBPath divline = (OBPath)controller.objectDict.get(String.format(Locale.US,"divline_%d", num));
         divline.setStrokeStart(0.15f);
     }
 
@@ -172,8 +173,8 @@ public class OC_Numberlines_Additions
 
     public static void drawCurveLine(int num,boolean clockwise, boolean label, int colour, OC_SectionController controller)
     {
-        OBPath startDiv = (OBPath)controller.objectDict.get(String.format("divline_%d",clockwise ? num : num-1));
-        OBPath endDiv = (OBPath)controller.objectDict.get(String.format("divline_%d", clockwise ? num+1 : num));
+        OBPath startDiv = (OBPath)controller.objectDict.get(String.format(Locale.US,"divline_%d",clockwise ? num : num-1));
+        OBPath endDiv = (OBPath)controller.objectDict.get(String.format(Locale.US,"divline_%d", clockwise ? num+1 : num));
         OBPath mainLine = (OBPath)controller.objectDict.get("mainline");
 
         OBPath curveLine =  new OBPath();
@@ -194,7 +195,7 @@ public class OC_Numberlines_Additions
         curveLine.sizeToBoundingBoxIncludingStroke();
         curveLine.hide();
         controller.attachControl(curveLine);
-        controller.objectDict.put(String.format("curveline_%d", num),curveLine);
+        controller.objectDict.put(String.format(Locale.US,"curveline_%d", num),curveLine);
 
         if(label)
         {
@@ -223,7 +224,7 @@ public class OC_Numberlines_Additions
             fullGroup.objectDict.put("eqLabel",eqLabel);
 
             controller.attachControl(fullGroup);
-            controller.objectDict.put(String.format("linelabel_%d", num),fullGroup);
+            controller.objectDict.put(String.format(Locale.US,"linelabel_%d", num),fullGroup);
 
         }
     }
@@ -241,7 +242,7 @@ public class OC_Numberlines_Additions
 
         for(int i=start; i<start+size; i++)
         {
-            OBPath divLine = (OBPath)controller.objectDict.get(String.format("divline_%d", i));
+            OBPath divLine = (OBPath)controller.objectDict.get(String.format(Locale.US,"divline_%d", i));
             divLine.setStrokeEnd(0);
             divLine.show();
             OBAnimationGroup.runAnims(Collections.singletonList(OBAnim.propertyAnim("strokeEnd",1,divLine)), duration*1.0f/size,true,OBAnim.ANIM_LINEAR,controller);
@@ -304,7 +305,7 @@ public class OC_Numberlines_Additions
                 labelGroup.setPosition(OB_Maths.locationForRect(1.0f/(eqParts.length+1) * (i+1),0.5f,boxControl.frame()));
             }
 
-            parts.put(String.format("part%d",index++),labelGroup);
+            parts.put(String.format(Locale.US,"part%d",index++),labelGroup);
             labelGroup.setShouldTexturise(false);
             controller.attachControl(labelGroup);
             labelGroup.show();
@@ -341,7 +342,7 @@ public class OC_Numberlines_Additions
         controller.lockScreen();
         for(int i = from; i<=to; i++)
         {
-            equation.objectDict.get(String.format("part%d",i)).show();
+            equation.objectDict.get(String.format(Locale.US,"part%d",i)).show();
         }
 
         if(audio != null)
@@ -359,7 +360,7 @@ public class OC_Numberlines_Additions
         controller.lockScreen();
         for(int i = from; i<=to; i++)
         {
-            equation.objectDict.get(String.format("part%d",i)).show();
+            equation.objectDict.get(String.format(Locale.US,"part%d",i)).show();
         }
         controller.unlockScreen();
     }
@@ -370,7 +371,7 @@ public class OC_Numberlines_Additions
         controller.lockScreen();
         for(int i = 1; i<=5; i++)
         {
-            equation.objectDict.get(String.format("part%d",i)).hide();
+            equation.objectDict.get(String.format(Locale.US,"part%d",i)).hide();
         }
         controller.unlockScreen();
     }
@@ -381,7 +382,7 @@ public class OC_Numberlines_Additions
         controller.lockScreen();
         for(int i=from; i <= to; i++)
         {
-            OBGroup group = (OBGroup)equation.objectDict.get(String.format("part%d",i));
+            OBGroup group = (OBGroup)equation.objectDict.get(String.format(Locale.US,"part%d",i));
             ((OBLabel)group.objectDict.get("label")).setColour(colour);
         }
 
@@ -390,7 +391,7 @@ public class OC_Numberlines_Additions
 
     public static OBLabel getLabelForEquation(int labelNum, OBGroup equation)
     {
-        OBGroup group = (OBGroup)equation.objectDict.get(String.format("part%d",labelNum));
+        OBGroup group = (OBGroup)equation.objectDict.get(String.format(Locale.US,"part%d",labelNum));
         return (OBLabel)group.objectDict.get("label");
     }
 

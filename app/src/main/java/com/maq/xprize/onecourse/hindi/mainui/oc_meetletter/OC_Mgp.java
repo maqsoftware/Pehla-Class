@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -104,7 +105,7 @@ public class OC_Mgp extends OC_SectionController
 
             for(int i=0; i<letters.size(); i++)
             {
-                addEventPhase(PHASE_A2,String.format("%s%d", phaseDict.get(PHASE_A2), i+1), null, null);
+                addEventPhase(PHASE_A2,String.format(Locale.US,"%s%d", phaseDict.get(PHASE_A2), i+1), null, null);
             }
         }
         else
@@ -124,7 +125,7 @@ public class OC_Mgp extends OC_SectionController
             OBWord word = (OBWord)componentsDict.get(arr2[i]);
             addEventPhase(PHASE_B2,
                 i == arr2.length-1 ? String.format("%slast",phaseDict.get(PHASE_B2)):
-                String.format("%s%d",phaseDict.get(PHASE_B2),i+1), null, word);
+                String.format(Locale.US,"%s%d",phaseDict.get(PHASE_B2),i+1), null, word);
 
             if(word != null)
             {
@@ -166,7 +167,7 @@ public class OC_Mgp extends OC_SectionController
             disct.addAll(distractors.subList(0,letCount-1));
             disct.add(targetPhoneme);
             List<OBPhoneme> lets = OBUtils.randomlySortedArray(disct);
-            List<PointF> locs = letterLocs.get(String.format("loc_c_%d",letCount));
+            List<PointF> locs = letterLocs.get(String.format(Locale.US,"loc_c_%d",letCount));
             PointF targetLoc = locs.get(lets.indexOf(targetPhoneme));
             if(lastLoc.equals(targetLoc))
             {
@@ -177,7 +178,7 @@ public class OC_Mgp extends OC_SectionController
                 lastLoc = targetLoc;
             }
             addEventPhase(PHASE_C,
-                    i==order.size()-1 ? String.format("%slast",phaseDict.get(PHASE_C)): String.format("%s%d",phaseDict.get(PHASE_C),i+1),
+                    i==order.size()-1 ? String.format("%slast",phaseDict.get(PHASE_C)): String.format(Locale.US,"%s%d",phaseDict.get(PHASE_C),i+1),
                     lets,null);
 
             eventsData.get(eventsData.size()-1).put("fontmode",i);
@@ -571,7 +572,7 @@ public class OC_Mgp extends OC_SectionController
             }
 
             List<OBPhoneme> letters = (List<OBPhoneme> )data.get("letters");
-            List<PointF> locs = letterLocs.get(String.format("loc_c_%d",letters.size()));
+            List<PointF> locs = letterLocs.get(String.format(Locale.US,"loc_c_%d",letters.size()));
             prepareTargets(letters,locs,font,fontSize);
         }
 

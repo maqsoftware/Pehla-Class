@@ -20,6 +20,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBWord;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -156,7 +157,7 @@ public class OC_NonWordAudioRec extends OC_AudioRecSection
 
     public String eventForSceneNum(int sceneNum)
     {
-        String currentScene = String.format("%d",sceneNum);
+        String currentScene = String.format(Locale.US,"%d",sceneNum);
         if(audioScenes.get(currentScene) != null)
         {
             return currentScene;

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -105,12 +106,12 @@ public class OBMisc
 
         for(int i = from; i <= to; i++)
         {
-            OBLabel numLabel = new OBLabel(String.format("%d",i),font,fontSize);
+            OBLabel numLabel = new OBLabel(String.format(Locale.US,"%d",i),font,fontSize);
             numLabel.setPosition(OB_Maths.locationForRect((i-from+1.0f)*(1.0f/(to-from+2)),0.5f,box.frame()));
             controller.attachControl(numLabel);
             numLabel.setColour(colour);
             numLabel.setProperty("num_value",i);
-            controller.objectDict.put(String.format("%s%d",prefix,i),numLabel);
+            controller.objectDict.put(String.format(Locale.US,"%s%d",prefix,i),numLabel);
             numLabel.hide();
             numLabel.setZPosition(10);
         }
@@ -144,7 +145,7 @@ public class OBMisc
     public static void insertLabelIntoGroup(OBGroup group, int num, float size, int colour, PointF position, OC_SectionController controller)
     {
         Typeface font = OBUtils.standardTypeFace();
-        OBLabel label = new OBLabel(String.format("%d",num),font,size);
+        OBLabel label = new OBLabel(String.format(Locale.US,"%d",num),font,size);
         label.setColour(colour);
         label.setScale(1.0f/group.scale());
         OBGroup numGroup = new OBGroup(Collections.singletonList((OBControl)label));
@@ -189,7 +190,7 @@ public class OBMisc
     {
         List<String> arr = new ArrayList<>();
         for (int i = startidx;i <= endidx;i++)
-            arr.add(String.format("%s%d",root,i));
+            arr.add(String.format(Locale.US,"%s%d",root,i));
         return arr;
 
     }
@@ -207,7 +208,7 @@ public class OBMisc
             box.setBorderWidth(controller.applyGraphicScale(2));
             box.setPosition(OB_Maths.locationForRect(1.0f/(to-from+1)*(i-from),0.5f,numbox.frame()));
             box.setLeft(numbox.position().x - ((to-from+1)/2.0f *(box.width() - box.borderWidth)) + (box.width() - box.borderWidth)*(i-from)*1.0f);
-            OBLabel label = new OBLabel(String.format("%d",i),OBUtils.standardTypeFace(),65.0f*numbox.height()/85.0f); label.setColour(Color.BLACK);
+            OBLabel label = new OBLabel(String.format(Locale.US,"%d",i),OBUtils.standardTypeFace(),65.0f*numbox.height()/85.0f); label.setColour(Color.BLACK);
             label.setPosition(copyPoint(box.position()));
             label.setColour(labelColour);
             OBGroup group = new OBGroup(Arrays.asList(box,label));

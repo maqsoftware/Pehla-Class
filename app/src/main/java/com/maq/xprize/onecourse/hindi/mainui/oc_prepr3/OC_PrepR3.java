@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static java.lang.Math.min;
@@ -603,13 +604,13 @@ public class OC_PrepR3 extends OC_Reading
         Est3_Question qu = currPassage.questions.get(questionNo);
         int r = qu.questionID.indexOf(".");
         String qid = qu.questionID.substring(0,r);
-        String fn = String.format("%s_%s_%s_a_%d",audioPrefix,currPassage.passageID,qid,ano);
+        String fn = String.format(Locale.US,"%s_%s_%s_a_%d",audioPrefix,currPassage.passageID,qid,ano);
         playAudioQueued(Arrays.asList((Object)fn),true);
     }
 
     public void playAudioForSentence(int sno) throws Exception
     {
-        String fn = String.format("%s_%s_p_p_%d",audioPrefix,currPassage.passageID,sno);
+        String fn = String.format(Locale.US,"%s_%s_p_p_%d",audioPrefix,currPassage.passageID,sno);
         playAudioQueued(Arrays.asList((Object)fn),true);
     }
 

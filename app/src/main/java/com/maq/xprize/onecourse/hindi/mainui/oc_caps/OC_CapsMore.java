@@ -12,6 +12,7 @@ import com.maq.xprize.onecourse.hindi.utils.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import com.maq.xprize.onecourse.hindi.utils.*;
 
@@ -52,12 +53,12 @@ public class OC_CapsMore extends OC_Wordcontroller
         int i = 0;
         for(String s : letters)
         {
-            caps.add(s.toUpperCase());
+            caps.add(s.toUpperCase(Locale.US));
             OBLabel lab = new OBLabel(s,font);
             labs.add(lab);
-            OBLabel caplab = new OBLabel(s.toUpperCase(),font);
+            OBLabel caplab = new OBLabel(s.toUpperCase(Locale.US),font);
             caplabs.add(caplab);
-            OBControl homebox = objectDict.get(String.format("box%d",i));
+            OBControl homebox = objectDict.get(String.format(Locale.US,"box%d",i));
             positionLabel(lab,caplab,homebox);
             i++;
         }
@@ -328,7 +329,7 @@ public class OC_CapsMore extends OC_Wordcontroller
 
     public void highlightBothInTurn(int idx) throws Exception
     {
-        String letterName = capLabels.get(idx).text().toLowerCase();
+        String letterName = capLabels.get(idx).text().toLowerCase(Locale.US);
         labels.get(idx).setColour(Color.RED);
         playLetterName(letterName);
         waitForSecs(0.2f);

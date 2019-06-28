@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -235,7 +236,7 @@ public class OC_MoreAddSubtract_S6i extends OC_SectionController
         {
             OBGroup box = (OBGroup)objectDict.get("box_drop").copy();
             box.show();
-            OBLabel targetLabel = OC_Numberlines_Additions.getLabelForEquation(Integer.valueOf(num),(OBGroup)objectDict.get(String.format("equation_%d", currentPhase)));
+            OBLabel targetLabel = OC_Numberlines_Additions.getLabelForEquation(Integer.valueOf(num),(OBGroup)objectDict.get(String.format(Locale.US,"equation_%d", currentPhase)));
             box.setPosition(targetLabel.getWorldPosition());
             box.setProperty("num_value",targetLabel.text());
             attachControl(box);
@@ -248,7 +249,7 @@ public class OC_MoreAddSubtract_S6i extends OC_SectionController
 
     public void slideEquation() throws Exception
     {
-        OBControl equation = objectDict.get(String.format("equation_%d",currentPhase));
+        OBControl equation = objectDict.get(String.format(Locale.US,"equation_%d",currentPhase));
         PointF loc = OC_Generic.copyPoint(equation.position());
         loc.x = OB_Maths.locationForRect(0.5f,0f,this.bounds()).x;
         playSfxAudio("slide",false);
@@ -274,7 +275,7 @@ public class OC_MoreAddSubtract_S6i extends OC_SectionController
     public void startPhase() throws Exception
     {
         createPhaseMissing();
-        if(!performSel("demo",String.format("%s%d",currentEvent(), currentPhase)))
+        if(!performSel("demo",String.format(Locale.US,"%s%d",currentEvent(), currentPhase)))
         {
             if(currentPhase == 1)
             {
@@ -306,7 +307,7 @@ public class OC_MoreAddSubtract_S6i extends OC_SectionController
     {
         for(int i = 0; i<2; i++)
         {
-            OBGroup equ = (OBGroup)objectDict.get(String.format("equation_%d", i+1));
+            OBGroup equ = (OBGroup)objectDict.get(String.format(Locale.US,"equation_%d", i+1));
             OC_Numberlines_Additions.colourEquation(equ,1,5,Color.RED,this);
             playAudioScene("FINAL",i,true);
             waitForSecs(0.3f);

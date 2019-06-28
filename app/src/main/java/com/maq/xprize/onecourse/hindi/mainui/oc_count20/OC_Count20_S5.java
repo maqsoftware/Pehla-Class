@@ -24,6 +24,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -64,7 +65,7 @@ public class OC_Count20_S5 extends OC_Tracer
         numbers = new ArrayList<>();
         for (int i = 1;i <= 10;i++)
         {
-            String counterName = String.format("counter%d",i);
+            String counterName = String.format(Locale.US,"counter%d",i);
             OBGroup cou = (OBGroup)objectDict.get(counterName);
             //detachControl(cou);
             counters.add(cou);
@@ -77,7 +78,7 @@ public class OC_Count20_S5 extends OC_Tracer
             }
             float sc = cou.scale();
             //cou.setScale(1.0f);
-            OBLabel txt = new OBLabel(String.format("%d",i+10),tf,textSize);
+            OBLabel txt = new OBLabel(String.format(Locale.US,"%d",i+10),tf,textSize);
             txt.setColour(Color.BLACK);
             txt.setPosition(cou.position());
             numbers.add(txt);
@@ -310,7 +311,7 @@ public class OC_Count20_S5 extends OC_Tracer
         List<OBPath> arr = new ArrayList<>();
         for (int i = 1;i <=2;i++)
         {
-            OBPath p = (OBPath)digit.objectDict.get(String.format("p%d",i));
+            OBPath p = (OBPath)digit.objectDict.get(String.format(Locale.US,"p%d",i));
             if (p != null)
             {
                 arr.add(p);
@@ -327,7 +328,7 @@ public class OC_Count20_S5 extends OC_Tracer
         OBGroup p = (OBGroup)objectDict.get(str);
         for (int i = 1;i < 10;i++)
         {
-            String pp = String.format("p%d",i);
+            String pp = String.format(Locale.US,"p%d",i);
             OBPath characterfragment = (OBPath)p.objectDict.get(pp);
             if (characterfragment != null)
             {
@@ -354,7 +355,7 @@ public class OC_Count20_S5 extends OC_Tracer
         new OBRunnableSyncUI(){public void ex()
         {
             int actualNumber = n + 10;
-            loadEvent(String.format("%d",actualNumber));
+            loadEvent(String.format(Locale.US,"%d",actualNumber));
             p1 = (OBGroup)objectDict.get("p1");
             p2 = (OBGroup)objectDict.get("p2");
             uPaths = processDigit(p1);
@@ -471,7 +472,7 @@ public class OC_Count20_S5 extends OC_Tracer
 
     void fillProgress(int i)
     {
-        OBGroup prog = (OBGroup)objectDict.get(String.format("circle_progress%d",i));
+        OBGroup prog = (OBGroup)objectDict.get(String.format(Locale.US,"circle_progress%d",i));
         OBPath p = (OBPath)prog.objectDict.get("circle_stroke");
         p.setFillColor(Color.RED);
     }

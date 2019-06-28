@@ -19,6 +19,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 15/03/2017.
@@ -349,7 +350,7 @@ public class OC_Counting5and10_S2i extends OC_Generic_Event
 
     public void action_hiliteCurrentBox()
     {
-        OBControl box = objectDict.get(String.format("number_%d", correctNumber));
+        OBControl box = objectDict.get(String.format(Locale.US,"number_%d", correctNumber));
         lockScreen();
         for (OBControl number : filterControls("number.*"))
         {
@@ -383,7 +384,7 @@ public class OC_Counting5and10_S2i extends OC_Generic_Event
             gotItRightBigTick(false);
             //
             number.disable();
-            OBControl slot = objectDict.get(String.format("number_%d", correctNumber));
+            OBControl slot = objectDict.get(String.format(Locale.US,"number_%d", correctNumber));
             number.moveToPoint(slot.getWorldPosition(), 0.3f, true);
             number.setColour(Color.BLACK);
             correctNumber--;

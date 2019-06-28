@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import static com.maq.xprize.onecourse.hindi.utils.OBAnim.ANIM_EASE_IN_EASE_OUT;
 import static com.maq.xprize.onecourse.hindi.utils.OBAnim.ANIM_EASE_OUT;
@@ -68,7 +69,7 @@ public class OC_Shapes_S1 extends OC_Generic_Event
             bottom = Math.max(control.bottom(), bottom);
         }
         bottom += bounds().height() * 0.04;
-        OBControl place = objectDict.get(String.format("place_%d", currentPlace));
+        OBControl place = objectDict.get(String.format(Locale.US,"place_%d", currentPlace));
         OBControl dash = objectDict.get("dash");
         PointF destination = OC_Generic.copyPoint(place.getWorldPosition());
         destination.y = bottom;
@@ -131,7 +132,7 @@ public class OC_Shapes_S1 extends OC_Generic_Event
     {
         setStatus(STATUS_BUSY);
         OBControl control = (OBControl) target;
-        OBControl correctPlaceControl = objectDict.get(String.format("place_%d", currentPlace));
+        OBControl correctPlaceControl = objectDict.get(String.format(Locale.US,"place_%d", currentPlace));
         OBControl bottomBar = objectDict.get("bottom_bar");
         if (!bottomBar.frame.contains(pt.x, pt.y)) // outside resting position;
         {

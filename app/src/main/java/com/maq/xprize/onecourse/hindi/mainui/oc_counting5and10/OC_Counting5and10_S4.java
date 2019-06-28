@@ -14,6 +14,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pedroloureiro on 21/06/16.
@@ -133,7 +134,7 @@ public class OC_Counting5and10_S4 extends OC_Generic_SelectCorrectObject
         {
             lockScreen();
             child.hideMembers("hand.*");
-            child.showMembers(String.format("hand_%d", i));
+            child.showMembers(String.format(Locale.US,"hand_%d", i));
             child.setNeedsRetexture();
             unlockScreen();
             //
@@ -158,7 +159,7 @@ public class OC_Counting5and10_S4 extends OC_Generic_SelectCorrectObject
         //
         for (int i = 1; i <= 10; i++)
         {
-            OBGroup number = (OBGroup) objectDict.get(String.format("number_%d", i * 5));
+            OBGroup number = (OBGroup) objectDict.get(String.format(Locale.US,"number_%d", i * 5));
             //
             action_playNextDemoSentence(false); // FIVE. TEN. FIFTEEN. TWENTY. TWENTY-FIVE. THIRTY. THIRTY-FIVE. FORTY. FORTY-FIVE. FIFTY.
             lockScreen();
@@ -182,7 +183,7 @@ public class OC_Counting5and10_S4 extends OC_Generic_SelectCorrectObject
         //
         for (int i = 1; i <= 10; i++)
         {
-            OBGroup number = (OBGroup) objectDict.get(String.format("number_%d", i * 5));
+            OBGroup number = (OBGroup) objectDict.get(String.format(Locale.US,"number_%d", i * 5));
             //
             action_playNextDemoSentence(false); // FIVE. TEN. FIFTEEN. TWENTY. TWENTY-FIVE. THIRTY. THIRTY-FIVE. FORTY. FORTY-FIVE. FIFTY.
             lockScreen();
@@ -263,7 +264,7 @@ public class OC_Counting5and10_S4 extends OC_Generic_SelectCorrectObject
         //
         for (int i = 1; i <= loops; i++)
         {
-            OBGroup number = (OBGroup) objectDict.get(String.format("number_%d", 5 * i));
+            OBGroup number = (OBGroup) objectDict.get(String.format(Locale.US,"number_%d", 5 * i));
             OBPath box = (OBPath) number.objectDict.get("frame");
             //
             lockScreen();
@@ -303,7 +304,7 @@ public class OC_Counting5and10_S4 extends OC_Generic_SelectCorrectObject
     {
         for (int i = 1; i <= 5; i++)
         {
-            OBGroup child = (OBGroup) objectDict.get(String.format("child_%d", i));
+            OBGroup child = (OBGroup) objectDict.get(String.format(Locale.US,"child_%d", i));
             child.hideMembers("frame.*");
             //
             int totalHands = number / 5;

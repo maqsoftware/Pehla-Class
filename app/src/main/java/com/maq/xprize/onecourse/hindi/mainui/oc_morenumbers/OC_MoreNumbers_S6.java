@@ -23,6 +23,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_MutInt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -119,7 +120,7 @@ public class OC_MoreNumbers_S6 extends OC_SectionController
             }
         }
         for(Integer num : nums)
-            eventTargets.add(objectDict.get(String.format("circle_%d",num)));
+            eventTargets.add(objectDict.get(String.format(Locale.US,"circle_%d",num)));
 
         if(currentMode == MODE_DRAG)
         {
@@ -537,7 +538,7 @@ public class OC_MoreNumbers_S6 extends OC_SectionController
     }
     public String getPhase()
     {
-        return String.format("%s%d", currentEvent(), currentIndex+1);
+        return String.format(Locale.US,"%s%d", currentEvent(), currentIndex+1);
 
     }
 
@@ -638,7 +639,7 @@ public class OC_MoreNumbers_S6 extends OC_SectionController
                 attachControl(circleCopy);
                 circleCopy.show();
                 circleCopy.setZPosition ( 1);
-                OBLabel label = new OBLabel(String.format("%d",num),OBUtils.standardTypeFace(),fontSize);
+                OBLabel label = new OBLabel(String.format(Locale.US,"%d",num),OBUtils.standardTypeFace(),fontSize);
                 label.setColour ( textcolour);
                 OBGroup groupNum = new OBGroup(Arrays.asList((OBControl)label));
                 groupNum.sizeToTightBoundingBox();
@@ -667,7 +668,7 @@ public class OC_MoreNumbers_S6 extends OC_SectionController
                 fullGroup.setProperty("num_value",num);
                 fullGroup.hide();
                 attachControl(fullGroup);
-                objectDict.put(String.format("circle_%d",num),fullGroup);
+                objectDict.put(String.format(Locale.US,"circle_%d",num),fullGroup);
             }
         }
     }
@@ -677,7 +678,7 @@ public class OC_MoreNumbers_S6 extends OC_SectionController
         List<OBAnim> anims = new ArrayList<>();
         for(int i=1; i<=10; i++)
         {
-            OBGroup circle = (OBGroup)objectDict.get(String.format("circle_%d",80+(row*10) +i));
+            OBGroup circle = (OBGroup)objectDict.get(String.format(Locale.US,"circle_%d",80+(row*10) +i));
             circle.setLeft(circle.left()- bounds().width());
             circle.show();
             colourCircle(circle, colour);

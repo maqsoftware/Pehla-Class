@@ -30,6 +30,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static android.media.AudioFormat.CHANNEL_IN_MONO;
 import static android.media.AudioFormat.CHANNEL_OUT_MONO;
@@ -72,9 +73,9 @@ public class OC_BedtimeStory extends OC_SectionController
         for (int i = 0;i < rects.size();i++)
         {
             int j = i + 1;
-            OBPath bar = (OBPath) objectDict.get(String.format("bar%d",j));
-            OBPath rect = (OBPath) objectDict.get(String.format("rect%d",j));
-            OBPath circle = (OBPath) objectDict.get(String.format("obj%d",j));
+            OBPath bar = (OBPath) objectDict.get(String.format(Locale.US,"bar%d",j));
+            OBPath rect = (OBPath) objectDict.get(String.format(Locale.US,"rect%d",j));
+            OBPath circle = (OBPath) objectDict.get(String.format(Locale.US,"obj%d",j));
             bar.setStrokeColor(circle.fillColor());
             bar.setFrame(rect.frame());
             bar.setLineWidth(bar.width()/2f);
@@ -115,7 +116,7 @@ public class OC_BedtimeStory extends OC_SectionController
 
     String fileNameForIndex(int idx)
     {
-        return String.format("para%d_1",idx);
+        return String.format(Locale.US,"para%d_1",idx);
     }
 
     void startReading()
@@ -225,7 +226,7 @@ public class OC_BedtimeStory extends OC_SectionController
         lockScreen();
         for (int i = 0;i < 4;i++)
         {
-            OBControl c = objectDict.get(String.format("bar%d",4-i));
+            OBControl c = objectDict.get(String.format(Locale.US,"bar%d",4-i));
             setObjectVal(c,0f);
         }
         unlockScreen();
@@ -245,7 +246,7 @@ public class OC_BedtimeStory extends OC_SectionController
         int noBuckets = outBuckets.length;
         for (int i = 0;i < noBuckets;i++)
         {
-            OBControl c = objectDict.get(String.format("bar%d",noBuckets-i));
+            OBControl c = objectDict.get(String.format(Locale.US,"bar%d",noBuckets-i));
             float val = (float)Math.log10(outBuckets[i] + 1);
             //float val = (outBuckets[i]);
             //MainActivity.log(String.format("%g",val));

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -390,7 +391,7 @@ public class OC_Library extends OC_Menu
         for(int i = 0; i<units.size(); i++)
         {
             List<OCM_MlUnit> booksLevel = units.get(i+1);
-            OBControl levelControl = objectDict.get(String.format("level_%d", level));
+            OBControl levelControl = objectDict.get(String.format(Locale.US,"level_%d", level));
             PointF startPoint = OBMisc.copyPoint(levelControl.position());
             startPoint.x = icon.position().x;
             List<OBControl> bookIcons = new ArrayList<>();
