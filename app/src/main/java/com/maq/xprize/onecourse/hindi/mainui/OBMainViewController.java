@@ -571,7 +571,7 @@ public class OBMainViewController extends OBViewController {
 
             if (lastModuleName != null) {
 
-                startTime = System.currentTimeMillis() / 1000;;                                                                                   // setting the time when the app is resumed
+                startTime = System.currentTimeMillis() / 1000;                                                                                   // setting the time when the app is resumed
             }
             if (controller != null)
                 controller.onResume();
