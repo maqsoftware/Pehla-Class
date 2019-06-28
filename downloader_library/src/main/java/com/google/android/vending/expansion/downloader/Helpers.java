@@ -16,9 +16,7 @@
 
 package com.google.android.vending.expansion.downloader;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.SystemClock;
@@ -222,7 +220,6 @@ public class Helpers {
                 + File.separator + fileName;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     static public String getSaveFilePath(Context c) {
         // This technically existed since Honeycomb, but it is critical
         // on KitKat and greater versions since it will create the

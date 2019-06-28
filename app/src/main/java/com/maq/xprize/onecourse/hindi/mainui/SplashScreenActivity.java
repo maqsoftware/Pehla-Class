@@ -34,6 +34,7 @@ import static com.maq.xprize.onecourse.hindi.mainui.MainActivity.sharedPref;
 
 public class SplashScreenActivity extends Activity {
 
+    public static String assetsPath;
     Intent mainActivityIntent = null;
     String unzipDataFilePath;
     File expansionFile;
@@ -46,7 +47,6 @@ public class SplashScreenActivity extends Activity {
     boolean flagSwitchToInternal = false;
     boolean isExtractionRequired = false;
 
-    public static String assetsPath;
     public Dialog sdCardPreferenceDialog() {
         final SharedPreferences.Editor editor = sharedPref.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

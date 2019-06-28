@@ -68,7 +68,7 @@ public class DownloadNotification implements IDownloaderClient {
      * @param ctx The context to use to obtain access to the Notification
      *            Service
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     DownloadNotification(Context ctx, CharSequence applicationLabel) {
         mState = -1;
         mContext = ctx;
@@ -197,7 +197,6 @@ public class DownloadNotification implements IDownloaderClient {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onDownloadProgress(DownloadProgressInfo progress) {
         mProgressInfo = progress;
