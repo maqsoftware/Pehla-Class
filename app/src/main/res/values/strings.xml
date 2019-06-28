@@ -27,4 +27,8 @@
     <string name="playzone">Playzone</string>
     <string name="next">Next</string>
     <string name="cause_crash">Cause Crash</string>
+    <string name="dataPath">dataPath</string>
+    <string name="dialogInfo">\nDo you want to save app data in your SD card?\n\nक्या आप मेमरी कार्ड में ऐप को डालना चाहते है?</string>
+    <string name="dialogNo">No\nनहीं</string>
+    <string name="dialogYes">Yes\nहाँ</string>
 </resources>

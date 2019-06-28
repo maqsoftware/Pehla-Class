@@ -44,6 +44,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBSystemsManager;
 import com.maq.xprize.onecourse.hindi.utils.OBUser;
 import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,6 +80,7 @@ public class MainActivity extends Activity {
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
     public static MainActivity mainActivity;
+    public static SharedPreferences sharedPref;
     public static OBMainViewController mainViewController;
     public static Typeface standardTypeFace;
 
@@ -134,25 +136,34 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
+        sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 
         // Retrieve the stored values of main and patch file version
         int storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
         int storedPatchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), defaultFileVersion);
-        boolean isExtractionRequired = isExpansionExtractionRequired(storedMainFileVersion, storedPatchFileVersion);
-
-        if (storedMainFileVersion == 0 && storedPatchFileVersion == 0) {
-            // Set main and patch file version to 0, if the extractions takes place for the first time
+        boolean isExtractionRequired = false;
+        needExtraction();
+        if ((sharedPref.getInt("dataPath", 0) == 0)) {
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt(getString(R.string.mainFileVersion), 0);
-            editor.putInt(getString(R.string.patchFileVersion), 0);
-            editor.commit();
-            startSplashScreenActivity();
-        } else if (isExtractionRequired) {
-            // If main or patch file is updated, the extraction process needs to be performed again
-            startSplashScreenActivity();
+            editor.putInt("mainFileVersion", defaultFileVersion);
+            editor.putInt("patchFileVersion", defaultFileVersion);
+            editor.apply();
+            isExtractionRequired = true;
+        } else {
+            for (DownloadExpansionFile.XAPKFile xf : xAPKS) {
+                if ((xf.mIsMain && xf.mFileVersion != storedMainFileVersion) || (!xf.mIsMain && xf.mFileVersion != storedPatchFileVersion)) {
+                    isExtractionRequired = true;
+                    break;
+                }
+            }
         }
+        if (isExtractionRequired) {
+            Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
 
         MainActivity.log("MainActivity.onCreate");
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -198,20 +209,25 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void startSplashScreenActivity() {
-        Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private boolean isExpansionExtractionRequired(int storedMainFileVersion, int storedPatchFileVersion) {
-        for (DownloadExpansionFile.XAPKFile xf : xAPKS) {
-            // If main or patch file is updated set isExtractionRequired to true
-            if (xf.mIsMain && xf.mFileVersion != storedMainFileVersion || !xf.mIsMain && xf.mFileVersion != storedPatchFileVersion) {
-                return true;
+    private void needExtraction() {
+        File[] fileList = getExternalFilesDirs(null);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        for (File file : fileList) {
+            File flagFile = new File(".success.txt");
+            file = new File(file + File.separator + flagFile);
+            /*
+             * Checks if any older version has been installed and extracted successfully
+             * if extracted successfully, then set the existing path location as the preference.
+             */
+            if (file.exists()) {
+                if (file.toString().contains("emulated")) {
+                    editor.putInt(getString(R.string.dataPath), 1);
+                } else {
+                    editor.putInt(getString(R.string.dataPath), 2);
+                }
+                editor.apply();
             }
         }
-        return false;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
