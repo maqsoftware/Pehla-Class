@@ -112,7 +112,7 @@ public class Zip {
             }
         }
         if (isExpansionSuccessful) {
-            editor.putInt(isMain? String.valueOf(R.string.mainFileVersion) : String.valueOf(R.string.patchFileVersion), expansionFileVersion);
+            editor.putInt(isMain? "mainFileVersion" : "patchFileVersion", expansionFileVersion);
             editor.commit();
         }
     }
