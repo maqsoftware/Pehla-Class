@@ -59,6 +59,7 @@ public class OC_FatController extends OBFatController
     private boolean  allowsTimeOuts, showUserName;
 
 
+
     private Handler timeoutHandler;
     private Runnable timeoutRunnable;
 
@@ -230,6 +231,7 @@ public class OC_FatController extends OBFatController
             prepareNewSessionInDB(db, user.userid);
 
     }
+
 
     public void loadUser()
     {
