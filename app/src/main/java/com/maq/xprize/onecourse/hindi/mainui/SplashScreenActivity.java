@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -141,27 +142,27 @@ public class SplashScreenActivity extends Activity {
         }
     }
 
-    public String getDataFilePath() {
+    public String getDataFilePath(Context activityContext) {
         String internalDataFilePath = null;
         String externalDataFilePath = null;
         String dataFilePath = null;
-        File[] fileList = getExternalFilesDirs(null);
+        File[] fileList = activityContext.getExternalFilesDirs(null);
         for (File file : fileList) {
-            if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + getPackageName() + "/files") &&
+            if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + activityContext.getPackageName() + "/files") &&
                     file.isDirectory() &&
                     file.canRead() &&
                     isSDcard() &&
                     sharedPref.getInt(getString(R.string.dataPath), 0) == 2) {
 //              For external storage path
                 externalDataFilePath = file.getAbsolutePath() + File.separator;
-            } else if ((sharedPref.getInt(getString(R.string.dataPath), 0) == 1 || !flagSwitchToInternal) && internalDataFilePath == null) {
+            } else if ((sharedPref.getInt(activityContext.getString(R.string.dataPath), 0) == 1 || !flagSwitchToInternal) && internalDataFilePath == null) {
 //              For internal storage path
                 internalDataFilePath = file.getAbsolutePath() + File.separator;
             }
         }
         if (externalDataFilePath == null) {
             dataFilePath = internalDataFilePath;
-        } else if (sharedPref.getInt(getString(R.string.dataPath), 0) == 2) {
+        } else if (sharedPref.getInt(activityContext.getString(R.string.dataPath), 0) == 2) {
             dataFilePath = externalDataFilePath;
         }
         assetsPath = dataFilePath;
@@ -218,7 +219,7 @@ public class SplashScreenActivity extends Activity {
                     expansionFile = getOBBFilePath(xf);
                     expansionZipFile = new ZipFile(expansionFile);
                     zipHandler = new Zip(expansionZipFile, this);
-                    unzipDataFilePath = getDataFilePath();
+                    unzipDataFilePath = getDataFilePath(this);
                     packageNameDir = new File(unzipDataFilePath);
                     if (xf.mIsMain && !packageNameDir.exists()) {
                         packageNameDir.mkdir();

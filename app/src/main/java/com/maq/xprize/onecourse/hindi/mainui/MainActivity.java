@@ -139,11 +139,14 @@ public class MainActivity extends Activity {
         sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
 
+        SplashScreenActivity splashScreenActivity = new SplashScreenActivity();
+
         // Retrieve the stored values of main and patch file version
         int storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
         int storedPatchFileVersion = sharedPref.getInt(getString(R.string.patchFileVersion), defaultFileVersion);
         boolean isExtractionRequired = false;
         needExtraction();
+        splashScreenActivity.getDataFilePath(this);
         if ((sharedPref.getInt("dataPath", 0) == 0)) {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("mainFileVersion", defaultFileVersion);
