@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maq.xprize.onecourse.hindi"
-    android:installLocation="internalOnly"
+    android:installLocation="preferExternal"
     android:sharedUserId="${appuserid}">
 
     <!--Permissions required for running the app-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <!-- Required to access Google Play Licensing -->
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
@@ -19,6 +20,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Required to read and write the expansion files on shared storage. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera"/>
 
     <application
         android:icon="${appIcon}"
