@@ -100,7 +100,8 @@ public class SplashScreenActivity extends Activity {
         if (requestCode == 1) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                 sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
                 // Retrieve the stored values of main and patch file version
                 storedMainFileVersion = sharedPref.getInt(getString(R.string.mainFileVersion), defaultFileVersion);
