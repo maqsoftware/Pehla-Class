@@ -2074,6 +2074,7 @@ public class OBControl
                     topRow = row-1;
             }
         }
+        if(topRow<0){topRow=0;}                                                                       //bitmap.getPixel() does not take negative value.
         op = false;
         for (int row = bottomRow;row >= topRow && !op;row--)
         {
