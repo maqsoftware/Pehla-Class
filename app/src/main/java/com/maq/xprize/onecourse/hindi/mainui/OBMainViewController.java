@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBLabel;
 import com.maq.xprize.onecourse.hindi.controls.OBTextLayer;
@@ -47,6 +48,10 @@ public class OBMainViewController extends OBViewController {
     public long lastTouchActivity = 0;
     private Integer currentTouchID;
     private Handler lowlightButtonHandler = new Handler();
+
+    private String lastModuleName;
+    private long startTime;
+
 
     public OBMainViewController(Activity a) {
         super(a);
@@ -261,6 +266,14 @@ public class OBMainViewController extends OBViewController {
     }
 
     public boolean glMode() {
+        long endTime;
+        endTime = System.currentTimeMillis() / 1000;                                                                          //timeStamp in seconds.
+
+        if (lastModuleName != null) {
+
+            MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.completed));                                   // calling the event log for ending the module.
+        }
+        lastModuleName = null;
         return glView().getParent() != null;
     }
 
@@ -336,7 +349,7 @@ public class OBMainViewController extends OBViewController {
         pushViewController(vcClass, animate, fromRight, _params, pop, false, null);
     }
 
-    public void pushViewController(Class<?> vcClass, Boolean animate, boolean fromRight, Object _params, boolean pop, boolean zoom, RectF zoomRect) {
+    public void pushViewController(final Class<?> vcClass, Boolean animate, boolean fromRight, Object _params, boolean pop, boolean zoom, RectF zoomRect) {
         Constructor<?> cons;
         OBSectionController controller;
         try {
@@ -388,6 +401,36 @@ public class OBMainViewController extends OBViewController {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
+
+
+                String value = vc.getClass().getName();                                                                     // getting the name of the class
+
+                String moduleNamePath = value.replace("com.maq.xprize.onecourse.hindi.mainui.", "");      // getting the name of the module which need to be loaded
+                boolean isCommunity = moduleNamePath.contains("OCM_Child");                                                    // checking the module if contain the OCM_child which is in oc_community. Used at the very start for menu.
+                boolean isPlayZone = moduleNamePath.contains("OC_PlayZone");
+
+                String moduleName = moduleNamePath.replace(".", "/");
+                if (!isCommunity && !isPlayZone) {                                                                                              // we don't need to load the OCM_child, it's a menu
+                    long endTime;
+                    endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
+
+                    if (lastModuleName != null) {
+                        MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.completed));                             // calling the event log for ending the module.
+                    }
+
+                    startTime = endTime;
+                    lastModuleName = moduleName;
+                } else if (isPlayZone) {
+                    long endTime;
+                    endTime = System.currentTimeMillis() / 1000;                                                                   // timeStamp in seconds
+
+                    if (lastModuleName != null) {
+                        MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.completed));                             // calling the event log for ending the module.
+                    }
+                    lastModuleName = null;
+                }
+
+
                 vc.start();
             }
         });
@@ -526,6 +569,11 @@ public class OBMainViewController extends OBViewController {
     public void onResume() {
         if (viewControllers != null && viewControllers.size() > 0) {
             OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
+
+            if (lastModuleName != null) {
+
+                startTime = System.currentTimeMillis() / 1000;                                                                                   // setting the time when the app is resumed
+            }
             if (controller != null)
                 controller.onResume();
         }
@@ -535,6 +583,13 @@ public class OBMainViewController extends OBViewController {
     public void onPause() {
         if (viewControllers != null && viewControllers.size() > 0) {
             OBSectionController controller = viewControllers.get(viewControllers.size() - 1);
+            long endTime;
+            endTime = System.currentTimeMillis() / 1000;                                                                // timeStamps in seconds
+
+            if (lastModuleName != null) {
+
+                MainActivity.logEvent(lastModuleName, startTime, endTime, String.valueOf(R.string.inProgress));                        // calling the event log for pausing the module.
+            }
             if (controller != null)
                 controller.onPause();
         }

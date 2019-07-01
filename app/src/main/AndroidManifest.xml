@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.maq.xprize.onecourse.hindi"
-    android:installLocation="internalOnly"
+    android:installLocation="preferExternal"
     android:sharedUserId="${appuserid}">
 
     <!--Permissions required for running the app-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <!-- Required to access Google Play Licensing -->
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
@@ -21,6 +21,8 @@
     <!-- Required to read and write the expansion files on shared storage. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-feature android:name="android.hardware.camera"/>
+
     <application
         android:icon="${appIcon}"
         android:label="@string/app_name"
@@ -30,7 +32,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".mainui.MainActivity"
+            android:name=".mainui.DownloadExpansionFile"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
@@ -44,10 +46,33 @@
         </activity>
 
         <activity
+            android:name=".mainui.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <activity
             android:name=".mainui.SplashScreenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape" />
 
+        <!--
+         In order to start the service, it must be uniquely registered with
+         the package manager here.
+        -->
+        <service android:name=".service.ExpansionDownloaderService" />
+
+        <!--
+         In order for the alarm manager to contact the downloader script, the receiver
+         must be uniquely registered with the package manager here.
+        -->
+        <receiver android:name=".service.ExpansionAlarmReceiver" />
+
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 </manifest>

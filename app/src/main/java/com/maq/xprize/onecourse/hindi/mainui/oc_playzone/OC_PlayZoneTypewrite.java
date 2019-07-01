@@ -121,13 +121,18 @@ public class OC_PlayZoneTypewrite extends OC_SectionController {
         String[] themea = eventAttributes.get("themes").split(",");
         themeNames = Arrays.asList(themea);
 
+        RectF rectText = null;
         //Set bottom of textbox to be equal to top of Keyboard
-        float textBottom = objectDict.get("keyboard_rect").frame().top;
-        float textTop = objectDict.get("text_box").frame().top;
-        float textRight = objectDict.get("text_box").frame().right;
-        float textLeft = objectDict.get("text_box").frame().left;
-        RectF rectText = new RectF(textLeft, textTop, textRight, textBottom);
-        textBox = new OBScrollingText(rectText);
+        if (objectDict.get("keyboard_rect") != null) {
+            float textBottom = objectDict.get("keyboard_rect").frame().top;
+            float textTop = objectDict.get("text_box").frame().top;
+            float textRight = objectDict.get("text_box").frame().right;
+            float textLeft = objectDict.get("text_box").frame().left;
+            rectText = new RectF(textLeft, textTop, textRight, textBottom);
+            textBox = new OBScrollingText(rectText);
+        } else {
+            textBox = new OBScrollingText(objectDict.get("text_box").frame());
+        }
         textBox.setZPosition(50);
         textBox.setMasksToBounds(true);
         attachControl(textBox);
@@ -178,8 +183,10 @@ public class OC_PlayZoneTypewrite extends OC_SectionController {
         textBoxGroup = new OBGroup(gControls, textBox.frame());
         textBoxGroup.setZPosition(50);
         OBControl tbb = objectDict.get("text_box_bg");
-        tbb.setFrame(rectText);
-        textBoxGroup.setFrame(rectText);
+        if (objectDict.get("keyboard_rect") != null) {
+            tbb.setFrame(rectText);
+            textBoxGroup.setFrame(rectText);
+        }
         tbb.setZPosition(49);
         textBoxGroup.setPosition(tbb.position());
         textBoxGroup.setMasksToBounds(true);
