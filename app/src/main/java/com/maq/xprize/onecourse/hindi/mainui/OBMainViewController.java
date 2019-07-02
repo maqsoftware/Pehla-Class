@@ -274,7 +274,7 @@ public class OBMainViewController extends OBViewController {
 
         if (lastModuleName != null) {
 
-            MainActivity.logEvent(lastModuleName, startTime, endTime,statusCompleted);                                   // calling the event log for ending the module.
+            MainActivity.logEvent(lastModuleName, startTime, endTime, statusCompleted);                                   // calling the event log for ending the module.
         }
         lastModuleName = null;
         return glView().getParent() != null;
