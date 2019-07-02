@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.maq.xprize.onecourse.hindi.mainui.MainActivity.mainActivity;
+
 public class OBMainViewController extends OBViewController {
     public static final int SHOW_TOP_LEFT_BUTTON = 1,
             SHOW_TOP_RIGHT_BUTTON = 2,
@@ -52,8 +54,8 @@ public class OBMainViewController extends OBViewController {
     private String lastModuleName;
     private long startTime;
 
-    private String statusCompleted = "Completed";                                                    // status when module is completed for event log
-    private String statusInProgress = "In Progress";                                                // status when module is In Progress for event log
+    private String statusCompleted = mainActivity.getResources().getString(R.string.completed);     // status when module is completed for event log
+    private String statusInProgress = mainActivity.getResources().getString(R.string.inProgress);   // status when module is In Progress for event log
 
 
     public OBMainViewController(Activity a) {
