@@ -1,6 +1,5 @@
 package com.maq.xprize.onecourse.hindi.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -96,7 +95,6 @@ public class OBCameraManager {
         return cameraLoc == CAMERA_BACK ? CameraCharacteristics.LENS_FACING_BACK : CameraCharacteristics.LENS_FACING_FRONT;
     }
 
-    @SuppressLint("MissingPermission")
     private void openCamera(int cameraLoc) throws Exception {
         for (String cameraId : cameraManager.getCameraIdList()) {
             CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);

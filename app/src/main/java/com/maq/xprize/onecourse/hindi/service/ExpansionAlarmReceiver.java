@@ -28,7 +28,7 @@ import com.google.android.vending.expansion.downloader.DownloaderClientMarshalle
  * from the alarm service using the provided service helper function within the
  * DownloaderClientMarshaller. This class must be then registered in your AndroidManifest.xml
  * file with a section like this:
- *         <receiver android:name=".ExpansionAlarmReceiver"/>
+ * <receiver android:name=".ExpansionAlarmReceiver"/>
  */
 public class ExpansionAlarmReceiver extends BroadcastReceiver {
 

@@ -60,6 +60,7 @@ public class OC_Mwyh1 extends OC_Generic_WordsEvent
         super();
     }
 
+
     public void miscSetup()
     {
         super.miscSetup();
@@ -84,6 +85,7 @@ public class OC_Mwyh1 extends OC_Generic_WordsEvent
         main_loadParameters();
         currNo = 0;
     }
+
 
 
     @Override

@@ -60,7 +60,7 @@ maqpublisher.keystore
 .externalNativeBuild
 
 # Google Services (e.g. APIs or Firebase)
-# google-services.json
+google-services.json
 
 # lint
 lint/intermediates/
