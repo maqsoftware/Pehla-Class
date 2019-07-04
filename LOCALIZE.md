@@ -44,7 +44,7 @@ Each `letter` has a unique id and an optional set of `tags`. Possible values for
 ### 2. Phonemes, syllables and words
 The file `assets/oc-literacy-gen/local/LOCALE/wordcomponents.xml` defines the key phonemes, consonant clusters and syllables present in the language. It also contains a curated set of high-frequency and culturally specific words for learning the language.
 
-Each `phoneme` has a unique `id` with the prefix `is`. In Swahili, the phonemes _a, th_ and _ng'_ are represented like this:
+Each `phoneme` has a unique `id` with the prefix `is`. In English, the phonemes _a, th_ and _ng'_ are represented like this:
 
 ```xml		
 <phonemes>
@@ -54,28 +54,28 @@ Each `phoneme` has a unique `id` with the prefix `is`. In Swahili, the phonemes 
 </phonemes>
 ```
 
-Next come syllables. Each `syllable` is made from one or more `phoneme` and has a unique `id` with the prefix `isyl`. The individual phonemes in each syllable are delimited by `/`. In Swahili, the syllables _ju_ and _zwe_ are represented like this:
+Next come syllables. Each `syllable` is made from one or more `phoneme` and has a unique `id` with the prefix `isyl`. The individual phonemes in each syllable are delimited by `/`. In English, the syllables _axe_ and _bird_ are represented like this:
 	
 ```xml
 <syllables>
-	<syllable id="isyl_ju">j/u</syllable>
-	<syllable id="isyl_zwe">zw/e</syllable>
+	<syllable id="isyl_axe">a/x/e</syllable>
+	<syllable id="isyl_zwe">b/ir/d</syllable>
 </syllables>
 ```
 	
-Finally, the set of words. Each `word` is made from one or more `phonemes` or `syllables` and has a unique `id` with the prefix `fc`. The phonemes or syllables in each word are delimited by `/`. In Swahili, the words _paka_ and _rafiki_ are represented like this:
+Finally, the set of words. Each `word` is made from one or more `phonemes` or `syllables` and has a unique `id` with the prefix `fc`. The phonemes or syllables in each word are delimited by `/`. In English, the words _cat_ and _flower_ are represented like this:
 
 ```xml
 <words>
-	<word id="fc_cat">pa/ka</word>
-	<word id="fc_friend">ra/fi/ki</word>
+	<word id="fc_cat">cat</word>
+	<word id="fc_flower">flow/er</word>
 </words>
 ```    
 
 
 ### 3. Audio and images
 
-Each `letter`, `phoneme`, `syllable` and `word` is recorded by a native speaker and an _aac_ compressed version is stored in an _.m4a_ file, named by it's English `id`. For example, in Swahili, the words _nywele, jani_ and _kima_ exist as recorded audio files: `fc_hair.m4a`, `fc_leaf.m4a` and `fc_monkey.m4a`. These reside in the `assets/oc-literacy-gen/local/LOCALE/` directory.
+Each `letter`, `phoneme`, `syllable` and `word` is recorded by a native speaker and an _aac_ compressed version is stored in an _.m4a_ file, named by it's English `id`. For example, in English, the words _hair, leaf_ and _monkey_ exist as recorded audio files: `fc_hair.m4a`, `fc_leaf.m4a` and `fc_monkey.m4a`. These reside in the `assets/oc-literacy-gen/local/LOCALE/` directory.
 
 Where a word is broken down into `syllables` or `phonemes`, the recording has an accompanying _.epta_ file which specifies the start time of each phoneme or syllable in the audio file. For example, the English word _kick_, recorded in the file `fc_let_kick.m4a` has the following phoneme breakdowns in `fc_let_kick.etpa`:
 
@@ -88,22 +88,22 @@ Where a word is broken down into `syllables` or `phonemes`, the recording has an
 ```
 
 
-For each `word`, an optional _.png_ image exists. In Swahili, the words _mbu, kiazi_ and _shule_ have image files: `fc_mosquito.png`, `fc_potato.png` and `fc_school.png`.
+For each `word`, an optional _.png_ image exists. In English, the words _play, lunch_ and _school_ have image files: `fc_children.png`, `fc_lunchbox.png` and `fc_school.png`.
 
 
 ### 4. Stories
 Localised stories each have an `id` and reside in `assets/oc-reading/books/xr-[id]/`. Each story has configuration file `book.xml`.
 Presentational aspects of the story are defined on the `book` element. Each `page` contains one or more localised `para`. A `page` can have an optional `picjustify` attribute to specify the page layout.
 
-In lower level stories, there is a syllable breakdown for each word, delimited by `/`. The title and first page of the _A very tall man_ story in Swahili are represented like this:
+In lower level stories, there is a syllable breakdown for each word, delimited by `/`. The title and first page of the _A very tall man_ story in English are represented like this:
 
 ```xml	
-<book id="xr-averytallmanSW" indent="N" lineheight="1.5" paraheight="1.33" letterspacing="1" fontsize="50" noparas="true">
+<book id="xr-averytallmanEN" indent="N" lineheight="1.5" paraheight="1.33" letterspacing="1" fontsize="50" noparas="true">
 	<page pageno="0">
-		<para>M/tu m/re/fu sa/na</para>
+		<para>A ver/y tall man</para>
 	</page>
 	<page pageno="1">
-		<para>Mwa/nga/li/e m/tu hu/yu. Je/mbe la/ke ni fu/pi m/no.</para>
+		<para>Look at this man. His hoe is too short.</para>
 	</page>
 …
 ```
@@ -114,10 +114,10 @@ Every `para` has a corresponding _.m4a_ recorded audio file and an accompanying 
 
 ```xml
 <xml>
-	<timings text="Mwangalie mtu huyu. Jembe lake ni fupi mno.">
-		<timing id="0" start="0.000" end="0.513" startframe="0" framelength="22630" text="Mwangalie"/>
-		<timing id="1" start="0.513" end="0.872" startframe="22630" framelength="15820" text="mtu"/>
-		<timing id="2" start="0.872" end="1.235" startframe="38450" framelength="16018" text="huyu"/>
+	<timings text="Look at this man. His hoe is too short.">
+		<timing id="0" start="0.000" end="0.274" startframe="0" framelength="12103" text="Look"/>
+		<timing id="1" start="0.274" end="0.465" startframe="12103" framelength="8413" text="at"/>
+		<timing id="2" start="0.465" end="0.669" startframe="20516" framelength="8972" text="this"/>
 …
 ```
 
@@ -131,7 +131,7 @@ After the audio files have been generated, use [Amazon Polly's Speech Marks](htt
 
 ### 5. Component audio
 Component localizations consist of a set of _.m4a_ recorded audio files. The file names tend to correspond to the english localization.
-For example in the numeracy component _Add and subtract_, `assets/oc-addsubtract/local/sw/q_sevenbees.m4a` is the Swahili translation of the phrase _"Seven bees"_. In the reading component _Making plurals_, `assets/oc-makingplurals/local/en_GB/mp2_goodtheyreinorder.m4a` is the english recording of _"Good, they are in order"_.
+For example in the numeracy component _Add and subtract_, `assets/oc-addsubtract/local/en_GB/q_sevenbees.m4a` is the English recording of the phrase _"Seven bees"_. In the reading component _Making plurals_, `assets/oc-makingplurals/local/en_GB/mp2_goodtheyreinorder.m4a` is the english recording of _"Good, they are in order"_.
 We have provided mappings of all English audio to _.m4a_ filenames. These are xml files inside the `assets/localization` directory.  
 
 The English transcripts for all the audio files of a specific module are stored in `assets/transcripts/MODULE/english`. Create transcripts for local language and store them in `assets/transcripts/MODULE/LOCALE`. Generate audio files in local language and accent from these locale-specific transcripts by using [Amazon Polly](https://docs.aws.amazon.com/polly/latest/dg/what-is.html).
@@ -143,30 +143,43 @@ The child's _learning journey_ is an ordered set of `learning units` to be worke
 
 #### Community
 
-This is defined in the file `community_LOCALE/units.xml`. An example of the first part of the onecourse Swahili _learning journey_ from `community_swunits.xml`is shown below. The First unit is an introduction to using the tablet, the second a _flashcard_ reading activity:
+This is defined in the file `community_LOCALE/units.xml`. An example of the first part of the onecourse English _learning journey_ from `community_enGB/units.xml`is shown below. The First unit is an introduction to using the tablet, the second a _flashcard_ reading activity:
 
 ```xml
 <level id="1">
-	<unit	id="0002.OC_SectionIT"
+	<unit id="1.OC_VideoPlaybackStudy"
+	      		target="OC_VideoPlaybackStudy"
+	      		config="oc-video,oc-videos-gen"
+	      		params="vps/(null)/video=tablet_care_enGB"
+	      		targetDuration="900"
+	      		passThreshold="0.5"
+	      		catAudio=""
+	      		lang="en_GB"
+	      		icon="icon_0001"
+	      		ub_index="3"
+	      		awardStar="-1"/>
+	<unit id="2.OC_SectionIT"
 			target="OC_SectionIT"
-			params="eventit"
-			config="oc-introduction"
-			lang="sw"
-			targetDuration="120"
-			passThreshold="0.5"
-			icon="icon_0002"/>
-	<unit id="0003.OC_Sm2"
-			target="OC_Sm2"
-			params="sm2/
-					demo=true/
-					demotype=a1/
-					noscenes=8/
-					words=fc_prize,fc_animals,fc_sugar,fc_donkey,fc_pineapple,fc_glasses,fc_shorts,fc_minibus,fc_address,fc_basin,fc_cooking_pot,fc_sister,fc_mango,fc_hoe,fc_button,fc_drum,fc_pump_for_well,fc_friends,fc_rabbit,fc_soil,fc_children,fc_heron"
-			config="oc-lettersandsounds"
-			lang="sw"
-			targetDuration="120"
-			passThreshold="0.5"
-			icon="icon_0003"/>
+	      		config="oc-introduction"
+	      		params="eventit"
+	      		targetDuration="900"
+	      		passThreshold="0.5"
+	      		catAudio=""
+	      		lang="en_GB"
+	      		icon="icon_0002"
+	      		ub_index="4"
+	      		awardStar="-1"/>
+	<unit id="3.OC_Puzzle"
+	      		target="OC_Puzzle"
+	      		config="oc-lettersandsounds,oc-literacy-gen" 
+			params="puzzle;js/format=puzzle4/showtext=none/demo=true/preassembled=true/words=fc_duck,fc_hippopotamus,fc_giraffe,fc_elephant,fc_snake,fc_parrot,fc_crocodile"
+	      		targetDuration="900"
+	      		passThreshold="0.5"
+	      		catAudio=""
+	      		lang="en_GB"
+	      		icon="icon_0003"
+	      		ub_index="5"
+	      		awardStar="-1"/>
 …
 ```
 
@@ -199,7 +212,7 @@ In the following example, the _letter tracing_ component `OC_LetterTrace` is bei
 		target="OC_LetterTrace"
 		params="lt/intro=false/letter=i/notraces=4"
 		config="oc-lettersandsounds"
-		lang="sw"
+		lang="en_GB"
 		targetDuration="120"
 		passThreshold="0.5"
 		icon="icon_0052"
@@ -223,12 +236,12 @@ For video clips in the onecourse _play zone_, optional subtitles can be added. T
 3. The subtitle itself on one or more lines.
 4. A blank line indicating the end of this subtitle.
 
-For example, the Swahili subtitle for the video _Origami Elephant_ in `assets/oc-video/local/sw/origami_elephant.srt`:
+For example, the English subtitle for the video _Origami Elephant_ in `assets/oc-video/local/en_GB/origami_elephant.srt`:
 
 ```
 1
 00:00:00,000 --> 00:09:08,990
-Tutengeneze tembo wa karatasi!
+Make a paper elephant!
 
 ```
 
