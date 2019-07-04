@@ -103,6 +103,8 @@ public class MainActivity extends Activity {
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
 
+    AudioManager audioManager;                                                                      //declaring audio manager object.
+
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
         OBControl anchor = arm.objectDict.get("anchor");
@@ -229,6 +231,8 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)/2,0); //set the audio to 50% when app start.
     }
 
     private void needExtraction() {
