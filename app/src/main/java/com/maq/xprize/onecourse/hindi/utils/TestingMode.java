@@ -24,7 +24,7 @@ public class TestingMode extends AppCompatActivity {
         String line = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = null;
-        String dateStr = "2019/06/20 16:00:45";
+        String dateStr = "2019/04/12 16:00:45";
         int count = 0;
         try {
 
@@ -41,8 +41,6 @@ public class TestingMode extends AppCompatActivity {
                     case 2:
                         if (line.equals("1")) {
                             testingActive = true;
-                            System.out.println("Testing mode "+testingActive);
-
                         }
                         break;
                     case 3:
