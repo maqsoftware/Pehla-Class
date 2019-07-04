@@ -232,7 +232,7 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)/2,0); //set the audio to 50% when app start.
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2, 0); //set the audio to 50% when app start.
     }
 
     private void needExtraction() {
