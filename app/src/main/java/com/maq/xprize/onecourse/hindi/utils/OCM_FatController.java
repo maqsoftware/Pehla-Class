@@ -78,6 +78,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
     private Handler timeoutHandler;
     private Runnable timeoutRunnable;
     private boolean testMenuMode;
+    TestingMode testingMode = new TestingMode();
 
     public static OCM_User lastUserActiveFromDB(DBSQL db) {
         Cursor cursor = db.prepareRawQuery(String.format("SELECT U.userid AS userid FROM %s AS U LEFT JOIN %s AS S ON S.userid = U.userid ORDER BY S.startTime DESC LIMIT 1",
@@ -284,7 +285,14 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
      * @return current timestamp in seconds.
      */
     public long getCurrentTime() {
-        return System.currentTimeMillis() / 1000;
+        if (!testingMode.testingActive) {
+            return System.currentTimeMillis() / 1000;
+        } else {
+            if (testingMode.nightMode)
+                return 1555090245;   // value of "2019/04/12 23:00:45"  night time to activate night screen
+            else
+                return testingMode.timeSec;
+        }
     }
 
     public int getCurrentDay() {
@@ -1210,12 +1218,20 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
         Calendar currentCalendar = Calendar.getInstance();
         currentCalendar.setTimeInMillis(getCurrentTime() * 1000);
         int hourNow = currentCalendar.get(Calendar.HOUR_OF_DAY);
-
-        return hourNow >= playzoneActiveHour;
+        if (!testingMode.testingActive) {
+            return hourNow >= playzoneActiveHour;
+        } else {
+            if (testingMode.playZone)
+                return true;
+            else
+                return false;
+        }
     }
 
     public boolean communityModeActive() {
-        if (currentSessionStandardUnitCount() >= SESSION_UNIT_COUNT) {
+        if (testingMode.testingActive || testingMode.studySection) {
+            return true;
+        } else if (currentSessionStandardUnitCount() >= SESSION_UNIT_COUNT) {
             return true;
         } else {
 

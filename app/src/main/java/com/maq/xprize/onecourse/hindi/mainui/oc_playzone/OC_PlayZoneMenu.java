@@ -38,6 +38,7 @@ import com.maq.xprize.onecourse.hindi.utils.OB_Maths;
 import com.maq.xprize.onecourse.hindi.utils.OCM_FatController;
 import com.maq.xprize.onecourse.hindi.utils.OCM_MlUnit;
 import com.maq.xprize.onecourse.hindi.utils.OCM_MlUnitInstance;
+import com.maq.xprize.onecourse.hindi.utils.TestingMode;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by michal on 03/07/2017.
@@ -71,7 +73,8 @@ public class OC_PlayZoneMenu extends OC_Menu
     float dragTravelDistance;
     float leftLimit, rightLimit, topLimit, bottomLimit;
     OCM_FatController fatController;
-
+    TestingMode testingMode = new TestingMode();
+    int count = 0;
     @Override
     public void onPause()
     {
@@ -922,23 +925,47 @@ public class OC_PlayZoneMenu extends OC_Menu
         button.setProperty("speedy",speedY);
     }
 
-    public void moveButtonBySpeed(OBControl button,float frameFrac)
-    {
-        float speedX = (float)button.propertyValue("speedx");
-        float speedY = (float)button.propertyValue("speedy");
-        if(speedX == 0 && speedY == 0)
+    public void moveButtonBySpeed(OBControl button, float frameFrac) {
+        float speedX = (float) button.propertyValue("speedx");
+        float speedY = (float) button.propertyValue("speedy");
+        if (speedX == 0 && speedY == 0)
             return;
         PointF loc = OBMisc.copyPoint(button.position());
-        loc.x += speedX * frameFrac;
-        loc.y += speedY * frameFrac;
-        float decay = (float)Math.pow(0.99f,frameFrac);
-        if(Math.abs(speedX) > MAX_SPEED)
-            speedX *= decay;
-        if(Math.abs(speedY) > MAX_SPEED)
-            speedY *= decay;
-        setControlSpeed(button,speedX,speedY);
-        setButtonLoc(button,loc ,(boolean)button.propertyValue("collide"));
+        if (!testingMode.testingActive) {
+            loc.x += speedX * frameFrac;
+            loc.y += speedY * frameFrac;
+            float decay = (float) Math.pow(0.99f, frameFrac);
+            if (Math.abs(speedX) > MAX_SPEED)
+                speedX *= decay;
+            if (Math.abs(speedY) > MAX_SPEED)
+                speedY *= decay;
+        } else {
+            float x1 = loc.x, y1 = loc.y;
+            if (count < 400) {
+                loc.x += speedX * frameFrac;
+                loc.y += speedY * frameFrac;
+                x1 = loc.x;
+                y1 = loc.y;
+                float decay = (float) Math.pow(0.99f, frameFrac);
+                if (Math.abs(speedX) > MAX_SPEED)
+                    speedX *= decay;
+                if (Math.abs(speedY) > MAX_SPEED)
+                    speedY *= decay;
+            } else {
+                loc.x = x1;
+                loc.y = y1;
+                if (Math.abs(speedX) > MAX_SPEED)
+                    speedX = 0;
+                if (Math.abs(speedY) > MAX_SPEED)
+                    speedY = 0;
+            }
+            count++;
+        }
+        setControlSpeed(button, speedX, speedY);
+        setButtonLoc(button, loc, (boolean) button.propertyValue("collide"));
+
     }
+
 
     public void moveMediaIconsBySpeedFrac(float frameFrac)
     {
