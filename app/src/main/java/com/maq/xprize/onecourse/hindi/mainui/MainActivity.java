@@ -392,7 +392,7 @@ public class MainActivity extends Activity {
         super.onWindowFocusChanged(hasFocus);
     }
 
-    public void onBackPressed() {
+    public void onBackPressed() {                                                                   //back button functionality.
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
 
             super.onBackPressed();
