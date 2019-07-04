@@ -123,7 +123,7 @@ Every `para` has a corresponding _.m4a_ recorded audio file and an accompanying 
 
 Each word within a `para` is also individually recorded, along with a version split into syllables for lower-level stories.  
 
-Refer the [LocalizeHelper](https://github.com/maqsoftware/GLEXP-Team-onebillion-Hindi/blob/master/LocalizeHelper.md) document for specific steps to generate audio and ETPA files using Amazon Polly.  
+Refer the [LOCALIZE-HELPER](https://github.com/maqsoftware/GLEXP-Team-onebillion-Hindi/blob/master/LOCALIZE-HELPER.md) document for specific steps to generate audio and ETPA files using Amazon Polly.  
 **Note:** Check for the languages supported by Amazon Polly [here](https://docs.aws.amazon.com/polly/latest/dg/voicelist.html).
 
 
@@ -132,7 +132,7 @@ Component localizations consist of a set of _.m4a_ recorded audio files. The fil
 For example in the numeracy component _Add and subtract_, `assets/oc-addsubtract/local/en_GB/q_sevenbees.m4a` is the English recording of the phrase _"Seven bees"_. In the reading component _Making plurals_, `assets/oc-makingplurals/local/en_GB/mp2_goodtheyreinorder.m4a` is the english recording of _"Good, they are in order"_.
 We have provided mappings of all English audio to _.m4a_ filenames. These are xml files inside the `assets/localization` directory.  
 
-English transcripts for all the audio files of a specific module are stored in `assets/transcripts/MODULE/english`. Refer the [LocalizeHelper](https://github.com/maqsoftware/GLEXP-Team-onebillion-Hindi/blob/master/LocalizeHelper.md) document for specific steps to generate audio files using Amazon Polly.
+English transcripts for all the audio files of a specific module are stored in `assets/transcripts/MODULE/english`. Refer the [LOCALIZE-HELPER](https://github.com/maqsoftware/GLEXP-Team-onebillion-Hindi/blob/master/LOCALIZE-HELPER.md) document for specific steps to generate audio files using Amazon Polly.
 
 
 ### 6. Learning journey
