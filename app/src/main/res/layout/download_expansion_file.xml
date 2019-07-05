@@ -99,8 +99,8 @@
 
                 <Button
                     android:id="@+id/cancelButton"
-                    android:layout_width="131dp"
-                    android:layout_height="13dp"
+                    android:layout_width="125dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
