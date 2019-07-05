@@ -2,8 +2,10 @@
 <resources>
     <string name="_0mb_0mb">0MB / 0MB</string>
     <string name="_0">0%</string>
-    <string name="channel_name">Downloads</string>
-    <string name="channel_description">Shows download progress for expansion files</string>
+    <string name="downloads_channel_name">Downloads</string>
+    <string name="downloads_channel_description">Displays download progress for expansion files</string>
+    <string name="reminders_channel_name">Reminders</string>
+    <string name="reminders_channel_description">Displays reminder for studying</string>
     <!-- When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
         Note that such a download could have been initiated by a variety of

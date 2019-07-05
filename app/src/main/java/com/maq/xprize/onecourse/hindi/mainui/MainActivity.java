@@ -3,6 +3,8 @@ package com.maq.xprize.onecourse.hindi.mainui;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -35,6 +37,7 @@ import com.maq.xprize.onecourse.hindi.controls.OBControl;
 import com.maq.xprize.onecourse.hindi.controls.OBGroup;
 import com.maq.xprize.onecourse.hindi.glstuff.OBGLView;
 import com.maq.xprize.onecourse.hindi.glstuff.OBRenderer;
+import com.maq.xprize.onecourse.hindi.receivers.NotificationReminderReceiver;
 import com.maq.xprize.onecourse.hindi.utils.OBAnalyticsManager;
 import com.maq.xprize.onecourse.hindi.utils.OBAudioManager;
 import com.maq.xprize.onecourse.hindi.utils.OBConfigManager;
@@ -48,6 +51,7 @@ import com.maq.xprize.onecourse.hindi.utils.OBUtils;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +88,7 @@ public class MainActivity extends Activity {
     public static SharedPreferences sharedPref;
     public static OBMainViewController mainViewController;
     public static Typeface standardTypeFace;
+    private static int REQUEST_CODE = 0;
 
     private static String[] PERMISSION_ALL = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -153,8 +158,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);                                                       // creating Firebase instance.
-
+        // Creating Firebase Analytics instance
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         sharedPref = getSharedPreferences("ExpansionFile", MODE_PRIVATE);
         int defaultFileVersion = 0;
@@ -188,6 +193,9 @@ public class MainActivity extends Activity {
         }
 
         MainActivity.log("MainActivity.onCreate");
+
+        setNotificationReminder();
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         systemsManager = new OBSystemsManager(this);
@@ -229,6 +237,31 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setNotificationReminder() {
+        // Set the alarm to start at approximately 10:00 AM.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+
+        // Create an intent to trigger the notification reminder using a broadcast receiver
+        Intent notificationReminderIntent = new Intent(this, NotificationReminderReceiver.class);
+
+        // Because the intent must be fired by a system service from outside the application,
+        // it's necessary to wrap it in a PendingIntent. Providing a different process with
+        // a PendingIntent gives that other process permission to fire the intent that this
+        // application has created.
+        // Also, this code creates a BroadcastIntent to start an Activity.
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, REQUEST_CODE, notificationReminderIntent, 0);
+
+        // The AlarmManager, like most system services, isn't created by application code, but
+        // requested from the system.
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        // setInexactRepeating takes a start delay and period between alarms as arguments.
+        // The below code fires every day at 10:00 AM.
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     private void needExtraction() {
