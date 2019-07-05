@@ -5,6 +5,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+import android.speech.tts.Voice;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * TEXT TO SPEECH IMPLEMENTATION
@@ -44,9 +46,20 @@ public class OBTextToSpeech {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
+                    boolean langNotPresent = false;
                     // sets output language as Hindi
-                    int ttsLang = textToSpeech.setLanguage(Locale.forLanguageTag("hin"));
-                    if (ttsLang == TextToSpeech.LANG_MISSING_DATA || ttsLang == TextToSpeech.LANG_NOT_SUPPORTED)
+                    int ttsLang = textToSpeech.setLanguage(new Locale("hi", "in"));
+                    // gets the voice of the TTS engine
+                    Voice hinVoice = textToSpeech.getVoice();
+                    // gets all the voices supported by the TTS engine
+                    Set<Voice> allVoices = textToSpeech.getVoices();
+                    for (Voice v : allVoices) {
+                        if (v.equals(hinVoice)) {
+                            langNotPresent = v.getFeatures().contains("notInstalled");
+                            break;
+                        }
+                    }
+                    if (ttsLang == TextToSpeech.LANG_MISSING_DATA || ttsLang == TextToSpeech.LANG_NOT_SUPPORTED || langNotPresent)
                         Log.e("TTS", "The language is not supported");
                     else
                         Log.i("TTS", "Initialization success!");
@@ -72,7 +85,7 @@ public class OBTextToSpeech {
                 } else
                     Toast.makeText(context, "TTS initialization failed", Toast.LENGTH_SHORT).show();
             }
-        });
+        }, "com.google.android.tts");
     }
 
     private int getState() {
