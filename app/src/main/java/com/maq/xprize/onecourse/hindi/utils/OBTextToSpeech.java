@@ -30,8 +30,10 @@ public class OBTextToSpeech {
             OBAP_PLAYING = 2,
             OBAP_FINISHED = 3;
     private static int state;
+    private static boolean playBack;
     final private AudioManager audioManager;
-    private TextToSpeech textToSpeech;
+    final private TextToSpeech textToSpeech;
+    private AssetFileDescriptor fileDescriptor;
 
     OBTextToSpeech(final Context context) {
         setState(OBAP_IDLE);
@@ -82,9 +84,15 @@ public class OBTextToSpeech {
     }
 
     public boolean playAudio(AssetFileDescriptor fd) {
+        fileDescriptor = fd;
+        return playAudioHelper();
+    }
+
+    private boolean playAudioHelper() {
         synchronized (this) {
             try {
-                FileInputStream f = fd.createInputStream();
+                //fileDescriptor = fd;
+                FileInputStream f = fileDescriptor.createInputStream();
                 InputStreamReader i = new InputStreamReader(f, StandardCharsets.UTF_16LE);
                 BufferedReader b = new BufferedReader(i);
                 String data = b.readLine();
@@ -110,8 +118,17 @@ public class OBTextToSpeech {
     }
 
     void stopAudio() {
-        if (isPlaying())
-            textToSpeech.stop();
+        playBack = isPlaying();
+        textToSpeech.stop();
+    }
+
+    public void onResume() {
+        if (playBack && fileDescriptor != null)
+            playAudioHelper();
+    }
+
+    void onDestroy() {
+        textToSpeech.shutdown();
     }
 
 }

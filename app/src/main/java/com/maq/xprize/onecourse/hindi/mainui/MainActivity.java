@@ -80,6 +80,7 @@ public class MainActivity extends Activity {
     public static OBConfigManager configManager;
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
+    public static OBAudioManager audioManager;
     public static MainActivity mainActivity;
     public static SharedPreferences sharedPref;
     public static OBMainViewController mainViewController;
@@ -221,7 +222,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         try {
-            new OBAudioManager(mainActivity);
+            audioManager = new OBAudioManager(mainActivity);
             setUpConfig();
             checkForFirstSetupAndRun();
             ((ThreadPoolExecutor) AsyncTask.THREAD_POOL_EXECUTOR).setCorePoolSize(20);
@@ -469,6 +470,7 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         OBSystemsManager.sharedManager.onDestroy();
+        audioManager.onDestroy();
     }
 
     @Override
@@ -490,7 +492,7 @@ public class MainActivity extends Activity {
             suspendLock.unlock();
         } catch (Exception ignored) {
         }
-
+        audioManager.onResume();
     }
 
     @Override
@@ -508,6 +510,7 @@ public class MainActivity extends Activity {
         OBSystemsManager.sharedManager.onStop();
         analyticsManager.onStop();
         super.onStop();
+        audioManager.onStop();
     }
 
     public void onAlarmReceived(Intent intent) {
