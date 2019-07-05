@@ -13,11 +13,11 @@ import java.util.Date;
 
 // testing date for which testing scripts are made is "2019/04/12 16:00:45" set it using constructor
 public class TestingMode extends AppCompatActivity {
-    public static boolean testingActive = false; // enable testing mode and stops bubble in playground
+    public static boolean testingActive = false; // enable testing mode and stop bubble's motion in playground
     public static boolean studySection = false;   //shows all modules in study section even if testing mode is disabled
     public static boolean nightMode = false;      // In testing mode, this helps you to activate and deactivate night mode permanently else as per the implementation
     public static boolean playZone = false;  // In testing mode, this helps you to activate and deactivate play ground permanently else as per the implementation
-    public static long timeSec = 0;        // testing date can set text file in
+    public static long timeSec = 0;        // testing date can set using file assets/testing/testing.txt in application's data directory.
 
     public TestingMode() { //public constructor
         String filePath = OBConfigManager.sharedManager.getAssetsExternalPath() + File.separator + "testing" + File.separator + "testing.txt";
@@ -33,7 +33,6 @@ public class TestingMode extends AppCompatActivity {
                     new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println("Testing mode "+line);
                 switch (count) {
                     case 1:
                         dateStr = line;

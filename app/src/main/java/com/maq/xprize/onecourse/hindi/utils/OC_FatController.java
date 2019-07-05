@@ -57,7 +57,7 @@ public class OC_FatController extends OBFatController {
     private int currentSessionId;
     private long currentSessionStartTime, currentSessionEndTime;
     private boolean allowsTimeOuts, showUserName;
-    TestingMode testingMode = new TestingMode();
+    TestingMode testingMode;
 
 
     private Handler timeoutHandler;
@@ -77,6 +77,7 @@ public class OC_FatController extends OBFatController {
     }
 
     public long getCurrentTime() {
+        testingMode = new TestingMode();
         if (!testingMode.testingActive) {
             return System.currentTimeMillis() / 1000;
         } else {

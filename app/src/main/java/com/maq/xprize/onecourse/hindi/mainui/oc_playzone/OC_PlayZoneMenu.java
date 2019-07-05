@@ -73,8 +73,8 @@ public class OC_PlayZoneMenu extends OC_Menu
     float dragTravelDistance;
     float leftLimit, rightLimit, topLimit, bottomLimit;
     OCM_FatController fatController;
-    TestingMode testingMode = new TestingMode();
-    int count = 0;
+    TestingMode testingMode;
+    int count;
     @Override
     public void onPause()
     {
@@ -156,8 +156,8 @@ public class OC_PlayZoneMenu extends OC_Menu
         OBControl btmLeft = objectDict.get("bottom_bar_left");
         OBControl btmRight = objectDict.get("bottom_bar_right");
         scrollHitBox = new RectF(btmLeft.right(), btmLeft.top(), btmRight.left() , btmLeft.bottom());
-
-
+        testingMode = new TestingMode();
+        count = 0;
         OBControl backButton = objectDict.get("button_back");
         backButton.setZPosition(50);
         backButton.show();

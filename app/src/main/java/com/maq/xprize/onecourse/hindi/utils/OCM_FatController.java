@@ -78,7 +78,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
     private Handler timeoutHandler;
     private Runnable timeoutRunnable;
     private boolean testMenuMode;
-    TestingMode testingMode = new TestingMode();
+    TestingMode testingMode;
 
     public static OCM_User lastUserActiveFromDB(DBSQL db) {
         Cursor cursor = db.prepareRawQuery(String.format("SELECT U.userid AS userid FROM %s AS U LEFT JOIN %s AS S ON S.userid = U.userid ORDER BY S.startTime DESC LIMIT 1",
@@ -848,6 +848,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
             studyListLoopWeek = OBConfigManager.sharedManager.getFatControllerStudyLoopWeek();
             if (studyListLoopWeek < 0) studyListLoopWeek = 1;
             if (lockBatteryLevel < 0) lockBatteryLevel = 10;
+            testingMode = new TestingMode();
         } catch (Exception e) {
             unitAttemptsCount = 3;
             disallowStartHour = 22;
@@ -1221,10 +1222,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
         if (!testingMode.testingActive) {
             return hourNow >= playzoneActiveHour;
         } else {
-            if (testingMode.playZone)
-                return true;
-            else
-                return false;
+            return testingMode.playZone;
         }
     }
 
