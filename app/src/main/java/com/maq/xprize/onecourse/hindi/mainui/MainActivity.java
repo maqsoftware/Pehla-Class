@@ -103,6 +103,8 @@ public class MainActivity extends Activity {
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
 
+    private long backPressedTime;                                                                   // to record the time for back button.
+
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
         OBControl anchor = arm.objectDict.get("anchor");
@@ -390,8 +392,16 @@ public class MainActivity extends Activity {
         super.onWindowFocusChanged(hasFocus);
     }
 
-    public void onBackPressed() {
-        // do nothing
+    public void onBackPressed() {                                                                   //back button functionality.
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+
+            super.onBackPressed();
+
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 
     public void doGLStuff() {
