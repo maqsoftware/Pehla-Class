@@ -246,6 +246,8 @@ public class DownloadExpansionFile extends Activity implements IDownloaderClient
                     mPauseButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            Intent intent = new Intent(DownloadExpansionFile.this, MainActivity.class);
+                            startActivity(intent);
                             finish();
                         }
                     });
