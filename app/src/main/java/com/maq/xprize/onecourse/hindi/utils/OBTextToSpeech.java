@@ -83,15 +83,24 @@ public class OBTextToSpeech {
         state = st;
     }
 
+    /**
+     * This function is called to generate audio. The purpose of this function is to
+     * initialize fileDescriptor only when audio is being played directly from the transcripts
+     * for the first time and not when the app comes into foreground after being inactive.
+     * After setting the value for fileDescriptor, it calls its helper function to generated audio.
+     */
     public boolean playAudio(AssetFileDescriptor fd) {
         fileDescriptor = fd;
         return playAudioHelper();
     }
 
+    /**
+     * This function acts as a helper function for playAudio.
+     * This contains the main logic for generating audio from transcripts.
+     */
     private boolean playAudioHelper() {
         synchronized (this) {
             try {
-                //fileDescriptor = fd;
                 FileInputStream f = fileDescriptor.createInputStream();
                 InputStreamReader i = new InputStreamReader(f, StandardCharsets.UTF_16LE);
                 BufferedReader b = new BufferedReader(i);
