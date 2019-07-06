@@ -84,6 +84,7 @@ public class MainActivity extends Activity {
     public static OBConfigManager configManager;
     public static OBSystemsManager systemsManager;
     public static OBAnalyticsManager analyticsManager;
+    public static OBAudioManager audioManager;
     public static MainActivity mainActivity;
     public static SharedPreferences sharedPref;
     public static OBMainViewController mainViewController;
@@ -107,6 +108,10 @@ public class MainActivity extends Activity {
     public ReentrantLock suspendLock = new ReentrantLock();
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
+
+    private long backPressedTime;                                                                   // to record the time for back button.
+
+    AudioManager audioManager;                                                                      //declaring audio manager object.
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
@@ -229,13 +234,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         try {
-            new OBAudioManager();
+            audioManager = new OBAudioManager(mainActivity);
             setUpConfig();
             checkForFirstSetupAndRun();
             ((ThreadPoolExecutor) AsyncTask.THREAD_POOL_EXECUTOR).setCorePoolSize(20);
             log("onCreate ended");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2) {                  //check if the audio is less than 50%
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2, 0); //set the audio to 50% when app start.
         }
     }
 
@@ -423,8 +432,16 @@ public class MainActivity extends Activity {
         super.onWindowFocusChanged(hasFocus);
     }
 
-    public void onBackPressed() {
-        // do nothing
+    public void onBackPressed() {                                                                   //back button functionality.
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+
+            super.onBackPressed();
+
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 
     public void doGLStuff() {
@@ -502,6 +519,7 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         OBSystemsManager.sharedManager.onDestroy();
+        audioManager.onDestroy();
     }
 
     @Override
@@ -523,7 +541,7 @@ public class MainActivity extends Activity {
             suspendLock.unlock();
         } catch (Exception ignored) {
         }
-
+        audioManager.onResume();
     }
 
     @Override
@@ -541,6 +559,7 @@ public class MainActivity extends Activity {
         OBSystemsManager.sharedManager.onStop();
         analyticsManager.onStop();
         super.onStop();
+        audioManager.onStop();
     }
 
     public void onAlarmReceived(Intent intent) {
