@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 
     private long backPressedTime;                                                                   // to record the time for back button.
 
-    AudioManager audioManager;                                                                      //declaring audio manager object.
+    AudioManager audioManagerSetHalf;                                                                      //declaring audio manager object.
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
@@ -158,6 +158,19 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        systemsManager = new OBSystemsManager(this);
+
+        if (!isTaskRoot()) {                                                                                        //if the activity is not task root, close it
+            onDestroy();
+            finish();
+            return;
+        }
+
+        if (getIntent().getBooleanExtra("Exit me", false)) {                                         //finishes the main activity if the permissions are denied
+            finish();
+            return;
+        }
+
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);                                                       // creating Firebase instance.
 
 
@@ -195,7 +208,7 @@ public class MainActivity extends Activity {
         MainActivity.log("MainActivity.onCreate");
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        systemsManager = new OBSystemsManager(this);
+
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
@@ -234,9 +247,9 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2) {                  //check if the audio is less than 50%
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2, 0); //set the audio to 50% when app start.
+        audioManagerSetHalf = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManagerSetHalf.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManagerSetHalf.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2) {                  //check if the audio is less than 50%
+            audioManagerSetHalf.setStreamVolume(AudioManager.STREAM_MUSIC, audioManagerSetHalf.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2, 0); //set the audio to 50% when app start.
         }
     }
 
@@ -540,11 +553,15 @@ public class MainActivity extends Activity {
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_EXTERNAL_STORAGE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[3] == PackageManager.PERMISSION_GRANTED && grantResults[4] == PackageManager.PERMISSION_GRANTED) {
             log("received permission to access external storage. attempting to download again");
             runChecksAndLoadMainViewController();
-        } else if (requestCode == REQUEST_ALL) {
-            checkForFirstSetupAndRun();
+        } else {                                                                                        //closes all the previous activities when any of the permissions is denied
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("Exit me", true);
+            startActivity(intent);
+            finish();
         }
     }
 

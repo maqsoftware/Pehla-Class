@@ -6,7 +6,7 @@
 
     <!--Permissions required for running the app-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Required to access Google Play Licensing -->
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
@@ -21,7 +21,7 @@
     <!-- Required to read and write the expansion files on shared storage. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:icon="${appIcon}"
@@ -48,9 +48,9 @@
         <activity
             android:name=".mainui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
 
         <activity
             android:name=".mainui.SplashScreenActivity"
