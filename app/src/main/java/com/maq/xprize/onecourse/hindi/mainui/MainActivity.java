@@ -163,6 +163,7 @@ public class MainActivity extends Activity {
         if (!isTaskRoot()) {                                                                                        //if the activity is not task root, close it
             onDestroy();
             finish();
+            return;
         }
 
         if (getIntent().getBooleanExtra("Exit me", false)) {                                         //finishes the main activity if the permissions are denied
