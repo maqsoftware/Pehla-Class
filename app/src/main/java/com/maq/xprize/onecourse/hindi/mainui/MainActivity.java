@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 
     private long backPressedTime;                                                                   // to record the time for back button.
 
-    AudioManager audioManagerSetHalf;                                                                      //declaring audio manager object.
+    AudioManager volumeManager;                                                                      //declaring audio manager object.
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");
@@ -247,9 +247,9 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        audioManagerSetHalf = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (audioManagerSetHalf.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManagerSetHalf.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2) {                  //check if the audio is less than 50%
-            audioManagerSetHalf.setStreamVolume(AudioManager.STREAM_MUSIC, audioManagerSetHalf.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2, 0); //set the audio to 50% when app start.
+        volumeManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (volumeManager.getStreamVolume(AudioManager.STREAM_MUSIC) < volumeManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2) {                  //check if the audio is less than 50%
+            volumeManager.setStreamVolume(AudioManager.STREAM_MUSIC, volumeManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 2, 0); //set the audio to 50% when app start.
         }
     }
 
@@ -553,7 +553,7 @@ public class MainActivity extends Activity {
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[3] == PackageManager.PERMISSION_GRANTED && grantResults[4] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[3] == PackageManager.PERMISSION_GRANTED && grantResults[4] == PackageManager.PERMISSION_GRANTED) {              //checks if all the permissions are granted and if granted, continues execution
             log("received permission to access external storage. attempting to download again");
             runChecksAndLoadMainViewController();
         } else {                                                                                        //closes all the previous activities when any of the permissions is denied
