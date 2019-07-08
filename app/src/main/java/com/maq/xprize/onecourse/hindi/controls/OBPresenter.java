@@ -156,14 +156,14 @@ public class OBPresenter extends OBCharacter
             {
                 if (af instanceof String)
                 {
-                    Callable<Void> c1 = new Callable<Void>() {
+                    Callable<Void> audioThread = new Callable<Void>() {
                         @Override
                         public Void call() throws Exception {
                             controller.playAudio((String) af);
                             return null;
                         }
                     };
-                    Callable<Void> c2 = new Callable<Void>() {
+                    Callable<Void> animationThread = new Callable<Void>() {
                         @Override
                         public Void call() throws Exception {
                             int mframe = 1, nframe = 1;
@@ -190,8 +190,8 @@ public class OBPresenter extends OBCharacter
                         }
                     };
                     List<Callable<Void>> taskList = new ArrayList<>();
-                    taskList.add(c1);
-                    taskList.add(c2);
+                    taskList.add(audioThread);
+                    taskList.add(animationThread);
                     ExecutorService es = Executors.newFixedThreadPool(2);
                     try {
                         es.invokeAll(taskList);
