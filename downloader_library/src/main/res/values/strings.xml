@@ -2,8 +2,10 @@
 <resources>
     <string name="_0mb_0mb">0MB / 0MB</string>
     <string name="_0">0%</string>
-    <string name="channel_name">Downloads</string>
-    <string name="channel_description">Shows download progress for expansion files</string>
+    <string name="downloads_channel_name">Downloads</string>
+    <string name="downloads_channel_description">Displays download progress for expansion files</string>
+    <string name="reminders_channel_name">Reminders</string>
+    <string name="reminders_channel_description">Displays reminder for studying</string>
     <string name="kilobytes_per_second">%1$s KB/s</string>
     <string name="state_unknown">Starting…"\nशुरू हो रहा है…"</string>
     <string name="state_idle">Waiting for download to start\nडाउनलोड शुरू होने की प्रतीक्षा करें।</string>
@@ -18,9 +20,9 @@
     <string name="state_paused_wifi_disabled">Download paused because wifi is disabled\nडाउनलोड रोका गया क्योंकि वाईफाई बंद है।</string>
     <string name="state_paused_roaming">Download paused because you are on roaming\nडाउनलोड रोका गया क्योंकि आप रोमिंग पर है।</string>
     <string name="state_paused_sdcard_unavailable">Download paused because the external storage is unavailable\nडाउनलोड रोका गया क्योंकि मेमरी कार्ड अनुपलब्ध है।</string>
-    <string name="state_failed_unlicensed">Download failed because you may not have purchased this app\nडाउनलोड विफल हो गया क्योंकि आपने यह ऐप नहीं खरीदा होगा।</string>
-    <string name="state_failed_fetching_url">Download failed because the resources could not be found\nडाउनलोड विफल हो गया क्योंकि फ़ाइलें नहीं मिल सकीं।</string>
-    <string name="state_failed_sdcard_full">Download failed because the external storage is full\nडाउनलोड विफल हो गया क्योंकि मेमोरी कार्ड भर गया है।</string>
+    <string name="state_failed_unlicensed">Download failed because you may not have purchased this app\nडाउनलोड फेल हो गया क्योंकि आपने यह ऐप नहीं खरीदा होगा।</string>
+    <string name="state_failed_fetching_url">Download failed because the resources could not be found\nडाउनलोड फेल हो गया क्योंकि फ़ाइलें नहीं मिल सकीं।</string>
+    <string name="state_failed_sdcard_full">Download failed because the external storage is full\nडाउनलोड फेल हो गया क्योंकि मेमोरी कार्ड भर गया है।</string>
     <string name="state_failed_cancelled">Download cancelled\nडाउनलोड रद्द किया गया है।</string>
     <string name="status">Status\nस्थिति</string>
     <string name="text_button_cancel">Cancel\nरद्द करें</string>
@@ -33,7 +35,7 @@
     <string name="text_paused_cellular_2">If you choose not to enable downloading over cellular connections, the download will automatically resume when wi-fi is available.\nअगर आप सेलुलर कनेक्शन पर डाउनलोड करने को नहीं चुनते हैं, तो वाई-फाई उपलब्ध होने पर डाउनलोड सस्वयं शुरू हो जाएगा।</string>
     <string name="text_verifying_download">Verifying Download\nडाउनलोड की जाँच की जा रही है।</string>
     <string name="text_validation_complete">XAPK File Validation Complete.  Select OK to exit.\nXAPK फ़ाइल की मान्यता सफल रही। बाहर जाने के लिए OK को टैप करें।</string>
-    <string name="text_validation_failed">XAPK File Validation Failed.\nXAPK फ़ाइल की मान्यता विफल रही।</string>
+    <string name="text_validation_failed">XAPK File Validation Failed.\nXAPK फ़ाइल की मान्यता फेल हुई।</string>
     <string name="time_remaining">Time remaining:\nबचा हुआ समय: %1$s</string>
     <string name="time_remaining_notification">%1$s left</string>
 </resources>
