@@ -108,10 +108,8 @@ public class MainActivity extends Activity {
     public ReentrantLock suspendLock = new ReentrantLock();
     float sfxMasterVolume = 1.0f;
     Map<String, Float> sfxVolumes = new HashMap<>();
-
-    private long backPressedTime;                                                                   // to record the time for back button.
-
     AudioManager volumeManager;                                                                      //declaring audio manager object.
+    private long backPressedTime;                                                                   // to record the time for back button.
 
     public static OBGroup armPointer() {
         OBGroup arm = OBImageManager.sharedImageManager().vectorForName("arm_sleeve");

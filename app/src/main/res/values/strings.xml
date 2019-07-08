@@ -33,4 +33,6 @@
     <string name="dialogYes">Yes\nहाँ</string>
     <string name="completed">Completed</string>
     <string name="inProgress">In Progress</string>
+    <string name="notification_reminder_content_text">It\'s time to study today\'s content. Let\'s start…</string>
+    <string name="notification_reminder_channel_id">studyReminderChannel</string>
 </resources>

@@ -14,10 +14,8 @@ import com.maq.xprize.onecourse.hindi.R;
 import com.maq.xprize.onecourse.hindi.mainui.MainActivity;
 
 public class NotificationReminderReceiver extends BroadcastReceiver {
-    private static final String CHANNEL_ID = "studyReminderChannel";
     private static final String LOGTAG = "ReminderNotification";
     private static final int NOTIFICATION_ID = LOGTAG.hashCode();
-    private static final CharSequence notificationContentText = "It's time to study today's content. Let's start...";
     private NotificationManager notificationManager;
 
     @Override
@@ -42,12 +40,12 @@ public class NotificationReminderReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Notification builder object to set notification properties
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, context.getResources().getString(R.string.notification_reminder_channel_id));
 
         // Set notification properties
         mBuilder.setPriority(Notification.PRIORITY_DEFAULT);
         mBuilder.setCategory(Notification.CATEGORY_REMINDER);
-        mBuilder.setContentText(notificationContentText);
+        mBuilder.setContentText(context.getResources().getString(R.string.notification_reminder_content_text));
         mBuilder.setSmallIcon(R.mipmap.icon_child);
         mBuilder.setContentTitle(applicationLabel);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND);
@@ -70,7 +68,7 @@ public class NotificationReminderReceiver extends BroadcastReceiver {
             CharSequence name = context.getResources().getString(R.string.reminders_channel_name);
             String description = context.getResources().getString(R.string.reminders_channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            NotificationChannel channel = new NotificationChannel(context.getResources().getString(R.string.notification_reminder_channel_id), name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
