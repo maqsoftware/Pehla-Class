@@ -51,7 +51,6 @@
         <activity
             android:name=".mainui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
@@ -69,7 +68,7 @@
             </intent-filter>
         </receiver>
 
-        <!--L̥
+        <!--
          In order to start the service, it must be uniquely registered with
          the package manager here.
         -->
