@@ -27,7 +27,7 @@ public class OBAudioManager {
     public static OBAudioManager audioManager;
     private final Map<String, OBGeneralAudioPlayer> players;
     final private OBTextToSpeech textToSpeech;
-    private Map<String, AssetFileDescriptor> pathCacheDict = new HashMap<>();
+    private Map<String, String> pathCacheDict = new HashMap<>();
     private Map<String, Boolean> pathCacheAudio = new HashMap<>();
     private List<String> pathCacheList = new ArrayList<>();
     private boolean isAudioFile;
@@ -125,12 +125,15 @@ public class OBAudioManager {
     }
 
     public AssetFileDescriptor getAudioPathFD(String fileName) {
-        AssetFileDescriptor fd = pathCacheDict.get(fileName);
+        String filePath = pathCacheDict.get(fileName);
+        String fullPath = "";
+        AssetFileDescriptor fd = null;
+        if (filePath != null)
+            fd = OBUtils.getAssetFileDescriptorForPath(filePath);
         if (fd == null) {
             String audioSuffix = OBConfigManager.sharedManager.getAudioExtensions().get(0);
             String txtSuffix = OBConfigManager.sharedManager.getTextExtensions().get(0);
             for (String path : OBConfigManager.sharedManager.getAudioSearchPaths()) {
-                String fullPath;
                 // this checks whether the audio to be played is on sfx or on main channel
                 if (path.split("/", 0)[1].equals("sfx")) {
                     fullPath = path + "/" + fileName + "." + audioSuffix;
@@ -156,10 +159,10 @@ public class OBAudioManager {
                 return null;
             }
             pathCacheAudio.put(fileName, isAudioFile);
+            pathCacheDict.put(fileName, fullPath);
         }
         pathCacheList.remove(fileName);
         pathCacheList.add(fileName);
-        pathCacheDict.put(fileName, fd);
         if (pathCacheList.size() >= MAX_AUDIOPATH_CACHE_COUNT) {
             String firstobj = pathCacheList.get(0);
             pathCacheList.remove(0);

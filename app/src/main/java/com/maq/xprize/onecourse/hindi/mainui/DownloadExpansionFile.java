@@ -45,9 +45,9 @@ public class DownloadExpansionFile extends Activity implements IDownloaderClient
     public static final XAPKFile[] xAPKS = {
             new XAPKFile(
                     true, // true signifies a main file
-                    14, // the version of the APK that the file was uploaded
+                    15, // the version of the APK that the file was uploaded
                     // against
-                    923982736L // the length of the file in bytes
+                    770787526L // the length of the file in bytes
             )
     };
     private static final String LOG_TAG = "LVLDownloader";
@@ -246,6 +246,8 @@ public class DownloadExpansionFile extends Activity implements IDownloaderClient
                     mPauseButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            Intent intent = new Intent(DownloadExpansionFile.this, MainActivity.class);
+                            startActivity(intent);
                             finish();
                         }
                     });

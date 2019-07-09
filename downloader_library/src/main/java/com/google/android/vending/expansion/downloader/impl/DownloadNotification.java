@@ -105,8 +105,8 @@ public class DownloadNotification implements IDownloaderClient {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = String.valueOf(R.string.channel_name);
-            String description = String.valueOf(R.string.channel_description);
+            CharSequence name = String.valueOf(R.string.downloads_channel_name);
+            String description = String.valueOf(R.string.downloads_channel_description);
             int importance = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);

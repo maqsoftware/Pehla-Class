@@ -34,8 +34,8 @@ android {
         applicationId 'com.maq.xprize.onecourse.hindi'
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 14
-        versionName "4.1.0"
+        versionCode 15
+        versionName "4.2.0"
         resValue "string", "app_name", "onecourse"
     }
     buildTypes {
@@ -77,8 +77,8 @@ android {
     productFlavors {
         enGB_community_ {
             applicationId 'com.maq.xprize.onecourse.hindi'
-            versionCode 14
-            versionName '4.1.0'
+            versionCode 15
+            versionName '4.2.0'
             resValue "string", "app_name", "वनकोर्स - onecourse"
             buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_enGB.plist"'
             manifestPlaceholders = [
