@@ -24,7 +24,7 @@ def totalDevices(mainDir):
 def totalTestCase(resultsDir,deviceId):
     testCases = 0
     testPassed = 0
-    resultFilePath = os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\results",deviceId,deviceId+'.txt')
+    resultFilePath = os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\results",deviceId,deviceId+'.txt')
     file = open(resultFilePath,'r')
     for line in file :
         val =line.split('\n') 
@@ -115,8 +115,8 @@ if __name__ == "__main__":
             <td colspan="2" width='75%'>"""+str(totalTestCases)+"""</td></tr>
             </tbody></table>
             """
-    resultsDir = os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution",r"\testingScripts\results")
-    expectedResultsDir = os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution",r"\testingScripts\expected_result")
+    resultsDir = os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution",r"\onebillion\results")
+    expectedResultsDir = os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution",r"\onebillion\expected_result")
     print(resultsDir)
     print(expectedResultsDir)
     deviceNumber = 0
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         deviceNumber+=1
         details = prev.split(':')
         id = details[0].split(" ")[0]
-        testResult = totalTestCase(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\results",id)
+        testResult = totalTestCase(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\results",id)
         accuracy = 100*testResult[1]/testResult[0]
         body +="""
             <table width='100%' cellpadding='1' cellspacing='1' align='center'> <tbody>
@@ -157,9 +157,9 @@ if __name__ == "__main__":
             <th width='37.5%' align='center'><strong>Actual Result</strong></th>
             <th width='37.5%' align='center'><strong>Expected Result</strong></th></tr>"""
 
-        outputImages = os.path.join( r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\results",id,'outputs')
+        outputImages = os.path.join( r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\results",id,'outputs')
         imageCount = 0
-        resultfile = open(os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\results",id,id+'.txt'),'r')
+        resultfile = open(os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\results",id,id+'.txt'),'r')
         iterater1 = iter(resultfile)
         flag = 0
         for value in iterater1:
@@ -180,20 +180,20 @@ if __name__ == "__main__":
                         body+="""
                             <td width='7%' align='center' style='background-color:#800000;'>   Fail  </td>"""
                     img = cv2.imread(outputImages+'\output_t'+str(imageCount)+'.png')
-                    img = cv2.resize(img,( 500,349))
+                    img = cv2.resize(img,( 350,300))
                     cv2.imwrite(outputImages+'\output_t'+str(imageCount)+'.png',img)
                     
-                    img = cv2.imread(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\expected_result"+'\output_t'+str(imageCount)+'.png')
-                    img = cv2.resize(img,( 500,349))
-                    cv2.imwrite(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\expected_result"+'\output_t'+str(imageCount)+'.png',img)
+                    img = cv2.imread(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\expected_result"+'\output_t'+str(imageCount)+'.png')
+                    img = cv2.resize(img,( 350,300))
+                    cv2.imwrite(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\expected_result"+'\output_t'+str(imageCount)+'.png',img)
                     
                     body+=imageTag(outputImages+'\output_t'+str(imageCount)+'.png')
-                    body+=imageTag(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\expected_result"+'\output_t'+str(imageCount)+'.png')+"</tr>"
+                    body+=imageTag(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\expected_result"+'\output_t'+str(imageCount)+'.png')+"</tr>"
             
         body+="""
             </tbody></table>
             </body>"""
-        resultfile = open(os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\results",id,id+'.txt'),'r')
+        resultfile = open(os.path.join(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\results",id,id+'.txt'),'r')
         iterater1 = iter(resultfile)
         for value in iterater1:
             val = value.split('\n')[0]
@@ -213,12 +213,12 @@ if __name__ == "__main__":
                 img = cv2.resize(img,( 500,349))
                 cv2.imwrite(outputImages+'\output_t'+str(imageCount)+'.png',img)
                 
-                img = cv2.imread(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\expected_result"+'\output_t'+str(imageCount)+'.png')
+                img = cv2.imread(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\expected_result"+'\output_t'+str(imageCount)+'.png')
                 img = cv2.resize(img,( 500,349))
-                cv2.imwrite(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\expected_result"+'\output_t'+str(imageCount)+'.png',img)
+                cv2.imwrite(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\expected_result"+'\output_t'+str(imageCount)+'.png',img)
                 
                 body+=imageTag(outputImages+'\output_t'+str(imageCount)+'.png')
-                body+=imageTag(r"C:\Users\MAQUser\Desktop\scripts\start_execution\testingScripts\expected_result"+'\output_t'+str(imageCount)+'.png')+"</tr>"
+                body+=imageTag(r"C:\Users\MAQUser\Desktop\scripts\start_execution\onebillion\expected_result"+'\output_t'+str(imageCount)+'.png')+"</tr>"
             if val == 'Extraction':
                 break
             

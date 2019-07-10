@@ -5,25 +5,33 @@ echo from multiprocess import Process
 echo import os
 echo #
 ) >> automatedMultiprocessing.py
+
 set /A c =0
 setlocal enableDelayedExpansion
 for /f "skip=1 delims=#" %%a in (output.txt)  do (
 set /A c+=1
 set A1[!c!]=%%a
 )
+
 set /A c =0
 for /f "skip=1 delims= " %%a in (output.txt)  do (
 set /A c+=1
 set D1[!c!]=%%a
 )
+
+
+
 for /L %%a in (1,1,%c%)  do (
 call echo !D1[%%a]!
 echo def run!D1[%%a]!^(^)^: >> automatedMultiprocessing.py
 echo     import os >> automatedMultiprocessing.py
-echo     os.system^(r'%cd%\testingScripts\waitExtraction.py !A1[%%a]! ^> %cd%\testingScripts\results\!D1[%%a]!\!D1[%%a]!.txt'^) >> automatedMultiprocessing.py
+echo     os.system^(r'%cd%\%1\%1.py !A1[%%a]! ^> %cd%\%1\results\!D1[%%a]!\!D1[%%a]!.txt'^) >> automatedMultiprocessing.py
+
 )
 
+echo # Main section >> setDevices.py
 echo if __name__ ^=^= "__main__"^: >> automatedMultiprocessing.py
+:: define all the proccesses
 for /f "skip=1 delims= " %%a in (output.txt)  do (
 (echo     p%%a ^= multiprocess.Process^(target^=run%%a^) 
  )>> automatedMultiprocessing.py
@@ -38,7 +46,7 @@ for /f "skip=1 delims= " %%a in (output.txt)  do (
 (echo     p%%a.join^(^) 
  )>> automatedMultiprocessing.py
 )
-call folder.bat
+call folder.bat %1
 python automatedMultiprocessing.py
 cd Report
 python reportGeneration.py

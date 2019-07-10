@@ -2,11 +2,12 @@ import xlsxwriter
 import cv2
 import os
 import datetime
+import sys
 
 # Excel report for testing
 class reportGeneration:
     def __init__(self):
-        # extract VBA function's bin file from functionsVBA.xlsm so that it can be used in generated report 
+        # extract VBA function's bin file from functionsVBA.xlsm so that it can be used in generated report  
         os.system("python extractVBA.py functionsVBA.xlsm")
         self.totalTests = 93
         self.workbook = xlsxwriter.Workbook('testingReport.xlsm')
@@ -39,6 +40,7 @@ class reportGeneration:
             'align':'center'})
         self.path = os.getcwd()
         self.mainDir = os.path.abspath(os.path.join(self.path, '..'))
+        self.arg1 = sys.argv[1]
     def indexPagelabel(self):
         worksheet=self.workbook.add_worksheet('Index')
         worksheet.set_vba_name('first')
@@ -70,7 +72,7 @@ class reportGeneration:
         worksheet.write('I8', 'Actual accuracy',self.normalcenterFormatHead)
         worksheet.write('J8', 'Comments',self.normalcenterFormatHead)
         # summary table   
-        results = os.path.join(self.mainDir,'testingScripts','results')
+        results = os.path.join(self.mainDir,self.arg1,'results')
         file = open(os.path.join(self.mainDir,'deviceId.txt'),'r')
         iterater = iter(file)
         next(iterater)
@@ -112,7 +114,7 @@ class reportGeneration:
     # create device sheets
     def device(self): 
         worksheet ={}
-        results = os.path.join(self.mainDir,'testingScripts','results')
+        results = os.path.join(self.mainDir,self.arg1,'results')
         file = open(os.path.join(self.mainDir,'devices.txt'),'r')
         iterater = iter(file)
         next(iterater)
