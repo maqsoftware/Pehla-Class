@@ -639,7 +639,7 @@ public class OCM_FatController extends OBFatController implements OBSystemsManag
     public OCM_MlUnit getNextUnitFromDB(DBSQL db) {
         OCM_MlUnit mlUnit = null;
         int currentWeek = getCurrentWeek();
-        int materlistWeek = 5;
+        int materlistWeek = getMasterlistWeek();
         int firstDay = ((currentWeek - 1) * 7) + 1;
         int lastDay = currentWeek * 7;
         Cursor cursor = null;
