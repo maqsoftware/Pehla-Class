@@ -120,7 +120,7 @@ public class OBTextToSpeech {
                 String data = b.readLine();
                 // generates audio
                 setState(OBAP_PLAYING);
-                int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null, "TTS");
+                int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_ADD, null, "TTS");
                 // this loop ensures that the audio has completed playing to prevent sound overlapping
                 while (textToSpeech.isSpeaking()) ;
                 return (speechStatus != TextToSpeech.ERROR);
