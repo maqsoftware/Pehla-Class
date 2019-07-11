@@ -2,6 +2,7 @@ echo off
 call devices.bat
 
 echo kitkit onebillion
+:: user input for application name to test 
 SET /P _inputname= Please enter Application name:
 
 IF "%_inputname%"=="kitkit" GOTO :start_kikit_main
@@ -11,24 +12,27 @@ echo not a valid input
 pause
 GOTO :end
 
+:: NOTE: arguments are used in corresponding scripts to do the application specific testing
+
+:: Kitkit school testing
 :start_kikit_main
 echo Starting Kitkit School Main App testing
-
 call generateSetDevices.bat Kitkit
 python setDevices.py 
 call combined.bat
 call generateScript.bat Kitkit
-echo Starting Kitkit School Library App testing
 
+:: starts library and tools section testing 
+echo Starting Kitkit School Library App and Tools section testing 
 call generateSetDevices.bat KitkitLibrary
 python setDevices.py
 call combined.bat
 call generateScript.bat KitkitLibrary
 GOTO :end
-
+ 
+:: onebillion testing 
 :start_onebillion
 echo Starting onebillion App testing
-pause
 call generateSetDevices.bat onebillion
 python setDevices.py
 call combined.bat

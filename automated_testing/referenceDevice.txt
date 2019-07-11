@@ -1,0 +1,5 @@
+List of reference device and application.
+onebillion -> Pixcel C Tab
+Kitkit -> Picxel XL Phone
+KitkitLibrary -> Picxel XL Phone
+

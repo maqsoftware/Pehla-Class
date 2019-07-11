@@ -34,14 +34,17 @@ if __name__ == "__main__":
 					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1],
 					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1],
 					 [5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1]]]
-
+    # reset application i.e clear data and permission
     noreset = 'true'
+    print ("Extraction")
     testingOperationObject = KitkitSchool.testingOperation(sys.argv[1],sys.argv[2],__file__,30)
     driver = testingOperationObject.connect(noreset)
     sleep(2)
-    
+    # result variable in this script is used to check the previous test case result so that next test case can be decided
     result = testingOperationObject.allow_permission(driver)
-
+    
+    # result or noreset == 'true' condition is used so that if there is no extraction case then
+    # due to failure of some test cases ,that need to be failed in this scenario, other test cases doesnot get effected
     if result or noreset == 'true':
         points,result = testingOperationObject.find_matches(driver,os.path.join(testingOperationObject.template,'')+'1.png')
         testingOperationObject.click_elements(points,driver)
@@ -50,34 +53,45 @@ if __name__ == "__main__":
             sleep(8)
             result =testingOperationObject.allow_permission(driver)
             sleep(2)
+
             if result or noreset == 'true':
                 result =testingOperationObject.wait_for_extraction(driver)
+
                 if result or noreset == 'true':
                     print("Extraction done")
                     sleep(30)
                     mainappPath = os.path.join(testingOperationObject.template,'mainapp','')
+
                     for menu in range(2):
                         sleep(2)
                         points,result = testingOperationObject.find_matches(driver,mainappPath+str(menu+1)+'.png')
                         testingOperationObject.click_elements(points,driver)
                         sleep(4)
+
                         if result:
-                            sectionNumberPath = os.path.join(mainappPath,str(menu+1),'')	
+                            sectionNumberPath = os.path.join(mainappPath,str(menu+1),'')
+
                             for section in range(11):
+
                                 if section == 0:
                                     sleep(5)
+
                                 sleep(2)
                                 points,result = testingOperationObject.find_matches(driver,sectionNumberPath+str(section+1)+'.png')
                                 testingOperationObject.click_elements(points,driver)
+                                
                                 if result:
                                     subSectionPath = os.path.join(sectionNumberPath,str(menu+1)+'_'+str(section+1),'')
+                                    
                                     for subSection in range(mainappMenu[menu][section]):
                                     # subSection = mainappMenu[menu][section] -1
                                         sleep(2)
                                         points,result = testingOperationObject.find_matches(driver,subSectionPath+str(subSection+1)+'.png')
                                         testingOperationObject.click_elements(points,driver)
+                                        
                                         if result:
                                             gamePath = os.path.join(subSectionPath,str(menu+1)+'_'+str(section+1)+'_'+str(subSection+1),'') 
+                                            
                                             if not testingOperationObject.isTablet or subSection < mainappMenu[menu][section] -1:
                                                 for game in range(gamesNumber[menu][section][subSection]):
 
@@ -131,11 +145,3 @@ if __name__ == "__main__":
                                 driver.back()
     sleep(2)        
     driver.close_app()
-
-					
-
-
-    
-    
-    # C:\Users\MAQUser\Desktop\scripts\Screen shots\cropedObject\mainapp
-    # os.path.join(testingOperationObject.template,'mainScreen','')

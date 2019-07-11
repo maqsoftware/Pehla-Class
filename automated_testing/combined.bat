@@ -1,7 +1,8 @@
+:: this script does port allocation to the connected devices
 echo off
 echo combined output > output.txt
 set /A i=0
-:: allocate ports to devices
+
 setlocal enableDelayedExpansion
 for /F "skip=2 delims=!" %%a in (deviceId.txt) do (
     set /A i+=1
@@ -13,7 +14,7 @@ for /F "delims=!" %%a in (activePorts.txt) do (
     set /A i+=1
     set A2[!i!]=%%a
 )
-
+:: allocate ports to devices and output it
 for /L %%a in (1,1,%i%) do (
 call echo !A1[%%a]! !A2[%%a]!# >> output.txt
 )

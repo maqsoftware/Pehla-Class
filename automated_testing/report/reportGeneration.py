@@ -9,10 +9,12 @@ class reportGeneration:
     def __init__(self):
         # extract VBA function's bin file from functionsVBA.xlsm so that it can be used in generated report  
         os.system("python extractVBA.py functionsVBA.xlsm")
+        self.arg1 = sys.argv[1]
         self.totalTests = 93
-        self.workbook = xlsxwriter.Workbook('testingReport.xlsm')
+        self.workbook = xlsxwriter.Workbook('testingReport'+self.arg1+'.xlsm')
         self.workbook.add_vba_project('./vbaProject.bin')
-        self.workbook.set_vba_name('THisWorkbook')
+        self.workbook.set_vba_name('ThisWorkbook')
+        # style section
         self.mainHeadingFormat = self.workbook.add_format({
             'bold': 1,
             'font': 'Calibri',
@@ -38,9 +40,11 @@ class reportGeneration:
             'border':1,
             'size': 11,
             'align':'center'})
+        # Paths used in 
         self.path = os.getcwd()
         self.mainDir = os.path.abspath(os.path.join(self.path, '..'))
         self.arg1 = sys.argv[1]
+
     def indexPagelabel(self):
         worksheet=self.workbook.add_worksheet('Index')
         worksheet.set_vba_name('first')
@@ -49,7 +53,6 @@ class reportGeneration:
         worksheet.set_column(8,9, 15)
         worksheet.set_row(0,24)
         count = 10
-        constant = 10
         worksheet.merge_range('A1:G1','Local Automated Testing System - Testing Report',self.mainHeadingFormat)
         worksheet.write('A2', 'Date and Time',self.normalFormat)
         worksheet.write('A3', 'Application',self.normalFormat)
@@ -58,6 +61,13 @@ class reportGeneration:
         worksheet.write('C2', 'Avg test pass',self.normalFormat)
         worksheet.write('C3', 'Avg testing accuracy',self.normalFormat)
         worksheet.write('C4', 'Avg manual accuracy',self.normalFormat)
+        
+        if self.arg1 == 'Kitkit':
+            worksheet.write('B3', 'Phela School',self.normalFormat)
+        elif self.arg1 == 'KitkitLibrary':
+            worksheet.write('B3', 'Phela Library',self.normalFormat)
+        else:
+            worksheet.write('B3', 'onecourse',self.normalFormat)
 
         worksheet.write('A7', 'Summary:',self.subHeadingFormat)
         worksheet.write('A8', 'Sr no.',self.normalcenterFormatHead)
@@ -102,7 +112,12 @@ class reportGeneration:
             count+=1
         # Header values 
         worksheet.write('B2',str(datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")),self.normalcenterFormat)
-        worksheet.write('B5',93,self.normalcenterFormat)
+        if self.arg1 == 'onebillion':
+            worksheet.write('B5',93,self.normalcenterFormat)
+        elif self.arg1 == 'Kitkit':
+            worksheet.write('B5',countFail+countPass,self.normalcenterFormat)
+        else:
+            worksheet.write('B5',countFail+countPass,self.normalcenterFormat)
         worksheet.write('B4',count-10,self.normalcenterFormat)
         worksheet.write_formula('D2','=if(B4>0,AVERAGE(C10:C'+str(count)+'),"NA")')
         worksheet.write_formula('D3','=if(B4>0,AVERAGE(D10:D'+str(count)+'),"NA")')
@@ -119,14 +134,10 @@ class reportGeneration:
         iterater = iter(file)
         next(iterater)
         deviceCount = 0
-        
-        # Device sheets
         prev = next(iterater)
-        # total  = 0
-        # count = 10
-        # worksheet[deviceCount].write_formula('C5','= For Count 1 To C3 if(D'+str(count)+' == "-",total,if(D'+str(count)+' == C'+str(count)+',total= total+1,total)) Next Count')
-
+        # Device sheets
         for raw in iterater:
+
             resultTableIndex = 10
             worksheet[deviceCount] = self.workbook.add_worksheet('Device '+str(deviceCount+1))
             worksheet[deviceCount].set_column(0,1,25)
@@ -160,40 +171,43 @@ class reportGeneration:
 
             outputImages = os.path.join(results,id[0],'outputs')
             countPass = 0
+            countFail = 0
             worksheet[deviceCount].set_column(4,5, 80)
-            resultfile = open(os.path.join(results,id[0],id[0]+'.txt'),'r')
-            iterater1 = iter(resultfile)
-            flag = 0
-            for value in iterater1:
-                
-                val = value.split('\n')[0]
-                if val == 'Pass' or val == 'Fail' or val == 'Extraction':
-                    if val == 'Extraction':
-                        flag = 1
-                    elif flag == 1:
-                        if val == 'Pass':
-                            countPass+=1 
-                        worksheet[deviceCount].set_row(resultTableIndex-1,300)
-                
-                        # print(outputImages+'\output_t'+str(resultTableIndex-9)+'.png')
-                        worksheet[deviceCount].write('A'+str(resultTableIndex),resultTableIndex-9,self.normalFormatMiddle)
-                        worksheet[deviceCount].write('C'+str(resultTableIndex),val,self.normalFormatMiddle)
-                        worksheet[deviceCount].write('D'+str(resultTableIndex),'-',self.normalFormatMiddle)
-                        worksheet[deviceCount].data_validation('D'+str(resultTableIndex), {'validate': 'list',
-                                  'source': ['-','Pass','Fail']})
-                        
-                        # expected result
-                        img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
-                        img = cv2.resize(img,( 564,399))
-                        cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
-                        
-                        worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
-                        # actual result
-                        img = cv2.imread(outputImages+'\output_t'+str(resultTableIndex-9)+'.png')
-                        img = cv2.resize(img,( 564,399))
-                        cv2.imwrite('base_images\Routput_'+str(deviceCount)+'t'+str(resultTableIndex-9)+'.png',img)
-                        worksheet[deviceCount].insert_image('F'+str(resultTableIndex), 'base_images\Routput_'+str(deviceCount)+'t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
-                        resultTableIndex+=1
+            
+            if self.arg1 == 'onebillion':
+                resultfile = open(os.path.join(results,id[0],id[0]+'.txt'),'r')
+                iterater1 = iter(resultfile)
+                flag = 0
+                for value in iterater1:
+
+                    val = value.split('\n')[0]
+                    if val == 'Pass' or val == 'Fail' or val == 'Extraction':
+                        if val == 'Extraction':
+                            flag = 1
+                        elif flag == 1:
+                            if val == 'Pass':
+                                countPass+=1 
+                            worksheet[deviceCount].set_row(resultTableIndex-1,300)
+
+                            # print(outputImages+'\output_t'+str(resultTableIndex-9)+'.png')
+                            worksheet[deviceCount].write('A'+str(resultTableIndex),resultTableIndex-9,self.normalFormatMiddle)
+                            worksheet[deviceCount].write('C'+str(resultTableIndex),val,self.normalFormatMiddle)
+                            worksheet[deviceCount].write('D'+str(resultTableIndex),'-',self.normalFormatMiddle)
+                            worksheet[deviceCount].data_validation('D'+str(resultTableIndex), {'validate': 'list',
+                                      'source': ['-','Pass','Fail']})
+
+                            # # expected result
+                            # img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
+                            # img = cv2.resize(img,( 564,399))
+                            # cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
+                            
+                            worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
+                            # actual result
+                            img = cv2.imread(outputImages+'\output_t'+str(resultTableIndex-9)+'.png')
+                            img = cv2.resize(img,( 564,399))
+                            cv2.imwrite('base_images\Routput_'+str(deviceCount)+'t'+str(resultTableIndex-9)+'.png',img)
+                            worksheet[deviceCount].insert_image('F'+str(resultTableIndex), 'base_images\Routput_'+str(deviceCount)+'t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
+                            resultTableIndex+=1
 
             resultfile = open(os.path.join(results,id[0],id[0]+'.txt'),'r')
             iterater1 = iter(resultfile) 
@@ -209,37 +223,34 @@ class reportGeneration:
                     worksheet[deviceCount].write('C'+str(resultTableIndex),val,self.normalFormatMiddle)
                     worksheet[deviceCount].write('D'+str(resultTableIndex),'-',self.normalFormatMiddle)
                     worksheet[deviceCount].data_validation('D'+str(resultTableIndex), {'validate': 'list','source': ['-','Pass','Fail']})
-                    # expected result
-                    img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
-                    img = cv2.resize(img,( 564,399))
-                    cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
+
+                    # # expected result
+                    # img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
+                    # img = cv2.resize(img,( 564,399))
+                    # cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
                     
-                    worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
+                    # worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
+
                     # actual result
                     img = cv2.imread(outputImages+'\output_t'+str(resultTableIndex-9)+'.png')
                     img = cv2.resize(img,( 564,399))
                     cv2.imwrite('base_images\Routput_'+str(deviceCount)+'t'+str(resultTableIndex-9)+'.png',img)
                     worksheet[deviceCount].insert_image('F'+str(resultTableIndex), 'base_images\Routput_'+str(deviceCount)+'t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
                     resultTableIndex+=1
-                elif val == 'Extraction':
-                    break
-            worksheet[deviceCount].write('B3',countPass,self.normalcenterFormat)
-            worksheet[deviceCount].write('C3',93,self.normalcenterFormat)
-            # worksheet[deviceCount].write_formula('C5','=module1.truePositive()')
-            # worksheet[deviceCount].write_formula('C6','=module1.falsePositive()')
-            # worksheet[deviceCount].write_formula('D5','=module1.trueNegative()')
-            # worksheet[deviceCount].write_formula('D6','=module1.falseNegative()')
+                if self.arg1 == 'onebillion':
+                    if val == 'Extraction':
+                        break
+                worksheet[deviceCount].write('B3',countPass,self.normalcenterFormat)
+            if self.arg1 == 'onebillion':
+                worksheet[deviceCount].write('C3',93,self.normalcenterFormat)
+            elif self.arg1 == 'Kitkit':
+                worksheet[deviceCount].write('C3',countFail+countPass,self.normalcenterFormat)
+            else:
+                worksheet[deviceCount].write('C3',countFail+countPass,self.normalcenterFormat)
             deviceCount+=1
             prev = raw
-            count = 10
             
             
-
-
-
-
-    
-
 
 if __name__ == "__main__":
     generationInstance = reportGeneration()
