@@ -196,10 +196,10 @@ class reportGeneration:
                             worksheet[deviceCount].data_validation('D'+str(resultTableIndex), {'validate': 'list',
                                       'source': ['-','Pass','Fail']})
 
-                            # # expected result
-                            # img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
-                            # img = cv2.resize(img,( 564,399))
-                            # cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
+                            # expected result
+                            img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
+                            img = cv2.resize(img,( 564,399))
+                            cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
                             
                             worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
                             # actual result
@@ -224,12 +224,12 @@ class reportGeneration:
                     worksheet[deviceCount].write('D'+str(resultTableIndex),'-',self.normalFormatMiddle)
                     worksheet[deviceCount].data_validation('D'+str(resultTableIndex), {'validate': 'list','source': ['-','Pass','Fail']})
 
-                    # # expected result
-                    # img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
-                    # img = cv2.resize(img,( 564,399))
-                    # cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
+                    # expected result
+                    img = cv2.imread(self.path+'\expected_result\output_t'+str(resultTableIndex-9)+'.png')
+                    img = cv2.resize(img,( 564,399))
+                    cv2.imwrite('expected_result\output_t'+str(resultTableIndex-9)+'.png',img)
                     
-                    # worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
+                    worksheet[deviceCount].insert_image('E'+str(resultTableIndex), 'expected_result\output_t'+str(resultTableIndex-9)+'.png',{'object_position': 1,'border':1,'x_offset': 1, 'y_offset': 1})
 
                     # actual result
                     img = cv2.imread(outputImages+'\output_t'+str(resultTableIndex-9)+'.png')

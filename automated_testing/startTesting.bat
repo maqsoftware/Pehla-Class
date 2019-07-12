@@ -1,4 +1,9 @@
 echo off
+:: %variable% is variable's value
+:: /A is used to define integer type variable
+:: /L is used to define Long integer type
+:: by default variables are of string type
+:: %i i is integer is the i th argument to the script 
 call devices.bat
 
 echo kitkit onebillion

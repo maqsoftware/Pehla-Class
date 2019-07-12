@@ -41,8 +41,8 @@ if __name__ == "__main__":
     mainDir = os.path.abspath(os.path.join(path, '..'))
     print(mainDir)
     totalTestCases = 94
-    fromaddr = "ayushm@maqsoftware.com"
-    toaddr = "ayushm@maqsoftware.com"
+    fromaddr = "ADD FROM ADDRESS HERE"
+    toaddr = "ADD TO ADDRESS HERE"
     deviceCount = totalDevices(mainDir)
     # instance of MIMEMultipart 
     msg = MIMEMultipart() 
@@ -237,7 +237,7 @@ if __name__ == "__main__":
     s.ehlo() 
     print("loggedin") 
     # Authentication 
-    s.login(fromaddr, "szskykzrmndgxpqx") 
+    s.login(fromaddr, "ADD APP PASSWORD HERE") 
     print("loggedin")
     # Converts the Multipart msg into a string 
     text = msg.as_string()

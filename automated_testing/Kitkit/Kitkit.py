@@ -12,30 +12,31 @@ import KitkitSchool
 
 
 if __name__ == "__main__":
-    # mainappMenu = [[6, 10, 28, 29, 33, 29, 31, 31, 31, 31, 26], [6, 17, 18, 29, 22, 29, 29, 29, 29, 29, 29]]
-    mainappMenu = [[6, 0, 0, 29, 33, 29, 31, 31, 31, 31, 26], [6, 17, 18, 29, 22, 29, 29, 29, 29, 29, 29]]
+    # this list contains the number of levels in each subsection of each section [english,Maths]-> [[11 subsection],[11 subsection]] ->[[number of levels in each subsection + 1 for the slider section][]]
+    mainappMenu = [[6, 10, 28, 29, 33, 29, 31, 31, 31, 31, 26], [6, 17, 18, 29, 22, 29, 29, 29, 29, 29, 29]]
+    # this list contains the number of games in each level of each subsection  and last value in each level is the number testcases in slide up ection
     gamesNumber = [[[3, 3, 3, 3, 3, 6], 
 					 [5, 5, 5, 5, 5, 5, 5, 5, 1, 8], 
 					 [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 8], 
 					 [4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 5, 4, 5, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 14], 
 					 [5, 4, 5, 4, 5, 4, 5, 1, 4, 5, 4, 5, 5, 5, 5, 1, 4, 4, 4, 4, 4, 5, 4, 1, 5, 4, 4, 5, 4, 5, 4, 1, 14],
-					 [5, 4, 5, 4, 5, 4, 1, 5, 4, 5, 4, 5, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 1],
-					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1],
-					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1],
-					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1],
-					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1]],
-					[[3, 4, 4, 3, 4],
-					 [5, 4, 5, 4, 4, 4, 5, 4, 5, 4, 5, 5, 5, 4, 5, 1],
-					 [5, 4, 5, 5, 5, 4, 5, 4, 5, 5, 4, 5, 5, 5, 5, 5, 1],
-					 [5, 5, 5, 6, 5, 6, 1, 6, 6, 5, 5, 5, 6, 1, 6, 6, 5, 5, 6, 5, 1, 5, 5, 6, 5, 5, 5, 1],
-					 [5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 5, 1],
-					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 4, 5, 5, 5, 5, 1],
-					 [5, 5, 6, 5, 5, 5, 1, 5, 6, 5, 6, 5, 5, 1, 5, 5, 5, 5, 5, 6, 1, 5, 5, 4, 5, 5, 5, 1],
-					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1],
-					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1],
-					 [5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1]]]
+					 [5, 4, 5, 4, 5, 4, 1, 5, 4, 5, 4, 5, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 1, 0],
+					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 0],
+					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 0],
+					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 0],
+					 [4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 1, 0]],
+					[[3, 4, 4, 3, 4, 0],
+					 [5, 4, 5, 4, 4, 4, 5, 4, 5, 4, 5, 5, 5, 4, 5, 1, 0],
+					 [5, 4, 5, 5, 5, 4, 5, 4, 5, 5, 4, 5, 5, 5, 5, 5, 1, 0],
+					 [5, 5, 5, 6, 5, 6, 1, 6, 6, 5, 5, 5, 6, 1, 6, 6, 5, 5, 6, 5, 1, 5, 5, 6, 5, 5, 5, 1, 0],
+					 [5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 5, 1, 0],
+					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 4, 5, 5, 5, 5, 1, 0],
+					 [5, 5, 6, 5, 5, 5, 1, 5, 6, 5, 6, 5, 5, 1, 5, 5, 5, 5, 5, 6, 1, 5, 5, 4, 5, 5, 5, 1, 0],
+					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 0],
+					 [5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 0],
+					 [5, 5, 5, 5, 5, 4, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 1, 0]]]
     # reset application i.e clear data and permission
-    noreset = 'true'
+    noreset = 'false' # this control the case when we dont want to reset application and run test on it
     print ("Extraction")
     testingOperationObject = KitkitSchool.testingOperation(sys.argv[1],sys.argv[2],__file__,30)
     driver = testingOperationObject.connect(noreset)
@@ -62,7 +63,7 @@ if __name__ == "__main__":
                     sleep(30)
                     mainappPath = os.path.join(testingOperationObject.template,'mainapp','')
 
-                    for menu in range(2):
+                    for menu in range(2): # sections
                         sleep(2)
                         points,result = testingOperationObject.find_matches(driver,mainappPath+str(menu+1)+'.png')
                         testingOperationObject.click_elements(points,driver)
@@ -71,7 +72,7 @@ if __name__ == "__main__":
                         if result:
                             sectionNumberPath = os.path.join(mainappPath,str(menu+1),'')
 
-                            for section in range(11):
+                            for section in range(11): #subsections
 
                                 if section == 0:
                                     sleep(5)
@@ -83,8 +84,8 @@ if __name__ == "__main__":
                                 if result:
                                     subSectionPath = os.path.join(sectionNumberPath,str(menu+1)+'_'+str(section+1),'')
                                     
-                                    for subSection in range(mainappMenu[menu][section]):
-                                    # subSection = mainappMenu[menu][section] -1
+                                    for subSection in range(mainappMenu[menu][section]): # levels
+        
                                         sleep(2)
                                         points,result = testingOperationObject.find_matches(driver,subSectionPath+str(subSection+1)+'.png')
                                         testingOperationObject.click_elements(points,driver)
@@ -93,13 +94,13 @@ if __name__ == "__main__":
                                             gamePath = os.path.join(subSectionPath,str(menu+1)+'_'+str(section+1)+'_'+str(subSection+1),'') 
                                             
                                             if not testingOperationObject.isTablet or subSection < mainappMenu[menu][section] -1:
-                                                for game in range(gamesNumber[menu][section][subSection]):
+                                                for game in range(gamesNumber[menu][section][subSection]): # games
 
                                                     sleep(2)
                                                     points,result = testingOperationObject.find_matches(driver,gamePath+str(game+1)+'.png')
                                                     testingOperationObject.click_elements(points,driver)
                                                     sleep(6)
-                                                    if testingOperationObject.check_tutorials(driver) and subSection < mainappMenu[menu][section] -1:
+                                                    if testingOperationObject.check_tutorials(driver) and subSection < mainappMenu[menu][section] -1: # check tutorials and slider test cases
                                                         sleep(16)
                                                     else:
                                                         sleep(2)
@@ -111,7 +112,7 @@ if __name__ == "__main__":
                                                             if not result:
                                                                 driver.back()
                                                             sleep(1)
-                                                        elif subSection == mainappMenu[menu][section] -1 and game%2 == 1:
+                                                        elif subSection == mainappMenu[menu][section] -1 and game%2 == 1:  # close slider elements pop ups
                                                             points,result = testingOperationObject.find_matches(driver,gamePath+'close.png')
                                                             testingOperationObject.click_elements(points,driver)
                                                             if not result:

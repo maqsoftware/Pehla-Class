@@ -7,18 +7,26 @@ echo from multiprocess import Process
 echo import os
 echo #
 ) >> setDevices.py
+
 setlocal enableDelayedExpansion
+:: this command enables to used updated value of a variable use !variable! for current variable value  
+:: %variable% gives as the stable value i.e variable in not being updated over and over again 
+
 
 set /A c =0
+:: %%variable are for loop controller varaible
 for /f "skip=2 delims=!" %%a in (deviceId.txt)  do (
 set /A c+=1
-set D1[!c!]=%%a
+set D1[!c!]=%%a 
+:: in this loop !c! is current value of c in for loop !c! = 1 and change with iters but %c% = 0
 )
+:: here %c% == !c!
 set /A cnt=%c%
 for /L %%a in (1,1,%c%)  do (
 
 
 :: generates funtions for all the devices.
+
 echo def run!D1[%%a]!^(^)^: >> setDevices.py
 echo     import os >> setDevices.py
 

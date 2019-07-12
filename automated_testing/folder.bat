@@ -1,4 +1,5 @@
 :: this script creates folder and files for the results of testing
+:: 'cd' is a variable use for current directory %cd% is its value
 if not exist %cd%\testingScripts\results mkdir %cd%\testingScripts\results
 set /A i=0
 

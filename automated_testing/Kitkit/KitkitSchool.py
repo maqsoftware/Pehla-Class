@@ -11,7 +11,7 @@ import sys
 
 
 class testingOperation:  
-    # base template device resolution width and height based on portrait mode
+    # base template device resolution width and height based on portrait mode (Pixel C Tablet)
     base_w = 2560
     base_h = 1440
     base_dpi_w = 532.983
@@ -59,7 +59,7 @@ class testingOperation:
         file.close()
         os.system("del devices"+udId+".txt")
 
-        # Table or Mobile
+        # Tablet or Mobile
         os.system("adb -s "+udId+" shell getprop ro.build.characteristics > devices"+udId+".txt")
         file = open("devices"+udId+".txt",'r')
         for line in file:
