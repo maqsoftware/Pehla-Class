@@ -239,7 +239,7 @@
 
 	<!-- ASSETS -->
 	<key>assets_external_path</key>
-	<string>/Android/data/com.maq.xprize.onecourse.hindi/files/assets</string>
+	<string>/Android/data/com.maq.pehlaclass/files/assets</string>
 
 
 	<!-- LOCATION MANAGER -->
