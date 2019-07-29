@@ -31,7 +31,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         multiDexEnabled true
-        applicationId 'com.maq.xprize.onecourse.hindi'
+        applicationId 'com.maq.pehlaclass'
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 15
@@ -49,7 +49,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [
-                    appuserid: "com.maq.xprize.onecourse.hindi"
+                    appuserid: "com.maq.pehlaclass"
             ]
         }
     }
@@ -75,12 +75,22 @@ android {
     flavorDimensions "ob"
 
     productFlavors {
-        enGB_community_ {
-            applicationId 'com.maq.xprize.onecourse.hindi'
-            versionCode 15
-            versionName '4.2.0'
-            resValue "string", "app_name", "वनकोर्स - onecourse"
-            buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_enGB.plist"'
+        english {
+            applicationId 'com.maq.pehlaclass.english'
+            versionCode 1
+            versionName '4.3.0'
+            resValue "string", "app_name", "Pehla Class"
+            buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_enIN.plist"'
+            manifestPlaceholders = [
+                    appIcon: "@mipmap/icon_child"
+            ]
+        }
+        hindi {
+            applicationId 'com.maq.pehlaclass.hindi'
+            versionCode 1
+            versionName '4.3.0'
+            resValue "string", "app_name", "पहला क्लास - Pehla Class"
+            buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_hiIN.plist"'
             manifestPlaceholders = [
                     appIcon: "@mipmap/icon_child"
             ]

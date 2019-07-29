@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.AppCompat.NoActionBar"
-    tools:context="com.maq.xprize.onecourse.hindi.mainui.SplashScreenActivity">
+    tools:context="com.maq.pehlaclass.mainui.SplashScreenActivity">
 
     <ImageView
         android:id="@+id/splashScreenBackground"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:gravity="center_vertical"
-        android:text="@string/content_extraction_hindi"
+        android:text="@string/content_extraction_locale"
         android:textColor="@android:color/black"
         android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
