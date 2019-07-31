@@ -73,7 +73,8 @@ public class OC_Lg3 extends OC_Lg
                 OBPhoneme pho = tempNumPhonemes.get(audioId);
                 arr.add(pho);
             }
-            else if(OBAudioManager.audioManager.getAudioPath(audioId) != null)
+            // Fallback to text file in case audio file is not found
+            else if(OBAudioManager.audioManager.getAudioPath(audioId) == null)
             {
                 OBPhoneme pho = new OBPhoneme(number,audioId);
                 tempNumPhonemes.put(audioId, pho);
