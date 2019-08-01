@@ -81,7 +81,7 @@ public class SplashScreenActivity extends Activity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
         setContentView(activity_splash_screen);
-        if (isSDcard() && sharedPref.getInt("dataPath", 0) == 0) {
+        if (isSDcard(this) && sharedPref.getInt("dataPath", 0) == 0) {
             flagSwitchToInternal = true;
             Dialog builder = sdCardPreferenceDialog();
             builder.show();
@@ -128,8 +128,8 @@ public class SplashScreenActivity extends Activity {
         return false;
     }
 
-    public boolean isSDcard() {
-        File[] fileList = getObbDirs();
+    public boolean isSDcard(Context activityContext) {
+        File[] fileList = activityContext.getObbDirs();
         return fileList.length >= 2;
     }
 
@@ -153,8 +153,8 @@ public class SplashScreenActivity extends Activity {
             if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + activityContext.getPackageName() + "/files") &&
                     file.isDirectory() &&
                     file.canRead() &&
-                    isSDcard() &&
-                    sharedPref.getInt(getString(R.string.dataPath), 0) == 2) {
+                    isSDcard(activityContext) &&
+                    sharedPref.getInt(activityContext.getString(R.string.dataPath), 0) == 2) {
 //              For external storage path
                 externalDataFilePath = file.getAbsolutePath() + File.separator;
             } else if ((sharedPref.getInt(activityContext.getString(R.string.dataPath), 0) == 1 || !flagSwitchToInternal) && internalDataFilePath == null) {
@@ -184,7 +184,7 @@ public class SplashScreenActivity extends Activity {
             if (!file.getAbsolutePath().equalsIgnoreCase(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + getPackageName()) &&
                     file.isDirectory() &&
                     file.canRead() &&
-                    isSDcard()) {
+                    isSDcard(this)) {
 //              For external storage path
                 externalOBBFilePath = file.getAbsolutePath() + File.separator +
                         Helpers.getExpansionAPKFileName(this, xf.mIsMain, xf.mFileVersion);
