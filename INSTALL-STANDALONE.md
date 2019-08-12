@@ -1,10 +1,6 @@
-# Building onecourse
+# Building Pehla Class
 
-Last updated: May 6, 2019
-## Overview
-The installation steps below will allow you to set-up the application as a standalone application alongside your current filesystem without the need to flash custom filesystem images. If you instead want to build custom filesystem images (i.e., clear the file system and have a single application remain on the tablet) for onecourse application, follow the steps detailed in [BUILD](https://github.com/XPRIZE/GLEXP-Team-onebillion/blob/master/BUILD.md) file.
-
-**Note:** OS-specific commands are mentioned where required. All other commands are OS independent (i.e., they work on both Windows and Mac/Linux)
+Last updated: August 12, 2019
 
 ## Requirements
 1. Ensure you have _adb_ installed on your computer. To do this, you can [follow the steps in this helpful guide](https://www.androidpit.com/how-to-install-adb-and-fastboot).
@@ -13,7 +9,7 @@ The installation steps below will allow you to set-up the application as a stand
 ## 1. Device preparation
 
 ##### Enable developer mode on your device
-1. Go to **Settings --> About tablet**.
+1. Go to **Settings --> About Phone/tablet**.
 2. Tap **Build Number** 7 times until it displays _"You are now a developer"_.
 
 ##### Enable USB Debugging on your device
@@ -24,59 +20,36 @@ The installation steps below will allow you to set-up the application as a stand
 5. Tap _"Always allow from this computer"_.
 6. Tap **OK**.
 
-## 2. Building the onecourse app
+## 2. Building the Pehla Class app
 
 1. Ensure you have **Android Studio** installed. To do this, you can [follow the steps in this helpful guide](https://developer.android.com/studio/install.html).
+     
+2. Start Android Studio and import the project into it.
 
-2. Configure the _ROOT_FOLDER_ environment variable and _ANDROID_HOME_ environment variable based on the location of the Android SDK:  
-   
-   Follow these steps for macOS (Mavericks or later) or Linux-based system:
-	
-		export ROOT_FOLDER=onecourse
-		
-		export ANDROID_HOME=[PATH/TO/ANDROID_SDK]
-		
-   Follow these steps for a Windows 7 or later system:
+3. To change the app locale, just select the desired language from the build variant.
 
-		Set-Variable -Name "ROOT_FOLDER" -Value "onecourse"
-		
-		Set-Variable -Name "ANDROID_HOME" -Value "PATH/TO/ANDROID_SDK"
-		
-3. Clone the **onecourse source** repository:
-		
-		git clone https://github.com/XPRIZE/GLEXP-Team-onebillion.git $ROOT_FOLDER/
-		
-4. In the _ROOT_FOLDER_ build _gradle_ tasks:
+4. Add google-services.json file in language specific [app](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder. It is there in Firebase console after the app project has been created.
 
-        ./gradlew tasks
+5. Build the project.
 		
-5. Build the **onecourse** _.apk_:
-
-	onecourse English:
-
-          ./gradlew assembleEnGB_community_debug
-	  
-	onecourse Swahili:
-	
-          ./gradlew assembleSw_community_debug
-		  
-6. Download the language-specific assets from the [releases](https://github.com/XPRIZE/GLEXP-Team-onebillion/releases/tag/v3.0.0) section and extract into your _ROOT_FOLDER_.
-		
-## 3. Installing onecourse
+## 3. Installing Pehla Class
 
 1. Install the application via adb:
 
-	onecourse English:
+	Pehla Class English:
 
-		adb install app/build/outputs/apk/enGB_community_/debug/app-enGB_community_-debug.apk
+		adb install app/english/release/app-english-release.apk
 		
-	onecourse Swahili:
+	Pehla Class Hindi:
 	
-		adb install app/build/outputs/apk/sw_community_/debug/app-sw_community_-debug.apk
+		adb install app/hindi/release/app-hindi-release.apk
 		
-2. Copy the assets to the Android device:
+2. Download the OBB file from the latest GitHub [release](https://github.com/maqsoftware/Pehla-Class/releases) and follow the instructions provided there.
 
-		adb push -p assets/ /sdcard/onebillion/assets
-		
-3. Once the assets are transferred, open the application and grant all the required permissions. It is now ready to use.  
-**Note:** Grant the _Allow modify system settings_ permission to allow the application to manage brightness setting.
+
+## FAQs
+1. The application throws _keystore_ file not found error. How do I fix this?
+	> _keystore_ file is used to digitally sign an Android application and hence, it is not provided with the project. One must create their own _keystore_ file using the [Android KeyTool](https://developer.android.com/studio/publish/app-signing) which comes with the Android Studio in order to sign the APK.
+
+2. How to enable the _Build variant_ option in the _Build_ menu?
+	> The _Build variant_ option is enabled only when the module's gradle file is opened.
