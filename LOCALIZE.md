@@ -1,8 +1,7 @@
-# Localization of onecourse
-
+# Localization of Pehla Class
 
 ## Process
-There are 8 key steps to localize onecourse. We work with local liguistic experts at each stage:
+There are 8 key steps to localize Pehla Class. We work with local liguistic experts at each stage:
 
 1. **Analyse target language and culture**. Examine the target language, and build a clear description of it, including: linguistic structure, alphabet, phonetic structure, order and frequency of graphemes, list of high frequency words, set of common first and last names.  Carry out a comprehensive analysis to understand the target area, in order to culturally adapt the course to that specific geographical area.
 2. **Cross check target language**. Check the description of the new language against our existing learning activities. Develop new components or modes, if beneficial to the child.
@@ -11,11 +10,11 @@ There are 8 key steps to localize onecourse. We work with local liguistic expert
 5. **Writing**. If there is any additional material required for the target language, such as simple phrases and sentences, it will be written at this stage.
 6. **Images**. Creation of any new images required for learning units and stories.
 7. **Recording**. Recording of all audio material required, using several voice artists.
-8. **Final build**. With all assets prepared, build onecourse in the new target language.
+8. **Final build**. With all assets prepared, build Pehla Class in the new target language.
 
 
 ## Overview
-Each localized version of onecourse requires a language pack for a _locale_. A locale is a pairing of a language and an optional region (e.g. Tanzanian Swahili, British English). A locale is represented using abbreviated codes, so Swahili would be `sw` and British English `en_GB`. A language pack consists of eight elements:
+Each localized version of Pehla Class requires a language pack for a _locale_. A locale is a pairing of a language and an optional region (e.g. Tanzanian Swahili, British English). A locale is represented using abbreviated codes, so Swahili would be `sw` and British English `en_GB`. A language pack consists of eight elements:
 
 1. The alphabet
 2. Phonemes, syllables and words
@@ -42,7 +41,7 @@ Each `letter` has a unique id and an optional set of `tags`. Possible values for
 ```
 
 ### 2. Phonemes, syllables and words
-The file `assets/oc-literacy-gen/local/LOCALE/wordcomponents.xml` defines the key phonemes, consonant clusters and syllables present in the language. It also contains a curated set of high-frequency and culturally specfic words for learning the language.
+The file `assets/oc-literacy-gen/local/LOCALE/wordcomponents.xml` defines the key phonemes, consonant clusters and syllables present in the language. It also contains a curated set of high-frequency and culturally specific words for learning the language.
 
 Each `phoneme` has a unique `id` with the prefix `is`. In Swahili, the phonemes _a, th_ and _ng'_ are represented like this:
 
@@ -137,7 +136,7 @@ The child's _learning journey_ is an ordered set of `learning units` to be worke
 
 #### Community
 
-This is defined in the file `community_LOCALE/units.xml`. An example of the first part of the onecourse Swahili _learning journey_ from `community_swunits.xml`is shown below. The First unit is an introduction to using the tablet, the second a _flashcard_ reading activity:
+This is defined in the file `community_LOCALE/units.xml`. An example of the first part of the Pehla Class Swahili _learning journey_ from `community_swunits.xml`is shown below. The First unit is an introduction to using the tablet, the second a _flashcard_ reading activity:
 
 ```xml
 <level id="1">
@@ -207,10 +206,10 @@ This is defined in the file `playzone_LOCALE/units.xml`. It specifies which unit
 This is defined in the file `library_LOCALE/units.xml`. It specifies all of the stories in the story library for the locale. Here, _level_ represents the relative complexity of a set of stories.
 
 ### 7. Fonts
-onecourse by default uses two fonts, `onebillionreader-Regular.otf` and `onebillionwriter-Regular.otf`. These can be replaced by identically named alternative fonts in `app/src/main/fonts/`. Please note onecourse does not currently support right-to-left scripts.
+Pehla Class by default uses two fonts, `onebillionreader-Regular.otf` and `onebillionwriter-Regular.otf`. These can be replaced by identically named alternative fonts in `app/src/main/fonts/`. Please note Pehla Class does not currently support right-to-left scripts.
 
 ### 8. Video Subtitles
-For video clips in the onecourse _play zone_, optional subtitles can be added. These are standard `.srt` text files placed in the `assets/oc-video/local/LOCALE/` directory. Each subtitle entry within a file consists of four parts:
+For video clips in the Pehla Class _play zone_, optional subtitles can be added. These are standard `.srt` text files placed in the `assets/oc-video/local/LOCALE/` directory. Each subtitle entry within a file consists of four parts:
 
 1. A numeric counter identifying each sequential subtitle.
 2. The time that the subtitle should appear on the screen, followed by `-->` and the time it should disappear.
@@ -226,50 +225,54 @@ Tutengeneze tembo wa karatasi!
 
 ```
 
-
-
-
-
 ## Build
 
-Apply the following configurations to files in the onecourse source code directory
+Apply the following configurations to files in the Pehla Class source code directory
 
 ###  Settings
 
-Create a settings `.plist` file for the new locale by copying the English:
+1. Create a settings `.plist` file for the new locale by copying the English:
 
-`cp app/src/main/config/settings_community_enGB.plist app/src/main/config/settings_community_LOCALE.plist`
+	`cp app/src/main/config/settings_community_enIN.plist app/src/main/config/settings_community_LOCALE.plist`
 
-Edit the new settings file, replacing the value of the following keys:
+2. Specify fallback language for assets common among locales. Mention LOCALE code for the assets to be used. 
 
-```
-<key>app_masterlist</key>
-<string>community_LOCALE</string>
+	```
+	<key>localisation_fallback_language_id</key>
+	<string>LOCALE</string>
+	```
 
-<key>app_masterlist_playzone</key>
-<string>playzone_LOCALE</string>
+3. Edit the new settings file, replacing the value of the following keys:
 
-<key>app_masterlist_library</key>
-<string>library_LOCALE</string>
+	```
+	<key>app_masterlist</key>
+	<string>community_LOCALE</string>
 
-```
+	<key>app_masterlist_playzone</key>
+	<string>playzone_LOCALE</string>
+
+	<key>app_masterlist_library</key>
+	<string>library_LOCALE</string>
+
+	```
 
 ### Build target
 
-Append the following configuration to `build.gradle`:
+1. Append the following configuration to `build.gradle`:
 
-```gradle
-LOCALE_community_ {
-    applicationId ‘org.onebillion.onecourse.child.LOCALE'
-    versionCode 1
-    versionName '1.0'
-    resValue "string", "app_name", "onecourse - Child"
-    resValue "string", "test_only", "false"
-    buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_LOCALE.plist"'
-    manifestPlaceholders = [
-            appIcon: "@mipmap/icon_child"
-    ]
-}
-```
+    ```gradle
+    LOCALE {
+        applicationId ‘com.maq.pehlaclass.LOCALE'
+        versionCode 1
+        versionName '1.0'
+        resValue "string", "app_name", "Pehla Class"
+        resValue "string", "test_only", "false"
+        buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_LOCALE.plist"'
+        manifestPlaceholders = [
+                appIcon: "@mipmap/icon_child"
+        ]
+    }
+    ```
 
-Follow the [build instructions](BUILD.md) to compile onecourse.
+2. Update the TTS locale `ttsLang` in [OBTextToSpeech.java](https://github.com/maqsoftware/Pehla-Class/blob/master/app/src/main/java/com/maq/pehlaclass/utils/OBTextToSpeech.java) file.
+3. Add locale specific app icons in the [src](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder.
