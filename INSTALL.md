@@ -1,6 +1,6 @@
 # Building Pehla Class
 
-Last updated: August 12, 2019
+Last updated: August 14, 2019
 
 ## Requirements
 1. Ensure you have _adb_ installed on your computer. To do this, you can [follow the steps in this helpful guide](https://www.androidpit.com/how-to-install-adb-and-fastboot).
@@ -26,9 +26,9 @@ Last updated: August 12, 2019
      
 2. Start Android Studio and import the project into it.
 
-3. To change the app locale, just select the desired language from the build variant.
+3. In order to build the app for a specific language, select the desired language from the build variant.
 
-4. Add google-services.json file in language specific [app](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder. It is there in Firebase console after the app project has been created.
+4. Add google-services.json file in language specific [app](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder. The google-service.json file is available in the Firebase console after a new Android app has been added to a Firebase project.
 
 5. Build the project.
 		
@@ -38,11 +38,11 @@ Last updated: August 12, 2019
 
 	Pehla Class English:
 
-		adb install app/english/release/app-english-release.apk
+		adb install app/english/debug/app-english-release.apk
 		
 	Pehla Class Hindi:
 	
-		adb install app/hindi/release/app-hindi-release.apk
+		adb install app/hindi/debug/app-hindi-release.apk
 		
 2. Download the OBB file from the latest GitHub [release](https://github.com/maqsoftware/Pehla-Class/releases) and follow the instructions provided there.
 

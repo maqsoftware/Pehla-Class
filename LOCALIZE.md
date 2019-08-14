@@ -136,7 +136,7 @@ The child's _learning journey_ is an ordered set of `learning units` to be worke
 
 #### Community
 
-This is defined in the file `community_LOCALE/units.xml`. An example of the first part of the Pehla Class Swahili _learning journey_ from `community_swunits.xml`is shown below. The First unit is an introduction to using the tablet, the second a _flashcard_ reading activity:
+This is defined in the file `community_LOCALE/units.xml`. An example of the first part of the Pehla Class Swahili _learning journey_ from `community_swunits.xml`is shown below. The first unit is an introduction to using the tablet, the second a _flashcard_ reading activity:
 
 ```xml
 <level id="1">
@@ -212,7 +212,7 @@ Pehla Class by default uses two fonts, `onebillionreader-Regular.otf` and `onebi
 For video clips in the Pehla Class _play zone_, optional subtitles can be added. These are standard `.srt` text files placed in the `assets/oc-video/local/LOCALE/` directory. Each subtitle entry within a file consists of four parts:
 
 1. A numeric counter identifying each sequential subtitle.
-2. The time that the subtitle should appear on the screen, followed by `-->` and the time it should disappear.
+2. The time at which the subtitle should appear on the screen, followed by `-->` and the time it should disappear.
 3. The subtitle itself on one or more lines.
 4. A blank line indicating the end of this subtitle.
 
