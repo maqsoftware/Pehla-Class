@@ -1,6 +1,6 @@
 # Building Pehla Class
 
-Last updated: August 14, 2019
+Last updated: August 26, 2019
 
 ## Requirements
 1. Ensure you have _adb_ installed on your computer. To do this, you can [follow the steps in this helpful guide](https://www.androidpit.com/how-to-install-adb-and-fastboot).
@@ -28,7 +28,7 @@ Last updated: August 14, 2019
 
 3. In order to build the app for a specific language, select the desired language from the build variant.
 
-4. Add google-services.json file in language specific [app](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder. The google-service.json file is available in the Firebase console after a new Android app has been added to a Firebase project.
+4. Add `google-services.json` file in language specific [app](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder. The `google-services.json` file is available after registering a new app in the Firebase console.
 
 5. Build the project.
 		
