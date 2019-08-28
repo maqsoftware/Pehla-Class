@@ -77,8 +77,8 @@ android {
     productFlavors {
         english {
             applicationId 'com.maq.pehlaclass.english'
-            versionCode 1
-            versionName '4.3.0'
+            versionCode 2
+            versionName '4.3.1'
             resValue "string", "app_name", "Pehla Class"
             buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_enIN.plist"'
             manifestPlaceholders = [
@@ -87,8 +87,8 @@ android {
         }
         hindi {
             applicationId 'com.maq.pehlaclass.hindi'
-            versionCode 1
-            versionName '4.3.0'
+            versionCode 2
+            versionName '4.3.1'
             resValue "string", "app_name", "पहला क्लास - Pehla Class"
             buildConfigField 'String', 'SETTINGS_FILE', '"settings_community_hiIN.plist"'
             manifestPlaceholders = [
