@@ -1,81 +1,55 @@
-# Installing onecourse
+# Building Pehla Class
 
-## Overview
-Each of the three versions of **onecourse** has as a set of Android filesytem images for the Google Pixel C. Follow the steps belows to install **onecourse**. If your Pixel C is already unlocked, skip straight to [the flashing step](#flash-filesystem-images).
+Last updated: August 26, 2019
 
 ## Requirements
-1. Ensure you have `adb` and `fastboot` installed on your computer. You can [follow the steps in this helpful guide](https://www.androidpit.com/how-to-install-adb-and-fastboot).
-2. Connect your computer to the device via USB.
+1. Ensure you have _adb_ installed on your computer. To do this, you can [follow the steps in this helpful guide](https://www.androidpit.com/how-to-install-adb-and-fastboot).
+2. Connect your device to the computer via USB.
 
+## 1. Device preparation
 
-## Device preparation
-
-##### Enable developer mode
-1. Go to **Settings > About tablet**.
+##### Enable developer mode on your device
+1. Go to **Settings --> About Phone/tablet**.
 2. Tap **Build Number** 7 times until it displays _"You are now a developer"_.
 
-
-##### Enable OEM Unlocking
-1. Go to **Settings > Developer** options.
-2. Enable OEM Unlocking.
-3. Tap **Enable** when prompted by the disclaimer.
-
-##### Enable USB Debugging
-1. Go to **Settings > Developer** options.
+##### Enable USB Debugging on your device
+1. Go to **Settings --> Developer** options.
 2. Tap **Enable USB debugging**.
 3. Tap **OK** when prompted by the disclaimer.
-4. You should see dialog with you computer's _"RSA key fingerprint"_.
+4. You should see a dialog box with your computer's _"RSA key fingerprint"_.
 5. Tap _"Always allow from this computer"_.
 6. Tap **OK**.
 
-## Unlock the bootloader
-1. On you computer, reboot the device into the bootloader by running:
+## 2. Building the Pehla Class app
 
-        adb reboot-bootloader
- 
-2. The device will now boot into the bootloader and display _Waiting for fastboot command…_.
+1. Ensure you have **Android Studio** installed. To do this, you can [follow the steps in this helpful guide](https://developer.android.com/studio/install.html).
+     
+2. Start Android Studio and import the project into it.
 
-3. Unlock the bootloader by running:
- 
-        fastboot flashing unlock
+3. In order to build the app for a specific language, select the desired language from the build variant.
 
-4. The device will display a warning about unlocking the bootloader.
-5. Press the **power** button on the device to unlock the bootloader.
-6. The device will reboot into the bootloader and display _Waiting for fastboot command…_.
-7. Reboot the device back into Android by running:
- 
-        fastboot reboot
+4. Add `google-services.json` file in language specific [app](https://github.com/maqsoftware/Pehla-Class/tree/master/app/src) folder. The `google-services.json` file is available after registering a new app in the Firebase console.
 
-8. Since your device will be reset, you will need to [enable USB debugging](#enable-usb-debugging) once more.
+5. Build the project.
+		
+## 3. Installing Pehla Class
 
+1. Install the application via adb:
 
+	Pehla Class English:
 
-## Flash filesystem images
-
-1. Download the set of filesystem images for the version of onecourse you wish to install:
- - onecourse Swahili [part 1](https://github.com/XPRIZE/GLEXP-Team-onebillion/releases/download/v3.0.1/onecourse-swahili-v3.0.1.tar.gz.aa), [part 2](https://github.com/XPRIZE/GLEXP-Team-onebillion/releases/download/v3.0.1/onecourse-swahili-v3.0.1.tar.gz.ab)
- - onecourse English [part 1](https://github.com/XPRIZE/GLEXP-Team-onebillion/releases/download/v3.0.1/onecourse-english-v3.0.1.tar.gz.aa), [part 2](https://github.com/XPRIZE/GLEXP-Team-onebillion/releases/download/v3.0.1/onecourse-english-v3.0.1.tar.gz.ab)
-
-2. Reboot the device into the bootloader by running:
- 
-        adb reboot-bootloader
- 
-3. The device will now boot into the bootloader and display _Waiting for fastboot command…_.
+		adb install app/english/debug/app-english-release.apk
+		
+	Pehla Class Hindi:
+	
+		adb install app/hindi/debug/app-hindi-release.apk
+		
+2. Download the OBB file from the latest GitHub [release](https://github.com/maqsoftware/Pehla-Class/releases) and follow the instructions provided there.
 
 
-4. On your computer, set the `ANDROID_PRODUCT_OUT` enviroment variable to the directory containing the filesytem images by running:
- 
-        ANDROID_PRODUCT_OUT=[PATH/TO/FILESYTEM_IMAGES]
+## FAQs
+1. The application throws _keystore_ file not found error. How do I fix this?
+	> _keystore_ file is used to digitally sign an Android application and hence, it is not provided with the project. One must create their own _keystore_ file using the [Android KeyTool](https://developer.android.com/studio/publish/app-signing) which comes with the Android Studio in order to sign the APK.
 
-5. Flash the device with the filesystem images by running:
-
-        fastboot flash boot boot.img
-        fastboot flash recovery recovery.img
-        fastboot flash vendor vendor.img
-        fastboot flash system system.img
-        fastboot flash userdata userdata.img
-        fastboot format cache
-        fastboot reboot
-
-
-6. After flashing is complete, the device will boot into **onecourse** setup. Follow the [setup instructions](SETUP.md).
+2. How to enable the _Build variant_ option in the _Build_ menu?
+	> The _Build variant_ option is enabled only when the module's gradle file is opened.
