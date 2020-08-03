@@ -1,0 +1,24 @@
+Installation steps for Local Automated Testing System
+ 
+NOTE : if cmd does not recognise any key word set environment variable accordingly. 
+
+1. Install available standard version of npm (node package manager) appium server requires nodejs for installation
+2. Use this command in cmd to install Appium server
+ 
+	npm install -g appium
+- Add appium application path in system variable
+3. Install available standard installation of Python3  
+4. Install all the Python libraries required for testing
+-OpenCV 
+pip install opencv-python
+
+-Appium Client
+pip install Appium-Python-Client
+
+-Multiprocessing Library
+pip multiprocess
+
+-Xlsx writer to create excel report
+pip install xlsxwriter
+
+Restart System
